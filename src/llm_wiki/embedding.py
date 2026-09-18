@@ -21,6 +21,10 @@ class EmbeddingConfigurationError(ValueError):
 class EmbeddingRequestError(RuntimeError):
     """Raised when the provider response cannot be used."""
 
+    def __init__(self, message: str, *, retryable: bool = False) -> None:
+        super().__init__(message)
+        self.retryable = retryable
+
 
 @dataclass(frozen=True)
 class EmbeddingSettings:
@@ -68,7 +72,12 @@ class GeminiEmbeddingProvider:
                 ),
             )
         except Exception as exc:  # Provider exceptions vary by transport and status code.
-            raise EmbeddingRequestError("Gemini embedding request failed.") from exc
+            status_code = getattr(exc, "status_code", getattr(exc, "code", None))
+            retryable = status_code == 429 or (isinstance(status_code, int) and status_code >= 500)
+            raise EmbeddingRequestError(
+                "Gemini embedding request failed.",
+                retryable=retryable,
+            ) from exc
 
         if not result.embeddings or not result.embeddings[0].values:
             raise EmbeddingRequestError("Gemini returned no embedding values.")

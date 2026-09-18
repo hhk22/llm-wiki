@@ -27,6 +27,21 @@ class FakeClient:
         self.models = FakeModels(values)
 
 
+class FailingModels:
+    def __init__(self, status_code: int) -> None:
+        self.status_code = status_code
+
+    def embed_content(self, **kwargs: object) -> SimpleNamespace:
+        error = RuntimeError("provider failure")
+        error.code = self.status_code
+        raise error
+
+
+class FailingClient:
+    def __init__(self, status_code: int) -> None:
+        self.models = FailingModels(status_code)
+
+
 def test_settings_require_api_key(monkeypatch: pytest.MonkeyPatch) -> None:
     monkeypatch.delenv("GEMINI_API_KEY", raising=False)
 
@@ -72,3 +87,19 @@ def test_rejects_unexpected_vector_dimensions() -> None:
 
     with pytest.raises(EmbeddingRequestError, match="Expected 3 dimensions"):
         provider.embed_query("배포")
+
+
+@pytest.mark.parametrize(("status_code", "retryable"), [(429, True), (503, True), (400, False)])
+def test_provider_errors_identify_retryable_statuses(
+    status_code: int,
+    retryable: bool,
+) -> None:
+    provider = GeminiEmbeddingProvider(
+        EmbeddingSettings(api_key="test-key", dimensions=3),
+        client=FailingClient(status_code),
+    )
+
+    with pytest.raises(EmbeddingRequestError) as error:
+        provider.embed_query("배포")
+
+    assert error.value.retryable is retryable

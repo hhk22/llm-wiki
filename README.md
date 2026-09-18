@@ -2,7 +2,7 @@
 
 가상 사내 문서로 RAG 검색의 기준선을 만들고, 검색 품질과 운영 문제를 단계적으로 개선하는 포트폴리오 프로젝트다.
 
-현재는 Markdown 문서 준비, Gemini Embedding API 검증, 평가 질문 작성, 헤딩 기반 청킹, PostgreSQL + pgvector 스키마 구성까지 완료했다. 다음 단계에서 150개 청크의 임베딩을 일괄 색인한다.
+현재는 Markdown 문서 120개를 150개 청크로 나눈 뒤 Gemini 임베딩을 생성해 PostgreSQL + pgvector에 일괄 색인했다. 다음 단계에서 키워드 검색과 벡터 검색을 평가한다.
 
 구현 의도와 검증 결과는 [RAG 기준선 문서](./blogs/01-rag-baseline.md)에 기록한다.
 
@@ -15,8 +15,8 @@
 | 평가 질문 작성 | 완료 | 4개 시나리오, 총 20개 질문 |
 | 청킹 | 완료 | 헤딩 단위 분할, 120개 문서 → 150개 청크 |
 | PostgreSQL + pgvector 실행 + DB 연결 및 스키마 구성 | 완료 | PostgreSQL 17.11, pgvector 0.8.6, `vector(768)` |
-| 일괄 색인 | 다음 | 문서·청크·임베딩 저장 |
-| 검색·평가 | 예정 | cosine similarity 검색, Hit@1·Hit@3 측정 |
+| 일괄 색인 | 완료 | 문서 120개, 청크 150개, 768차원 벡터 저장 |
+| 검색·평가 | 다음 | cosine similarity 검색, Hit@1·Hit@3 측정 |
 
 ## 프로젝트 구성
 
@@ -27,8 +27,9 @@ src/llm_wiki/documents.py   frontmatter와 본문 파싱
 src/llm_wiki/chunking.py    Markdown 헤딩 기반 청킹
 src/llm_wiki/embedding.py   Gemini 임베딩 클라이언트
 src/llm_wiki/database.py    PostgreSQL 연결·스키마 초기화
-scripts/                    임베딩·청킹·DB 확인 스크립트
-tests/                      문서·청킹·DB·평가 데이터 테스트
+src/llm_wiki/indexing.py    변경 감지·임베딩·트랜잭션 저장
+scripts/                    임베딩·청킹·DB·색인 스크립트
+tests/                      문서·청킹·DB·색인·평가 데이터 테스트
 ```
 
 ## 실행 환경
@@ -83,11 +84,30 @@ topic=incidents documents=30 chunks=30
 topic=onboarding-faq documents=30 chunks=30
 ```
 
+## 일괄 색인
+
+```bash
+uv run python scripts/ingest.py
+```
+
+`content_hash`가 같은 문서는 건너뛰고, 새로 추가되었거나 바뀐 문서만 청킹·임베딩해 저장한다. `429`와 `5xx` API 오류는 지수 백오프로 재시도한다.
+
+```text
+stored_documents=120
+stored_chunks=150
+invalid_embedding_dimensions=0
+
+# 같은 입력으로 재실행
+indexed_documents=0
+skipped_documents=120
+indexed_chunks=0
+```
+
 ## 테스트
 
 ```bash
 uv run pytest -q
-uv run ruff check scripts/check_embedding.py scripts/preview_chunks.py scripts/init_db.py src tests
+uv run ruff check scripts/check_embedding.py scripts/preview_chunks.py scripts/init_db.py scripts/ingest.py src tests
 ```
 
-테스트는 임베딩 입력 형식·차원 검증, 평가 질문 구조, frontmatter 파싱, 헤딩별 분할, DB 설정·스키마 초기화, 동일 입력의 결과 재현을 확인한다.
+테스트는 임베딩 입력·오류 처리, frontmatter 파싱, 헤딩별 분할, DB 스키마, 변경 감지 해시, API 재시도, 평가 질문 구조를 확인한다.
