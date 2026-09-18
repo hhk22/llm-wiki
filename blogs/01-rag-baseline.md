@@ -325,15 +325,18 @@ Markdown 로딩
 
 ### 7. 저장 결과 검증
 
-색인 후 문서 수, 청크 수, 벡터 차원을 DB에서 다시 확인했다. 150개 청크 모두 `tsv`와 768차원 벡터를 가졌고, 잘못된 해시와 중복 청크는 없었다.
+DB 건수만 세면 일부 문서가 다른 내용으로 저장된 경우를 찾을 수 없다. `verify_storage.py`에서 현재 Markdown을 다시 파싱·청킹하고, DB의 문서 ID·`content_hash`·청크 내용·벡터 차원과 비교했다.
 
 ```text
-documents = 120
-chunks = 150
-tsv = 150
+source / stored documents = 120 / 120
+expected / stored chunks = 150 / 150
+stored tsv = 150
 embedding dimensions (min/max) = 768 / 768
-invalid content_hash = 0
+content hash mismatches = 0
+missing / unexpected chunks = 0 / 0
+chunk content mismatches = 0
 duplicate chunks = 0
+status = PASS
 ```
 
 같은 입력으로 다시 실행한 결과 120개 문서를 모두 건너뛰고 DB의 문서·청크 수도 유지됐다.
