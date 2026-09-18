@@ -72,7 +72,7 @@ CREATE TABLE chunks (
   document_id  text REFERENCES documents(id),
   heading_path text,                 -- "배포 가이드 v22 > 롤백"
   content      text,
-  embedding    vector(1024),         -- pgvector
+  embedding    vector(768),          -- Gemini Embedding 2
   tsv          tsvector GENERATED ALWAYS AS (to_tsvector('simple', content)) STORED
 );
 ```
@@ -84,7 +84,7 @@ CREATE TABLE chunks (
 
 ```text
 [완료] 샘플 문서 준비
-→ Embedding API 연결
+→ [완료] Embedding API 연결
 → 평가 질문 작성
 → 청킹
 → pgvector 저장
@@ -118,7 +118,38 @@ CREATE TABLE chunks (
 
 ### 2. Embedding API 연결
 
-먼저 문장 하나를 임베딩 API에 보내 벡터가 정상적으로 생성되는지 확인한다. 이 단계에서 모델, 벡터 차원, 배치 요청 크기와 오류 응답 방식을 고정해 이후 저장 구조가 흔들리지 않게 한다.
+| 설정 | 값 |
+| --- | --- |
+| 모델 | `gemini-embedding-2` |
+| 출력 차원 | `768` |
+
+#### 임베딩 과정
+
+```text
+텍스트 → Gemini Embedding API → 768차원 벡터
+```
+
+#### 임베딩 테스트
+
+검색 질문과 의미상 관련 있는 문서가 더 가까운 벡터로 표현되는지 확인했다.
+
+```text
+질문: "배포 금지 시간은 언제인가요?"
+→ Embedding → Query Vector
+
+문서 A: "목요일 오후와 공휴일 전날에는 프로덕션 배포를 하지 않는다."
+→ Embedding → Vector A
+
+문서 B: "로컬 개발 환경은 Docker Compose로 실행한다."
+→ Embedding → Vector B
+```
+
+| 비교 | Cosine similarity |
+| --- | ---: |
+| 질문 ↔ 문서 A | `0.7833` |
+| 질문 ↔ 문서 B | `0.5683` |
+
+배포 질문과 관련 있는 문서 A가 더 높은 유사도를 보였다. 이후 질문 벡터를 모든 문서 청크의 벡터와 비교해 유사도가 높은 문서를 검색하고, 평가 질문의 Hit@K를 측정한다.
 
 ### 3. 평가 질문 작성
 
