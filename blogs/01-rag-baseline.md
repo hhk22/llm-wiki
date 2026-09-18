@@ -45,7 +45,7 @@ sources/**/*.md → ingest → frontmatter 파싱 → 헤딩 기준 청킹 → �
 
 v1은 사내 문서 검색 시스템의 초기 버전이다. 변경 추적·재시도 등은 이후 버전에서 단계적으로 개선한다. 문서 120개 규모에서는 명령 한 번으로 일괄 색인하면 충분하다.
 
-참고) 본문 해시를 저장해 **바뀌지 않은 문서는 다시 임베딩하지 않는다.**
+참고) 색인 입력 해시를 저장해 **바뀌지 않은 문서는 다시 임베딩하지 않는다.**
 
 ## 저장 구조
 
@@ -53,11 +53,13 @@ v1은 사내 문서 검색 시스템의 초기 버전이다. 변경 추적·재�
 
 | 테이블 | 저장하는 것 |
 | --- | --- |
-| `documents` | 문서 메타데이터(제목·주제·버전·수정일), 원본 파일 경로, 본문 해시 |
+| `documents` | 문서 메타데이터(제목·주제·버전·수정일), 원본 파일 경로, 색인 입력 해시 |
 | `chunks` | 청크 원문, 소속 문서와 섹션 경로, 임베딩 벡터, 키워드 색인 |
 
 ```sql
-CREATE TABLE documents (
+CREATE EXTENSION IF NOT EXISTS vector;
+
+CREATE TABLE IF NOT EXISTS documents (
   id           text PRIMARY KEY,
   source_path  text NOT NULL UNIQUE,
   title        text NOT NULL,
@@ -67,14 +69,17 @@ CREATE TABLE documents (
   content_hash text NOT NULL
 );
 
-CREATE TABLE chunks (
-  id           bigserial PRIMARY KEY,
-  document_id  text REFERENCES documents(id),
-  heading_path text,                 -- "배포 가이드 v22 > 롤백"
-  content      text,
-  embedding    vector(768),          -- Gemini Embedding 2
-  tsv          tsvector GENERATED ALWAYS AS (to_tsvector('simple', content)) STORED
+CREATE TABLE IF NOT EXISTS chunks (
+  document_id  text NOT NULL REFERENCES documents(id) ON DELETE CASCADE,
+  chunk_index  integer NOT NULL,
+  heading_path text NOT NULL,        -- "배포 가이드 v22 > 현재 규칙"
+  content      text NOT NULL,
+  embedding    vector(768) NOT NULL, -- Gemini Embedding 2
+  tsv          tsvector GENERATED ALWAYS AS (to_tsvector('simple', content)) STORED,
+  PRIMARY KEY (document_id, chunk_index)
 );
+
+CREATE INDEX IF NOT EXISTS chunks_tsv_idx ON chunks USING GIN (tsv);
 ```
 
 - **임베딩은 외부 API로 만들고, pgvector는 저장과 거리 계산만 한다.** pgvector가 벡터를 만들어 주지는 않는다.
@@ -87,8 +92,9 @@ CREATE TABLE chunks (
 → [완료] Embedding API 연결
 → [완료] 평가 질문 작성
 → [완료] 청킹
-→ [다음] pgvector 저장
-→ 일괄 색인
+→ [완료] PostgreSQL + pgvector 실행 + DB 연결 및 스키마 구성
+→ [다음] 일괄 색인
+→ 저장 결과 검증
 → 검색·평가
 ```
 
@@ -252,15 +258,195 @@ Chunk D: "승인자: 팀 리드 + SRE 온콜"
 온보딩 FAQ  30개 → 30개 청크
 ```
 
-### 5. pgvector 저장
+### 5. PostgreSQL + pgvector 실행 + DB 연결 및 스키마 구성
 
-문서 메타데이터는 `documents`, 검색할 본문과 임베딩은 `chunks`에 저장한다. pgvector는 벡터를 생성하는 역할이 아니라 저장된 벡터의 거리를 계산하는 역할만 맡는다.
+| 구성 | 버전 |
+| --- | --- |
+| PostgreSQL | `17.11` |
+| pgvector | `0.8.6` |
+
+#### documents: 원본 문서 정보
+
+`documents`에는 Markdown 문서 하나당 한 행을 저장한다. 예를 들어 배포 가이드 v22의 frontmatter는 다음과 같이 저장된다.
+
+```text
+id:           deploy-guide-v22
+source_path:  deploy-guide/v22.md
+title:        배포 가이드 v22
+topic:        deploy-guide
+version:      22
+updated_at:   2025-10-27
+content_hash: 색인 입력의 SHA-256
+```
+
+`version` 22는 DB의 버전이 아니라 `version: 22`라는 문서 frontmatter에서 가져온다. 배포 가이드 v1~v30을 구분하고 최신 규칙을 찾을 때 사용한다. 버전이 없는 장애 리포트·에러 코드·FAQ는 `NULL`로 둔다.
+
+#### chunks: 검색할 단위
+
+`chunks`에는 위 문서에서 나눈 두 개의 청크가 저장된다. `document_id`로 원본 문서를 참조하고, `chunk_index`로 문서 안의 순서를 구분한다.
+
+```text
+deploy-guide-v22 / chunk_index 0
+└─ heading_path: 배포 가이드 v22
+
+deploy-guide-v22 / chunk_index 1
+└─ heading_path: 배포 가이드 v22 > 현재 규칙
+```
+
+각 청크의 `content`를 저장하면 PostgreSQL이 키워드 검색용 `tsv`를 자동으로 만든다.
+
+```text
+content: "배포 금지 시간: 목요일 오후, 공휴일 전날"
+
+↓ to_tsvector('simple', content)
+
+tsv: '공휴일':6 '금지':2 '목요일':4 '배포':1 '시간':3 '오후':5 '전날':7
+```
+
+숫자는 단어가 등장한 위치다. Python은 `content`만 저장하며 `tsv`는 직접 만들지 않는다.
+
+```text
+tsv               → 정확한 키워드 검색
+embedding vector  → 의미가 비슷한 문장 검색
+```
+
+pgvector는 임베딩을 만들지 않는다. Gemini API가 만든 768차원 벡터를 `chunks.embedding`에 저장하고, 검색 시 질문 벡터와의 거리를 계산한다.
+
+```text
+database=llm_wiki
+tables=chunks,documents
+embedding_type=vector(768)
+```
 
 ### 6. 일괄 색인
 
-`sources/**/*.md`를 읽어 frontmatter 파싱, 청킹, 임베딩, 저장을 명령 한 번으로 실행한다. 본문 해시가 같은 문서는 다시 임베딩하지 않아 반복 실행 비용을 줄인다.
+`scripts/ingest.py`에서 전체 문서를 순서대로 읽고, 변경된 문서만 색인한다.
 
-### 7. 검색·평가
+```text
+Markdown 로딩
+→ frontmatter 파싱
+→ content_hash 계산
+→ DB의 기존 해시와 비교
+   ├─ 같음: 메타데이터만 갱신, 청킹·임베딩은 건너뜀
+   └─ 없음·다름: 청킹 → 임베딩 → DB 저장
+```
+
+#### 예시: 배포 가이드 v22 저장
+
+먼저 `sources/deploy-guide/v22.md`의 frontmatter와 본문을 나눈다.
+
+```text
+document_id: deploy-guide-v22
+title:       배포 가이드 v22
+topic:       deploy-guide
+version:     22
+updated_at:  2025-10-27
+body:        "# 배포 가이드 v22 ..."
+```
+
+#### content_hash 계산
+
+컬럼 이름은 `content_hash`지만, 본문만이 아니라 **같은 청크와 벡터를 다시 만들 수 있는 색인 입력 전체**를 대상으로 한다.
+
+먼저 제목의 앞뒤 공백을 제거하고, 본문의 줄바꿈 형식을 `\n`으로 통일한다. 그다음 다음 값을 JSON으로 만든다.
+
+```json
+{
+  "body": "# 배포 가이드 v22\n\n- 변경: ...",
+  "chunking_version": "heading-v1",
+  "embedding_dimensions": 768,
+  "embedding_input_version": "document-v1",
+  "embedding_model": "gemini-embedding-2",
+  "title": "배포 가이드 v22"
+}
+```
+
+JSON 키를 항상 같은 순서로 정렬해 문자열로 만들고, UTF-8 바이트에 SHA-256을 적용한다. 같은 입력은 항상 같은 64자 해시를 만든다.
+
+```python
+import hashlib
+import json
+
+
+def calculate_content_hash(document: Document) -> str:
+    normalized_body = "\n".join(document.body.splitlines()).strip()
+    payload = {
+        "title": document.title.strip(),
+        "body": normalized_body,
+        "chunking_version": "heading-v1",
+        "embedding_input_version": "document-v1",
+        "embedding_model": "gemini-embedding-2",
+        "embedding_dimensions": 768,
+    }
+    serialized = json.dumps(
+        payload,
+        ensure_ascii=False,
+        sort_keys=True,
+        separators=(",", ":"),
+    )
+    return hashlib.sha256(serialized.encode("utf-8")).hexdigest()
+```
+
+| 변경된 값 | 재색인하는 이유 |
+| --- | --- |
+| `title`, `body` | 임베딩할 내용이 바뀌었다. |
+| `chunking_version` | 같은 문서에서 다른 청크가 만들어질 수 있다. |
+| `embedding_input_version` | 제목과 본문을 API에 전달하는 형식이 바뀌었다. |
+| 모델·차원 | 기존 벡터와 새 벡터를 섞어 쓸 수 없다. |
+
+`topic`, `version`, `updated_at`은 검색용 메타데이터이며 청크 내용과 벡터를 바꾸지 않는다. 따라서 해시에서는 제외하고 `documents`만 갱신한다.
+
+DB에 `deploy-guide-v22`가 없거나 해시가 다르면, 본문을 두 개의 청크로 나누고 각각 Gemini API에 전달한다.
+
+```text
+Chunk 0
+heading_path: 배포 가이드 v22
+embedding input: title + 변경 내용·이유
+→ Gemini Embedding API → vector(768)
+
+Chunk 1
+heading_path: 배포 가이드 v22 > 현재 규칙
+embedding input: title + 배포 도구·명령·금지 시간·승인자
+→ Gemini Embedding API → vector(768)
+```
+
+두 벡터가 모두 정상적으로 생성되면 하나의 트랜잭션으로 문서와 청크를 저장한다.
+
+```text
+documents
+└─ deploy-guide-v22
+   title:        배포 가이드 v22
+   topic:        deploy-guide
+   source_path:  deploy-guide/v22.md
+   content_hash: SHA-256 결과
+
+chunks
+├─ deploy-guide-v22 / chunk_index 0
+│  heading_path: 배포 가이드 v22
+│  content:      변경 내용·이유
+│  embedding:    768차원 벡터
+└─ deploy-guide-v22 / chunk_index 1
+   heading_path: 배포 가이드 v22 > 현재 규칙
+   content:      배포 도구·명령·금지 시간·승인자
+   embedding:    768차원 벡터
+```
+
+내용이 바뀐 문서는 `documents`를 갱신하고 기존 `chunks`를 새 결과로 교체한다. 중간에 저장이 실패하면 전체를 롤백해 이전 색인을 유지한다. 같은 명령을 반복해도 `(document_id, chunk_index)`가 같은 청크가 중복으로 쌓이지 않는다.
+
+### 7. 저장 결과 검증
+
+색인 후에는 문서 수, 청크 수, 벡터 차원을 DB에서 다시 확인한다. 같은 명령을 한 번 더 실행해 모든 문서가 건너뛰어지고, 문서와 청크 수가 늘어나지 않는지도 확인한다.
+
+```text
+documents = 120
+chunks = 150
+embedding dimensions = 768
+재실행 시 중복 = 0
+```
+
+위 수치는 목표값이며, DB 색인을 실제로 실행한 뒤 측정 결과로 교체한다.
+
+### 8. 검색·평가
 
 같은 평가 질문으로 키워드 검색과 벡터 검색을 실행한다. 단일 문서 질문은 Hit@1·Hit@3, 문서 간 연결 질문은 필요한 두 문서의 Top 3 포함 여부를 기록하고 실패 원인을 다음 개선의 근거로 사용한다.
 

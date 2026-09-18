@@ -9,6 +9,7 @@ description = "A reproducible RAG baseline for the LLM Wiki portfolio project"
 requires-python = ">=3.11"
 dependencies = [
   "google-genai>=1.0,<2.0",
+  "psycopg[binary]>=3.2,<4.0",
   "python-dotenv>=1.0,<2.0",
   "pyyaml>=6.0,<7.0",
 ]
