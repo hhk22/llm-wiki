@@ -2,9 +2,9 @@
 
 가상 사내 문서로 RAG 검색의 기준선을 만들고, 검색 품질과 운영 문제를 단계적으로 개선하는 포트폴리오 프로젝트다.
 
-현재는 Markdown 문서 120개를 150개 청크로 나눈 뒤 Gemini 임베딩을 생성해 PostgreSQL + pgvector에 일괄 색인했다. 다음 단계에서 키워드 검색과 벡터 검색을 평가한다.
+v1에서는 Markdown 문서 120개를 색인하고, 키워드·벡터 검색을 20개 질문으로 평가한 뒤 검색 결과에 출처를 붙여 답변한다. 다음 v2에서는 hybrid 검색과 최신 버전 필터를 적용한다.
 
-구현 의도와 검증 결과는 [RAG 기준선 문서](./blogs/01-rag-baseline.md)에 기록한다.
+구현 과정과 측정 결과는 [RAG 기준선 문서](./blogs/01-rag-baseline.md)에 기록한다.
 
 ## 구현 현황
 
@@ -17,19 +17,28 @@
 | PostgreSQL + pgvector 실행 + DB 연결 및 스키마 구성 | 완료 | PostgreSQL 17.11, pgvector 0.8.6, `vector(768)` |
 | 일괄 색인 | 완료 | 문서 120개, 청크 150개, 768차원 벡터 저장 |
 | 저장 결과 검증 | 완료 | 원본 대비 누락·중복·내용 불일치 0건 |
-| 검색·평가 | 다음 | cosine similarity 검색, Hit@1·Hit@3 측정 |
+| 키워드·벡터 검색 | 완료 | 문서 중복을 제거한 Top K 검색 |
+| 검색 평가 | 완료 | 키워드 Hit@3 5%, 벡터 Hit@3 70% |
+| 출처 기반 답변 | 완료 | 검색 청크만 사용한 답변·출처·근거 부족 응답 |
+| API·MCP | 완료 | `health`, `search`, `answer` API와 MCP 도구 2개 |
 
 ## 프로젝트 구성
 
 ```text
 sources/                    가상 Markdown 문서 120개
 evaluation/questions.yaml   검색 평가 질문 20개
+evaluation/results-v1.json  질문별 검색 순위와 Hit@K 결과
 src/llm_wiki/documents.py   frontmatter와 본문 파싱
 src/llm_wiki/chunking.py    Markdown 헤딩 기반 청킹
 src/llm_wiki/embedding.py   Gemini 임베딩 클라이언트
 src/llm_wiki/database.py    PostgreSQL 연결·스키마 초기화
 src/llm_wiki/indexing.py    변경 감지·임베딩·트랜잭션 저장
 src/llm_wiki/storage_validation.py  원본과 저장 결과 비교
+src/llm_wiki/search.py      키워드·벡터 검색
+src/llm_wiki/evaluation.py  Hit@1·Hit@3 평가
+src/llm_wiki/answering.py   출처 기반 Gemini 답변
+src/llm_wiki/api.py         FastAPI 엔드포인트
+src/llm_wiki/mcp_server.py  API를 호출하는 MCP 도구
 scripts/                    임베딩·청킹·DB·색인 스크립트
 tests/                      문서·청킹·DB·색인·평가 데이터 테스트
 ```
@@ -128,11 +137,61 @@ duplicate_chunks=0
 status=PASS
 ```
 
+## 검색
+
+```bash
+uv run python scripts/search.py "E-021 오류 대응 방법" --method keyword
+uv run python scripts/search.py "같은 서비스의 동시 배포를 어떻게 막나요?" --method vector
+```
+
+키워드 검색은 PostgreSQL `tsvector`, 벡터 검색은 pgvector cosine similarity를 사용한다. 두 방식 모두 같은 문서의 여러 청크 중 점수가 가장 높은 하나만 남긴 뒤 문서 Top K를 반환한다.
+
+## 검색 평가
+
+```bash
+uv run python scripts/evaluate.py
+```
+
+고정 질문 20개를 두 검색 방식에 동일하게 실행한다. Hit@1은 단일 정답 질문 15개, Hit@3는 교차 문서 질문을 포함한 20개를 기준으로 계산한다. 질문별 검색 결과는 `evaluation/results-v1.json`에 저장된다.
+
+| 검색 방식 | Hit@1 | Hit@3 |
+| --- | ---: | ---: |
+| 키워드 | 1/15 (6.7%) | 1/20 (5.0%) |
+| 벡터 | 8/15 (53.3%) | 14/20 (70.0%) |
+
+## 출처 기반 답변
+
+```bash
+uv run python scripts/answer.py "배포 가이드 v22에서 변경된 배포 금지 시간은 언제인가요?"
+```
+
+벡터 검색 Top 3를 Gemini에 전달하고, 근거 번호가 포함된 답변과 실제 출처 목록을 함께 출력한다. 검색 결과가 없으면 모델을 호출하지 않으며, 전달된 문서에 근거가 없으면 답변할 수 없다고 응답하도록 제한한다.
+
+## API와 MCP
+
+```bash
+# Terminal 1
+uv run python scripts/serve_api.py
+
+# MCP host 실행 명령
+uv run python scripts/mcp_server.py
+```
+
+| 구분 | 이름 | 역할 |
+| --- | --- | --- |
+| API | `GET /health` | DB 연결 확인 |
+| API | `POST /search` | 키워드·벡터 검색 |
+| API | `POST /answer` | 답변과 출처 반환 |
+| MCP | `search_wiki` | `/search` 호출 |
+| MCP | `ask_wiki` | `/answer` 호출 |
+
+MCP 서버는 stdio로 실행되고 `.env`의 `LLM_WIKI_API_URL`에 있는 API를 호출한다.
+
 ## 테스트
 
 ```bash
 uv run pytest -q
-uv run ruff check scripts/check_embedding.py scripts/preview_chunks.py scripts/init_db.py scripts/ingest.py scripts/verify_storage.py src tests
+uv run ruff check scripts/check_embedding.py scripts/preview_chunks.py scripts/init_db.py scripts/ingest.py scripts/verify_storage.py scripts/search.py scripts/evaluate.py scripts/answer.py scripts/serve_api.py scripts/mcp_server.py src tests
 ```
 
-테스트는 임베딩 입력·오류 처리, frontmatter 파싱, 헤딩별 분할, DB 스키마, 변경 감지 해시, API 재시도, 저장 결과 검증, 평가 질문 구조를 확인한다.
+테스트는 임베딩·청킹·색인·검색·Hit@K·출처 답변과 API·MCP 연결을 확인한다.

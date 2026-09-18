@@ -8,7 +8,7 @@ questions:
 
   - id: exact-02
     type: exact_keyword
-    query: 장애 리포트 #20의 원인과 조치는 무엇인가요?
+    query: "장애 리포트 #20의 원인과 조치는 무엇인가요?"
     expected_document_id: incident-20
 
   - id: exact-03

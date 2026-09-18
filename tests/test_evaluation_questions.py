@@ -39,6 +39,10 @@ def test_evaluation_questions_are_valid() -> None:
     assert len(ids) == len(set(ids))
     assert len(queries) == len(set(queries))
     assert Counter(question["type"] for question in questions) == EXPECTED_TYPE_COUNTS
+    assert (
+        next(question for question in questions if question["id"] == "exact-02")["query"]
+        == "장애 리포트 #20의 원인과 조치는 무엇인가요?"
+    )
 
     source_ids = load_source_ids()
     for question in questions:

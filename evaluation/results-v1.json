@@ -1,0 +1,708 @@
+{
+  "question_set": "evaluation/questions.yaml",
+  "top_k": 3,
+  "embedding_model": "gemini-embedding-2",
+  "embedding_dimensions": 768,
+  "reports": [
+    {
+      "method": "keyword",
+      "questions": 20,
+      "single_document_questions": 15,
+      "hit_at_1_count": 1,
+      "hit_at_1": 0.06666666666666667,
+      "hit_at_3_count": 1,
+      "hit_at_3": 0.05,
+      "by_type": [
+        {
+          "question_type": "exact_keyword",
+          "questions": 5,
+          "hit_at_1_count": 1,
+          "hit_at_1": 0.2,
+          "hit_at_3_count": 1,
+          "hit_at_3": 0.2
+        },
+        {
+          "question_type": "paraphrase",
+          "questions": 5,
+          "hit_at_1_count": 0,
+          "hit_at_1": 0.0,
+          "hit_at_3_count": 0,
+          "hit_at_3": 0.0
+        },
+        {
+          "question_type": "current_policy",
+          "questions": 5,
+          "hit_at_1_count": 0,
+          "hit_at_1": 0.0,
+          "hit_at_3_count": 0,
+          "hit_at_3": 0.0
+        },
+        {
+          "question_type": "cross_reference",
+          "questions": 5,
+          "hit_at_1_count": null,
+          "hit_at_1": null,
+          "hit_at_3_count": 0,
+          "hit_at_3": 0.0
+        }
+      ],
+      "results": [
+        {
+          "question_id": "exact-01",
+          "question_type": "exact_keyword",
+          "query": "E-021 오류가 발생하면 어떤 설정을 확인해야 하나요?",
+          "required_document_ids": [
+            "error-E-021"
+          ],
+          "retrieved_document_ids": [
+            "error-E-021",
+            "faq-q07",
+            "faq-q18"
+          ],
+          "hit_at_1": true,
+          "hit_at_3": true
+        },
+        {
+          "question_id": "exact-02",
+          "question_type": "exact_keyword",
+          "query": "장애 리포트 #20의 원인과 조치는 무엇인가요?",
+          "required_document_ids": [
+            "incident-20"
+          ],
+          "retrieved_document_ids": [
+            "incident-14",
+            "faq-q09",
+            "incident-01"
+          ],
+          "hit_at_1": false,
+          "hit_at_3": false
+        },
+        {
+          "question_id": "exact-03",
+          "question_type": "exact_keyword",
+          "query": "E-008은 어떤 오류이고 어떻게 대응하나요?",
+          "required_document_ids": [
+            "error-E-008"
+          ],
+          "retrieved_document_ids": [
+            "faq-q07",
+            "faq-q25",
+            "error-E-001"
+          ],
+          "hit_at_1": false,
+          "hit_at_3": false
+        },
+        {
+          "question_id": "exact-04",
+          "question_type": "exact_keyword",
+          "query": "배포 가이드 v22에서 변경된 배포 금지 시간은 언제인가요?",
+          "required_document_ids": [
+            "deploy-guide-v22"
+          ],
+          "retrieved_document_ids": [
+            "error-E-030",
+            "deploy-guide-v02",
+            "deploy-guide-v03"
+          ],
+          "hit_at_1": false,
+          "hit_at_3": false
+        },
+        {
+          "question_id": "exact-05",
+          "question_type": "exact_keyword",
+          "query": "온보딩 FAQ Q10에서 정한 포스트모템 작성 기한은 언제인가요?",
+          "required_document_ids": [
+            "faq-q10"
+          ],
+          "retrieved_document_ids": [
+            "faq-q08",
+            "faq-q01",
+            "faq-q02"
+          ],
+          "hit_at_1": false,
+          "hit_at_3": false
+        },
+        {
+          "question_id": "paraphrase-01",
+          "question_type": "paraphrase",
+          "query": "서비스를 이전 상태로 되돌릴 때 별도 승인이 필요한가요?",
+          "required_document_ids": [
+            "faq-q03"
+          ],
+          "retrieved_document_ids": [
+            "faq-q21",
+            "faq-q16",
+            "faq-q07"
+          ],
+          "hit_at_1": false,
+          "hit_at_3": false
+        },
+        {
+          "question_id": "paraphrase-02",
+          "question_type": "paraphrase",
+          "query": "Pod가 준비 상태 검사를 통과하지 못하면 무엇을 확인해야 하나요?",
+          "required_document_ids": [
+            "error-E-015"
+          ],
+          "retrieved_document_ids": [
+            "faq-q18",
+            "faq-q01",
+            "faq-q03"
+          ],
+          "hit_at_1": false,
+          "hit_at_3": false
+        },
+        {
+          "question_id": "paraphrase-03",
+          "question_type": "paraphrase",
+          "query": "같은 서비스에 두 배포가 겹쳐 올라가는 것을 어떻게 막나요?",
+          "required_document_ids": [
+            "error-E-025"
+          ],
+          "retrieved_document_ids": [
+            "faq-q27",
+            "faq-q11",
+            "faq-q26"
+          ],
+          "hit_at_1": false,
+          "hit_at_3": false
+        },
+        {
+          "question_id": "paraphrase-04",
+          "question_type": "paraphrase",
+          "query": "DB 풀에서 사용할 연결을 가져오지 못할 때 무엇을 점검해야 하나요?",
+          "required_document_ids": [
+            "error-E-008"
+          ],
+          "retrieved_document_ids": [
+            "faq-q07",
+            "faq-q13",
+            "faq-q18"
+          ],
+          "hit_at_1": false,
+          "hit_at_3": false
+        },
+        {
+          "question_id": "paraphrase-05",
+          "question_type": "paraphrase",
+          "query": "장애를 롤백으로 복구한 뒤 원인 분석 문서는 언제까지 작성해야 하나요?",
+          "required_document_ids": [
+            "faq-q10"
+          ],
+          "retrieved_document_ids": [
+            "faq-q01",
+            "faq-q03",
+            "faq-q04"
+          ],
+          "hit_at_1": false,
+          "hit_at_3": false
+        },
+        {
+          "question_id": "current-01",
+          "question_type": "current_policy",
+          "query": "현재 프로덕션 배포 명령은 무엇인가요?",
+          "required_document_ids": [
+            "deploy-guide-v30"
+          ],
+          "retrieved_document_ids": [
+            "deploy-guide-v02",
+            "deploy-guide-v03",
+            "deploy-guide-v04"
+          ],
+          "hit_at_1": false,
+          "hit_at_3": false
+        },
+        {
+          "question_id": "current-02",
+          "question_type": "current_policy",
+          "query": "현재 프로덕션 배포가 금지되는 시간은 언제인가요?",
+          "required_document_ids": [
+            "deploy-guide-v30"
+          ],
+          "retrieved_document_ids": [
+            "faq-q01",
+            "deploy-guide-v01",
+            "deploy-guide-v02"
+          ],
+          "hit_at_1": false,
+          "hit_at_3": false
+        },
+        {
+          "question_id": "current-03",
+          "question_type": "current_policy",
+          "query": "현재 프로덕션 배포는 누가 승인하나요?",
+          "required_document_ids": [
+            "deploy-guide-v30"
+          ],
+          "retrieved_document_ids": [
+            "faq-q01",
+            "faq-q04",
+            "faq-q19"
+          ],
+          "hit_at_1": false,
+          "hit_at_3": false
+        },
+        {
+          "question_id": "current-04",
+          "question_type": "current_policy",
+          "query": "현재 사용하는 프로덕션 배포 도구는 무엇인가요?",
+          "required_document_ids": [
+            "deploy-guide-v30"
+          ],
+          "retrieved_document_ids": [
+            "deploy-guide-v02",
+            "deploy-guide-v03",
+            "deploy-guide-v04"
+          ],
+          "hit_at_1": false,
+          "hit_at_3": false
+        },
+        {
+          "question_id": "current-05",
+          "question_type": "current_policy",
+          "query": "현재 배포할 때 변경 티켓 번호가 반드시 필요한가요?",
+          "required_document_ids": [
+            "deploy-guide-v30"
+          ],
+          "retrieved_document_ids": [
+            "faq-q21",
+            "faq-q07",
+            "faq-q16"
+          ],
+          "hit_at_1": false,
+          "hit_at_3": false
+        },
+        {
+          "question_id": "cross-01",
+          "question_type": "cross_reference",
+          "query": "목요일 오후가 배포 금지 시간으로 바뀐 계기가 된 장애는 무엇인가요?",
+          "required_document_ids": [
+            "incident-18",
+            "deploy-guide-v22"
+          ],
+          "retrieved_document_ids": [
+            "error-E-030",
+            "faq-q02",
+            "deploy-guide-v22"
+          ],
+          "hit_at_1": null,
+          "hit_at_3": false
+        },
+        {
+          "question_id": "cross-02",
+          "question_type": "cross_reference",
+          "query": "같은 서비스의 동시 배포를 막는 잠금은 어떤 장애 이후 도입됐나요?",
+          "required_document_ids": [
+            "incident-20",
+            "deploy-guide-v23"
+          ],
+          "retrieved_document_ids": [
+            "incident-20",
+            "error-E-025",
+            "incident-10"
+          ],
+          "hit_at_1": null,
+          "hit_at_3": false
+        },
+        {
+          "question_id": "cross-03",
+          "question_type": "cross_reference",
+          "query": "대규모 변경에 feature flag가 필요한 이유는 무엇인가요?",
+          "required_document_ids": [
+            "incident-21",
+            "deploy-guide-v26"
+          ],
+          "retrieved_document_ids": [
+            "faq-q20",
+            "faq-q09",
+            "incident-21"
+          ],
+          "hit_at_1": null,
+          "hit_at_3": false
+        },
+        {
+          "question_id": "cross-04",
+          "question_type": "cross_reference",
+          "query": "배포 후 모니터링이 의무화된 계기가 된 장애는 무엇인가요?",
+          "required_document_ids": [
+            "incident-15",
+            "deploy-guide-v20"
+          ],
+          "retrieved_document_ids": [
+            "deploy-guide-v02",
+            "deploy-guide-v03",
+            "deploy-guide-v04"
+          ],
+          "hit_at_1": null,
+          "hit_at_3": false
+        },
+        {
+          "question_id": "cross-05",
+          "question_type": "cross_reference",
+          "query": "롤백 승인 절차를 없앤 이유가 된 장애는 무엇인가요?",
+          "required_document_ids": [
+            "incident-14",
+            "deploy-guide-v19"
+          ],
+          "retrieved_document_ids": [
+            "error-E-022",
+            "error-E-003",
+            "error-E-020"
+          ],
+          "hit_at_1": null,
+          "hit_at_3": false
+        }
+      ]
+    },
+    {
+      "method": "vector",
+      "questions": 20,
+      "single_document_questions": 15,
+      "hit_at_1_count": 8,
+      "hit_at_1": 0.5333333333333333,
+      "hit_at_3_count": 14,
+      "hit_at_3": 0.7,
+      "by_type": [
+        {
+          "question_type": "exact_keyword",
+          "questions": 5,
+          "hit_at_1_count": 4,
+          "hit_at_1": 0.8,
+          "hit_at_3_count": 5,
+          "hit_at_3": 1.0
+        },
+        {
+          "question_type": "paraphrase",
+          "questions": 5,
+          "hit_at_1_count": 4,
+          "hit_at_1": 0.8,
+          "hit_at_3_count": 5,
+          "hit_at_3": 1.0
+        },
+        {
+          "question_type": "current_policy",
+          "questions": 5,
+          "hit_at_1_count": 0,
+          "hit_at_1": 0.0,
+          "hit_at_3_count": 0,
+          "hit_at_3": 0.0
+        },
+        {
+          "question_type": "cross_reference",
+          "questions": 5,
+          "hit_at_1_count": null,
+          "hit_at_1": null,
+          "hit_at_3_count": 4,
+          "hit_at_3": 0.8
+        }
+      ],
+      "results": [
+        {
+          "question_id": "exact-01",
+          "question_type": "exact_keyword",
+          "query": "E-021 오류가 발생하면 어떤 설정을 확인해야 하나요?",
+          "required_document_ids": [
+            "error-E-021"
+          ],
+          "retrieved_document_ids": [
+            "faq-q07",
+            "error-E-021",
+            "error-E-016"
+          ],
+          "hit_at_1": false,
+          "hit_at_3": true
+        },
+        {
+          "question_id": "exact-02",
+          "question_type": "exact_keyword",
+          "query": "장애 리포트 #20의 원인과 조치는 무엇인가요?",
+          "required_document_ids": [
+            "incident-20"
+          ],
+          "retrieved_document_ids": [
+            "incident-20",
+            "incident-09",
+            "incident-25"
+          ],
+          "hit_at_1": true,
+          "hit_at_3": true
+        },
+        {
+          "question_id": "exact-03",
+          "question_type": "exact_keyword",
+          "query": "E-008은 어떤 오류이고 어떻게 대응하나요?",
+          "required_document_ids": [
+            "error-E-008"
+          ],
+          "retrieved_document_ids": [
+            "error-E-008",
+            "error-E-002",
+            "error-E-007"
+          ],
+          "hit_at_1": true,
+          "hit_at_3": true
+        },
+        {
+          "question_id": "exact-04",
+          "question_type": "exact_keyword",
+          "query": "배포 가이드 v22에서 변경된 배포 금지 시간은 언제인가요?",
+          "required_document_ids": [
+            "deploy-guide-v22"
+          ],
+          "retrieved_document_ids": [
+            "deploy-guide-v22",
+            "deploy-guide-v16",
+            "faq-q02"
+          ],
+          "hit_at_1": true,
+          "hit_at_3": true
+        },
+        {
+          "question_id": "exact-05",
+          "question_type": "exact_keyword",
+          "query": "온보딩 FAQ Q10에서 정한 포스트모템 작성 기한은 언제인가요?",
+          "required_document_ids": [
+            "faq-q10"
+          ],
+          "retrieved_document_ids": [
+            "faq-q10",
+            "faq-q17",
+            "faq-q08"
+          ],
+          "hit_at_1": true,
+          "hit_at_3": true
+        },
+        {
+          "question_id": "paraphrase-01",
+          "question_type": "paraphrase",
+          "query": "서비스를 이전 상태로 되돌릴 때 별도 승인이 필요한가요?",
+          "required_document_ids": [
+            "faq-q03"
+          ],
+          "retrieved_document_ids": [
+            "faq-q03",
+            "deploy-guide-v19",
+            "deploy-guide-v24"
+          ],
+          "hit_at_1": true,
+          "hit_at_3": true
+        },
+        {
+          "question_id": "paraphrase-02",
+          "question_type": "paraphrase",
+          "query": "Pod가 준비 상태 검사를 통과하지 못하면 무엇을 확인해야 하나요?",
+          "required_document_ids": [
+            "error-E-015"
+          ],
+          "retrieved_document_ids": [
+            "error-E-015",
+            "faq-q26",
+            "incident-25"
+          ],
+          "hit_at_1": true,
+          "hit_at_3": true
+        },
+        {
+          "question_id": "paraphrase-03",
+          "question_type": "paraphrase",
+          "query": "같은 서비스에 두 배포가 겹쳐 올라가는 것을 어떻게 막나요?",
+          "required_document_ids": [
+            "error-E-025"
+          ],
+          "retrieved_document_ids": [
+            "faq-q27",
+            "deploy-guide-v23",
+            "error-E-025"
+          ],
+          "hit_at_1": false,
+          "hit_at_3": true
+        },
+        {
+          "question_id": "paraphrase-04",
+          "question_type": "paraphrase",
+          "query": "DB 풀에서 사용할 연결을 가져오지 못할 때 무엇을 점검해야 하나요?",
+          "required_document_ids": [
+            "error-E-008"
+          ],
+          "retrieved_document_ids": [
+            "error-E-008",
+            "incident-09",
+            "incident-29"
+          ],
+          "hit_at_1": true,
+          "hit_at_3": true
+        },
+        {
+          "question_id": "paraphrase-05",
+          "question_type": "paraphrase",
+          "query": "장애를 롤백으로 복구한 뒤 원인 분석 문서는 언제까지 작성해야 하나요?",
+          "required_document_ids": [
+            "faq-q10"
+          ],
+          "retrieved_document_ids": [
+            "faq-q10",
+            "incident-24",
+            "incident-14"
+          ],
+          "hit_at_1": true,
+          "hit_at_3": true
+        },
+        {
+          "question_id": "current-01",
+          "question_type": "current_policy",
+          "query": "현재 프로덕션 배포 명령은 무엇인가요?",
+          "required_document_ids": [
+            "deploy-guide-v30"
+          ],
+          "retrieved_document_ids": [
+            "faq-q01",
+            "deploy-guide-v15",
+            "deploy-guide-v21"
+          ],
+          "hit_at_1": false,
+          "hit_at_3": false
+        },
+        {
+          "question_id": "current-02",
+          "question_type": "current_policy",
+          "query": "현재 프로덕션 배포가 금지되는 시간은 언제인가요?",
+          "required_document_ids": [
+            "deploy-guide-v30"
+          ],
+          "retrieved_document_ids": [
+            "faq-q02",
+            "deploy-guide-v05",
+            "deploy-guide-v16"
+          ],
+          "hit_at_1": false,
+          "hit_at_3": false
+        },
+        {
+          "question_id": "current-03",
+          "question_type": "current_policy",
+          "query": "현재 프로덕션 배포는 누가 승인하나요?",
+          "required_document_ids": [
+            "deploy-guide-v30"
+          ],
+          "retrieved_document_ids": [
+            "faq-q04",
+            "deploy-guide-v23",
+            "deploy-guide-v22"
+          ],
+          "hit_at_1": false,
+          "hit_at_3": false
+        },
+        {
+          "question_id": "current-04",
+          "question_type": "current_policy",
+          "query": "현재 사용하는 프로덕션 배포 도구는 무엇인가요?",
+          "required_document_ids": [
+            "deploy-guide-v30"
+          ],
+          "retrieved_document_ids": [
+            "deploy-guide-v16",
+            "deploy-guide-v15",
+            "deploy-guide-v14"
+          ],
+          "hit_at_1": false,
+          "hit_at_3": false
+        },
+        {
+          "question_id": "current-05",
+          "question_type": "current_policy",
+          "query": "현재 배포할 때 변경 티켓 번호가 반드시 필요한가요?",
+          "required_document_ids": [
+            "deploy-guide-v30"
+          ],
+          "retrieved_document_ids": [
+            "deploy-guide-v27",
+            "faq-q21",
+            "deploy-guide-v25"
+          ],
+          "hit_at_1": false,
+          "hit_at_3": false
+        },
+        {
+          "question_id": "cross-01",
+          "question_type": "cross_reference",
+          "query": "목요일 오후가 배포 금지 시간으로 바뀐 계기가 된 장애는 무엇인가요?",
+          "required_document_ids": [
+            "incident-18",
+            "deploy-guide-v22"
+          ],
+          "retrieved_document_ids": [
+            "deploy-guide-v22",
+            "incident-26",
+            "deploy-guide-v05"
+          ],
+          "hit_at_1": null,
+          "hit_at_3": false
+        },
+        {
+          "question_id": "cross-02",
+          "question_type": "cross_reference",
+          "query": "같은 서비스의 동시 배포를 막는 잠금은 어떤 장애 이후 도입됐나요?",
+          "required_document_ids": [
+            "incident-20",
+            "deploy-guide-v23"
+          ],
+          "retrieved_document_ids": [
+            "incident-20",
+            "deploy-guide-v23",
+            "error-E-025"
+          ],
+          "hit_at_1": null,
+          "hit_at_3": true
+        },
+        {
+          "question_id": "cross-03",
+          "question_type": "cross_reference",
+          "query": "대규모 변경에 feature flag가 필요한 이유는 무엇인가요?",
+          "required_document_ids": [
+            "incident-21",
+            "deploy-guide-v26"
+          ],
+          "retrieved_document_ids": [
+            "faq-q20",
+            "deploy-guide-v26",
+            "incident-21"
+          ],
+          "hit_at_1": null,
+          "hit_at_3": true
+        },
+        {
+          "question_id": "cross-04",
+          "question_type": "cross_reference",
+          "query": "배포 후 모니터링이 의무화된 계기가 된 장애는 무엇인가요?",
+          "required_document_ids": [
+            "incident-15",
+            "deploy-guide-v20"
+          ],
+          "retrieved_document_ids": [
+            "deploy-guide-v20",
+            "incident-15",
+            "incident-24"
+          ],
+          "hit_at_1": null,
+          "hit_at_3": true
+        },
+        {
+          "question_id": "cross-05",
+          "question_type": "cross_reference",
+          "query": "롤백 승인 절차를 없앤 이유가 된 장애는 무엇인가요?",
+          "required_document_ids": [
+            "incident-14",
+            "deploy-guide-v19"
+          ],
+          "retrieved_document_ids": [
+            "incident-14",
+            "deploy-guide-v19",
+            "error-E-020"
+          ],
+          "hit_at_1": null,
+          "hit_at_3": true
+        }
+      ]
+    }
+  ]
+}
