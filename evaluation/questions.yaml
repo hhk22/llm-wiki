@@ -1,0 +1,112 @@
+version: 1
+
+questions:
+  - id: exact-01
+    type: exact_keyword
+    query: E-021 오류가 발생하면 어떤 설정을 확인해야 하나요?
+    expected_document_id: error-E-021
+
+  - id: exact-02
+    type: exact_keyword
+    query: "장애 리포트 #20의 원인과 조치는 무엇인가요?"
+    expected_document_id: incident-20
+
+  - id: exact-03
+    type: exact_keyword
+    query: E-008은 어떤 오류이고 어떻게 대응하나요?
+    expected_document_id: error-E-008
+
+  - id: exact-04
+    type: exact_keyword
+    query: 배포 가이드 v22에서 변경된 배포 금지 시간은 언제인가요?
+    expected_document_id: deploy-guide-v22
+
+  - id: exact-05
+    type: exact_keyword
+    query: 온보딩 FAQ Q10에서 정한 포스트모템 작성 기한은 언제인가요?
+    expected_document_id: faq-q10
+
+  - id: paraphrase-01
+    type: paraphrase
+    query: 서비스를 이전 상태로 되돌릴 때 별도 승인이 필요한가요?
+    expected_document_id: faq-q03
+
+  - id: paraphrase-02
+    type: paraphrase
+    query: Pod가 준비 상태 검사를 통과하지 못하면 무엇을 확인해야 하나요?
+    expected_document_id: error-E-015
+
+  - id: paraphrase-03
+    type: paraphrase
+    query: 같은 서비스에 두 배포가 겹쳐 올라가는 것을 어떻게 막나요?
+    expected_document_id: error-E-025
+
+  - id: paraphrase-04
+    type: paraphrase
+    query: DB 풀에서 사용할 연결을 가져오지 못할 때 무엇을 점검해야 하나요?
+    expected_document_id: error-E-008
+
+  - id: paraphrase-05
+    type: paraphrase
+    query: 장애를 롤백으로 복구한 뒤 원인 분석 문서는 언제까지 작성해야 하나요?
+    expected_document_id: faq-q10
+
+  - id: current-01
+    type: current_policy
+    query: 현재 프로덕션 배포 명령은 무엇인가요?
+    expected_document_id: deploy-guide-v30
+
+  - id: current-02
+    type: current_policy
+    query: 현재 프로덕션 배포가 금지되는 시간은 언제인가요?
+    expected_document_id: deploy-guide-v30
+
+  - id: current-03
+    type: current_policy
+    query: 현재 프로덕션 배포는 누가 승인하나요?
+    expected_document_id: deploy-guide-v30
+
+  - id: current-04
+    type: current_policy
+    query: 현재 사용하는 프로덕션 배포 도구는 무엇인가요?
+    expected_document_id: deploy-guide-v30
+
+  - id: current-05
+    type: current_policy
+    query: 현재 배포할 때 변경 티켓 번호가 반드시 필요한가요?
+    expected_document_id: deploy-guide-v30
+
+  - id: cross-01
+    type: cross_reference
+    query: 목요일 오후가 배포 금지 시간으로 바뀐 계기가 된 장애는 무엇인가요?
+    required_document_ids:
+      - incident-18
+      - deploy-guide-v22
+
+  - id: cross-02
+    type: cross_reference
+    query: 같은 서비스의 동시 배포를 막는 잠금은 어떤 장애 이후 도입됐나요?
+    required_document_ids:
+      - incident-20
+      - deploy-guide-v23
+
+  - id: cross-03
+    type: cross_reference
+    query: 대규모 변경에 feature flag가 필요한 이유는 무엇인가요?
+    required_document_ids:
+      - incident-21
+      - deploy-guide-v26
+
+  - id: cross-04
+    type: cross_reference
+    query: 배포 후 모니터링이 의무화된 계기가 된 장애는 무엇인가요?
+    required_document_ids:
+      - incident-15
+      - deploy-guide-v20
+
+  - id: cross-05
+    type: cross_reference
+    query: 롤백 승인 절차를 없앤 이유가 된 장애는 무엇인가요?
+    required_document_ids:
+      - incident-14
+      - deploy-guide-v19

@@ -1,0 +1,28 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" viewBox="0 0 1200 630" font-family="'Noto Sans KR', 'Malgun Gothic', 'Apple SD Gothic Neo', 'Segoe UI', sans-serif">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#0E1A3A"/>
+      <stop offset="1" stop-color="#16244F"/>
+    </linearGradient>
+    <linearGradient id="accent" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0" stop-color="#4FE3D0"/>
+      <stop offset="1" stop-color="#7FA6FF"/>
+    </linearGradient>
+  </defs>
+
+  <rect width="1200" height="630" fill="url(#bg)"/>
+
+  <!-- icon: a wiki page with a link node -->
+  <g transform="translate(508 150)">
+    <rect x="0" y="0" width="184" height="184" rx="40" fill="#FFFFFF" fill-opacity="0.06" stroke="#FFFFFF" stroke-opacity="0.12" stroke-width="2"/>
+    <g stroke="#DCE4FF" stroke-opacity="0.85" stroke-width="7" stroke-linecap="round" fill="none">
+      <line x1="52" y1="66" x2="132" y2="66"/>
+      <line x1="52" y1="96" x2="112" y2="96"/>
+      <line x1="52" y1="126" x2="92" y2="126"/>
+    </g>
+    <circle cx="128" cy="126" r="12" fill="url(#accent)"/>
+  </g>
+
+  <text x="600" y="435" text-anchor="middle" font-size="96" font-weight="800" fill="#F4F7FF" letter-spacing="-2">LLM Wiki</text>
+  <text x="600" y="492" text-anchor="middle" font-size="24" font-weight="500" fill="#9FB0D6" letter-spacing="0.5">사내 문서로 위키를 만드는 기록</text>
+</svg>
