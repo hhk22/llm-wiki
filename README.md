@@ -169,12 +169,81 @@ uv run python scripts/answer.py "배포 가이드 v22에서 변경된 배포 금
 
 ## API와 MCP
 
-```bash
-# Terminal 1
-uv run python scripts/serve_api.py
+FastAPI가 실제 검색·답변 기능을 제공하고, MCP Server는 이 API를 Codex가 호출할 수 있는 도구로 노출한다.
 
-# MCP host 실행 명령
-uv run python scripts/mcp_server.py
+```text
+Codex → MCP Server → FastAPI → PostgreSQL + Gemini
+```
+
+### 1. API 실행
+
+최초 실행이라면 PostgreSQL에 스키마와 색인 데이터를 준비한 뒤 API를 시작한다.
+
+```bash
+docker compose up -d
+uv run python scripts/init_db.py
+uv run python scripts/ingest.py
+uv run python scripts/serve_api.py
+```
+
+API는 기본적으로 `http://127.0.0.1:8000`에서 실행된다. 다른 터미널에서 상태를 확인한다.
+
+```bash
+curl http://127.0.0.1:8000/health
+```
+
+```json
+{"status":"ok"}
+```
+
+### 2. Codex에 MCP Server 등록
+
+저장소 루트에서 다음 명령을 실행한다. `$(pwd)`는 현재 저장소의 절대 경로로 저장되므로 Codex가 어느 디렉터리에서 실행되더라도 MCP Server를 시작할 수 있다.
+
+```bash
+codex mcp add llm-wiki \
+  --env LLM_WIKI_API_URL=http://127.0.0.1:8000 \
+  -- uv run --directory "$(pwd)" python scripts/mcp_server.py
+```
+
+등록 결과를 확인한다.
+
+```bash
+codex mcp list
+codex mcp get llm-wiki
+```
+
+MCP Server는 stdio 방식이므로 별도 터미널에서 계속 실행하지 않는다. Codex가 새 세션에서 등록된 명령으로 프로세스를 시작하고 `search_wiki`, `ask_wiki`와 통신한다.
+
+### 3. Codex에서 사용
+
+MCP를 등록한 뒤 새 Codex 세션을 연다.
+
+```bash
+codex
+```
+
+Codex에 자연어로 요청한다.
+
+```text
+ask_wiki 도구를 사용해서 배포 가이드 v22에서 변경된
+배포 금지 시간을 찾고 출처와 함께 답해줘.
+```
+
+Codex에서 검색 결과만 확인하려면 다음처럼 요청한다.
+
+```text
+search_wiki 도구로 E-021 오류 대응 문서를 3개 찾아줘.
+```
+
+호출 흐름은 다음과 같다.
+
+```text
+Codex
+→ ask_wiki(query, method="vector", top_k=3)
+→ POST /answer
+→ 벡터 검색 Top 3 + Gemini 답변 생성
+→ 답변과 출처 반환
 ```
 
 | 구분 | 이름 | 역할 |
@@ -185,7 +254,7 @@ uv run python scripts/mcp_server.py
 | MCP | `search_wiki` | `/search` 호출 |
 | MCP | `ask_wiki` | `/answer` 호출 |
 
-MCP 서버는 stdio로 실행되고 `.env`의 `LLM_WIKI_API_URL`에 있는 API를 호출한다.
+API가 실행되지 않은 상태에서도 MCP 프로세스는 시작될 수 있지만, 도구를 호출하면 API 연결 오류가 발생한다. API 주소를 변경했다면 MCP 등록 명령의 `LLM_WIKI_API_URL`도 같은 주소로 변경한다.
 
 ## 테스트
 
