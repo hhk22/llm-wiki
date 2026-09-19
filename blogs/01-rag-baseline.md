@@ -322,3 +322,5 @@ v1에서는 문서 준비부터 색인·검증·검색·평가·출처 답변까
 → reranker
 → Hit@1·Hit@3 재측정
 ```
+
+전체 구현 코드와 실행 방법은 [GitHub 저장소](https://github.com/hhk22/llm-wiki/tree/docs/llm-wiki-devlog)에서 확인할 수 있다.
