@@ -3,6 +3,7 @@ from __future__ import annotations
 import asyncio
 from typing import Any
 
+import pytest
 from mcp import Client
 
 from llm_wiki.mcp_server import create_mcp_server
@@ -53,3 +54,17 @@ def test_mcp_answer_tool_returns_sources() -> None:
 
     assert result.structured_content["answer"].endswith("[1]")
     assert result.structured_content["sources"][0]["document_id"] == "deploy-guide-v30"
+
+
+@pytest.mark.parametrize("tool_name", ["search_wiki", "ask_wiki"])
+def test_mcp_tools_accept_and_forward_hybrid_method(tool_name: str) -> None:
+    async def call_tool() -> Any:
+        async with Client(create_mcp_server(lambda: FakeApiClient())) as client:
+            return await client.call_tool(
+                tool_name, {"query": "E-021 오류 대응", "method": "hybrid", "top_k": 3}
+            )
+
+    result = asyncio.run(call_tool())
+
+    assert result.structured_content["method"] == "hybrid"
+    assert result.structured_content["query"] == "E-021 오류 대응"

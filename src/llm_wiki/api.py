@@ -2,7 +2,7 @@
 
 from __future__ import annotations
 
-from typing import Literal, Protocol
+from typing import Protocol
 
 from fastapi import FastAPI, HTTPException
 from pydantic import BaseModel, Field, field_validator
@@ -10,12 +10,19 @@ from pydantic import BaseModel, Field, field_validator
 from llm_wiki.answering import GeminiAnswerProvider, GenerationSettings, answer_with_retry
 from llm_wiki.database import DatabaseSettings, connect_database
 from llm_wiki.embedding import EmbeddingSettings, GeminiEmbeddingProvider
-from llm_wiki.search import SearchResult, embed_query_with_retry, keyword_search, vector_search
+from llm_wiki.search import (
+    SearchMethod,
+    SearchResult,
+    embed_query_with_retry,
+    hybrid_search,
+    keyword_search,
+    vector_search,
+)
 
 
 class QueryRequest(BaseModel):
     query: str
-    method: Literal["keyword", "vector"] = "vector"
+    method: SearchMethod = "vector"
     top_k: int = Field(default=3, ge=1, le=10)
 
     @field_validator("query")
@@ -49,13 +56,13 @@ class SearchItem(BaseModel):
 
 class SearchResponse(BaseModel):
     query: str
-    method: Literal["keyword", "vector"]
+    method: SearchMethod
     results: list[SearchItem]
 
 
 class AnswerResponse(BaseModel):
     query: str
-    method: Literal["keyword", "vector"]
+    method: SearchMethod
     answer: str
     sources: list[SearchItem]
 
@@ -82,6 +89,8 @@ class WikiService:
 
             provider = GeminiEmbeddingProvider(EmbeddingSettings.from_env())
             query_vector = embed_query_with_retry(provider, query)
+            if method == "hybrid":
+                return hybrid_search(connection, query, query_vector, limit=top_k)
             return vector_search(connection, query_vector, limit=top_k)
 
     def answer(self, query: str, method: str, top_k: int) -> tuple[str, list[SearchResult]]:

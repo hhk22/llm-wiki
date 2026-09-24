@@ -1,16 +1,18 @@
-"""Keyword and pgvector retrieval over indexed document chunks."""
+"""Keyword, pgvector and reciprocal-rank hybrid retrieval over document chunks."""
 
 from __future__ import annotations
 
 import re
 import time
 from collections.abc import Callable, Sequence
-from dataclasses import dataclass
+from dataclasses import dataclass, replace
 from typing import Any, Literal, Protocol
 
 from llm_wiki.embedding import EmbeddingRequestError
 
-SearchMethod = Literal["keyword", "vector"]
+SearchMethod = Literal["keyword", "vector", "hybrid"]
+HYBRID_CANDIDATE_LIMIT = 10
+RRF_K = 60
 
 ERROR_CODE_PARTICLE = re.compile(
     r"(?<![\w-])(E-\d{3})(?:에서는|에서|으로|은|는|이|가|을|를|의|과|와|도|로)"
@@ -143,9 +145,12 @@ def keyword_search(
     query: str,
     *,
     limit: int = 3,
+    normalize: bool = True,
 ) -> list[SearchResult]:
-    """Search title, heading and content lexemes, returning one chunk per document."""
-    query = normalize_keyword_query(_validate_query(query))
+    """Search one chunk per document; disable normalization only for baseline evaluation."""
+    query = _validate_query(query)
+    if normalize:
+        query = normalize_keyword_query(query)
     limit = _validate_limit(limit)
     rows = connection.execute(KEYWORD_SEARCH_SQL, (query, limit)).fetchall()
     return [_row_to_result(row) for row in rows]
@@ -166,6 +171,55 @@ def vector_search(
         (_serialize_vector(query_vector), limit),
     ).fetchall()
     return [_row_to_result(row) for row in rows]
+
+
+def fuse_rrf(
+    keyword_results: Sequence[SearchResult],
+    vector_results: Sequence[SearchResult],
+    *,
+    limit: int = 3,
+    rrf_k: int = RRF_K,
+) -> list[SearchResult]:
+    """Fuse document ranks equally, preferring the vector source chunk on overlap."""
+    limit = _validate_limit(limit)
+    if rrf_k < 1:
+        raise ValueError("rrf_k must be at least 1.")
+
+    scores: dict[str, float] = {}
+    representatives: dict[str, SearchResult] = {}
+    for results in (keyword_results, vector_results):
+        seen: set[str] = set()
+        for result in results:
+            document_id = result.document_id
+            if document_id in seen:
+                continue
+            seen.add(document_id)
+            scores[document_id] = scores.get(document_id, 0.0) + 1 / (rrf_k + len(seen))
+            representatives[document_id] = result
+
+    ranked_ids = sorted(scores, key=lambda document_id: (-scores[document_id], document_id))
+    return [
+        replace(representatives[document_id], score=scores[document_id])
+        for document_id in ranked_ids[:limit]
+    ]
+
+
+def hybrid_search(
+    connection: SearchReader,
+    query: str,
+    query_vector: Sequence[float],
+    *,
+    limit: int = 3,
+) -> list[SearchResult]:
+    """Fuse the top ten documents per method, widening for larger requested limits."""
+    query = _validate_query(query)
+    limit = _validate_limit(limit)
+    if not query_vector:
+        raise ValueError("query_vector must not be empty.")
+    candidate_limit = max(HYBRID_CANDIDATE_LIMIT, limit)
+    keyword_results = keyword_search(connection, query, limit=candidate_limit)
+    vector_results = vector_search(connection, query_vector, limit=candidate_limit)
+    return fuse_rrf(keyword_results, vector_results, limit=limit)
 
 
 def embed_query_with_retry(

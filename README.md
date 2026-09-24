@@ -2,9 +2,9 @@
 
 가상 사내 문서로 RAG 검색의 기준선을 만들고, 검색 품질과 운영 문제를 단계적으로 개선하는 포트폴리오 프로젝트다.
 
-v1에서는 Markdown 문서 120개를 색인하고, 키워드·벡터 검색을 20개 질문으로 평가한 뒤 검색 결과에 출처를 붙여 답변한다. 다음 v2에서는 hybrid 검색과 최신 버전 필터를 적용한다.
+v1에서는 Markdown 문서 120개를 색인하고, 키워드·벡터 검색을 20개 질문으로 평가한 뒤 검색 결과에 출처를 붙여 답변한다. v2에서는 오류 코드 조사 보정과 hybrid 검색을 구현했다. 고정 20문항에서 hybrid Hit@3는 55%로 벡터의 70%보다 낮아 기본 검색은 벡터로 유지한다. 최신 버전 필터는 다음 실험이다.
 
-구현 과정과 측정 결과는 [RAG 기준선 문서](./blogs/01-rag-baseline.md)에 기록한다.
+구현 과정과 측정 결과는 [RAG 기준선](./blogs/01-rag-baseline.md)과 [v2 검색 품질 실험](./blogs/02-search-quality.md)에 기록한다.
 
 ## 구현 현황
 
@@ -18,7 +18,8 @@ v1에서는 Markdown 문서 120개를 색인하고, 키워드·벡터 검색을 
 | 일괄 색인 | 완료 | 문서 120개, 청크 150개, 768차원 벡터 저장 |
 | 저장 결과 검증 | 완료 | 원본 대비 누락·중복·내용 불일치 0건 |
 | 키워드·벡터 검색 | 완료 | 문서 중복을 제거한 Top K 검색 |
-| 검색 평가 | 완료 | 키워드 Hit@3 5%, 벡터 Hit@3 70% |
+| v1 검색 평가 | 완료 | 키워드 Hit@3 5%, 벡터 Hit@3 70% |
+| v2 조사 보정·Hybrid | 구현·평가 완료 | 보정 키워드 Hit@3 10%, hybrid 55%; 기본값은 벡터 유지 |
 | 출처 기반 답변 | 완료 | 검색 청크만 사용한 답변·출처·근거 부족 응답 |
 | API·MCP | 완료 | `health`, `search`, `answer` API와 MCP 도구 2개 |
 
@@ -27,14 +28,15 @@ v1에서는 Markdown 문서 120개를 색인하고, 키워드·벡터 검색을 
 ```text
 sources/                    가상 Markdown 문서 120개
 evaluation/questions.yaml   검색 평가 질문 20개
-evaluation/results-v1.json  질문별 검색 순위와 Hit@K 결과
+evaluation/results-v1.json  v1 검색 기준선
+evaluation/results-v2-hybrid.json  hybrid 후보·근거·전후 비교 결과
 src/llm_wiki/documents.py   frontmatter와 본문 파싱
 src/llm_wiki/chunking.py    Markdown 헤딩 기반 청킹
 src/llm_wiki/embedding.py   Gemini 임베딩 클라이언트
 src/llm_wiki/database.py    PostgreSQL 연결·스키마 초기화
 src/llm_wiki/indexing.py    변경 감지·임베딩·트랜잭션 저장
 src/llm_wiki/storage_validation.py  원본과 저장 결과 비교
-src/llm_wiki/search.py      키워드·벡터 검색
+src/llm_wiki/search.py      키워드·벡터·RRF hybrid 검색
 src/llm_wiki/evaluation.py  Hit@1·Hit@3 평가
 src/llm_wiki/answering.py   출처 기반 Gemini 답변
 src/llm_wiki/api.py         FastAPI 엔드포인트
@@ -73,6 +75,8 @@ docker compose exec api python scripts/ingest.py
 ```json
 {"query": "E-021 오류가 발생하면 어떤 설정을 확인해야 하나요?", "method": "vector", "top_k": 3}
 ```
+
+`/search`, `/answer`, MCP의 `search_wiki`·`ask_wiki`는 모두 `method`에 `keyword`, `vector`, `hybrid`를 지원한다. 기본값은 `vector`이며, `hybrid`는 비교용 옵션이다.
 
 컨테이너 내부에서는 API가 `postgres:5432`, MCP가 `http://api:8000`으로 연결한다. `.env`의 `DATABASE_URL`, `API_HOST`, `LLM_WIKI_API_URL`은 로컬 실행용이며 Compose 내부 주소는 별도로 설정한다. 호스트 공개 포트는 `.env`의 `POSTGRES_PORT`, `API_PORT`, `MCP_PORT`로 변경할 수 있다. `.env`는 이미지에 복사하지 않으며, Gemini 키는 API 컨테이너에만 전달한다.
 
@@ -182,9 +186,10 @@ status=PASS
 ```bash
 uv run python scripts/search.py "E-021 오류 대응 방법" --method keyword
 uv run python scripts/search.py "같은 서비스의 동시 배포를 어떻게 막나요?" --method vector
+uv run python scripts/search.py "E-021 오류가 발생하면 어떤 설정을 확인해야 하나요?" --method hybrid
 ```
 
-키워드 검색은 PostgreSQL `tsvector`, 벡터 검색은 pgvector cosine similarity를 사용한다. 두 방식 모두 같은 문서의 여러 청크 중 점수가 가장 높은 하나만 남긴 뒤 문서 Top K를 반환한다.
+키워드 검색은 PostgreSQL `tsvector`, 벡터 검색은 pgvector cosine similarity를 사용한다. 두 방식 모두 같은 문서의 여러 청크 중 점수가 가장 높은 하나만 남긴 뒤 문서 Top K를 반환한다. 키워드 검색에는 오류 코드의 조사 제거가 적용된다. Hybrid는 양쪽 문서 Top 10을 RRF(상수 60, 동일 가중치)로 결합하고, 동점은 문서 ID순으로 정렬한다. 두 후보에 있는 문서는 벡터 검색의 청크를 사용하며, hybrid 응답의 `score`는 RRF 점수다. CLI의 `--top-k`가 10보다 크면 양쪽 후보 수도 함께 늘린다.
 
 ## 검색 평가
 
@@ -192,12 +197,15 @@ uv run python scripts/search.py "같은 서비스의 동시 배포를 어떻게 
 uv run python scripts/evaluate.py
 ```
 
-고정 질문 20개를 두 검색 방식에 동일하게 실행한다. Hit@1은 단일 정답 질문 15개, Hit@3는 교차 문서 질문을 포함한 20개를 기준으로 계산한다. 질문별 검색 결과는 `evaluation/results-v1.json`에 저장된다.
+고정 질문 20개로 보정 전·후 키워드, 벡터, 보정 전·후 hybrid 다섯 방식을 비교한다. 질문당 임베딩과 벡터 후보를 공유해 순위 결합 효과를 비교한다. Hit@1은 단일 정답 15문항, Hit@3는 교차 문서 질문을 포함한 20문항 기준이다. 후보·대표 청크·점수·단계별 시간·퇴보 문항은 `evaluation/results-v2-hybrid.json`에 저장하며, `--output`으로 출력 경로를 바꿀 수 있다. 기존 `results-v1.json` 덮어쓰기는 차단한다.
 
 | 검색 방식 | Hit@1 | Hit@3 |
 | --- | ---: | ---: |
-| 키워드 | 1/15 (6.7%) | 1/20 (5.0%) |
+| 보정 전 키워드 | 1/15 (6.7%) | 1/20 (5.0%) |
+| 조사 보정 키워드 | 2/15 (13.3%) | 2/20 (10.0%) |
 | 벡터 | 8/15 (53.3%) | 14/20 (70.0%) |
+| 보정 전 키워드 + 벡터 RRF | 4/15 (26.7%) | 11/20 (55.0%) |
+| 조사 보정 키워드 + 벡터 RRF | 5/15 (33.3%) | 11/20 (55.0%) |
 
 ## 출처 기반 답변
 
@@ -205,7 +213,7 @@ uv run python scripts/evaluate.py
 uv run python scripts/answer.py "배포 가이드 v22에서 변경된 배포 금지 시간은 언제인가요?"
 ```
 
-벡터 검색 Top 3를 Gemini에 전달하고, 근거 번호가 포함된 답변과 실제 출처 목록을 함께 출력한다. 검색 결과가 없으면 모델을 호출하지 않으며, 전달된 문서에 근거가 없으면 답변할 수 없다고 응답하도록 제한한다.
+기본값은 벡터 검색이며 `--method hybrid`로 비교할 수 있다. 검색 Top 3를 Gemini에 전달하고, 근거 번호가 포함된 답변과 실제 출처 목록을 함께 출력한다. 검색 결과가 없으면 모델을 호출하지 않으며, 전달된 문서에 근거가 없으면 답변할 수 없다고 응답하도록 제한한다.
 
 ## API와 MCP
 
@@ -280,7 +288,7 @@ Codex
 | 구분 | 이름 | 역할 |
 | --- | --- | --- |
 | API | `GET /health` | DB 연결 확인 |
-| API | `POST /search` | 키워드·벡터 검색 |
+| API | `POST /search` | 키워드·벡터·hybrid 검색 |
 | API | `POST /answer` | 답변과 출처 반환 |
 | MCP | `search_wiki` | `/search` 호출 |
 | MCP | `ask_wiki` | `/answer` 호출 |

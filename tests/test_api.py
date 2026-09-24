@@ -1,7 +1,11 @@
 from __future__ import annotations
 
+from contextlib import nullcontext
+
+import pytest
 from fastapi.testclient import TestClient
 
+from llm_wiki import api
 from llm_wiki.api import create_app
 from llm_wiki.search import SearchResult
 
@@ -24,9 +28,11 @@ class FakeService:
         return None
 
     def search(self, query: str, method: str, top_k: int) -> list[SearchResult]:
+        self.last_call = (query, method, top_k)
         return [search_result()]
 
     def answer(self, query: str, method: str, top_k: int) -> tuple[str, list[SearchResult]]:
+        self.last_call = (query, method, top_k)
         return "목요일 오후입니다. [1]", [search_result()]
 
 
@@ -73,3 +79,46 @@ def test_query_validation_rejects_blank_text_and_large_top_k() -> None:
 
     assert blank.status_code == 422
     assert large_top_k.status_code == 422
+
+
+@pytest.mark.parametrize("path", ["/search", "/answer"])
+def test_hybrid_requests_reach_service_and_preserve_original_query(path: str) -> None:
+    service = FakeService()
+    client = TestClient(create_app(service))
+
+    response = client.post(
+        path, json={"query": "E-008은?", "method": "hybrid", "top_k": 3}
+    )
+
+    assert response.status_code == 200
+    assert response.json()["method"] == "hybrid"
+    assert response.json()["query"] == "E-008은?"
+    assert service.last_call == ("E-008은?", "hybrid", 3)
+    assert client.post(path, json={"query": "test", "method": "unknown"}).status_code == 422
+
+
+def test_wiki_service_embeds_original_query_once_and_routes_to_hybrid(
+    monkeypatch: pytest.MonkeyPatch,
+) -> None:
+    connection = object()
+    queries = []
+    calls = []
+
+    class Provider:
+        def embed_query(self, query: str) -> list[float]:
+            queries.append(query)
+            return [0.1, 0.2]
+
+    def hybrid(conn, query, vector, *, limit):
+        calls.append((conn, query, vector, limit))
+        return [search_result()]
+
+    monkeypatch.setenv("DATABASE_URL", "postgresql://test")
+    monkeypatch.setenv("GEMINI_API_KEY", "test-key")
+    monkeypatch.setattr(api, "connect_database", lambda settings: nullcontext(connection))
+    monkeypatch.setattr(api, "GeminiEmbeddingProvider", lambda settings: Provider())
+    monkeypatch.setattr(api, "hybrid_search", hybrid)
+
+    assert api.WikiService().search("E-008은?", "hybrid", 3) == [search_result()]
+    assert queries == ["E-008은?"]
+    assert calls == [(connection, "E-008은?", [0.1, 0.2], 3)]

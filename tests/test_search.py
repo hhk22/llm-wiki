@@ -1,11 +1,20 @@
 from __future__ import annotations
 
+from dataclasses import replace
 from typing import Any
 
 import pytest
 
+from llm_wiki import search
 from llm_wiki.embedding import EmbeddingRequestError
-from llm_wiki.search import embed_query_with_retry, keyword_search, vector_search
+from llm_wiki.search import (
+    SearchResult,
+    embed_query_with_retry,
+    fuse_rrf,
+    hybrid_search,
+    keyword_search,
+    vector_search,
+)
 
 
 class ResultRows:
@@ -138,3 +147,87 @@ def test_query_embedding_retries_transient_failure() -> None:
     assert vector == [0.1, 0.2]
     assert provider.calls == 3
     assert delays == [1, 2]
+
+
+def candidate(document_id: str, *, score: float = 0.5, chunk: int = 0) -> SearchResult:
+    return SearchResult(document_id, chunk, document_id, "test", None, "", "content", score)
+
+
+def test_rrf_uses_ranks_and_prefers_vector_evidence_without_mutating_candidates() -> None:
+    keyword = [candidate("a", score=1000), candidate("b", score=900)]
+    vector = [candidate("b", score=0.9, chunk=2), candidate("c", score=0.8)]
+
+    results = fuse_rrf(keyword, vector)
+
+    assert [result.document_id for result in results] == ["b", "a", "c"]
+    assert results[0].score == pytest.approx(1 / 62 + 1 / 61)
+    assert results[0].chunk_index == 2
+    assert results[1].score == pytest.approx(1 / 61)
+    assert results[2].score == pytest.approx(1 / 62)
+    assert vector[0].score == 0.9
+    assert keyword[1].chunk_index == 0
+
+
+def test_rrf_swapped_ranks_tie_and_use_document_id_order() -> None:
+    a, b = candidate("a"), candidate("b")
+
+    results = fuse_rrf([b, a], [a, b])
+
+    assert [result.document_id for result in results] == ["a", "b"]
+    assert results[0].score == results[1].score
+    assert fuse_rrf([b, a], [a, b], limit=1) == results[:1]
+
+
+def test_rrf_counts_each_document_once_per_ranking() -> None:
+    a, b = candidate("a"), candidate("b")
+
+    results = fuse_rrf([a, replace(a, chunk_index=1), b], [])
+
+    assert [result.document_id for result in results] == ["a", "b"]
+    assert results[0].chunk_index == 0
+    assert results[0].score == pytest.approx(1 / 61)
+    assert results[1].score == pytest.approx(1 / 62)
+
+
+def test_rrf_handles_empty_rankings_and_rejects_invalid_options() -> None:
+    assert fuse_rrf([], []) == []
+    assert fuse_rrf([], [candidate("b"), candidate("a")])[0].document_id == "b"
+    with pytest.raises(ValueError, match="limit"):
+        fuse_rrf([], [], limit=0)
+    with pytest.raises(ValueError, match="rrf_k"):
+        fuse_rrf([], [], rrf_k=0)
+
+
+@pytest.mark.parametrize(("limit", "candidate_limit"), [(3, 10), (12, 12)])
+def test_hybrid_collects_wider_candidates_before_fusion(
+    monkeypatch: pytest.MonkeyPatch, limit: int, candidate_limit: int
+) -> None:
+    calls = []
+    connection = RecordingConnection([])
+
+    def keywords(conn: Any, query: str, *, limit: int) -> list[SearchResult]:
+        calls.append((conn, query, limit))
+        return [candidate("a"), candidate("b")]
+
+    def vectors(conn: Any, vector: Any, *, limit: int) -> list[SearchResult]:
+        calls.append((conn, vector, limit))
+        return [candidate("b"), candidate("c")]
+
+    monkeypatch.setattr(search, "keyword_search", keywords)
+    monkeypatch.setattr(search, "vector_search", vectors)
+
+    results = hybrid_search(connection, "E-008은?", [0.1, 0.2], limit=limit)
+
+    assert calls == [
+        (connection, "E-008은?", candidate_limit),
+        (connection, [0.1, 0.2], candidate_limit),
+    ]
+    assert results[0].document_id == "b"
+
+
+def test_keyword_baseline_evaluation_can_disable_normalization() -> None:
+    connection = RecordingConnection([])
+
+    keyword_search(connection, "E-008은?", normalize=False)
+
+    assert connection.params == ("E-008은?", 3)
