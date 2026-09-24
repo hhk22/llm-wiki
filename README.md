@@ -43,7 +43,47 @@ scripts/                    임베딩·청킹·DB·색인 스크립트
 tests/                      문서·청킹·DB·색인·평가 데이터 테스트
 ```
 
-## 실행 환경
+## Docker Compose로 전체 실행
+
+Docker Compose로 PostgreSQL, FastAPI, HTTP MCP 서버를 함께 실행한다. 최초 실행 전 `.env.example`을 `.env`로 복사하고 `GEMINI_API_KEY`를 입력한다. 기존 `.env`와 DB 데이터가 있으면 그대로 사용한다.
+
+```bash
+docker compose up -d --build
+docker compose ps
+```
+
+기존에 tmux 등에서 로컬 API를 실행 중이라면 먼저 `Ctrl+C`로 종료해 8000 포트를 비운다. 첫 빌드 이후에는 `docker compose up -d`로 실행하고, 코드·의존성을 변경했으면 `--build`를 붙인다.
+
+| 서비스 | 기본 접속 주소 | 역할 |
+| --- | --- | --- |
+| PostgreSQL | `127.0.0.1:5432` | 문서·청크·벡터 저장 |
+| API | http://127.0.0.1:8000/docs | Swagger UI에서 검색·답변 실행 |
+| MCP | `http://127.0.0.1:8001/mcp` | MCP 클라이언트용 Streamable HTTP 연결 |
+
+DB의 healthcheck를 통과하면 API가 `init_db.py`로 없는 테이블·인덱스를 생성하고 시작한다. API의 `/health`가 정상 응답하면 MCP를 시작한다. 기존 데이터는 유지하며 `init_db.py`를 따로 실행할 필요가 없다. 스키마 초기화는 기존 테이블을 변경하는 마이그레이션이나 문서 색인을 수행하지 않는다.
+
+**새 DB에 문서를 처음 넣을 때만** 아래 명령을 실행한다. 임베딩 API를 호출하며, 기존 데이터가 있다면 생략한다.
+
+```bash
+docker compose exec api python scripts/ingest.py
+```
+
+검색은 `/docs`에서 `POST /search` → **Try it out** → 다음 JSON 입력 → **Execute**로 확인한다. 답변과 출처는 같은 입력으로 `POST /answer`를 호출한다.
+
+```json
+{"query": "E-021 오류가 발생하면 어떤 설정을 확인해야 하나요?", "method": "vector", "top_k": 3}
+```
+
+컨테이너 내부에서는 API가 `postgres:5432`, MCP가 `http://api:8000`으로 연결한다. `.env`의 `DATABASE_URL`, `API_HOST`, `LLM_WIKI_API_URL`은 로컬 실행용이며 Compose 내부 주소는 별도로 설정한다. 호스트 공개 포트는 `.env`의 `POSTGRES_PORT`, `API_PORT`, `MCP_PORT`로 변경할 수 있다. `.env`는 이미지에 복사하지 않으며, Gemini 키는 API 컨테이너에만 전달한다.
+
+```bash
+docker compose logs -f api mcp
+docker compose down
+```
+
+`down` 후에도 DB named volume의 데이터는 유지된다. 컨테이너의 문서는 빌드 시점의 `sources/` 사본이므로 문서를 수정한 뒤 컨테이너에서 색인하려면 먼저 `docker compose up -d --build`로 이미지를 갱신한다.
+
+## 로컬 Python 실행 환경
 
 Python 3.11 이상과 [uv](https://docs.astral.sh/uv/)가 필요하다.
 
@@ -64,7 +104,7 @@ uv run python scripts/check_embedding.py
 ## PostgreSQL + pgvector 실행·스키마 구성
 
 ```bash
-docker compose up -d
+docker compose up -d postgres
 docker compose ps
 uv run python scripts/init_db.py
 ```
@@ -175,45 +215,36 @@ FastAPI가 실제 검색·답변 기능을 제공하고, MCP Server는 이 API�
 Codex → MCP Server → FastAPI → PostgreSQL + Gemini
 ```
 
-### 1. API 실행
+### 1. Compose MCP를 Codex에 등록
 
-최초 실행이라면 PostgreSQL에 스키마와 색인 데이터를 준비한 뒤 API를 시작한다.
-
-```bash
-docker compose up -d
-uv run python scripts/init_db.py
-uv run python scripts/ingest.py
-uv run python scripts/serve_api.py
-```
-
-API는 기본적으로 `http://127.0.0.1:8000`에서 실행된다. 다른 터미널에서 상태를 확인한다.
+전체 서비스를 Compose로 실행한 뒤 HTTP 주소를 등록한다.
 
 ```bash
-curl http://127.0.0.1:8000/health
-```
-
-```json
-{"status":"ok"}
-```
-
-### 2. Codex에 MCP Server 등록
-
-저장소 루트에서 다음 명령을 실행한다. `$(pwd)`는 현재 저장소의 절대 경로로 저장되므로 Codex가 어느 디렉터리에서 실행되더라도 MCP Server를 시작할 수 있다.
-
-```bash
-codex mcp add llm-wiki \
-  --env LLM_WIKI_API_URL=http://127.0.0.1:8000 \
-  -- uv run --directory "$(pwd)" python scripts/mcp_server.py
-```
-
-등록 결과를 확인한다.
-
-```bash
-codex mcp list
+codex mcp add llm-wiki --url http://127.0.0.1:8001/mcp
 codex mcp get llm-wiki
 ```
 
-MCP Server는 stdio 방식이므로 별도 터미널에서 계속 실행하지 않는다. Codex가 새 세션에서 등록된 명령으로 프로세스를 시작하고 `search_wiki`, `ask_wiki`와 통신한다.
+기존 `llm-wiki` stdio 등록도 같은 이름의 위 명령으로 HTTP 등록으로 변경한다. `MCP_PORT`를 변경했다면 URL의 포트도 맞춘다. 등록 후 새 Codex 세션에서 사용한다. HTTP 서버 등록 방식은 [OpenAI 공식 문서](https://developers.openai.com/learn/docs-mcp)를 참고했다.
+
+### 2. 로컬 API·stdio MCP로 실행하는 경우
+
+Python 코드를 직접 실행하며 개발하려면 Compose의 API·MCP를 중지하고 로컬 API를 실행한다. 기존 색인 데이터가 있으면 색인 작업은 생략한다.
+
+```bash
+docker compose stop mcp api
+docker compose up -d postgres
+uv run python scripts/ingest.py  # 최초 색인 시에만 실행
+uv run python scripts/serve_api.py
+```
+
+다른 터미널에서 저장소 루트를 기준으로 stdio MCP를 등록한다. `$(pwd)`는 현재 저장소의 절대 경로로 저장된다.
+
+```bash
+codex mcp add llm-wiki --env LLM_WIKI_API_URL=http://127.0.0.1:8000 -- uv run --directory "$(pwd)" python scripts/mcp_server.py
+codex mcp get llm-wiki
+```
+
+이 로컬 실행 방식에서는 Codex가 MCP 프로세스를 시작한다. `scripts/mcp_server.py`의 기본값은 stdio이며, Compose에서는 `--transport streamable-http` 옵션으로 상시 HTTP 서버를 실행한다.
 
 ### 3. Codex에서 사용
 
@@ -254,7 +285,7 @@ Codex
 | MCP | `search_wiki` | `/search` 호출 |
 | MCP | `ask_wiki` | `/answer` 호출 |
 
-API가 실행되지 않은 상태에서도 MCP 프로세스는 시작될 수 있지만, 도구를 호출하면 API 연결 오류가 발생한다. API 주소를 변경했다면 MCP 등록 명령의 `LLM_WIKI_API_URL`도 같은 주소로 변경한다.
+로컬 stdio 방식에서 API 주소를 변경했다면 MCP 등록 명령의 `LLM_WIKI_API_URL`도 같은 주소로 변경한다. Compose의 MCP는 내부 서비스 이름으로 API에 연결하므로 호스트 API 포트 변경의 영향을 받지 않는다.
 
 ## 테스트
 
