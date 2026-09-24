@@ -26,6 +26,7 @@ from llm_wiki.search import (
     normalize_keyword_query,
     vector_search,
 )
+from llm_wiki.search_scope import SearchScope
 
 ROOT = Path(__file__).resolve().parents[1]
 QUESTIONS_PATH = ROOT / "evaluation" / "questions.yaml"
@@ -68,7 +69,8 @@ def main() -> None:
             for method, normalize in (("keyword_raw", False), ("keyword", True)):
                 start = time.perf_counter()
                 candidates[method] = keyword_search(
-                    connection, query, limit=HYBRID_CANDIDATE_LIMIT, normalize=normalize
+                    connection, query, limit=HYBRID_CANDIDATE_LIMIT, normalize=normalize,
+                    scope=SearchScope(),
                 )
                 timings[method] = time.perf_counter() - start
 

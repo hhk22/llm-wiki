@@ -12,6 +12,7 @@ from dotenv import load_dotenv
 from llm_wiki.database import DatabaseSettings, connect_database
 from llm_wiki.embedding import EmbeddingSettings, GeminiEmbeddingProvider
 from llm_wiki.search import embed_query_with_retry, hybrid_search, keyword_search, vector_search
+from llm_wiki.search_scope import infer_search_scope
 
 
 def parse_args() -> argparse.Namespace:
@@ -35,7 +36,10 @@ def main() -> None:
             if args.method == "hybrid":
                 results = hybrid_search(connection, args.query, query_vector, limit=args.top_k)
             else:
-                results = vector_search(connection, query_vector, limit=args.top_k)
+                results = vector_search(
+                    connection, query_vector, limit=args.top_k,
+                    scope=infer_search_scope(args.query),
+                )
 
     print(f"method={args.method}")
     print(f"query={args.query}")

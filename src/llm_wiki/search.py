@@ -9,6 +9,7 @@ from dataclasses import dataclass, replace
 from typing import Any, Literal, Protocol
 
 from llm_wiki.embedding import EmbeddingRequestError
+from llm_wiki.search_scope import SearchScope, infer_search_scope, scope_sql
 
 SearchMethod = Literal["keyword", "vector", "hybrid"]
 HYBRID_CANDIDATE_LIMIT = 10
@@ -49,7 +50,7 @@ WITH query_terms AS (
         setweight(to_tsvector('simple', d.title), 'A') ||
         setweight(to_tsvector('simple', c.heading_path), 'B') ||
         setweight(c.tsv, 'C')
-    ) @@ q.value
+    ) @@ q.value AND ({document_filter})
 ), document_rank AS (
     SELECT
         *,
@@ -90,6 +91,7 @@ WITH search_vector AS (
     FROM chunks c
     JOIN documents d ON d.id = c.document_id
     CROSS JOIN search_vector q
+    WHERE {document_filter}
 ), document_rank AS (
     SELECT
         *,
@@ -146,13 +148,18 @@ def keyword_search(
     *,
     limit: int = 3,
     normalize: bool = True,
+    scope: SearchScope | None = None,
 ) -> list[SearchResult]:
     """Search one chunk per document; disable normalization only for baseline evaluation."""
     query = _validate_query(query)
+    scope = scope if scope is not None else infer_search_scope(query)
     if normalize:
         query = normalize_keyword_query(query)
     limit = _validate_limit(limit)
-    rows = connection.execute(KEYWORD_SEARCH_SQL, (query, limit)).fetchall()
+    predicate, params = scope_sql(scope if scope is not None else SearchScope())
+    rows = connection.execute(
+        KEYWORD_SEARCH_SQL.format(document_filter=predicate), (query, *params, limit)
+    ).fetchall()
     return [_row_to_result(row) for row in rows]
 
 
@@ -161,14 +168,16 @@ def vector_search(
     query_vector: Sequence[float],
     *,
     limit: int = 3,
+    scope: SearchScope | None = None,
 ) -> list[SearchResult]:
     """Rank document chunks by cosine similarity, returning one chunk per document."""
     if not query_vector:
         raise ValueError("query_vector must not be empty.")
     limit = _validate_limit(limit)
+    predicate, params = scope_sql(scope if scope is not None else SearchScope())
     rows = connection.execute(
-        VECTOR_SEARCH_SQL,
-        (_serialize_vector(query_vector), limit),
+        VECTOR_SEARCH_SQL.format(document_filter=predicate),
+        (_serialize_vector(query_vector), *params, limit),
     ).fetchall()
     return [_row_to_result(row) for row in rows]
 
@@ -210,6 +219,7 @@ def hybrid_search(
     query_vector: Sequence[float],
     *,
     limit: int = 3,
+    scope: SearchScope | None = None,
 ) -> list[SearchResult]:
     """Fuse the top ten documents per method, widening for larger requested limits."""
     query = _validate_query(query)
@@ -217,8 +227,9 @@ def hybrid_search(
     if not query_vector:
         raise ValueError("query_vector must not be empty.")
     candidate_limit = max(HYBRID_CANDIDATE_LIMIT, limit)
-    keyword_results = keyword_search(connection, query, limit=candidate_limit)
-    vector_results = vector_search(connection, query_vector, limit=candidate_limit)
+    scope = scope if scope is not None else infer_search_scope(query)
+    keyword_results = keyword_search(connection, query, limit=candidate_limit, scope=scope)
+    vector_results = vector_search(connection, query_vector, limit=candidate_limit, scope=scope)
     return fuse_rrf(keyword_results, vector_results, limit=limit)
 
 

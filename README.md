@@ -2,7 +2,7 @@
 
 가상 사내 문서로 RAG 검색의 기준선을 만들고, 검색 품질과 운영 문제를 단계적으로 개선하는 포트폴리오 프로젝트다.
 
-v1에서는 Markdown 문서 120개를 색인하고, 키워드·벡터 검색을 20개 질문으로 평가한 뒤 검색 결과에 출처를 붙여 답변한다. v2에서는 오류 코드 조사 보정과 hybrid 검색을 구현했다. 고정 20문항에서 hybrid Hit@3는 55%로 벡터의 70%보다 낮아 기본 검색은 벡터로 유지한다. 최신 버전 필터는 다음 실험이다.
+v1에서는 Markdown 문서 120개를 색인하고, 키워드·벡터 검색을 20개 질문으로 평가한 뒤 검색 결과에 출처를 붙여 답변한다. v2에서는 오류 코드 조사 보정과 hybrid 검색을 구현했다. 고정 20문항에서 hybrid Hit@3는 55%로 벡터의 70%보다 낮아 기본 검색은 벡터로 유지한다. 3단계 최신 버전 필터를 적용한 벡터의 문서 Hit@3는 95%(19/20)이며 기존 성공 문항은 유지됐다. 단, 최신 문서를 찾고도 답이 없는 요약 청크를 반환하는 사례 1건이 남았다.
 
 구현 과정과 측정 결과는 [RAG 기준선](./blogs/01-rag-baseline.md)과 [v2 검색 품질 실험](./blogs/02-search-quality.md)에 기록한다.
 
@@ -20,6 +20,7 @@ v1에서는 Markdown 문서 120개를 색인하고, 키워드·벡터 검색을 
 | 키워드·벡터 검색 | 완료 | 문서 중복을 제거한 Top K 검색 |
 | v1 검색 평가 | 완료 | 키워드 Hit@3 5%, 벡터 Hit@3 70% |
 | v2 조사 보정·Hybrid | 구현·평가 완료 | 보정 키워드 Hit@3 10%, hybrid 55%; 기본값은 벡터 유지 |
+| v2 최신 버전 필터 | 구현·평가 완료 | 벡터 + 필터 문서 Hit@3 95%, hybrid + 필터 75% |
 | 출처 기반 답변 | 완료 | 검색 청크만 사용한 답변·출처·근거 부족 응답 |
 | API·MCP | 완료 | `health`, `search`, `answer` API와 MCP 도구 2개 |
 
@@ -76,7 +77,7 @@ docker compose exec api python scripts/ingest.py
 {"query": "E-021 오류가 발생하면 어떤 설정을 확인해야 하나요?", "method": "vector", "top_k": 3}
 ```
 
-`/search`, `/answer`, MCP의 `search_wiki`·`ask_wiki`는 모두 `method`에 `keyword`, `vector`, `hybrid`를 지원한다. 기본값은 `vector`이며, `hybrid`는 비교용 옵션이다.
+`/search`, `/answer`, MCP의 `search_wiki`·`ask_wiki`는 모두 `method`에 `keyword`, `vector`, `hybrid`를 지원한다. 기본값은 `vector`이며, `hybrid`는 비교용 옵션이다. 현재 배포 정책 질문에는 최신 버전 필터가 자동 적용되고, 특정 버전은 해당 버전으로 검색한다. 변경 이력·비교·불분명한 질문은 범위를 제한하지 않는다.
 
 컨테이너 내부에서는 API가 `postgres:5432`, MCP가 `http://api:8000`으로 연결한다. `.env`의 `DATABASE_URL`, `API_HOST`, `LLM_WIKI_API_URL`은 로컬 실행용이며 Compose 내부 주소는 별도로 설정한다. 호스트 공개 포트는 `.env`의 `POSTGRES_PORT`, `API_PORT`, `MCP_PORT`로 변경할 수 있다. `.env`는 이미지에 복사하지 않으며, Gemini 키는 API 컨테이너에만 전달한다.
 
@@ -191,13 +192,15 @@ uv run python scripts/search.py "E-021 오류가 발생하면 어떤 설정을 �
 
 키워드 검색은 PostgreSQL `tsvector`, 벡터 검색은 pgvector cosine similarity를 사용한다. 두 방식 모두 같은 문서의 여러 청크 중 점수가 가장 높은 하나만 남긴 뒤 문서 Top K를 반환한다. 키워드 검색에는 오류 코드의 조사 제거가 적용된다. Hybrid는 양쪽 문서 Top 10을 RRF(상수 60, 동일 가중치)로 결합하고, 동점은 문서 ID순으로 정렬한다. 두 후보에 있는 문서는 벡터 검색의 청크를 사용하며, hybrid 응답의 `score`는 RRF 점수다. CLI의 `--top-k`가 10보다 크면 양쪽 후보 수도 함께 늘린다.
 
+현재 정책 여부는 명시적인 한국어 표현으로 판단한다. 예를 들어 `현재 프로덕션 배포 명령은 무엇인가요?`는 숫자 버전이 가장 큰 배포 가이드만 검색하며, `배포 가이드 v22의 금지 시간은?`는 v22를 검색한다. 최신 버전 번호는 DB에서 계산한다. `현재 배포 규칙이 바뀐 계기는?`는 과거 가이드와 장애 문서를 유지한다. 키워드·벡터·hybrid 및 API·MCP·CLI에 같은 조건이 적용되며 재색인은 필요 없다.
+
 ## 검색 평가
 
 ```bash
 uv run python scripts/evaluate.py
 ```
 
-고정 질문 20개로 보정 전·후 키워드, 벡터, 보정 전·후 hybrid 다섯 방식을 비교한다. 질문당 임베딩과 벡터 후보를 공유해 순위 결합 효과를 비교한다. Hit@1은 단일 정답 15문항, Hit@3는 교차 문서 질문을 포함한 20문항 기준이다. 후보·대표 청크·점수·단계별 시간·퇴보 문항은 `evaluation/results-v2-hybrid.json`에 저장하며, `--output`으로 출력 경로를 바꿀 수 있다. 기존 `results-v1.json` 덮어쓰기는 차단한다.
+2단계 재현용으로 버전 필터를 끄고, 고정 질문 20개로 보정 전·후 키워드, 벡터, 보정 전·후 hybrid 다섯 방식을 비교한다. 질문당 임베딩과 벡터 후보를 공유해 순위 결합 효과를 비교한다. Hit@1은 단일 정답 15문항, Hit@3는 교차 문서 질문을 포함한 20문항 기준이다. 후보·대표 청크·점수·단계별 시간·퇴보 문항은 `evaluation/results-v2-hybrid.json`에 저장하며, `--output`으로 출력 경로를 바꿀 수 있다. 기존 `results-v1.json` 덮어쓰기는 차단한다.
 
 | 검색 방식 | Hit@1 | Hit@3 |
 | --- | ---: | ---: |
@@ -206,6 +209,15 @@ uv run python scripts/evaluate.py
 | 벡터 | 8/15 (53.3%) | 14/20 (70.0%) |
 | 보정 전 키워드 + 벡터 RRF | 4/15 (26.7%) | 11/20 (55.0%) |
 | 조사 보정 키워드 + 벡터 RRF | 5/15 (33.3%) | 11/20 (55.0%) |
+
+### 3단계 버전 필터 평가
+
+```bash
+uv run python scripts/evaluate_filters.py
+uv run python scripts/evaluate_filters.py --questions evaluation/filter-validation.yaml --output evaluation/results-v2-filters-validation.json
+```
+
+같은 질문 임베딩으로 keyword·vector·hybrid의 필터 전후 6개 변형을 비교한다. 고정 20문항 결과는 `evaluation/results-v2-filters.json`에, 별도 표현 6문항은 별도 파일에 저장한다. 문서 Hit@3는 벡터 14/20 → 19/20, hybrid 11/20 → 15/20이며 각각 기존 성공 문항의 퇴보는 없다. 최신 정책 5문항 중 실제 답을 포함한 청크는 4개로, 문서 적중과 근거 확보를 구분한다.
 
 ## 출처 기반 답변
 
@@ -299,7 +311,13 @@ Codex
 
 ```bash
 uv run pytest -q
-uv run ruff check scripts/check_embedding.py scripts/preview_chunks.py scripts/init_db.py scripts/ingest.py scripts/verify_storage.py scripts/search.py scripts/evaluate.py scripts/answer.py scripts/serve_api.py scripts/mcp_server.py src tests
+uv run ruff check scripts/check_embedding.py scripts/preview_chunks.py scripts/init_db.py scripts/ingest.py scripts/verify_storage.py scripts/search.py scripts/evaluate.py scripts/evaluate_filters.py scripts/answer.py scripts/serve_api.py scripts/mcp_server.py src tests
 ```
 
 테스트는 임베딩·청킹·색인·검색·Hit@K·출처 답변과 API·MCP 연결을 확인한다.
+
+버전 필터의 실제 PostgreSQL 테스트는 `TEST_DATABASE_URL`을 설정하면 함께 실행된다. 연결 안에서만 보이는 임시 테이블을 사용해 기존 문서를 변경하지 않으며, v31·v100 추가와 숫자 버전 정렬, 특정 버전 및 이력 검색을 검증한다.
+
+```bash
+TEST_DATABASE_URL=postgresql://llm_wiki:llm_wiki@localhost:5432/llm_wiki uv run pytest -q tests/test_search_scope.py
+```

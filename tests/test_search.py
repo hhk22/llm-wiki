@@ -205,11 +205,13 @@ def test_hybrid_collects_wider_candidates_before_fusion(
     calls = []
     connection = RecordingConnection([])
 
-    def keywords(conn: Any, query: str, *, limit: int) -> list[SearchResult]:
+    def keywords(conn: Any, query: str, *, limit: int, scope) -> list[SearchResult]:
+        assert scope == search.SearchScope()
         calls.append((conn, query, limit))
         return [candidate("a"), candidate("b")]
 
-    def vectors(conn: Any, vector: Any, *, limit: int) -> list[SearchResult]:
+    def vectors(conn: Any, vector: Any, *, limit: int, scope) -> list[SearchResult]:
+        assert scope == search.SearchScope()
         calls.append((conn, vector, limit))
         return [candidate("b"), candidate("c")]
 

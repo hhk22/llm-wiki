@@ -86,9 +86,7 @@ def test_hybrid_requests_reach_service_and_preserve_original_query(path: str) ->
     service = FakeService()
     client = TestClient(create_app(service))
 
-    response = client.post(
-        path, json={"query": "E-008은?", "method": "hybrid", "top_k": 3}
-    )
+    response = client.post(path, json={"query": "E-008은?", "method": "hybrid", "top_k": 3})
 
     assert response.status_code == 200
     assert response.json()["method"] == "hybrid"
@@ -122,3 +120,45 @@ def test_wiki_service_embeds_original_query_once_and_routes_to_hybrid(
     assert api.WikiService().search("E-008은?", "hybrid", 3) == [search_result()]
     assert queries == ["E-008은?"]
     assert calls == [(connection, "E-008은?", [0.1, 0.2], 3)]
+
+
+@pytest.mark.parametrize(
+    ("query", "mode", "version"),
+    [
+        ("현재 프로덕션 배포 명령은?", "latest", None),
+        ("배포 가이드 v22의 금지 시간은?", "version", 22),
+        ("현재 배포 정책이 바뀐 계기는?", "all", None),
+    ],
+)
+def test_vector_service_passes_scope_and_preserves_embedding_query(
+    monkeypatch,
+    query,
+    mode,
+    version,
+):
+    connection = object()
+    embedded = []
+    scopes = []
+
+    class Provider:
+        def embed_query(self, text):
+            embedded.append(text)
+            return [0.1, 0.2]
+
+    def vectors(conn, vector, *, limit, scope):
+        assert conn is connection
+        assert vector == [0.1, 0.2]
+        assert limit == 3
+        scopes.append(scope)
+        return [search_result()]
+
+    monkeypatch.setenv("DATABASE_URL", "postgresql://test")
+    monkeypatch.setenv("GEMINI_API_KEY", "test-key")
+    monkeypatch.setattr(api, "connect_database", lambda settings: nullcontext(connection))
+    monkeypatch.setattr(api, "GeminiEmbeddingProvider", lambda settings: Provider())
+    monkeypatch.setattr(api, "vector_search", vectors)
+
+    assert api.WikiService().search(query, "vector", 3) == [search_result()]
+    assert embedded == [query]
+    assert scopes[0].mode == mode
+    assert scopes[0].version == version

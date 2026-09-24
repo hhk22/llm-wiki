@@ -18,6 +18,7 @@ from llm_wiki.search import (
     keyword_search,
     vector_search,
 )
+from llm_wiki.search_scope import infer_search_scope
 
 
 class QueryRequest(BaseModel):
@@ -91,7 +92,9 @@ class WikiService:
             query_vector = embed_query_with_retry(provider, query)
             if method == "hybrid":
                 return hybrid_search(connection, query, query_vector, limit=top_k)
-            return vector_search(connection, query_vector, limit=top_k)
+            return vector_search(
+                connection, query_vector, limit=top_k, scope=infer_search_scope(query)
+            )
 
     def answer(self, query: str, method: str, top_k: int) -> tuple[str, list[SearchResult]]:
         sources = self.search(query, method, top_k)

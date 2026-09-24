@@ -13,6 +13,7 @@ from llm_wiki.answering import GeminiAnswerProvider, GenerationSettings, answer_
 from llm_wiki.database import DatabaseSettings, connect_database
 from llm_wiki.embedding import EmbeddingSettings, GeminiEmbeddingProvider
 from llm_wiki.search import embed_query_with_retry, hybrid_search, keyword_search, vector_search
+from llm_wiki.search_scope import infer_search_scope
 
 
 def parse_args() -> argparse.Namespace:
@@ -36,7 +37,10 @@ def main() -> None:
             if args.method == "hybrid":
                 sources = hybrid_search(connection, args.query, query_vector, limit=args.top_k)
             else:
-                sources = vector_search(connection, query_vector, limit=args.top_k)
+                sources = vector_search(
+                    connection, query_vector, limit=args.top_k,
+                    scope=infer_search_scope(args.query),
+                )
 
     answer_provider = GeminiAnswerProvider(GenerationSettings.from_env())
     result = answer_with_retry(answer_provider, args.query, sources)
