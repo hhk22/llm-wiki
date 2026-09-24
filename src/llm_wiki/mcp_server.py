@@ -34,7 +34,7 @@ def create_mcp_server(client_factory: ApiClientFactory = WikiApiClient) -> MCPSe
         method: SearchMethod = "vector",
         top_k: int = 3,
     ) -> dict[str, Any]:
-        """Answer a question using retrieved wiki documents and include sources."""
+        """Answer from top_k wiki documents, with up to two source chunks per document."""
         return await client_factory().answer(query, method, top_k)
 
     return server

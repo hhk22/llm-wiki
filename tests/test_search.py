@@ -72,7 +72,7 @@ def test_keyword_search_maps_rows_and_uses_document_deduplication() -> None:
 
     assert results[0].document_id == "deploy-guide-v30"
     assert results[0].score == pytest.approx(0.8123)
-    assert connection.params == ("배포 금지 시간", 3)
+    assert connection.params == ("배포 금지 시간", 3, 1)
     assert "PARTITION BY document_id" in connection.query
 
 
@@ -100,7 +100,7 @@ def test_keyword_search_normalizes_only_standalone_error_code_particles(
 
     keyword_search(connection, query, limit=3)
 
-    assert connection.params == (expected, 3)
+    assert connection.params == (expected, 3, 1)
 
 
 def test_vector_query_embedding_preserves_error_code_particles() -> None:
@@ -117,7 +117,7 @@ def test_vector_search_serializes_vector_for_pgvector() -> None:
     results = vector_search(connection, [0.1, 0.2], limit=5)
 
     assert results[0].chunk_index == 1
-    assert connection.params == ("[0.1,0.2]", 5)
+    assert connection.params == ("[0.1,0.2]", 5, 1)
     assert "<=>" in connection.query
 
 
@@ -205,12 +205,16 @@ def test_hybrid_collects_wider_candidates_before_fusion(
     calls = []
     connection = RecordingConnection([])
 
-    def keywords(conn: Any, query: str, *, limit: int, scope) -> list[SearchResult]:
+    def keywords(
+        conn: Any, query: str, *, limit: int, scope, chunks_per_document
+    ) -> list[SearchResult]:
         assert scope == search.SearchScope()
         calls.append((conn, query, limit))
         return [candidate("a"), candidate("b")]
 
-    def vectors(conn: Any, vector: Any, *, limit: int, scope) -> list[SearchResult]:
+    def vectors(
+        conn: Any, vector: Any, *, limit: int, scope, chunks_per_document
+    ) -> list[SearchResult]:
         assert scope == search.SearchScope()
         calls.append((conn, vector, limit))
         return [candidate("b"), candidate("c")]
@@ -232,4 +236,52 @@ def test_keyword_baseline_evaluation_can_disable_normalization() -> None:
 
     keyword_search(connection, "E-008은?", normalize=False)
 
-    assert connection.params == ("E-008은?", 3)
+    assert connection.params == ("E-008은?", 3, 1)
+
+
+@pytest.mark.parametrize("count", [0, -1, 3])
+def test_retrieval_rejects_unsupported_chunk_limits(count):
+    connection = RecordingConnection([])
+    with pytest.raises(ValueError, match="chunks_per_document"):
+        keyword_search(connection, "test", chunks_per_document=count)
+    with pytest.raises(ValueError, match="chunks_per_document"):
+        vector_search(connection, [1.0], chunks_per_document=count)
+    with pytest.raises(ValueError, match="chunks_per_document"):
+        hybrid_search(connection, "test", [1.0], chunks_per_document=count)
+
+
+def test_hybrid_keeps_vector_chunks_and_keyword_only_fallback(monkeypatch):
+    keyword = [
+        candidate("a", chunk=0),
+        candidate("a", chunk=1),
+        candidate("b", chunk=0),
+        candidate("b", chunk=1),
+    ]
+    vector = [candidate("a", chunk=2), candidate("a", chunk=3)]
+    monkeypatch.setattr(search, "keyword_search", lambda *args, **kwargs: keyword)
+    monkeypatch.setattr(search, "vector_search", lambda *args, **kwargs: vector)
+
+    results = hybrid_search(RecordingConnection([]), "query", [1.0], chunks_per_document=2)
+
+    assert [(r.document_id, r.chunk_index) for r in results] == [
+        ("a", 2),
+        ("a", 3),
+        ("b", 0),
+        ("b", 1),
+    ]
+    assert results[0].score == results[1].score == pytest.approx(4 / 61)
+    assert results[2].score == results[3].score == pytest.approx(1 / 62)
+
+
+def test_weighted_rrf_changes_preference_and_counts_each_document_once():
+    a, b = candidate("a"), candidate("b")
+    results = fuse_rrf([a, b], [b, replace(b, chunk_index=1), a], vector_weight=3)
+    assert [r.document_id for r in results] == ["b", "a"]
+    assert results[0].score == pytest.approx(1 / 62 + 3 / 61)
+    assert results[1].score == pytest.approx(1 / 61 + 3 / 62)
+
+
+@pytest.mark.parametrize("weight", [0, -1, float("nan"), float("inf")])
+def test_rrf_rejects_invalid_weights(weight):
+    with pytest.raises(ValueError, match="weights"):
+        fuse_rrf([], [], vector_weight=weight)

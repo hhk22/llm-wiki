@@ -2,7 +2,7 @@
 
 가상 사내 문서로 RAG 검색의 기준선을 만들고, 검색 품질과 운영 문제를 단계적으로 개선하는 포트폴리오 프로젝트다.
 
-v1에서는 Markdown 문서 120개를 색인하고, 키워드·벡터 검색을 20개 질문으로 평가한 뒤 검색 결과에 출처를 붙여 답변한다. v2에서는 오류 코드 조사 보정과 hybrid 검색을 구현했다. 고정 20문항에서 hybrid Hit@3는 55%로 벡터의 70%보다 낮아 기본 검색은 벡터로 유지한다. 3단계 최신 버전 필터를 적용한 벡터의 문서 Hit@3는 95%(19/20)이며 기존 성공 문항은 유지됐다. 단, 최신 문서를 찾고도 답이 없는 요약 청크를 반환하는 사례 1건이 남았다.
+v1에서는 Markdown 문서 120개를 색인하고, 키워드·벡터 검색을 20개 질문으로 평가한 뒤 검색 결과에 출처를 붙여 답변한다. v2에서는 오류 코드 조사 보정과 hybrid 검색을 구현했다. 고정 20문항에서 hybrid Hit@3는 55%로 벡터의 70%보다 낮아 기본 검색은 벡터로 유지한다. 3단계 최신 버전 필터를 적용한 벡터의 문서 Hit@3는 95%(19/20)이며 기존 성공 문항은 유지됐다. 4단계에서는 답변에 문서당 최대 2개 청크를 전달해, 대표 청크 하나를 고를 때 빠지던 근거를 함께 제공한다.
 
 구현 과정과 측정 결과는 [RAG 기준선](./blogs/01-rag-baseline.md)과 [v2 검색 품질 실험](./blogs/02-search-quality.md)에 기록한다.
 
@@ -190,7 +190,7 @@ uv run python scripts/search.py "같은 서비스의 동시 배포를 어떻게 
 uv run python scripts/search.py "E-021 오류가 발생하면 어떤 설정을 확인해야 하나요?" --method hybrid
 ```
 
-키워드 검색은 PostgreSQL `tsvector`, 벡터 검색은 pgvector cosine similarity를 사용한다. 두 방식 모두 같은 문서의 여러 청크 중 점수가 가장 높은 하나만 남긴 뒤 문서 Top K를 반환한다. 키워드 검색에는 오류 코드의 조사 제거가 적용된다. Hybrid는 양쪽 문서 Top 10을 RRF(상수 60, 동일 가중치)로 결합하고, 동점은 문서 ID순으로 정렬한다. 두 후보에 있는 문서는 벡터 검색의 청크를 사용하며, hybrid 응답의 `score`는 RRF 점수다. CLI의 `--top-k`가 10보다 크면 양쪽 후보 수도 함께 늘린다.
+키워드 검색은 PostgreSQL `tsvector`, 벡터 검색은 pgvector cosine similarity를 사용한다. 검색 목록은 문서별 최고 점수 청크로 문서 Top K를 반환한다. 답변 생성은 같은 문서 순위를 유지하며 문서당 상위 청크를 최대 2개 전달한다. 키워드 검색에는 오류 코드의 조사 제거가 적용된다. Hybrid는 양쪽 문서 Top 10을 RRF(상수 60, 키워드 1 : 벡터 3)로 결합하고, 동점은 문서 ID순으로 정렬한다. 두 후보에 있는 문서는 벡터 검색의 청크를 사용하며, hybrid 응답의 `score`는 RRF 점수다. CLI의 `--top-k`가 10보다 크면 양쪽 후보 수도 함께 늘린다.
 
 현재 정책 여부는 명시적인 한국어 표현으로 판단한다. 예를 들어 `현재 프로덕션 배포 명령은 무엇인가요?`는 숫자 버전이 가장 큰 배포 가이드만 검색하며, `배포 가이드 v22의 금지 시간은?`는 v22를 검색한다. 최신 버전 번호는 DB에서 계산한다. `현재 배포 규칙이 바뀐 계기는?`는 과거 가이드와 장애 문서를 유지한다. 키워드·벡터·hybrid 및 API·MCP·CLI에 같은 조건이 적용되며 재색인은 필요 없다.
 
@@ -219,13 +219,34 @@ uv run python scripts/evaluate_filters.py --questions evaluation/filter-validati
 
 같은 질문 임베딩으로 keyword·vector·hybrid의 필터 전후 6개 변형을 비교한다. 고정 20문항 결과는 `evaluation/results-v2-filters.json`에, 별도 표현 6문항은 별도 파일에 저장한다. 문서 Hit@3는 벡터 14/20 → 19/20, hybrid 11/20 → 15/20이며 각각 기존 성공 문항의 퇴보는 없다. 최신 정책 5문항 중 실제 답을 포함한 청크는 4개로, 문서 적중과 근거 확보를 구분한다.
 
+### 4단계 근거 청크 수 비교
+
+```bash
+uv run python scripts/evaluate_evidence.py
+```
+
+고정 20문항에서 문서당 청크 1개·2개의 문서 순위와 기존 근거 보존 여부를 비교한다. 세 검색 방식 모두 문서 순위와 기존 대표 청크가 유지됐다. 별도로 최신 정책 5문항과 기존 성공 3문항을 답변 비교 대상으로 정했다. 같은 모델·프롬프트로 비교한 8문항의 전후 답변은 `evaluation/results-v2-evidence.json`에 저장했다. 문서 Hit@3와 실제 답변 내용은 구분해 확인한다. 티켓 질문은 근거 부족 응답에서 `--ticket <id>`를 인용하는 답변으로 바뀌었다. 호출 제한에 맞춰 생성 요청 간격을 16초 이상 두고 중간 결과를 저장하며, 중단 시 `--resume`으로 이어갈 수 있다.
+
+### 사례 2·3: 원인 장애 참조와 가중 RRF
+
+```bash
+uv run python scripts/evaluate_followups.py
+uv run python scripts/check_followup_answers.py
+```
+
+첫 명령은 저장된 20문항의 검색 후보와 현재 DB로 참조 보강·가중치 효과를 분리 평가하며 Gemini를 호출하지 않는다. 두 번째 명령은 5개 실패 사례의 질문 임베딩과 답변을 실제 호출해 전후 비교한다. 생성 호출은 16초 간격으로 실행하고 `--resume`으로 중간 저장 결과부터 이어갈 수 있다.
+
+정책 변경 이유·계기를 묻는 질문은 검색된 최상위 가이드의 `이유:` 줄에서 명시한 장애 문서를 한 번 조회해 가이드 바로 뒤에 넣는다. 결과는 여전히 문서 Top K 이내이며, 없는 참조는 건너뛴다. 이 방식으로 추가된 근거는 `reference_from`에 가이드 ID를 담고, 검색 점수가 아닌 참조 조회이므로 `score=0`을 사용한다. 일반 검색 결과의 `reference_from`은 `null`이다. 참조로 추가하는 장애 문서의 청크는 원문 순서로 최대 2개를 가져온다.
+
+저장 후보 재평가에서 벡터 + 참조는 문서 Hit@3 19/20 → 20/20이었다. 참조를 제외한 가중 hybrid는 15/20 → 19/20으로 올랐지만, E-021의 1위 퇴보로 Hit@1은 11/15 → 10/15였다. 기본 검색은 벡터이며, 이 결과는 개발용 질문 세트의 검색 평가다.
+
 ## 출처 기반 답변
 
 ```bash
 uv run python scripts/answer.py "배포 가이드 v22에서 변경된 배포 금지 시간은 언제인가요?"
 ```
 
-기본값은 벡터 검색이며 `--method hybrid`로 비교할 수 있다. 검색 Top 3를 Gemini에 전달하고, 근거 번호가 포함된 답변과 실제 출처 목록을 함께 출력한다. 검색 결과가 없으면 모델을 호출하지 않으며, 전달된 문서에 근거가 없으면 답변할 수 없다고 응답하도록 제한한다.
+기본값은 벡터 검색이며 `--method hybrid`로 비교할 수 있다. 검색한 문서 Top 3에서 문서당 상위 청크를 최대 2개씩 Gemini에 전달하고, 하나의 답변과 청크별 근거 번호를 출력한다. `/search`·`search_wiki`는 문서당 대표 청크 1개, `/answer`·`ask_wiki`는 문서당 최대 2개를 반환한다. `top_k`는 문서 수이므로 기본 답변의 `sources`는 최대 6개다. CLI에서 `--chunks-per-document 1`을 지정하면 이전 방식과 비교할 수 있다. 검색 결과가 없으면 모델을 호출하지 않으며, 전달된 문서에 근거가 없으면 답변할 수 없다고 응답하도록 제한한다.
 
 ## API와 MCP
 
@@ -293,7 +314,7 @@ search_wiki 도구로 E-021 오류 대응 문서를 3개 찾아줘.
 Codex
 → ask_wiki(query, method="vector", top_k=3)
 → POST /answer
-→ 벡터 검색 Top 3 + Gemini 답변 생성
+→ 벡터 검색 문서 Top 3 → 문서당 최대 2개 청크 + Gemini 답변 생성
 → 답변과 출처 반환
 ```
 
@@ -311,7 +332,7 @@ Codex
 
 ```bash
 uv run pytest -q
-uv run ruff check scripts/check_embedding.py scripts/preview_chunks.py scripts/init_db.py scripts/ingest.py scripts/verify_storage.py scripts/search.py scripts/evaluate.py scripts/evaluate_filters.py scripts/answer.py scripts/serve_api.py scripts/mcp_server.py src tests
+uv run ruff check scripts/check_embedding.py scripts/preview_chunks.py scripts/init_db.py scripts/ingest.py scripts/verify_storage.py scripts/search.py scripts/evaluate.py scripts/evaluate_filters.py scripts/evaluate_evidence.py scripts/evaluate_followups.py scripts/check_followup_answers.py scripts/answer.py scripts/serve_api.py scripts/mcp_server.py src tests
 ```
 
 테스트는 임베딩·청킹·색인·검색·Hit@K·출처 답변과 API·MCP 연결을 확인한다.

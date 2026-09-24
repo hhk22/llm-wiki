@@ -107,7 +107,8 @@ def test_wiki_service_embeds_original_query_once_and_routes_to_hybrid(
             queries.append(query)
             return [0.1, 0.2]
 
-    def hybrid(conn, query, vector, *, limit):
+    def hybrid(conn, query, vector, *, limit, chunks_per_document):
+        assert chunks_per_document == 1
         calls.append((conn, query, vector, limit))
         return [search_result()]
 
@@ -145,7 +146,8 @@ def test_vector_service_passes_scope_and_preserves_embedding_query(
             embedded.append(text)
             return [0.1, 0.2]
 
-    def vectors(conn, vector, *, limit, scope):
+    def vectors(conn, vector, *, limit, scope, chunks_per_document):
+        assert chunks_per_document == 1
         assert conn is connection
         assert vector == [0.1, 0.2]
         assert limit == 3
@@ -157,8 +159,44 @@ def test_vector_service_passes_scope_and_preserves_embedding_query(
     monkeypatch.setattr(api, "connect_database", lambda settings: nullcontext(connection))
     monkeypatch.setattr(api, "GeminiEmbeddingProvider", lambda settings: Provider())
     monkeypatch.setattr(api, "vector_search", vectors)
+    monkeypatch.setattr(api, "follow_causal_reference", lambda conn, query, results, **kw: results)
 
     assert api.WikiService().search(query, "vector", 3) == [search_result()]
     assert embedded == [query]
     assert scopes[0].mode == mode
     assert scopes[0].version == version
+
+
+@pytest.mark.parametrize("method", ["keyword", "vector", "hybrid"])
+def test_answer_uses_two_chunks_per_document_and_returns_numbered_sources(monkeypatch, method):
+    from dataclasses import replace
+
+    from llm_wiki.answering import build_grounded_prompt
+
+    chunks = [replace(search_result(), chunk_index=0, content="변경 없음."), search_result()]
+    calls = []
+
+    def retrieve(self, query, selected_method, top_k, *, chunks_per_document=1):
+        calls.append((selected_method, top_k, chunks_per_document))
+        return chunks
+
+    class Provider:
+        def generate(self, query, sources):
+            assert sources == chunks
+            prompt = build_grounded_prompt(query, sources)
+            assert "[1] document_id=deploy-guide-v30" in prompt
+            assert "[2] document_id=deploy-guide-v30" in prompt
+            assert "변경 없음." in prompt and "배포 금지 시간: 목요일 오후" in prompt
+            return "목요일 오후입니다. [2]"
+
+    monkeypatch.setenv("GEMINI_API_KEY", "test-key")
+    monkeypatch.setattr(api.WikiService, "search", retrieve)
+    monkeypatch.setattr(api, "GeminiAnswerProvider", lambda settings: Provider())
+    client = TestClient(create_app(api.WikiService()))
+    response = client.post(
+        "/answer", json={"query": "현재 배포 금지 시간은?", "method": method, "top_k": 1}
+    )
+    assert response.status_code == 200
+    assert calls == [(method, 1, 2)]
+    assert response.json()["answer"] == "목요일 오후입니다. [2]"
+    assert [r["chunk_index"] for r in response.json()["sources"]] == [0, 1]

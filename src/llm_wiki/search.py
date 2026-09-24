@@ -2,6 +2,7 @@
 
 from __future__ import annotations
 
+import math
 import re
 import time
 from collections.abc import Callable, Sequence
@@ -14,6 +15,8 @@ from llm_wiki.search_scope import SearchScope, infer_search_scope, scope_sql
 SearchMethod = Literal["keyword", "vector", "hybrid"]
 HYBRID_CANDIDATE_LIMIT = 10
 RRF_K = 60
+HYBRID_VECTOR_WEIGHT = 3.0
+ANSWER_CHUNKS_PER_DOCUMENT = 2
 
 ERROR_CODE_PARTICLE = re.compile(
     r"(?<![\w-])(E-\d{3})(?:에서는|에서|으로|은|는|이|가|을|를|의|과|와|도|로)"
@@ -59,20 +62,26 @@ WITH query_terms AS (
             ORDER BY score DESC, chunk_index ASC
         ) AS document_row
     FROM scored
+), top_documents AS (
+    SELECT document_id, score
+    FROM document_rank
+    WHERE document_row = 1
+    ORDER BY score DESC, document_id ASC
+    LIMIT %s
 )
 SELECT
-    document_id,
-    chunk_index,
-    title,
-    topic,
-    version,
-    heading_path,
-    content,
-    score
-FROM document_rank
-WHERE document_row = 1
-ORDER BY score DESC, document_id ASC
-LIMIT %s
+    r.document_id,
+    r.chunk_index,
+    r.title,
+    r.topic,
+    r.version,
+    r.heading_path,
+    r.content,
+    r.score
+FROM document_rank r
+JOIN top_documents t ON t.document_id = r.document_id
+WHERE r.document_row <= %s
+ORDER BY t.score DESC, r.document_id ASC, r.document_row ASC
 """
 
 VECTOR_SEARCH_SQL = """
@@ -100,20 +109,26 @@ WITH search_vector AS (
             ORDER BY score DESC, chunk_index ASC
         ) AS document_row
     FROM scored
+), top_documents AS (
+    SELECT document_id, score
+    FROM document_rank
+    WHERE document_row = 1
+    ORDER BY score DESC, document_id ASC
+    LIMIT %s
 )
 SELECT
-    document_id,
-    chunk_index,
-    title,
-    topic,
-    version,
-    heading_path,
-    content,
-    score
-FROM document_rank
-WHERE document_row = 1
-ORDER BY score DESC, document_id ASC
-LIMIT %s
+    r.document_id,
+    r.chunk_index,
+    r.title,
+    r.topic,
+    r.version,
+    r.heading_path,
+    r.content,
+    r.score
+FROM document_rank r
+JOIN top_documents t ON t.document_id = r.document_id
+WHERE r.document_row <= %s
+ORDER BY t.score DESC, r.document_id ASC, r.document_row ASC
 """
 
 
@@ -135,6 +150,7 @@ class SearchResult:
     heading_path: str
     content: str
     score: float
+    reference_from: str | None = None
 
 
 def normalize_keyword_query(query: str) -> str:
@@ -149,16 +165,19 @@ def keyword_search(
     limit: int = 3,
     normalize: bool = True,
     scope: SearchScope | None = None,
+    chunks_per_document: int = 1,
 ) -> list[SearchResult]:
-    """Search one chunk per document; disable normalization only for baseline evaluation."""
+    """Select Top K documents, then up to N matching chunks per document."""
     query = _validate_query(query)
     scope = scope if scope is not None else infer_search_scope(query)
     if normalize:
         query = normalize_keyword_query(query)
     limit = _validate_limit(limit)
+    chunks_per_document = _validate_chunks_per_document(chunks_per_document)
     predicate, params = scope_sql(scope if scope is not None else SearchScope())
     rows = connection.execute(
-        KEYWORD_SEARCH_SQL.format(document_filter=predicate), (query, *params, limit)
+        KEYWORD_SEARCH_SQL.format(document_filter=predicate),
+        (query, *params, limit, chunks_per_document),
     ).fetchall()
     return [_row_to_result(row) for row in rows]
 
@@ -169,15 +188,17 @@ def vector_search(
     *,
     limit: int = 3,
     scope: SearchScope | None = None,
+    chunks_per_document: int = 1,
 ) -> list[SearchResult]:
-    """Rank document chunks by cosine similarity, returning one chunk per document."""
+    """Select Top K documents by best cosine score, retaining up to N chunks each."""
     if not query_vector:
         raise ValueError("query_vector must not be empty.")
     limit = _validate_limit(limit)
+    chunks_per_document = _validate_chunks_per_document(chunks_per_document)
     predicate, params = scope_sql(scope if scope is not None else SearchScope())
     rows = connection.execute(
         VECTOR_SEARCH_SQL.format(document_filter=predicate),
-        (_serialize_vector(query_vector), *params, limit),
+        (_serialize_vector(query_vector), *params, limit, chunks_per_document),
     ).fetchall()
     return [_row_to_result(row) for row in rows]
 
@@ -188,22 +209,27 @@ def fuse_rrf(
     *,
     limit: int = 3,
     rrf_k: int = RRF_K,
+    keyword_weight: float = 1.0,
+    vector_weight: float = 1.0,
 ) -> list[SearchResult]:
-    """Fuse document ranks equally, preferring the vector source chunk on overlap."""
+    """Fuse weighted document ranks; equal weights remain the historical baseline."""
     limit = _validate_limit(limit)
     if rrf_k < 1:
         raise ValueError("rrf_k must be at least 1.")
 
+    if any(not math.isfinite(w) or w <= 0 for w in (keyword_weight, vector_weight)):
+        raise ValueError("RRF weights must be finite and positive.")
+
     scores: dict[str, float] = {}
     representatives: dict[str, SearchResult] = {}
-    for results in (keyword_results, vector_results):
+    for results, weight in ((keyword_results, keyword_weight), (vector_results, vector_weight)):
         seen: set[str] = set()
         for result in results:
             document_id = result.document_id
             if document_id in seen:
                 continue
             seen.add(document_id)
-            scores[document_id] = scores.get(document_id, 0.0) + 1 / (rrf_k + len(seen))
+            scores[document_id] = scores.get(document_id, 0.0) + weight / (rrf_k + len(seen))
             representatives[document_id] = result
 
     ranked_ids = sorted(scores, key=lambda document_id: (-scores[document_id], document_id))
@@ -220,6 +246,8 @@ def hybrid_search(
     *,
     limit: int = 3,
     scope: SearchScope | None = None,
+    chunks_per_document: int = 1,
+    vector_weight: float = HYBRID_VECTOR_WEIGHT,
 ) -> list[SearchResult]:
     """Fuse the top ten documents per method, widening for larger requested limits."""
     query = _validate_query(query)
@@ -228,9 +256,38 @@ def hybrid_search(
         raise ValueError("query_vector must not be empty.")
     candidate_limit = max(HYBRID_CANDIDATE_LIMIT, limit)
     scope = scope if scope is not None else infer_search_scope(query)
-    keyword_results = keyword_search(connection, query, limit=candidate_limit, scope=scope)
-    vector_results = vector_search(connection, query_vector, limit=candidate_limit, scope=scope)
-    return fuse_rrf(keyword_results, vector_results, limit=limit)
+    chunks_per_document = _validate_chunks_per_document(chunks_per_document)
+    keyword_results = keyword_search(
+        connection,
+        query,
+        limit=candidate_limit,
+        scope=scope,
+        chunks_per_document=chunks_per_document,
+    )
+    vector_results = vector_search(
+        connection,
+        query_vector,
+        limit=candidate_limit,
+        scope=scope,
+        chunks_per_document=chunks_per_document,
+    )
+    documents = fuse_rrf(keyword_results, vector_results, limit=limit, vector_weight=vector_weight)
+    if chunks_per_document == 1:
+        return documents
+
+    # RRF ranks documents once, irrespective of their number of chunks.
+    # Use the same source preference as fuse_rrf: vector, otherwise keyword.
+    evidence: dict[str, list[SearchResult]] = {}
+    for results in (keyword_results, vector_results):
+        grouped: dict[str, list[SearchResult]] = {}
+        for result in results:
+            grouped.setdefault(result.document_id, []).append(result)
+        evidence.update(grouped)
+    return [
+        replace(chunk, score=document.score)
+        for document in documents
+        for chunk in evidence[document.document_id][:chunks_per_document]
+    ]
 
 
 def embed_query_with_retry(
@@ -282,3 +339,9 @@ def _validate_limit(limit: int) -> int:
 
 def _serialize_vector(vector: Sequence[float]) -> str:
     return "[" + ",".join(repr(value) for value in vector) + "]"
+
+
+def _validate_chunks_per_document(value: int) -> int:
+    if value not in (1, 2):
+        raise ValueError("chunks_per_document must be 1 or 2.")
+    return value

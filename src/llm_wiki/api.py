@@ -10,7 +10,9 @@ from pydantic import BaseModel, Field, field_validator
 from llm_wiki.answering import GeminiAnswerProvider, GenerationSettings, answer_with_retry
 from llm_wiki.database import DatabaseSettings, connect_database
 from llm_wiki.embedding import EmbeddingSettings, GeminiEmbeddingProvider
+from llm_wiki.references import follow_causal_reference
 from llm_wiki.search import (
+    ANSWER_CHUNKS_PER_DOCUMENT,
     SearchMethod,
     SearchResult,
     embed_query_with_retry,
@@ -42,6 +44,7 @@ class SearchItem(BaseModel):
     heading_path: str
     content: str
     score: float
+    reference_from: str | None = None
 
     @classmethod
     def from_result(cls, result: SearchResult) -> SearchItem:
@@ -52,6 +55,7 @@ class SearchItem(BaseModel):
             heading_path=result.heading_path,
             content=result.content,
             score=result.score,
+            reference_from=result.reference_from,
         )
 
 
@@ -83,21 +87,56 @@ class WikiService:
         with connect_database(DatabaseSettings.from_env()) as connection:
             connection.execute("SELECT 1").fetchone()
 
-    def search(self, query: str, method: str, top_k: int) -> list[SearchResult]:
+    def search(
+        self,
+        query: str,
+        method: str,
+        top_k: int,
+        *,
+        chunks_per_document: int = 1,
+    ) -> list[SearchResult]:
         with connect_database(DatabaseSettings.from_env()) as connection:
             if method == "keyword":
-                return keyword_search(connection, query, limit=top_k)
-
-            provider = GeminiEmbeddingProvider(EmbeddingSettings.from_env())
-            query_vector = embed_query_with_retry(provider, query)
-            if method == "hybrid":
-                return hybrid_search(connection, query, query_vector, limit=top_k)
-            return vector_search(
-                connection, query_vector, limit=top_k, scope=infer_search_scope(query)
+                results = keyword_search(
+                    connection,
+                    query,
+                    limit=top_k,
+                    chunks_per_document=chunks_per_document,
+                )
+            else:
+                provider = GeminiEmbeddingProvider(EmbeddingSettings.from_env())
+                query_vector = embed_query_with_retry(provider, query)
+                if method == "hybrid":
+                    results = hybrid_search(
+                        connection,
+                        query,
+                        query_vector,
+                        limit=top_k,
+                        chunks_per_document=chunks_per_document,
+                    )
+                else:
+                    results = vector_search(
+                        connection,
+                        query_vector,
+                        limit=top_k,
+                        scope=infer_search_scope(query),
+                        chunks_per_document=chunks_per_document,
+                    )
+            return follow_causal_reference(
+                connection,
+                query,
+                results,
+                limit=top_k,
+                chunks_per_document=chunks_per_document,
             )
 
     def answer(self, query: str, method: str, top_k: int) -> tuple[str, list[SearchResult]]:
-        sources = self.search(query, method, top_k)
+        sources = self.search(
+            query,
+            method,
+            top_k,
+            chunks_per_document=ANSWER_CHUNKS_PER_DOCUMENT,
+        )
         provider = GeminiAnswerProvider(GenerationSettings.from_env())
         result = answer_with_retry(provider, query, sources)
         return result.answer, list(result.sources)

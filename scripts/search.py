@@ -11,6 +11,7 @@ from dotenv import load_dotenv
 
 from llm_wiki.database import DatabaseSettings, connect_database
 from llm_wiki.embedding import EmbeddingSettings, GeminiEmbeddingProvider
+from llm_wiki.references import follow_causal_reference
 from llm_wiki.search import embed_query_with_retry, hybrid_search, keyword_search, vector_search
 from llm_wiki.search_scope import infer_search_scope
 
@@ -37,9 +38,19 @@ def main() -> None:
                 results = hybrid_search(connection, args.query, query_vector, limit=args.top_k)
             else:
                 results = vector_search(
-                    connection, query_vector, limit=args.top_k,
+                    connection,
+                    query_vector,
+                    limit=args.top_k,
                     scope=infer_search_scope(args.query),
                 )
+
+        results = follow_causal_reference(
+            connection,
+            args.query,
+            results,
+            limit=args.top_k,
+            chunks_per_document=1,
+        )
 
     print(f"method={args.method}")
     print(f"query={args.query}")

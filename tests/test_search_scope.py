@@ -1,11 +1,13 @@
 from __future__ import annotations
 
 import os
+from dataclasses import replace
 
 import psycopg
 import pytest
 
-from llm_wiki.search import hybrid_search, keyword_search, vector_search
+from llm_wiki.references import follow_causal_reference
+from llm_wiki.search import SearchResult, hybrid_search, keyword_search, vector_search
 from llm_wiki.search_scope import SearchScope, infer_search_scope
 
 
@@ -93,3 +95,118 @@ def test_history_preserves_older_guides_and_other_topics(database):
     assert {"guide-9", "guide-30", "faq"} <= {r.document_id for r in results}
     database.execute("DELETE FROM documents WHERE topic = 'deploy-guide'")
     assert vector_search(database, [1, 0], scope=SearchScope("latest")) == []
+
+
+@pytest.mark.parametrize("method", ["keyword", "vector", "hybrid"])
+def test_two_chunks_preserve_document_order_and_do_not_consume_document_slots(database, method):
+    for index in (1, 2):
+        database.execute(
+            """INSERT INTO chunks VALUES (%s, %s, '배포 규칙', '배포 배포 명령',
+            to_tsvector('simple', '배포 배포 명령'), '[1,0]'::vector)""",
+            ("guide-30", index),
+        )
+
+    def retrieve(count, scope):
+        options = {"limit": 3, "scope": scope, "chunks_per_document": count}
+        if method == "keyword":
+            return keyword_search(database, "배포 명령", **options)
+        if method == "vector":
+            return vector_search(database, [1, 0], **options)
+        return hybrid_search(database, "배포 명령", [1, 0], **options)
+
+    before = retrieve(1, SearchScope())
+    after = retrieve(2, SearchScope())
+    doc_ids = list(dict.fromkeys(r.document_id for r in after))
+    assert doc_ids == [r.document_id for r in before]
+    assert len(doc_ids) == 3
+    for document in before:
+        chunks = [r for r in after if r.document_id == document.document_id]
+        assert 1 <= len(chunks) <= 2
+        assert chunks[0] == document
+        assert len({r.chunk_index for r in chunks}) == len(chunks)
+    # Highest two chunks tie: chunk_index remains the stable secondary order.
+    latest = retrieve(2, SearchScope("latest"))
+    assert [(r.document_id, r.chunk_index) for r in latest] == [
+        ("guide-30", 1),
+        ("guide-30", 2),
+    ]
+    assert retrieve(2, SearchScope("version", 999)) == []
+
+
+def result(doc, topic="deploy-guide", chunk=0):
+    return SearchResult(doc, chunk, doc, topic, None, "", "content", 0.8)
+
+
+def prepare(database, *, exists=True, content="- 이유: 장애 리포트 #18 이후 결정"):
+    database.execute("UPDATE chunks SET content = %s WHERE document_id = %s", (content, "guide-30"))
+    if exists:
+        add_document(database, "incident-18", "incidents", None)
+    return [result("guide-30"), result("faq", "faq"), result("guide-9")]
+
+
+def test_causal_reference_adds_missing_incident_without_answer_id_lookup(database):
+    before = prepare(database)
+    after = follow_causal_reference(database, "배포 규칙이 바뀐 계기는?", before)
+    assert [r.document_id for r in after] == ["guide-30", "incident-18", "faq"]
+    assert after[0] == before[0]
+    assert after[1].reference_from == "guide-30"
+    assert after[1].score == 0
+
+
+@pytest.mark.parametrize(
+    "query",
+    [
+        "현재 배포 명령은?",
+        "배포 가이드 v9의 규칙은?",
+        "장애 리포트 #18의 원인과 배포 조치는?",
+        "E-021 배포 오류의 이유는?",
+    ],
+)
+def test_non_policy_cause_queries_do_not_follow_links(database, query):
+    before = prepare(database)
+    assert follow_causal_reference(database, query, before) == before
+
+
+@pytest.mark.parametrize(
+    "content",
+    [
+        "- 관련 장애: 장애 리포트 #18",
+        "- 이유: 링크 없음",
+        "- 이전 버전: 배포 가이드 v9",
+    ],
+)
+def test_only_explicit_reason_line_is_followed(database, content):
+    before = prepare(database, content=content)
+    assert follow_causal_reference(database, "배포 규칙 변경 이유는?", before) == before
+
+
+def test_missing_reference_target_leaves_results_unchanged(database):
+    before = prepare(database, exists=False)
+    assert follow_causal_reference(database, "배포 규칙 변경 이유는?", before) == before
+
+
+def test_existing_reference_and_top_one_leave_results_unchanged(database):
+    before = prepare(database)
+    existing = [before[0], result("incident-18", "incidents"), before[1]]
+    assert follow_causal_reference(database, "배포 규칙 변경 이유는?", existing) == existing
+    assert (
+        follow_causal_reference(database, "배포 규칙 변경 이유는?", before[:1], limit=1)
+        == before[:1]
+    )
+
+
+def test_reference_expansion_preserves_chunk_groups_and_follows_only_one_hop(database):
+    before = prepare(database)
+    database.execute(
+        "UPDATE chunks SET content = '- 이유: 장애 리포트 #19' WHERE document_id = 'incident-18'"
+    )
+    add_document(database, "incident-19", "incidents", None)
+    expanded = [before[0], replace(before[0], chunk_index=1), *before[1:]]
+    after = follow_causal_reference(
+        database, "배포 변경 이유는?", expanded, limit=2, chunks_per_document=2
+    )
+    assert [(r.document_id, r.chunk_index) for r in after] == [
+        ("guide-30", 0),
+        ("guide-30", 1),
+        ("incident-18", 0),
+    ]
