@@ -2,6 +2,7 @@
 
 from __future__ import annotations
 
+import re
 import time
 from collections.abc import Callable, Sequence
 from dataclasses import dataclass
@@ -10,6 +11,12 @@ from typing import Any, Literal, Protocol
 from llm_wiki.embedding import EmbeddingRequestError
 
 SearchMethod = Literal["keyword", "vector"]
+
+ERROR_CODE_PARTICLE = re.compile(
+    r"(?<![\w-])(E-\d{3})(?:에서는|에서|으로|은|는|이|가|을|를|의|과|와|도|로)"
+    r"(?=$|[\s,.?!])",
+    re.IGNORECASE,
+)
 
 KEYWORD_SEARCH_SQL = """
 WITH query_terms AS (
@@ -126,6 +133,11 @@ class SearchResult:
     score: float
 
 
+def normalize_keyword_query(query: str) -> str:
+    """Remove known Korean particles attached to standalone error codes."""
+    return ERROR_CODE_PARTICLE.sub(r"\1", query)
+
+
 def keyword_search(
     connection: SearchReader,
     query: str,
@@ -133,7 +145,7 @@ def keyword_search(
     limit: int = 3,
 ) -> list[SearchResult]:
     """Search title, heading and content lexemes, returning one chunk per document."""
-    query = _validate_query(query)
+    query = normalize_keyword_query(_validate_query(query))
     limit = _validate_limit(limit)
     rows = connection.execute(KEYWORD_SEARCH_SQL, (query, limit)).fetchall()
     return [_row_to_result(row) for row in rows]

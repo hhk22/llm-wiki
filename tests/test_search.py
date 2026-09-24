@@ -33,9 +33,11 @@ class FlakyQueryProvider:
         self.failures = failures
         self.retryable = retryable
         self.calls = 0
+        self.queries: list[str] = []
 
     def embed_query(self, query: str) -> list[float]:
         self.calls += 1
+        self.queries.append(query)
         if self.calls <= self.failures:
             raise EmbeddingRequestError("temporary", retryable=self.retryable)
         return [0.1, 0.2]
@@ -63,6 +65,41 @@ def test_keyword_search_maps_rows_and_uses_document_deduplication() -> None:
     assert results[0].score == pytest.approx(0.8123)
     assert connection.params == ("배포 금지 시간", 3)
     assert "PARTITION BY document_id" in connection.query
+
+
+@pytest.mark.parametrize(
+    ("query", "expected"),
+    [
+        ("E-008은 어떤 오류인가요?", "E-008 어떤 오류인가요?"),
+        ("e-008에서는 어떤 설정을 확인하나요?", "e-008 어떤 설정을 확인하나요?"),
+        ("E-008과 관련된 장애는?", "E-008 관련된 장애는?"),
+        ("E-008은, E-021과 어떤 차이가 있나요?", "E-008, E-021 어떤 차이가 있나요?"),
+        ("E-008은?", "E-008?"),
+        ("  E-008은  ", "E-008"),
+        ("E-021 오류 대응 방법", "E-021 오류 대응 방법"),
+        ("커넥션은 언제 반환하나요?", "커넥션은 언제 반환하나요?"),
+        ("E-0080은 어떤 오류인가요?", "E-0080은 어떤 오류인가요?"),
+        ("SERVICE-E-008은 어떤 코드인가요?", "SERVICE-E-008은 어떤 코드인가요?"),
+        ("E-008은하 설정", "E-008은하 설정"),
+        ("v22에서 Q10의 규칙 확인", "v22에서 Q10의 규칙 확인"),
+    ],
+)
+def test_keyword_search_normalizes_only_standalone_error_code_particles(
+    query: str, expected: str
+) -> None:
+    connection = RecordingConnection([])
+
+    keyword_search(connection, query, limit=3)
+
+    assert connection.params == (expected, 3)
+
+
+def test_vector_query_embedding_preserves_error_code_particles() -> None:
+    provider = FlakyQueryProvider(failures=0)
+
+    embed_query_with_retry(provider, "E-008은 어떤 오류인가요?")
+
+    assert provider.queries == ["E-008은 어떤 오류인가요?"]
 
 
 def test_vector_search_serializes_vector_for_pgvector() -> None:
