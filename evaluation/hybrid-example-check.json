@@ -1,0 +1,820 @@
+{
+  "purpose": "Exploratory examples requested after the fixed 20-question evaluation; all four checked queries are retained. Not a held-out quality estimate.",
+  "candidate_limit_per_method": 10,
+  "rrf_k": 60,
+  "rrf_weights": {
+    "keyword": 1,
+    "vector": 1
+  },
+  "keyword_normalization": "Known Korean particles on error codes removed",
+  "embedding_model": "gemini-embedding-2",
+  "embedding_dimensions": 768,
+  "summary": [
+    {
+      "query": "저장소 이전 후 배포 권한 오류 E-021이 발생하면 어떻게 해결하나요?",
+      "expected_document_id": "error-E-021",
+      "expected_document_ranks": {
+        "keyword": 1,
+        "vector": 1,
+        "hybrid": 1
+      }
+    },
+    {
+      "query": "같은 서비스의 배포가 겹칠 때 발생하는 E-025는 어떻게 막나요?",
+      "expected_document_id": "error-E-025",
+      "expected_document_ranks": {
+        "keyword": 2,
+        "vector": 1,
+        "hybrid": 1
+      }
+    },
+    {
+      "query": "DB 연결을 얻지 못하는 E-008 오류는 어떤 설정을 확인해야 하나요?",
+      "expected_document_id": "error-E-008",
+      "expected_document_ranks": {
+        "keyword": 1,
+        "vector": 1,
+        "hybrid": 1
+      }
+    },
+    {
+      "query": "Pod가 준비되지 않아 E-015가 발생하면 무엇을 확인하나요?",
+      "expected_document_id": "error-E-015",
+      "expected_document_ranks": {
+        "keyword": 1,
+        "vector": 1,
+        "hybrid": 1
+      }
+    }
+  ],
+  "queries": [
+    {
+      "query": "저장소 이전 후 배포 권한 오류 E-021이 발생하면 어떻게 해결하나요?",
+      "expected_document_id": "error-E-021",
+      "results": {
+        "keyword": [
+          {
+            "document_id": "error-E-021",
+            "chunk_index": 0,
+            "content": "- 발생 위치: 배포 (GitHub Actions)\n- 의미: 워크플로에 배포 권한이 없다.\n- 원인: `deployments: write` 권한 누락. 저장소 생성·이전 시 자주 발생.\n- 대응: 워크플로 권한 설정을 확인한다.\n- 관련 장애: 장애 리포트 #12, #13, #17",
+            "score": 5.4
+          },
+          {
+            "document_id": "error-E-025",
+            "chunk_index": 0,
+            "content": "- 발생 위치: 배포 (GitHub Actions)\n- 의미: 같은 서비스에 두 배포가 동시에 실행됐다.\n- 원인: 배포 잠금 부재.\n- 대응: 한 버전으로 재배포한다. 배포 가이드 v23에서 잠금이 도입됐다.\n- 관련 장애: 장애 리포트 #20",
+            "score": 3.4
+          },
+          {
+            "document_id": "error-E-030",
+            "chunk_index": 0,
+            "content": "- 발생 위치: 배포\n- 의미: 배포 금지 시간에 배포를 시도했다.\n- 원인: 배포 가이드 최신 버전의 금지 시간 미확인.\n- 대응: 금지 시간이 끝난 뒤 배포한다.\n- 관련 장애: 장애 리포트 #26",
+            "score": 3.4
+          },
+          {
+            "document_id": "error-E-017",
+            "chunk_index": 0,
+            "content": "- 발생 위치: 배포 (Jenkins)\n- 의미: 배포가 제한 시간 안에 끝나지 않았다.\n- 원인: 느린 롤아웃, 타임아웃 설정 부족.\n- 대응: 타임아웃 설정을 확인한다. 배포 가이드 v4에서 20분으로 늘렸다.",
+            "score": 3.2
+          },
+          {
+            "document_id": "error-E-006",
+            "chunk_index": 0,
+            "content": "- 발생 위치: api-gateway\n- 의미: 사용자 역할에 해당 API 권한이 없다.\n- 원인: 역할 매핑 누락 또는 잘못된 매핑 배포.\n- 대응: 역할 매핑 설정을 확인한다.\n- 관련 장애: 장애 리포트 #27",
+            "score": 3.0
+          },
+          {
+            "document_id": "faq-q07",
+            "chunk_index": 0,
+            "content": "**Q. 배포할 때 E-021이 뜨면 어떻게 하나요?**\n\n워크플로 권한 부족이다. 저장소의 워크플로 권한에 `deployments: write`가 있는지 확인한다.\n\n- 관련 문서: 에러 코드 E-021, 장애 리포트 #12",
+            "score": 3.0
+          },
+          {
+            "document_id": "deploy-guide-v02",
+            "chunk_index": 1,
+            "content": "- 배포 도구: Jenkins\n- 배포 명령: Jenkins job `deploy-staging` → `deploy-prod` 순서로 실행\n- 롤백 명령: 이전 빌드를 `deploy-prod`로 재실행\n- 배포 금지 시간: 없음\n- 승인자: 팀 리드\n- 이전 버전: 배포 가이드 v1",
+            "score": 2.6
+          },
+          {
+            "document_id": "deploy-guide-v03",
+            "chunk_index": 1,
+            "content": "-  배포 도구: Jenkins\n- 배포 명령: Jenkins job `deploy-staging` → `deploy-prod` 순서로 실행\n- 롤백 명령: 이전 빌드를`deploy-prod`로 재실행\n- 배포 금지 시간: 없음\n- 승인자: 팀 리드\n- 이전 버전: 배포 가이드 v2",
+            "score": 2.6
+          },
+          {
+            "document_id": "deploy-guide-v04",
+            "chunk_index": 1,
+            "content": "- 배포 도구: Jenkins\n- 배포 명령: Jenkins job `deploy-staging` → `deploy-prod` 순서로 실행\n- 롤백 명령: 이전 빌드를 `deploy-prod`로 재실행\n- 배포 금지 시간: 없음\n- 승인자: 팀 리드\n- 이전 버전: 배포 가이드 v3",
+            "score": 2.6
+          },
+          {
+            "document_id": "deploy-guide-v05",
+            "chunk_index": 1,
+            "content": "- 배포 도구: Jenkins\n- 배포 명령: Jenkins job `deploy-staging` → `deploy-prod` 순서로 실행\n- 롤백 명령: 이전 빌드를 `deploy-prod`로 재실행\n- 배포 금지 시간: 금요일 오후\n- 승인자: 팀 리드\n- 이전 버전: 배포 가이드 v4",
+            "score": 2.6
+          }
+        ],
+        "vector": [
+          {
+            "document_id": "error-E-021",
+            "chunk_index": 0,
+            "content": "- 발생 위치: 배포 (GitHub Actions)\n- 의미: 워크플로에 배포 권한이 없다.\n- 원인: `deployments: write` 권한 누락. 저장소 생성·이전 시 자주 발생.\n- 대응: 워크플로 권한 설정을 확인한다.\n- 관련 장애: 장애 리포트 #12, #13, #17",
+            "score": 0.8055816905446357
+          },
+          {
+            "document_id": "faq-q07",
+            "chunk_index": 0,
+            "content": "**Q. 배포할 때 E-021이 뜨면 어떻게 하나요?**\n\n워크플로 권한 부족이다. 저장소의 워크플로 권한에 `deployments: write`가 있는지 확인한다.\n\n- 관련 문서: 에러 코드 E-021, 장애 리포트 #12",
+            "score": 0.8026141641966705
+          },
+          {
+            "document_id": "deploy-guide-v15",
+            "chunk_index": 0,
+            "content": "- 변경: GitHub Actions 오류 수정 (E-021 워크플로 권한 부족). 워크플로에 `deployments: write` 권한을 추가한다.\n- 이유: 장애 리포트 #12 이후 결정",
+            "score": 0.7473164508403173
+          },
+          {
+            "document_id": "error-E-022",
+            "chunk_index": 0,
+            "content": "- 발생 위치: 배포\n- 의미: 필요한 승인 없이 배포가 실행됐다.\n- 원인: 승인 단계 미강제.\n- 대응: 승인 단계를 확인한다. 승인자는 배포 가이드 최신 버전을 따른다.\n- 관련 장애: 장애 리포트 #05",
+            "score": 0.7343293549412914
+          },
+          {
+            "document_id": "error-E-025",
+            "chunk_index": 0,
+            "content": "- 발생 위치: 배포 (GitHub Actions)\n- 의미: 같은 서비스에 두 배포가 동시에 실행됐다.\n- 원인: 배포 잠금 부재.\n- 대응: 한 버전으로 재배포한다. 배포 가이드 v23에서 잠금이 도입됐다.\n- 관련 장애: 장애 리포트 #20",
+            "score": 0.7251227020632257
+          },
+          {
+            "document_id": "incident-17",
+            "chunk_index": 0,
+            "content": "- 날짜: 2025-09-24\n- 서비스: notification-worker\n- 등급: SEV3\n- 증상: 긴급 수정 배포가 권한 오류로 1시간 지연됐다.\n- 원인: 워크플로 권한이 저장소 이전 과정에서 초기화됐다. (에러 코드 E-021)\n- 조치: 권한을 복구했다. 권한 점검을 배포 체크리스트에 넣었다.",
+            "score": 0.7238443022516716
+          },
+          {
+            "document_id": "error-E-023",
+            "chunk_index": 0,
+            "content": "- 발생 위치: 배포 (GitHub Actions)\n- 의미: 빌드 결과물 업로드가 실패했다.\n- 원인: 일시적 네트워크 오류.\n- 대응: 재시도한다. 배포 가이드 v17에서 3회 자동 재시도됐다.",
+            "score": 0.7225502198815027
+          },
+          {
+            "document_id": "deploy-guide-v23",
+            "chunk_index": 0,
+            "content": "- 변경: GitHub Actions 오류 수정 (E-025 동시 배포 충돌). 같은 서비스의 동시 배포를 잠금으로 막는다.\n- 이유: 장애 리포트 #20 이후 결정",
+            "score": 0.721876243873991
+          },
+          {
+            "document_id": "error-E-020",
+            "chunk_index": 0,
+            "content": "- 발생 위치: 배포\n- 의미: 롤백할 이전 버전이 없거나 동작하지 않는다.\n- 원인: 스키마 변경이 함께 배포돼 이전 버전이 호환되지 않음.\n- 대응: 핫픽스로 복구한다. 대규모 변경은 feature flag를 사용한다.\n- 관련 장애: 장애 리포트 #21",
+            "score": 0.7216430140521977
+          },
+          {
+            "document_id": "deploy-guide-v03",
+            "chunk_index": 0,
+            "content": "- 변경: Jenkins 오류 수정 (E-012 빌드 캐시 손상). 빌드 전 캐시 삭제 단계를 추가한다.",
+            "score": 0.7174145197098735
+          }
+        ],
+        "hybrid": [
+          {
+            "document_id": "error-E-021",
+            "chunk_index": 0,
+            "content": "- 발생 위치: 배포 (GitHub Actions)\n- 의미: 워크플로에 배포 권한이 없다.\n- 원인: `deployments: write` 권한 누락. 저장소 생성·이전 시 자주 발생.\n- 대응: 워크플로 권한 설정을 확인한다.\n- 관련 장애: 장애 리포트 #12, #13, #17",
+            "score": 0.03278688524590164
+          },
+          {
+            "document_id": "error-E-025",
+            "chunk_index": 0,
+            "content": "- 발생 위치: 배포 (GitHub Actions)\n- 의미: 같은 서비스에 두 배포가 동시에 실행됐다.\n- 원인: 배포 잠금 부재.\n- 대응: 한 버전으로 재배포한다. 배포 가이드 v23에서 잠금이 도입됐다.\n- 관련 장애: 장애 리포트 #20",
+            "score": 0.0315136476426799
+          },
+          {
+            "document_id": "faq-q07",
+            "chunk_index": 0,
+            "content": "**Q. 배포할 때 E-021이 뜨면 어떻게 하나요?**\n\n워크플로 권한 부족이다. 저장소의 워크플로 권한에 `deployments: write`가 있는지 확인한다.\n\n- 관련 문서: 에러 코드 E-021, 장애 리포트 #12",
+            "score": 0.03128054740957967
+          },
+          {
+            "document_id": "deploy-guide-v03",
+            "chunk_index": 0,
+            "content": "- 변경: Jenkins 오류 수정 (E-012 빌드 캐시 손상). 빌드 전 캐시 삭제 단계를 추가한다.",
+            "score": 0.028991596638655463
+          },
+          {
+            "document_id": "deploy-guide-v15",
+            "chunk_index": 0,
+            "content": "- 변경: GitHub Actions 오류 수정 (E-021 워크플로 권한 부족). 워크플로에 `deployments: write` 권한을 추가한다.\n- 이유: 장애 리포트 #12 이후 결정",
+            "score": 0.015873015873015872
+          },
+          {
+            "document_id": "error-E-030",
+            "chunk_index": 0,
+            "content": "- 발생 위치: 배포\n- 의미: 배포 금지 시간에 배포를 시도했다.\n- 원인: 배포 가이드 최신 버전의 금지 시간 미확인.\n- 대응: 금지 시간이 끝난 뒤 배포한다.\n- 관련 장애: 장애 리포트 #26",
+            "score": 0.015873015873015872
+          },
+          {
+            "document_id": "error-E-017",
+            "chunk_index": 0,
+            "content": "- 발생 위치: 배포 (Jenkins)\n- 의미: 배포가 제한 시간 안에 끝나지 않았다.\n- 원인: 느린 롤아웃, 타임아웃 설정 부족.\n- 대응: 타임아웃 설정을 확인한다. 배포 가이드 v4에서 20분으로 늘렸다.",
+            "score": 0.015625
+          },
+          {
+            "document_id": "error-E-022",
+            "chunk_index": 0,
+            "content": "- 발생 위치: 배포\n- 의미: 필요한 승인 없이 배포가 실행됐다.\n- 원인: 승인 단계 미강제.\n- 대응: 승인 단계를 확인한다. 승인자는 배포 가이드 최신 버전을 따른다.\n- 관련 장애: 장애 리포트 #05",
+            "score": 0.015625
+          },
+          {
+            "document_id": "error-E-006",
+            "chunk_index": 0,
+            "content": "- 발생 위치: api-gateway\n- 의미: 사용자 역할에 해당 API 권한이 없다.\n- 원인: 역할 매핑 누락 또는 잘못된 매핑 배포.\n- 대응: 역할 매핑 설정을 확인한다.\n- 관련 장애: 장애 리포트 #27",
+            "score": 0.015384615384615385
+          },
+          {
+            "document_id": "incident-17",
+            "chunk_index": 0,
+            "content": "- 날짜: 2025-09-24\n- 서비스: notification-worker\n- 등급: SEV3\n- 증상: 긴급 수정 배포가 권한 오류로 1시간 지연됐다.\n- 원인: 워크플로 권한이 저장소 이전 과정에서 초기화됐다. (에러 코드 E-021)\n- 조치: 권한을 복구했다. 권한 점검을 배포 체크리스트에 넣었다.",
+            "score": 0.015151515151515152
+          }
+        ]
+      }
+    },
+    {
+      "query": "같은 서비스의 배포가 겹칠 때 발생하는 E-025는 어떻게 막나요?",
+      "expected_document_id": "error-E-025",
+      "results": {
+        "keyword": [
+          {
+            "document_id": "faq-q07",
+            "chunk_index": 0,
+            "content": "**Q. 배포할 때 E-021이 뜨면 어떻게 하나요?**\n\n워크플로 권한 부족이다. 저장소의 워크플로 권한에 `deployments: write`가 있는지 확인한다.\n\n- 관련 문서: 에러 코드 E-021, 장애 리포트 #12",
+            "score": 3.8
+          },
+          {
+            "document_id": "error-E-025",
+            "chunk_index": 0,
+            "content": "- 발생 위치: 배포 (GitHub Actions)\n- 의미: 같은 서비스에 두 배포가 동시에 실행됐다.\n- 원인: 배포 잠금 부재.\n- 대응: 한 버전으로 재배포한다. 배포 가이드 v23에서 잠금이 도입됐다.\n- 관련 장애: 장애 리포트 #20",
+            "score": 3.2
+          },
+          {
+            "document_id": "error-E-017",
+            "chunk_index": 0,
+            "content": "- 발생 위치: 배포 (Jenkins)\n- 의미: 배포가 제한 시간 안에 끝나지 않았다.\n- 원인: 느린 롤아웃, 타임아웃 설정 부족.\n- 대응: 타임아웃 설정을 확인한다. 배포 가이드 v4에서 20분으로 늘렸다.",
+            "score": 1.6
+          },
+          {
+            "document_id": "error-E-022",
+            "chunk_index": 0,
+            "content": "- 발생 위치: 배포\n- 의미: 필요한 승인 없이 배포가 실행됐다.\n- 원인: 승인 단계 미강제.\n- 대응: 승인 단계를 확인한다. 승인자는 배포 가이드 최신 버전을 따른다.\n- 관련 장애: 장애 리포트 #05",
+            "score": 1.6
+          },
+          {
+            "document_id": "error-E-024",
+            "chunk_index": 0,
+            "content": "- 발생 위치: 배포\n- 의미: 카나리 단계에서 오류율이 기준을 넘어 배포가 자동 중단됐다.\n- 원인: 새 버전 결함.\n- 대응: 정상 동작이다. 원인을 수정해 재배포한다.\n- 관련 장애: 장애 리포트 #19",
+            "score": 1.6
+          },
+          {
+            "document_id": "faq-q25",
+            "chunk_index": 0,
+            "content": "**Q. API 요청 한도는 어떻게 되나요?**\n\n사용자 ID 기준으로 분당 600회다. 초과하면 E-007이 반환된다.\n\n- 관련 문서: 에러 코드 E-007",
+            "score": 1.6
+          },
+          {
+            "document_id": "faq-q26",
+            "chunk_index": 0,
+            "content": "**Q. 배포 중 헬스체크가 실패하면 어떻게 되나요?**\n\n배포가 자동 중단된다. Pod 로그와 readiness 경로를 확인한다.\n\n- 관련 문서: 에러 코드 E-015, 장애 리포트 #30",
+            "score": 1.6
+          },
+          {
+            "document_id": "faq-q27",
+            "chunk_index": 0,
+            "content": "**Q. 두 명이 같은 서비스를 동시에 배포할 수 있나요?**\n\n없다. 같은 서비스의 배포는 잠금으로 한 번에 하나만 실행된다.\n\n- 관련 문서: 배포 가이드 v23",
+            "score": 1.6
+          },
+          {
+            "document_id": "error-E-001",
+            "chunk_index": 0,
+            "content": "- 발생 위치: order-api\n- 의미: 주문 요청이 검증 규칙을 통과하지 못했다.\n- 원인: 필수 항목 누락 또는 잘못된 검증 규칙 배포.\n- 대응: 요청 본문을 확인한다. 배포 직후 급증하면 롤백한다.\n- 관련 장애: 장애 리포트 #01, #14, #24",
+            "score": 1.4
+          },
+          {
+            "document_id": "error-E-002",
+            "chunk_index": 0,
+            "content": "- 발생 위치: catalog-api\n- 의미: 요청 수량이 재고보다 많다.\n- 원인: 재고 차감 동시성 문제 또는 실제 재고 부족.\n- 대응: 재고 수치를 확인한다. 음수면 동시성 버그다.\n- 관련 장애: 장애 리포트 #04",
+            "score": 1.4
+          }
+        ],
+        "vector": [
+          {
+            "document_id": "error-E-025",
+            "chunk_index": 0,
+            "content": "- 발생 위치: 배포 (GitHub Actions)\n- 의미: 같은 서비스에 두 배포가 동시에 실행됐다.\n- 원인: 배포 잠금 부재.\n- 대응: 한 버전으로 재배포한다. 배포 가이드 v23에서 잠금이 도입됐다.\n- 관련 장애: 장애 리포트 #20",
+            "score": 0.8185431414092331
+          },
+          {
+            "document_id": "deploy-guide-v23",
+            "chunk_index": 0,
+            "content": "- 변경: GitHub Actions 오류 수정 (E-025 동시 배포 충돌). 같은 서비스의 동시 배포를 잠금으로 막는다.\n- 이유: 장애 리포트 #20 이후 결정",
+            "score": 0.8010198352289593
+          },
+          {
+            "document_id": "faq-q27",
+            "chunk_index": 0,
+            "content": "**Q. 두 명이 같은 서비스를 동시에 배포할 수 있나요?**\n\n없다. 같은 서비스의 배포는 잠금으로 한 번에 하나만 실행된다.\n\n- 관련 문서: 배포 가이드 v23",
+            "score": 0.7802025734774564
+          },
+          {
+            "document_id": "incident-20",
+            "chunk_index": 0,
+            "content": "- 날짜: 2025-11-05\n- 서비스: payment-api\n- 등급: SEV2\n- 증상: 두 명이 동시에 배포해 서로 다른 버전이 섞였다.\n- 원인: 같은 서비스의 동시 배포를 막는 장치가 없었다. (에러 코드 E-025)\n- 조치: 한 버전으로 재배포했다. 배포 잠금을 도입했다.\n- 후속 조치: 배포 가이드 v23에 반영",
+            "score": 0.7584347396726401
+          },
+          {
+            "document_id": "deploy-guide-v25",
+            "chunk_index": 1,
+            "content": "- 배포 도구: GitHub Actions\n- 배포 명령: `deploy run --env prod`\n- 롤백 명령: `deploy rollback --to <version>` (승인 불필요)\n- 배포 금지 시간: 목요일 오후, 공휴일 전날, 12/22~1/2 연말 동결\n- 승인자: 팀 리드 + 서비스 오너\n- 이전 버전: 배포 가이드 v24",
+            "score": 0.7251350566020627
+          },
+          {
+            "document_id": "error-E-030",
+            "chunk_index": 0,
+            "content": "- 발생 위치: 배포\n- 의미: 배포 금지 시간에 배포를 시도했다.\n- 원인: 배포 가이드 최신 버전의 금지 시간 미확인.\n- 대응: 금지 시간이 끝난 뒤 배포한다.\n- 관련 장애: 장애 리포트 #26",
+            "score": 0.723916156525415
+          },
+          {
+            "document_id": "error-E-017",
+            "chunk_index": 0,
+            "content": "- 발생 위치: 배포 (Jenkins)\n- 의미: 배포가 제한 시간 안에 끝나지 않았다.\n- 원인: 느린 롤아웃, 타임아웃 설정 부족.\n- 대응: 타임아웃 설정을 확인한다. 배포 가이드 v4에서 20분으로 늘렸다.",
+            "score": 0.7237491278349777
+          },
+          {
+            "document_id": "incident-05",
+            "chunk_index": 0,
+            "content": "- 날짜: 2025-03-26\n- 서비스: order-api\n- 등급: SEV2\n- 증상: 승인되지 않은 변경이 prod에 배포돼 주문 조회가 느려졌다.\n- 원인: 배포 승인 단계가 강제되지 않았다. (에러 코드 E-022)\n- 조치: 롤백하고 승인 절차를 강제했다.\n- 후속 조치: 배포 가이드 v7에 반영",
+            "score": 0.7226637005806175
+          },
+          {
+            "document_id": "error-E-022",
+            "chunk_index": 0,
+            "content": "- 발생 위치: 배포\n- 의미: 필요한 승인 없이 배포가 실행됐다.\n- 원인: 승인 단계 미강제.\n- 대응: 승인 단계를 확인한다. 승인자는 배포 가이드 최신 버전을 따른다.\n- 관련 장애: 장애 리포트 #05",
+            "score": 0.7197649835840855
+          },
+          {
+            "document_id": "error-E-020",
+            "chunk_index": 0,
+            "content": "- 발생 위치: 배포\n- 의미: 롤백할 이전 버전이 없거나 동작하지 않는다.\n- 원인: 스키마 변경이 함께 배포돼 이전 버전이 호환되지 않음.\n- 대응: 핫픽스로 복구한다. 대규모 변경은 feature flag를 사용한다.\n- 관련 장애: 장애 리포트 #21",
+            "score": 0.7176518531415824
+          }
+        ],
+        "hybrid": [
+          {
+            "document_id": "error-E-025",
+            "chunk_index": 0,
+            "content": "- 발생 위치: 배포 (GitHub Actions)\n- 의미: 같은 서비스에 두 배포가 동시에 실행됐다.\n- 원인: 배포 잠금 부재.\n- 대응: 한 버전으로 재배포한다. 배포 가이드 v23에서 잠금이 도입됐다.\n- 관련 장애: 장애 리포트 #20",
+            "score": 0.03252247488101534
+          },
+          {
+            "document_id": "error-E-017",
+            "chunk_index": 0,
+            "content": "- 발생 위치: 배포 (Jenkins)\n- 의미: 배포가 제한 시간 안에 끝나지 않았다.\n- 원인: 느린 롤아웃, 타임아웃 설정 부족.\n- 대응: 타임아웃 설정을 확인한다. 배포 가이드 v4에서 20분으로 늘렸다.",
+            "score": 0.030798389007344232
+          },
+          {
+            "document_id": "faq-q27",
+            "chunk_index": 0,
+            "content": "**Q. 두 명이 같은 서비스를 동시에 배포할 수 있나요?**\n\n없다. 같은 서비스의 배포는 잠금으로 한 번에 하나만 실행된다.\n\n- 관련 문서: 배포 가이드 v23",
+            "score": 0.03057889822595705
+          },
+          {
+            "document_id": "error-E-022",
+            "chunk_index": 0,
+            "content": "- 발생 위치: 배포\n- 의미: 필요한 승인 없이 배포가 실행됐다.\n- 원인: 승인 단계 미강제.\n- 대응: 승인 단계를 확인한다. 승인자는 배포 가이드 최신 버전을 따른다.\n- 관련 장애: 장애 리포트 #05",
+            "score": 0.030117753623188408
+          },
+          {
+            "document_id": "faq-q07",
+            "chunk_index": 0,
+            "content": "**Q. 배포할 때 E-021이 뜨면 어떻게 하나요?**\n\n워크플로 권한 부족이다. 저장소의 워크플로 권한에 `deployments: write`가 있는지 확인한다.\n\n- 관련 문서: 에러 코드 E-021, 장애 리포트 #12",
+            "score": 0.01639344262295082
+          },
+          {
+            "document_id": "deploy-guide-v23",
+            "chunk_index": 0,
+            "content": "- 변경: GitHub Actions 오류 수정 (E-025 동시 배포 충돌). 같은 서비스의 동시 배포를 잠금으로 막는다.\n- 이유: 장애 리포트 #20 이후 결정",
+            "score": 0.016129032258064516
+          },
+          {
+            "document_id": "incident-20",
+            "chunk_index": 0,
+            "content": "- 날짜: 2025-11-05\n- 서비스: payment-api\n- 등급: SEV2\n- 증상: 두 명이 동시에 배포해 서로 다른 버전이 섞였다.\n- 원인: 같은 서비스의 동시 배포를 막는 장치가 없었다. (에러 코드 E-025)\n- 조치: 한 버전으로 재배포했다. 배포 잠금을 도입했다.\n- 후속 조치: 배포 가이드 v23에 반영",
+            "score": 0.015625
+          },
+          {
+            "document_id": "deploy-guide-v25",
+            "chunk_index": 1,
+            "content": "- 배포 도구: GitHub Actions\n- 배포 명령: `deploy run --env prod`\n- 롤백 명령: `deploy rollback --to <version>` (승인 불필요)\n- 배포 금지 시간: 목요일 오후, 공휴일 전날, 12/22~1/2 연말 동결\n- 승인자: 팀 리드 + 서비스 오너\n- 이전 버전: 배포 가이드 v24",
+            "score": 0.015384615384615385
+          },
+          {
+            "document_id": "error-E-024",
+            "chunk_index": 0,
+            "content": "- 발생 위치: 배포\n- 의미: 카나리 단계에서 오류율이 기준을 넘어 배포가 자동 중단됐다.\n- 원인: 새 버전 결함.\n- 대응: 정상 동작이다. 원인을 수정해 재배포한다.\n- 관련 장애: 장애 리포트 #19",
+            "score": 0.015384615384615385
+          },
+          {
+            "document_id": "error-E-030",
+            "chunk_index": 0,
+            "content": "- 발생 위치: 배포\n- 의미: 배포 금지 시간에 배포를 시도했다.\n- 원인: 배포 가이드 최신 버전의 금지 시간 미확인.\n- 대응: 금지 시간이 끝난 뒤 배포한다.\n- 관련 장애: 장애 리포트 #26",
+            "score": 0.015151515151515152
+          }
+        ]
+      }
+    },
+    {
+      "query": "DB 연결을 얻지 못하는 E-008 오류는 어떤 설정을 확인해야 하나요?",
+      "expected_document_id": "error-E-008",
+      "results": {
+        "keyword": [
+          {
+            "document_id": "error-E-008",
+            "chunk_index": 0,
+            "content": "- 발생 위치: 공통\n- 의미: 커넥션 풀에서 연결을 얻지 못했다.\n- 원인: 커넥션 반환 누락, 풀 크기 부족, 느린 쿼리.\n- 대응: 풀 사용량과 반환 누락 코드를 확인한다.\n- 관련 장애: 장애 리포트 #09, #29",
+            "score": 4.6
+          },
+          {
+            "document_id": "faq-q07",
+            "chunk_index": 0,
+            "content": "**Q. 배포할 때 E-021이 뜨면 어떻게 하나요?**\n\n워크플로 권한 부족이다. 저장소의 워크플로 권한에 `deployments: write`가 있는지 확인한다.\n\n- 관련 문서: 에러 코드 E-021, 장애 리포트 #12",
+            "score": 2.6
+          },
+          {
+            "document_id": "faq-q13",
+            "chunk_index": 0,
+            "content": "**Q. DB 마이그레이션은 배포와 함께 하나요?**\n\n아니다. 배포 전에 별도로 먼저 실행한다.\n\n- 관련 문서: 배포 가이드 v9, 장애 리포트 #08",
+            "score": 2.4
+          },
+          {
+            "document_id": "faq-q18",
+            "chunk_index": 0,
+            "content": "**Q. 배포 후에 무엇을 확인해야 하나요?**\n\n15분 동안 Grafana 대시보드에서 오류율과 지연 시간을 지켜본다.\n\n- 관련 문서: 배포 가이드 v20, 장애 리포트 #15",
+            "score": 2.4
+          },
+          {
+            "document_id": "faq-q30",
+            "chunk_index": 0,
+            "content": "**Q. 배포 가이드가 v1부터 v30까지 있는데 어떤 걸 봐야 하나요?**\n\n최신 버전인 v30을 본다. 이전 버전은 변경 이력 참고용이다.\n\n- 관련 문서: 배포 가이드 v30",
+            "score": 2.4
+          },
+          {
+            "document_id": "error-E-004",
+            "chunk_index": 0,
+            "content": "- 발생 위치: payment-api\n- 의미: PG사 응답이 제한 시간 안에 오지 않았다.\n- 원인: PG사 지연 또는 타임아웃 설정이 너무 짧음.\n- 대응: 타임아웃 설정을 확인한다. 배포 직후면 롤백한다.\n- 관련 장애: 장애 리포트 #10",
+            "score": 1.6
+          },
+          {
+            "document_id": "error-E-005",
+            "chunk_index": 0,
+            "content": "- 발생 위치: api-gateway\n- 의미: 액세스 토큰의 유효 기간이 지났다.\n- 원인: 정상 만료 또는 TTL 설정 오류.\n- 대응: 재로그인 빈도가 비정상이면 TTL 설정을 확인한다.\n- 관련 장애: 장애 리포트 #02",
+            "score": 1.6
+          },
+          {
+            "document_id": "error-E-006",
+            "chunk_index": 0,
+            "content": "- 발생 위치: api-gateway\n- 의미: 사용자 역할에 해당 API 권한이 없다.\n- 원인: 역할 매핑 누락 또는 잘못된 매핑 배포.\n- 대응: 역할 매핑 설정을 확인한다.\n- 관련 장애: 장애 리포트 #27",
+            "score": 1.6
+          },
+          {
+            "document_id": "error-E-017",
+            "chunk_index": 0,
+            "content": "- 발생 위치: 배포 (Jenkins)\n- 의미: 배포가 제한 시간 안에 끝나지 않았다.\n- 원인: 느린 롤아웃, 타임아웃 설정 부족.\n- 대응: 타임아웃 설정을 확인한다. 배포 가이드 v4에서 20분으로 늘렸다.",
+            "score": 1.6
+          },
+          {
+            "document_id": "error-E-018",
+            "chunk_index": 0,
+            "content": "- 발생 위치: 배포\n- 의미: DB 마이그레이션이 실패했다.\n- 원인: 잘못된 스키마 변경, 배포와 동시 실행.\n- 대응: 마이그레이션을 배포 전에 별도로 실행한다.\n- 관련 장애: 장애 리포트 #08",
+            "score": 1.6
+          }
+        ],
+        "vector": [
+          {
+            "document_id": "error-E-008",
+            "chunk_index": 0,
+            "content": "- 발생 위치: 공통\n- 의미: 커넥션 풀에서 연결을 얻지 못했다.\n- 원인: 커넥션 반환 누락, 풀 크기 부족, 느린 쿼리.\n- 대응: 풀 사용량과 반환 누락 코드를 확인한다.\n- 관련 장애: 장애 리포트 #09, #29",
+            "score": 0.8151612194218828
+          },
+          {
+            "document_id": "error-E-018",
+            "chunk_index": 0,
+            "content": "- 발생 위치: 배포\n- 의미: DB 마이그레이션이 실패했다.\n- 원인: 잘못된 스키마 변경, 배포와 동시 실행.\n- 대응: 마이그레이션을 배포 전에 별도로 실행한다.\n- 관련 장애: 장애 리포트 #08",
+            "score": 0.7014401399613748
+          },
+          {
+            "document_id": "incident-09",
+            "chunk_index": 0,
+            "content": "- 날짜: 2025-05-21\n- 서비스: order-api, payment-api\n- 등급: SEV2\n- 증상: 모든 API 응답이 10초 이상 걸렸다.\n- 원인: DB 커넥션 풀이 고갈됐다. 커넥션 반환 누락이 원인이다. (에러 코드 E-008)\n- 조치: 커넥션 누수 코드를 수정하고 풀 크기를 늘렸다.",
+            "score": 0.696527152218566
+          },
+          {
+            "document_id": "error-E-016",
+            "chunk_index": 0,
+            "content": "- 발생 위치: 배포\n- 의미: 필수 환경 변수가 없다.\n- 원인: 배포 설정에 항목 누락.\n- 대응: 환경 변수 목록을 배포 설정과 비교한다.\n- 관련 장애: 장애 리포트 #03",
+            "score": 0.6858167443926481
+          },
+          {
+            "document_id": "error-E-006",
+            "chunk_index": 0,
+            "content": "- 발생 위치: api-gateway\n- 의미: 사용자 역할에 해당 API 권한이 없다.\n- 원인: 역할 매핑 누락 또는 잘못된 매핑 배포.\n- 대응: 역할 매핑 설정을 확인한다.\n- 관련 장애: 장애 리포트 #27",
+            "score": 0.6809590877531675
+          },
+          {
+            "document_id": "error-E-004",
+            "chunk_index": 0,
+            "content": "- 발생 위치: payment-api\n- 의미: PG사 응답이 제한 시간 안에 오지 않았다.\n- 원인: PG사 지연 또는 타임아웃 설정이 너무 짧음.\n- 대응: 타임아웃 설정을 확인한다. 배포 직후면 롤백한다.\n- 관련 장애: 장애 리포트 #10",
+            "score": 0.6809296810904295
+          },
+          {
+            "document_id": "error-E-005",
+            "chunk_index": 0,
+            "content": "- 발생 위치: api-gateway\n- 의미: 액세스 토큰의 유효 기간이 지났다.\n- 원인: 정상 만료 또는 TTL 설정 오류.\n- 대응: 재로그인 빈도가 비정상이면 TTL 설정을 확인한다.\n- 관련 장애: 장애 리포트 #02",
+            "score": 0.6784144842152388
+          },
+          {
+            "document_id": "error-E-015",
+            "chunk_index": 0,
+            "content": "- 발생 위치: 배포\n- 의미: readiness 헬스체크가 통과하지 않았다.\n- 원인: 애플리케이션 시작 실패, 헬스체크 경로 변경, 리소스 부족.\n- 대응: Pod 로그와 헬스체크 경로를 확인한다.\n- 관련 장애: 장애 리포트 #15, #30",
+            "score": 0.6736776238987853
+          },
+          {
+            "document_id": "error-E-007",
+            "chunk_index": 0,
+            "content": "- 발생 위치: api-gateway\n- 의미: rate limit을 넘었다.\n- 원인: 과도한 호출 또는 한도 기준 설정 오류.\n- 대응: 한도 기준(사용자 ID)과 수치를 확인한다.\n- 관련 장애: 장애 리포트 #07",
+            "score": 0.6716689071556842
+          },
+          {
+            "document_id": "error-E-002",
+            "chunk_index": 0,
+            "content": "- 발생 위치: catalog-api\n- 의미: 요청 수량이 재고보다 많다.\n- 원인: 재고 차감 동시성 문제 또는 실제 재고 부족.\n- 대응: 재고 수치를 확인한다. 음수면 동시성 버그다.\n- 관련 장애: 장애 리포트 #04",
+            "score": 0.6712322026901684
+          }
+        ],
+        "hybrid": [
+          {
+            "document_id": "error-E-008",
+            "chunk_index": 0,
+            "content": "- 발생 위치: 공통\n- 의미: 커넥션 풀에서 연결을 얻지 못했다.\n- 원인: 커넥션 반환 누락, 풀 크기 부족, 느린 쿼리.\n- 대응: 풀 사용량과 반환 누락 코드를 확인한다.\n- 관련 장애: 장애 리포트 #09, #29",
+            "score": 0.03278688524590164
+          },
+          {
+            "document_id": "error-E-018",
+            "chunk_index": 0,
+            "content": "- 발생 위치: 배포\n- 의미: DB 마이그레이션이 실패했다.\n- 원인: 잘못된 스키마 변경, 배포와 동시 실행.\n- 대응: 마이그레이션을 배포 전에 별도로 실행한다.\n- 관련 장애: 장애 리포트 #08",
+            "score": 0.0304147465437788
+          },
+          {
+            "document_id": "error-E-004",
+            "chunk_index": 0,
+            "content": "- 발생 위치: payment-api\n- 의미: PG사 응답이 제한 시간 안에 오지 않았다.\n- 원인: PG사 지연 또는 타임아웃 설정이 너무 짧음.\n- 대응: 타임아웃 설정을 확인한다. 배포 직후면 롤백한다.\n- 관련 장애: 장애 리포트 #10",
+            "score": 0.030303030303030304
+          },
+          {
+            "document_id": "error-E-006",
+            "chunk_index": 0,
+            "content": "- 발생 위치: api-gateway\n- 의미: 사용자 역할에 해당 API 권한이 없다.\n- 원인: 역할 매핑 누락 또는 잘못된 매핑 배포.\n- 대응: 역할 매핑 설정을 확인한다.\n- 관련 장애: 장애 리포트 #27",
+            "score": 0.030090497737556562
+          },
+          {
+            "document_id": "error-E-005",
+            "chunk_index": 0,
+            "content": "- 발생 위치: api-gateway\n- 의미: 액세스 토큰의 유효 기간이 지났다.\n- 원인: 정상 만료 또는 TTL 설정 오류.\n- 대응: 재로그인 빈도가 비정상이면 TTL 설정을 확인한다.\n- 관련 장애: 장애 리포트 #02",
+            "score": 0.029850746268656716
+          },
+          {
+            "document_id": "faq-q07",
+            "chunk_index": 0,
+            "content": "**Q. 배포할 때 E-021이 뜨면 어떻게 하나요?**\n\n워크플로 권한 부족이다. 저장소의 워크플로 권한에 `deployments: write`가 있는지 확인한다.\n\n- 관련 문서: 에러 코드 E-021, 장애 리포트 #12",
+            "score": 0.016129032258064516
+          },
+          {
+            "document_id": "faq-q13",
+            "chunk_index": 0,
+            "content": "**Q. DB 마이그레이션은 배포와 함께 하나요?**\n\n아니다. 배포 전에 별도로 먼저 실행한다.\n\n- 관련 문서: 배포 가이드 v9, 장애 리포트 #08",
+            "score": 0.015873015873015872
+          },
+          {
+            "document_id": "incident-09",
+            "chunk_index": 0,
+            "content": "- 날짜: 2025-05-21\n- 서비스: order-api, payment-api\n- 등급: SEV2\n- 증상: 모든 API 응답이 10초 이상 걸렸다.\n- 원인: DB 커넥션 풀이 고갈됐다. 커넥션 반환 누락이 원인이다. (에러 코드 E-008)\n- 조치: 커넥션 누수 코드를 수정하고 풀 크기를 늘렸다.",
+            "score": 0.015873015873015872
+          },
+          {
+            "document_id": "error-E-016",
+            "chunk_index": 0,
+            "content": "- 발생 위치: 배포\n- 의미: 필수 환경 변수가 없다.\n- 원인: 배포 설정에 항목 누락.\n- 대응: 환경 변수 목록을 배포 설정과 비교한다.\n- 관련 장애: 장애 리포트 #03",
+            "score": 0.015625
+          },
+          {
+            "document_id": "faq-q18",
+            "chunk_index": 0,
+            "content": "**Q. 배포 후에 무엇을 확인해야 하나요?**\n\n15분 동안 Grafana 대시보드에서 오류율과 지연 시간을 지켜본다.\n\n- 관련 문서: 배포 가이드 v20, 장애 리포트 #15",
+            "score": 0.015625
+          }
+        ]
+      }
+    },
+    {
+      "query": "Pod가 준비되지 않아 E-015가 발생하면 무엇을 확인하나요?",
+      "expected_document_id": "error-E-015",
+      "results": {
+        "keyword": [
+          {
+            "document_id": "error-E-015",
+            "chunk_index": 0,
+            "content": "- 발생 위치: 배포\n- 의미: readiness 헬스체크가 통과하지 않았다.\n- 원인: 애플리케이션 시작 실패, 헬스체크 경로 변경, 리소스 부족.\n- 대응: Pod 로그와 헬스체크 경로를 확인한다.\n- 관련 장애: 장애 리포트 #15, #30",
+            "score": 2.8
+          },
+          {
+            "document_id": "error-E-028",
+            "chunk_index": 0,
+            "content": "- 발생 위치: Kubernetes\n- 의미: Pod가 스케줄되지 못하고 Pending 상태다.\n- 원인: 노드 CPU·메모리 부족.\n- 대응: 노드를 추가하거나 리소스 요청량을 조정한다.\n- 관련 장애: 장애 리포트 #25",
+            "score": 1.6
+          },
+          {
+            "document_id": "faq-q06",
+            "chunk_index": 0,
+            "content": "**Q. 에러 코드는 어디서 확인하나요?**\n\n에러 코드 문서 E-001부터 E-030까지 코드별로 의미·원인·대응이 정리돼 있다.\n\n- 관련 문서: 에러 코드 문서",
+            "score": 1.6
+          },
+          {
+            "document_id": "error-E-001",
+            "chunk_index": 0,
+            "content": "- 발생 위치: order-api\n- 의미: 주문 요청이 검증 규칙을 통과하지 못했다.\n- 원인: 필수 항목 누락 또는 잘못된 검증 규칙 배포.\n- 대응: 요청 본문을 확인한다. 배포 직후 급증하면 롤백한다.\n- 관련 장애: 장애 리포트 #01, #14, #24",
+            "score": 1.4
+          },
+          {
+            "document_id": "error-E-002",
+            "chunk_index": 0,
+            "content": "- 발생 위치: catalog-api\n- 의미: 요청 수량이 재고보다 많다.\n- 원인: 재고 차감 동시성 문제 또는 실제 재고 부족.\n- 대응: 재고 수치를 확인한다. 음수면 동시성 버그다.\n- 관련 장애: 장애 리포트 #04",
+            "score": 1.4
+          },
+          {
+            "document_id": "error-E-003",
+            "chunk_index": 0,
+            "content": "- 발생 위치: payment-api\n- 의미: PG사가 결제를 거절했다.\n- 원인: 카드 한도, 잘못된 카드 정보, PG사 정책.\n- 대응: 사용자에게 안내한다. 거절률 급증 시 PG사 상태를 확인한다.",
+            "score": 1.4
+          },
+          {
+            "document_id": "error-E-004",
+            "chunk_index": 0,
+            "content": "- 발생 위치: payment-api\n- 의미: PG사 응답이 제한 시간 안에 오지 않았다.\n- 원인: PG사 지연 또는 타임아웃 설정이 너무 짧음.\n- 대응: 타임아웃 설정을 확인한다. 배포 직후면 롤백한다.\n- 관련 장애: 장애 리포트 #10",
+            "score": 1.4
+          },
+          {
+            "document_id": "error-E-005",
+            "chunk_index": 0,
+            "content": "- 발생 위치: api-gateway\n- 의미: 액세스 토큰의 유효 기간이 지났다.\n- 원인: 정상 만료 또는 TTL 설정 오류.\n- 대응: 재로그인 빈도가 비정상이면 TTL 설정을 확인한다.\n- 관련 장애: 장애 리포트 #02",
+            "score": 1.4
+          },
+          {
+            "document_id": "error-E-006",
+            "chunk_index": 0,
+            "content": "- 발생 위치: api-gateway\n- 의미: 사용자 역할에 해당 API 권한이 없다.\n- 원인: 역할 매핑 누락 또는 잘못된 매핑 배포.\n- 대응: 역할 매핑 설정을 확인한다.\n- 관련 장애: 장애 리포트 #27",
+            "score": 1.4
+          },
+          {
+            "document_id": "error-E-007",
+            "chunk_index": 0,
+            "content": "- 발생 위치: api-gateway\n- 의미: rate limit을 넘었다.\n- 원인: 과도한 호출 또는 한도 기준 설정 오류.\n- 대응: 한도 기준(사용자 ID)과 수치를 확인한다.\n- 관련 장애: 장애 리포트 #07",
+            "score": 1.4
+          }
+        ],
+        "vector": [
+          {
+            "document_id": "error-E-015",
+            "chunk_index": 0,
+            "content": "- 발생 위치: 배포\n- 의미: readiness 헬스체크가 통과하지 않았다.\n- 원인: 애플리케이션 시작 실패, 헬스체크 경로 변경, 리소스 부족.\n- 대응: Pod 로그와 헬스체크 경로를 확인한다.\n- 관련 장애: 장애 리포트 #15, #30",
+            "score": 0.7992832064628658
+          },
+          {
+            "document_id": "error-E-028",
+            "chunk_index": 0,
+            "content": "- 발생 위치: Kubernetes\n- 의미: Pod가 스케줄되지 못하고 Pending 상태다.\n- 원인: 노드 CPU·메모리 부족.\n- 대응: 노드를 추가하거나 리소스 요청량을 조정한다.\n- 관련 장애: 장애 리포트 #25",
+            "score": 0.7211126879856867
+          },
+          {
+            "document_id": "error-E-014",
+            "chunk_index": 0,
+            "content": "- 발생 위치: 배포\n- 의미: 지정한 이미지 태그를 찾을 수 없거나 `latest`를 사용했다.\n- 원인: 태그 규칙 위반.\n- 대응: `<service>:<git-sha>` 형식 태그를 사용한다.\n- 관련 장애: 장애 리포트 #06",
+            "score": 0.7073701547318735
+          },
+          {
+            "document_id": "incident-25",
+            "chunk_index": 0,
+            "content": "- 날짜: 2026-02-25\n- 서비스: admin-web\n- 등급: SEV3\n- 증상: 새 Pod가 Pending 상태로 10분간 시작되지 않았다.\n- 원인: 노드 리소스가 부족했다. (에러 코드 E-028)\n- 조치: 노드를 추가했다.",
+            "score": 0.7055056727803942
+          },
+          {
+            "document_id": "incident-22",
+            "chunk_index": 0,
+            "content": "- 날짜: 2026-01-14\n- 서비스: order-api, user-api\n- 등급: SEV2\n- 증상: 배포된 Pod가 시작 직후 종료를 반복했다.\n- 원인: Vault 정책 변경으로 시크릿 읽기가 거부됐다. (에러 코드 E-026)\n- 조치: Vault 정책을 복구했다.",
+            "score": 0.7039827108383229
+          },
+          {
+            "document_id": "incident-15",
+            "chunk_index": 0,
+            "content": "- 날짜: 2025-08-27\n- 서비스: user-api\n- 등급: SEV2\n- 증상: 배포 2시간 뒤 메모리 부족으로 Pod가 반복 재시작됐다.\n- 원인: 메모리 누수가 배포 직후 헬스체크에서는 드러나지 않았다. (에러 코드 E-015)\n- 조치: 롤백했다. 배포 후 모니터링을 의무화했다.\n- 후속 조치: 배포 가이드 v20에 반영",
+            "score": 0.701377663550093
+          },
+          {
+            "document_id": "error-E-016",
+            "chunk_index": 0,
+            "content": "- 발생 위치: 배포\n- 의미: 필수 환경 변수가 없다.\n- 원인: 배포 설정에 항목 누락.\n- 대응: 환경 변수 목록을 배포 설정과 비교한다.\n- 관련 장애: 장애 리포트 #03",
+            "score": 0.700452601855703
+          },
+          {
+            "document_id": "error-E-013",
+            "chunk_index": 0,
+            "content": "- 발생 위치: CI\n- 의미: 컨테이너 이미지를 레지스트리에 올리지 못했다.\n- 원인: 레지스트리 인증 만료 또는 용량 초과.\n- 대응: 레지스트리 인증과 용량을 확인한다.",
+            "score": 0.6996148049601809
+          },
+          {
+            "document_id": "error-E-017",
+            "chunk_index": 0,
+            "content": "- 발생 위치: 배포 (Jenkins)\n- 의미: 배포가 제한 시간 안에 끝나지 않았다.\n- 원인: 느린 롤아웃, 타임아웃 설정 부족.\n- 대응: 타임아웃 설정을 확인한다. 배포 가이드 v4에서 20분으로 늘렸다.",
+            "score": 0.6880901122361867
+          },
+          {
+            "document_id": "faq-q26",
+            "chunk_index": 0,
+            "content": "**Q. 배포 중 헬스체크가 실패하면 어떻게 되나요?**\n\n배포가 자동 중단된다. Pod 로그와 readiness 경로를 확인한다.\n\n- 관련 문서: 에러 코드 E-015, 장애 리포트 #30",
+            "score": 0.683330476284032
+          }
+        ],
+        "hybrid": [
+          {
+            "document_id": "error-E-015",
+            "chunk_index": 0,
+            "content": "- 발생 위치: 배포\n- 의미: readiness 헬스체크가 통과하지 않았다.\n- 원인: 애플리케이션 시작 실패, 헬스체크 경로 변경, 리소스 부족.\n- 대응: Pod 로그와 헬스체크 경로를 확인한다.\n- 관련 장애: 장애 리포트 #15, #30",
+            "score": 0.03278688524590164
+          },
+          {
+            "document_id": "error-E-028",
+            "chunk_index": 0,
+            "content": "- 발생 위치: Kubernetes\n- 의미: Pod가 스케줄되지 못하고 Pending 상태다.\n- 원인: 노드 CPU·메모리 부족.\n- 대응: 노드를 추가하거나 리소스 요청량을 조정한다.\n- 관련 장애: 장애 리포트 #25",
+            "score": 0.03225806451612903
+          },
+          {
+            "document_id": "error-E-014",
+            "chunk_index": 0,
+            "content": "- 발생 위치: 배포\n- 의미: 지정한 이미지 태그를 찾을 수 없거나 `latest`를 사용했다.\n- 원인: 태그 규칙 위반.\n- 대응: `<service>:<git-sha>` 형식 태그를 사용한다.\n- 관련 장애: 장애 리포트 #06",
+            "score": 0.015873015873015872
+          },
+          {
+            "document_id": "faq-q06",
+            "chunk_index": 0,
+            "content": "**Q. 에러 코드는 어디서 확인하나요?**\n\n에러 코드 문서 E-001부터 E-030까지 코드별로 의미·원인·대응이 정리돼 있다.\n\n- 관련 문서: 에러 코드 문서",
+            "score": 0.015873015873015872
+          },
+          {
+            "document_id": "error-E-001",
+            "chunk_index": 0,
+            "content": "- 발생 위치: order-api\n- 의미: 주문 요청이 검증 규칙을 통과하지 못했다.\n- 원인: 필수 항목 누락 또는 잘못된 검증 규칙 배포.\n- 대응: 요청 본문을 확인한다. 배포 직후 급증하면 롤백한다.\n- 관련 장애: 장애 리포트 #01, #14, #24",
+            "score": 0.015625
+          },
+          {
+            "document_id": "incident-25",
+            "chunk_index": 0,
+            "content": "- 날짜: 2026-02-25\n- 서비스: admin-web\n- 등급: SEV3\n- 증상: 새 Pod가 Pending 상태로 10분간 시작되지 않았다.\n- 원인: 노드 리소스가 부족했다. (에러 코드 E-028)\n- 조치: 노드를 추가했다.",
+            "score": 0.015625
+          },
+          {
+            "document_id": "error-E-002",
+            "chunk_index": 0,
+            "content": "- 발생 위치: catalog-api\n- 의미: 요청 수량이 재고보다 많다.\n- 원인: 재고 차감 동시성 문제 또는 실제 재고 부족.\n- 대응: 재고 수치를 확인한다. 음수면 동시성 버그다.\n- 관련 장애: 장애 리포트 #04",
+            "score": 0.015384615384615385
+          },
+          {
+            "document_id": "incident-22",
+            "chunk_index": 0,
+            "content": "- 날짜: 2026-01-14\n- 서비스: order-api, user-api\n- 등급: SEV2\n- 증상: 배포된 Pod가 시작 직후 종료를 반복했다.\n- 원인: Vault 정책 변경으로 시크릿 읽기가 거부됐다. (에러 코드 E-026)\n- 조치: Vault 정책을 복구했다.",
+            "score": 0.015384615384615385
+          },
+          {
+            "document_id": "error-E-003",
+            "chunk_index": 0,
+            "content": "- 발생 위치: payment-api\n- 의미: PG사가 결제를 거절했다.\n- 원인: 카드 한도, 잘못된 카드 정보, PG사 정책.\n- 대응: 사용자에게 안내한다. 거절률 급증 시 PG사 상태를 확인한다.",
+            "score": 0.015151515151515152
+          },
+          {
+            "document_id": "incident-15",
+            "chunk_index": 0,
+            "content": "- 날짜: 2025-08-27\n- 서비스: user-api\n- 등급: SEV2\n- 증상: 배포 2시간 뒤 메모리 부족으로 Pod가 반복 재시작됐다.\n- 원인: 메모리 누수가 배포 직후 헬스체크에서는 드러나지 않았다. (에러 코드 E-015)\n- 조치: 롤백했다. 배포 후 모니터링을 의무화했다.\n- 후속 조치: 배포 가이드 v20에 반영",
+            "score": 0.015151515151515152
+          }
+        ]
+      }
+    }
+  ]
+}

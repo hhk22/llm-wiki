@@ -1,0 +1,29 @@
+version: 1
+# Additional checks fixed before running the filter evaluation; not an independent benchmark.
+questions:
+  - id: extra-current-01
+    type: current_policy
+    query: 요즘 운영 환경으로 배포할 때 터미널에 입력할 명령을 알려줘.
+    expected_document_id: deploy-guide-v30
+  - id: extra-current-02
+    type: current_policy
+    query: 최신 배포 가이드에서는 누구의 승인을 받아야 해?
+    expected_document_id: deploy-guide-v30
+  - id: extra-version-01
+    type: exact_keyword
+    query: 배포 가이드 v22의 배포 금지 시간을 알려줘.
+    expected_document_id: deploy-guide-v22
+  - id: extra-history-01
+    type: cross_reference
+    query: 현재 배포 정책에서 목요일 오후를 금지하게 된 원인 장애를 설명해 줘.
+    required_document_ids:
+      - deploy-guide-v22
+      - incident-18
+  - id: extra-ambiguous-01
+    type: paraphrase
+    query: 배포 중 같은 서비스의 작업이 겹치지 않게 하는 방법은?
+    expected_document_id: error-E-025
+  - id: extra-code-01
+    type: exact_keyword
+    query: 현재 배포 중 E-021 오류가 났는데 무엇을 확인해야 해?
+    expected_document_id: error-E-021

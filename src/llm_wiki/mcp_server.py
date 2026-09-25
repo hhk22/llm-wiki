@@ -3,11 +3,12 @@
 from __future__ import annotations
 
 from collections.abc import Callable
-from typing import Any, Literal
+from typing import Any
 
 from mcp.server import MCPServer
 
 from llm_wiki.api_client import WikiApiClient
+from llm_wiki.search import SearchMethod
 
 ApiClientFactory = Callable[[], WikiApiClient]
 
@@ -21,7 +22,7 @@ def create_mcp_server(client_factory: ApiClientFactory = WikiApiClient) -> MCPSe
     @server.tool()
     async def search_wiki(
         query: str,
-        method: Literal["keyword", "vector"] = "vector",
+        method: SearchMethod = "vector",
         top_k: int = 3,
     ) -> dict[str, Any]:
         """Search wiki documents and return ranked source chunks."""
@@ -30,10 +31,10 @@ def create_mcp_server(client_factory: ApiClientFactory = WikiApiClient) -> MCPSe
     @server.tool()
     async def ask_wiki(
         query: str,
-        method: Literal["keyword", "vector"] = "vector",
+        method: SearchMethod = "vector",
         top_k: int = 3,
     ) -> dict[str, Any]:
-        """Answer a question using retrieved wiki documents and include sources."""
+        """Answer from top_k wiki documents, with up to two source chunks per document."""
         return await client_factory().answer(query, method, top_k)
 
     return server

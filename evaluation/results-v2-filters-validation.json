@@ -1,0 +1,2970 @@
+{
+  "question_set": "evaluation/filter-validation.yaml",
+  "top_k": 3,
+  "candidate_limit_per_method": 10,
+  "rrf_k": 60,
+  "rrf_weights": {
+    "keyword": 1,
+    "vector": 1
+  },
+  "filters": "query intent -> numeric version of deploy-guide, before ranking",
+  "reranker": false,
+  "embedding_model": "gemini-embedding-2",
+  "embedding_dimensions": 768,
+  "embedding_operations": 6,
+  "measurement_note": "One pass, not p50/p95. One query embedding reused across variants; HTTP retries may add requests. Document Hit does not prove answer evidence is present in the representative chunk. No generation.",
+  "reports": [
+    {
+      "method": "keyword",
+      "questions": 6,
+      "single_document_questions": 5,
+      "hit_at_1_count": 0,
+      "hit_at_1": 0.0,
+      "hit_at_3_count": 0,
+      "hit_at_3": 0.0,
+      "by_type": [
+        {
+          "question_type": "exact_keyword",
+          "questions": 2,
+          "hit_at_1_count": 0,
+          "hit_at_1": 0.0,
+          "hit_at_3_count": 0,
+          "hit_at_3": 0.0
+        },
+        {
+          "question_type": "paraphrase",
+          "questions": 1,
+          "hit_at_1_count": 0,
+          "hit_at_1": 0.0,
+          "hit_at_3_count": 0,
+          "hit_at_3": 0.0
+        },
+        {
+          "question_type": "current_policy",
+          "questions": 2,
+          "hit_at_1_count": 0,
+          "hit_at_1": 0.0,
+          "hit_at_3_count": 0,
+          "hit_at_3": 0.0
+        },
+        {
+          "question_type": "cross_reference",
+          "questions": 1,
+          "hit_at_1_count": null,
+          "hit_at_1": null,
+          "hit_at_3_count": 0,
+          "hit_at_3": 0.0
+        }
+      ],
+      "results": [
+        {
+          "question_id": "extra-current-01",
+          "question_type": "current_policy",
+          "query": "요즘 운영 환경으로 배포할 때 터미널에 입력할 명령을 알려줘.",
+          "required_document_ids": [
+            "deploy-guide-v30"
+          ],
+          "retrieved_document_ids": [
+            "faq-q07",
+            "faq-q21",
+            "faq-q16"
+          ],
+          "hit_at_1": false,
+          "hit_at_3": false
+        },
+        {
+          "question_id": "extra-current-02",
+          "question_type": "current_policy",
+          "query": "최신 배포 가이드에서는 누구의 승인을 받아야 해?",
+          "required_document_ids": [
+            "deploy-guide-v30"
+          ],
+          "retrieved_document_ids": [
+            "deploy-guide-v02",
+            "deploy-guide-v03",
+            "deploy-guide-v04"
+          ],
+          "hit_at_1": false,
+          "hit_at_3": false
+        },
+        {
+          "question_id": "extra-version-01",
+          "question_type": "exact_keyword",
+          "query": "배포 가이드 v22의 배포 금지 시간을 알려줘.",
+          "required_document_ids": [
+            "deploy-guide-v22"
+          ],
+          "retrieved_document_ids": [
+            "error-E-030",
+            "deploy-guide-v02",
+            "deploy-guide-v03"
+          ],
+          "hit_at_1": false,
+          "hit_at_3": false
+        },
+        {
+          "question_id": "extra-history-01",
+          "question_type": "cross_reference",
+          "query": "현재 배포 정책에서 목요일 오후를 금지하게 된 원인 장애를 설명해 줘.",
+          "required_document_ids": [
+            "deploy-guide-v22",
+            "incident-18"
+          ],
+          "retrieved_document_ids": [
+            "deploy-guide-v22",
+            "deploy-guide-v23",
+            "deploy-guide-v24"
+          ],
+          "hit_at_1": null,
+          "hit_at_3": false
+        },
+        {
+          "question_id": "extra-ambiguous-01",
+          "question_type": "paraphrase",
+          "query": "배포 중 같은 서비스의 작업이 겹치지 않게 하는 방법은?",
+          "required_document_ids": [
+            "error-E-025"
+          ],
+          "retrieved_document_ids": [
+            "faq-q26",
+            "deploy-guide-v02",
+            "deploy-guide-v03"
+          ],
+          "hit_at_1": false,
+          "hit_at_3": false
+        },
+        {
+          "question_id": "extra-code-01",
+          "question_type": "exact_keyword",
+          "query": "현재 배포 중 E-021 오류가 났는데 무엇을 확인해야 해?",
+          "required_document_ids": [
+            "error-E-021"
+          ],
+          "retrieved_document_ids": [
+            "faq-q18",
+            "error-E-025",
+            "error-E-030"
+          ],
+          "hit_at_1": false,
+          "hit_at_3": false
+        }
+      ]
+    },
+    {
+      "method": "vector",
+      "questions": 6,
+      "single_document_questions": 5,
+      "hit_at_1_count": 1,
+      "hit_at_1": 0.2,
+      "hit_at_3_count": 3,
+      "hit_at_3": 0.5,
+      "by_type": [
+        {
+          "question_type": "exact_keyword",
+          "questions": 2,
+          "hit_at_1_count": 1,
+          "hit_at_1": 0.5,
+          "hit_at_3_count": 2,
+          "hit_at_3": 1.0
+        },
+        {
+          "question_type": "paraphrase",
+          "questions": 1,
+          "hit_at_1_count": 0,
+          "hit_at_1": 0.0,
+          "hit_at_3_count": 1,
+          "hit_at_3": 1.0
+        },
+        {
+          "question_type": "current_policy",
+          "questions": 2,
+          "hit_at_1_count": 0,
+          "hit_at_1": 0.0,
+          "hit_at_3_count": 0,
+          "hit_at_3": 0.0
+        },
+        {
+          "question_type": "cross_reference",
+          "questions": 1,
+          "hit_at_1_count": null,
+          "hit_at_1": null,
+          "hit_at_3_count": 0,
+          "hit_at_3": 0.0
+        }
+      ],
+      "results": [
+        {
+          "question_id": "extra-current-01",
+          "question_type": "current_policy",
+          "query": "요즘 운영 환경으로 배포할 때 터미널에 입력할 명령을 알려줘.",
+          "required_document_ids": [
+            "deploy-guide-v30"
+          ],
+          "retrieved_document_ids": [
+            "deploy-guide-v21",
+            "deploy-guide-v16",
+            "deploy-guide-v22"
+          ],
+          "hit_at_1": false,
+          "hit_at_3": false
+        },
+        {
+          "question_id": "extra-current-02",
+          "question_type": "current_policy",
+          "query": "최신 배포 가이드에서는 누구의 승인을 받아야 해?",
+          "required_document_ids": [
+            "deploy-guide-v30"
+          ],
+          "retrieved_document_ids": [
+            "faq-q04",
+            "deploy-guide-v07",
+            "deploy-guide-v24"
+          ],
+          "hit_at_1": false,
+          "hit_at_3": false
+        },
+        {
+          "question_id": "extra-version-01",
+          "question_type": "exact_keyword",
+          "query": "배포 가이드 v22의 배포 금지 시간을 알려줘.",
+          "required_document_ids": [
+            "deploy-guide-v22"
+          ],
+          "retrieved_document_ids": [
+            "deploy-guide-v22",
+            "faq-q02",
+            "deploy-guide-v16"
+          ],
+          "hit_at_1": true,
+          "hit_at_3": true
+        },
+        {
+          "question_id": "extra-history-01",
+          "question_type": "cross_reference",
+          "query": "현재 배포 정책에서 목요일 오후를 금지하게 된 원인 장애를 설명해 줘.",
+          "required_document_ids": [
+            "deploy-guide-v22",
+            "incident-18"
+          ],
+          "retrieved_document_ids": [
+            "deploy-guide-v22",
+            "deploy-guide-v05",
+            "incident-26"
+          ],
+          "hit_at_1": null,
+          "hit_at_3": false
+        },
+        {
+          "question_id": "extra-ambiguous-01",
+          "question_type": "paraphrase",
+          "query": "배포 중 같은 서비스의 작업이 겹치지 않게 하는 방법은?",
+          "required_document_ids": [
+            "error-E-025"
+          ],
+          "retrieved_document_ids": [
+            "faq-q27",
+            "deploy-guide-v23",
+            "error-E-025"
+          ],
+          "hit_at_1": false,
+          "hit_at_3": true
+        },
+        {
+          "question_id": "extra-code-01",
+          "question_type": "exact_keyword",
+          "query": "현재 배포 중 E-021 오류가 났는데 무엇을 확인해야 해?",
+          "required_document_ids": [
+            "error-E-021"
+          ],
+          "retrieved_document_ids": [
+            "faq-q07",
+            "error-E-021",
+            "error-E-022"
+          ],
+          "hit_at_1": false,
+          "hit_at_3": true
+        }
+      ]
+    },
+    {
+      "method": "hybrid",
+      "questions": 6,
+      "single_document_questions": 5,
+      "hit_at_1_count": 1,
+      "hit_at_1": 0.2,
+      "hit_at_3_count": 2,
+      "hit_at_3": 0.3333333333333333,
+      "by_type": [
+        {
+          "question_type": "exact_keyword",
+          "questions": 2,
+          "hit_at_1_count": 1,
+          "hit_at_1": 0.5,
+          "hit_at_3_count": 2,
+          "hit_at_3": 1.0
+        },
+        {
+          "question_type": "paraphrase",
+          "questions": 1,
+          "hit_at_1_count": 0,
+          "hit_at_1": 0.0,
+          "hit_at_3_count": 0,
+          "hit_at_3": 0.0
+        },
+        {
+          "question_type": "current_policy",
+          "questions": 2,
+          "hit_at_1_count": 0,
+          "hit_at_1": 0.0,
+          "hit_at_3_count": 0,
+          "hit_at_3": 0.0
+        },
+        {
+          "question_type": "cross_reference",
+          "questions": 1,
+          "hit_at_1_count": null,
+          "hit_at_1": null,
+          "hit_at_3_count": 0,
+          "hit_at_3": 0.0
+        }
+      ],
+      "results": [
+        {
+          "question_id": "extra-current-01",
+          "question_type": "current_policy",
+          "query": "요즘 운영 환경으로 배포할 때 터미널에 입력할 명령을 알려줘.",
+          "required_document_ids": [
+            "deploy-guide-v30"
+          ],
+          "retrieved_document_ids": [
+            "deploy-guide-v21",
+            "faq-q07",
+            "deploy-guide-v16"
+          ],
+          "hit_at_1": false,
+          "hit_at_3": false
+        },
+        {
+          "question_id": "extra-current-02",
+          "question_type": "current_policy",
+          "query": "최신 배포 가이드에서는 누구의 승인을 받아야 해?",
+          "required_document_ids": [
+            "deploy-guide-v30"
+          ],
+          "retrieved_document_ids": [
+            "deploy-guide-v07",
+            "deploy-guide-v05",
+            "deploy-guide-v02"
+          ],
+          "hit_at_1": false,
+          "hit_at_3": false
+        },
+        {
+          "question_id": "extra-version-01",
+          "question_type": "exact_keyword",
+          "query": "배포 가이드 v22의 배포 금지 시간을 알려줘.",
+          "required_document_ids": [
+            "deploy-guide-v22"
+          ],
+          "retrieved_document_ids": [
+            "deploy-guide-v05",
+            "deploy-guide-v22",
+            "error-E-030"
+          ],
+          "hit_at_1": false,
+          "hit_at_3": true
+        },
+        {
+          "question_id": "extra-history-01",
+          "question_type": "cross_reference",
+          "query": "현재 배포 정책에서 목요일 오후를 금지하게 된 원인 장애를 설명해 줘.",
+          "required_document_ids": [
+            "deploy-guide-v22",
+            "incident-18"
+          ],
+          "retrieved_document_ids": [
+            "deploy-guide-v22",
+            "deploy-guide-v05",
+            "deploy-guide-v23"
+          ],
+          "hit_at_1": null,
+          "hit_at_3": false
+        },
+        {
+          "question_id": "extra-ambiguous-01",
+          "question_type": "paraphrase",
+          "query": "배포 중 같은 서비스의 작업이 겹치지 않게 하는 방법은?",
+          "required_document_ids": [
+            "error-E-025"
+          ],
+          "retrieved_document_ids": [
+            "faq-q26",
+            "faq-q27",
+            "deploy-guide-v02"
+          ],
+          "hit_at_1": false,
+          "hit_at_3": false
+        },
+        {
+          "question_id": "extra-code-01",
+          "question_type": "exact_keyword",
+          "query": "현재 배포 중 E-021 오류가 났는데 무엇을 확인해야 해?",
+          "required_document_ids": [
+            "error-E-021"
+          ],
+          "retrieved_document_ids": [
+            "error-E-021",
+            "error-E-025",
+            "error-E-030"
+          ],
+          "hit_at_1": true,
+          "hit_at_3": true
+        }
+      ]
+    },
+    {
+      "method": "keyword_filtered",
+      "questions": 6,
+      "single_document_questions": 5,
+      "hit_at_1_count": 2,
+      "hit_at_1": 0.4,
+      "hit_at_3_count": 2,
+      "hit_at_3": 0.3333333333333333,
+      "by_type": [
+        {
+          "question_type": "exact_keyword",
+          "questions": 2,
+          "hit_at_1_count": 1,
+          "hit_at_1": 0.5,
+          "hit_at_3_count": 1,
+          "hit_at_3": 0.5
+        },
+        {
+          "question_type": "paraphrase",
+          "questions": 1,
+          "hit_at_1_count": 0,
+          "hit_at_1": 0.0,
+          "hit_at_3_count": 0,
+          "hit_at_3": 0.0
+        },
+        {
+          "question_type": "current_policy",
+          "questions": 2,
+          "hit_at_1_count": 1,
+          "hit_at_1": 0.5,
+          "hit_at_3_count": 1,
+          "hit_at_3": 0.5
+        },
+        {
+          "question_type": "cross_reference",
+          "questions": 1,
+          "hit_at_1_count": null,
+          "hit_at_1": null,
+          "hit_at_3_count": 0,
+          "hit_at_3": 0.0
+        }
+      ],
+      "results": [
+        {
+          "question_id": "extra-current-01",
+          "question_type": "current_policy",
+          "query": "요즘 운영 환경으로 배포할 때 터미널에 입력할 명령을 알려줘.",
+          "required_document_ids": [
+            "deploy-guide-v30"
+          ],
+          "retrieved_document_ids": [],
+          "hit_at_1": false,
+          "hit_at_3": false
+        },
+        {
+          "question_id": "extra-current-02",
+          "question_type": "current_policy",
+          "query": "최신 배포 가이드에서는 누구의 승인을 받아야 해?",
+          "required_document_ids": [
+            "deploy-guide-v30"
+          ],
+          "retrieved_document_ids": [
+            "deploy-guide-v30"
+          ],
+          "hit_at_1": true,
+          "hit_at_3": true
+        },
+        {
+          "question_id": "extra-version-01",
+          "question_type": "exact_keyword",
+          "query": "배포 가이드 v22의 배포 금지 시간을 알려줘.",
+          "required_document_ids": [
+            "deploy-guide-v22"
+          ],
+          "retrieved_document_ids": [
+            "deploy-guide-v22"
+          ],
+          "hit_at_1": true,
+          "hit_at_3": true
+        },
+        {
+          "question_id": "extra-history-01",
+          "question_type": "cross_reference",
+          "query": "현재 배포 정책에서 목요일 오후를 금지하게 된 원인 장애를 설명해 줘.",
+          "required_document_ids": [
+            "deploy-guide-v22",
+            "incident-18"
+          ],
+          "retrieved_document_ids": [
+            "deploy-guide-v22",
+            "deploy-guide-v23",
+            "deploy-guide-v24"
+          ],
+          "hit_at_1": null,
+          "hit_at_3": false
+        },
+        {
+          "question_id": "extra-ambiguous-01",
+          "question_type": "paraphrase",
+          "query": "배포 중 같은 서비스의 작업이 겹치지 않게 하는 방법은?",
+          "required_document_ids": [
+            "error-E-025"
+          ],
+          "retrieved_document_ids": [
+            "faq-q26",
+            "deploy-guide-v02",
+            "deploy-guide-v03"
+          ],
+          "hit_at_1": false,
+          "hit_at_3": false
+        },
+        {
+          "question_id": "extra-code-01",
+          "question_type": "exact_keyword",
+          "query": "현재 배포 중 E-021 오류가 났는데 무엇을 확인해야 해?",
+          "required_document_ids": [
+            "error-E-021"
+          ],
+          "retrieved_document_ids": [
+            "faq-q18",
+            "error-E-025",
+            "error-E-030"
+          ],
+          "hit_at_1": false,
+          "hit_at_3": false
+        }
+      ]
+    },
+    {
+      "method": "vector_filtered",
+      "questions": 6,
+      "single_document_questions": 5,
+      "hit_at_1_count": 3,
+      "hit_at_1": 0.6,
+      "hit_at_3_count": 5,
+      "hit_at_3": 0.8333333333333334,
+      "by_type": [
+        {
+          "question_type": "exact_keyword",
+          "questions": 2,
+          "hit_at_1_count": 1,
+          "hit_at_1": 0.5,
+          "hit_at_3_count": 2,
+          "hit_at_3": 1.0
+        },
+        {
+          "question_type": "paraphrase",
+          "questions": 1,
+          "hit_at_1_count": 0,
+          "hit_at_1": 0.0,
+          "hit_at_3_count": 1,
+          "hit_at_3": 1.0
+        },
+        {
+          "question_type": "current_policy",
+          "questions": 2,
+          "hit_at_1_count": 2,
+          "hit_at_1": 1.0,
+          "hit_at_3_count": 2,
+          "hit_at_3": 1.0
+        },
+        {
+          "question_type": "cross_reference",
+          "questions": 1,
+          "hit_at_1_count": null,
+          "hit_at_1": null,
+          "hit_at_3_count": 0,
+          "hit_at_3": 0.0
+        }
+      ],
+      "results": [
+        {
+          "question_id": "extra-current-01",
+          "question_type": "current_policy",
+          "query": "요즘 운영 환경으로 배포할 때 터미널에 입력할 명령을 알려줘.",
+          "required_document_ids": [
+            "deploy-guide-v30"
+          ],
+          "retrieved_document_ids": [
+            "deploy-guide-v30"
+          ],
+          "hit_at_1": true,
+          "hit_at_3": true
+        },
+        {
+          "question_id": "extra-current-02",
+          "question_type": "current_policy",
+          "query": "최신 배포 가이드에서는 누구의 승인을 받아야 해?",
+          "required_document_ids": [
+            "deploy-guide-v30"
+          ],
+          "retrieved_document_ids": [
+            "deploy-guide-v30"
+          ],
+          "hit_at_1": true,
+          "hit_at_3": true
+        },
+        {
+          "question_id": "extra-version-01",
+          "question_type": "exact_keyword",
+          "query": "배포 가이드 v22의 배포 금지 시간을 알려줘.",
+          "required_document_ids": [
+            "deploy-guide-v22"
+          ],
+          "retrieved_document_ids": [
+            "deploy-guide-v22"
+          ],
+          "hit_at_1": true,
+          "hit_at_3": true
+        },
+        {
+          "question_id": "extra-history-01",
+          "question_type": "cross_reference",
+          "query": "현재 배포 정책에서 목요일 오후를 금지하게 된 원인 장애를 설명해 줘.",
+          "required_document_ids": [
+            "deploy-guide-v22",
+            "incident-18"
+          ],
+          "retrieved_document_ids": [
+            "deploy-guide-v22",
+            "deploy-guide-v05",
+            "incident-26"
+          ],
+          "hit_at_1": null,
+          "hit_at_3": false
+        },
+        {
+          "question_id": "extra-ambiguous-01",
+          "question_type": "paraphrase",
+          "query": "배포 중 같은 서비스의 작업이 겹치지 않게 하는 방법은?",
+          "required_document_ids": [
+            "error-E-025"
+          ],
+          "retrieved_document_ids": [
+            "faq-q27",
+            "deploy-guide-v23",
+            "error-E-025"
+          ],
+          "hit_at_1": false,
+          "hit_at_3": true
+        },
+        {
+          "question_id": "extra-code-01",
+          "question_type": "exact_keyword",
+          "query": "현재 배포 중 E-021 오류가 났는데 무엇을 확인해야 해?",
+          "required_document_ids": [
+            "error-E-021"
+          ],
+          "retrieved_document_ids": [
+            "faq-q07",
+            "error-E-021",
+            "error-E-022"
+          ],
+          "hit_at_1": false,
+          "hit_at_3": true
+        }
+      ]
+    },
+    {
+      "method": "hybrid_filtered",
+      "questions": 6,
+      "single_document_questions": 5,
+      "hit_at_1_count": 4,
+      "hit_at_1": 0.8,
+      "hit_at_3_count": 4,
+      "hit_at_3": 0.6666666666666666,
+      "by_type": [
+        {
+          "question_type": "exact_keyword",
+          "questions": 2,
+          "hit_at_1_count": 2,
+          "hit_at_1": 1.0,
+          "hit_at_3_count": 2,
+          "hit_at_3": 1.0
+        },
+        {
+          "question_type": "paraphrase",
+          "questions": 1,
+          "hit_at_1_count": 0,
+          "hit_at_1": 0.0,
+          "hit_at_3_count": 0,
+          "hit_at_3": 0.0
+        },
+        {
+          "question_type": "current_policy",
+          "questions": 2,
+          "hit_at_1_count": 2,
+          "hit_at_1": 1.0,
+          "hit_at_3_count": 2,
+          "hit_at_3": 1.0
+        },
+        {
+          "question_type": "cross_reference",
+          "questions": 1,
+          "hit_at_1_count": null,
+          "hit_at_1": null,
+          "hit_at_3_count": 0,
+          "hit_at_3": 0.0
+        }
+      ],
+      "results": [
+        {
+          "question_id": "extra-current-01",
+          "question_type": "current_policy",
+          "query": "요즘 운영 환경으로 배포할 때 터미널에 입력할 명령을 알려줘.",
+          "required_document_ids": [
+            "deploy-guide-v30"
+          ],
+          "retrieved_document_ids": [
+            "deploy-guide-v30"
+          ],
+          "hit_at_1": true,
+          "hit_at_3": true
+        },
+        {
+          "question_id": "extra-current-02",
+          "question_type": "current_policy",
+          "query": "최신 배포 가이드에서는 누구의 승인을 받아야 해?",
+          "required_document_ids": [
+            "deploy-guide-v30"
+          ],
+          "retrieved_document_ids": [
+            "deploy-guide-v30"
+          ],
+          "hit_at_1": true,
+          "hit_at_3": true
+        },
+        {
+          "question_id": "extra-version-01",
+          "question_type": "exact_keyword",
+          "query": "배포 가이드 v22의 배포 금지 시간을 알려줘.",
+          "required_document_ids": [
+            "deploy-guide-v22"
+          ],
+          "retrieved_document_ids": [
+            "deploy-guide-v22"
+          ],
+          "hit_at_1": true,
+          "hit_at_3": true
+        },
+        {
+          "question_id": "extra-history-01",
+          "question_type": "cross_reference",
+          "query": "현재 배포 정책에서 목요일 오후를 금지하게 된 원인 장애를 설명해 줘.",
+          "required_document_ids": [
+            "deploy-guide-v22",
+            "incident-18"
+          ],
+          "retrieved_document_ids": [
+            "deploy-guide-v22",
+            "deploy-guide-v05",
+            "deploy-guide-v23"
+          ],
+          "hit_at_1": null,
+          "hit_at_3": false
+        },
+        {
+          "question_id": "extra-ambiguous-01",
+          "question_type": "paraphrase",
+          "query": "배포 중 같은 서비스의 작업이 겹치지 않게 하는 방법은?",
+          "required_document_ids": [
+            "error-E-025"
+          ],
+          "retrieved_document_ids": [
+            "faq-q26",
+            "faq-q27",
+            "deploy-guide-v02"
+          ],
+          "hit_at_1": false,
+          "hit_at_3": false
+        },
+        {
+          "question_id": "extra-code-01",
+          "question_type": "exact_keyword",
+          "query": "현재 배포 중 E-021 오류가 났는데 무엇을 확인해야 해?",
+          "required_document_ids": [
+            "error-E-021"
+          ],
+          "retrieved_document_ids": [
+            "error-E-021",
+            "error-E-025",
+            "error-E-030"
+          ],
+          "hit_at_1": true,
+          "hit_at_3": true
+        }
+      ]
+    }
+  ],
+  "compared_to_unfiltered": {
+    "keyword_filtered": {
+      "hit_at_1": {
+        "improved": [
+          "extra-current-02",
+          "extra-version-01"
+        ],
+        "regressed": []
+      },
+      "hit_at_3": {
+        "improved": [
+          "extra-current-02",
+          "extra-version-01"
+        ],
+        "regressed": []
+      }
+    },
+    "vector_filtered": {
+      "hit_at_1": {
+        "improved": [
+          "extra-current-01",
+          "extra-current-02"
+        ],
+        "regressed": []
+      },
+      "hit_at_3": {
+        "improved": [
+          "extra-current-01",
+          "extra-current-02"
+        ],
+        "regressed": []
+      }
+    },
+    "hybrid_filtered": {
+      "hit_at_1": {
+        "improved": [
+          "extra-current-01",
+          "extra-current-02",
+          "extra-version-01"
+        ],
+        "regressed": []
+      },
+      "hit_at_3": {
+        "improved": [
+          "extra-current-01",
+          "extra-current-02"
+        ],
+        "regressed": []
+      }
+    }
+  },
+  "diagnostics": [
+    {
+      "question_id": "extra-current-01",
+      "query": "요즘 운영 환경으로 배포할 때 터미널에 입력할 명령을 알려줘.",
+      "scope": {
+        "mode": "latest",
+        "version": null
+      },
+      "timings_seconds": {
+        "query_embedding": 0.7107879589984805,
+        "keyword": 0.017522541998914676,
+        "vector": 0.00611320800089743,
+        "hybrid_fusion": 0.00014725000073667616,
+        "keyword_filtered": 0.0029945839996798895,
+        "vector_filtered": 0.0026937919992633397,
+        "hybrid_filtered_fusion": 4.937499943480361e-05
+      },
+      "candidates": {
+        "keyword": [
+          {
+            "document_id": "faq-q07",
+            "chunk_index": 0,
+            "heading_path": "온보딩 FAQ Q07",
+            "content": "**Q. 배포할 때 E-021이 뜨면 어떻게 하나요?**\n\n워크플로 권한 부족이다. 저장소의 워크플로 권한에 `deployments: write`가 있는지 확인한다.\n\n- 관련 문서: 에러 코드 E-021, 장애 리포트 #12",
+            "score": 2.4
+          },
+          {
+            "document_id": "faq-q21",
+            "chunk_index": 0,
+            "heading_path": "온보딩 FAQ Q21",
+            "content": "**Q. 배포할 때 티켓 번호가 꼭 필요한가요?**\n\n그렇다. `--ticket <id>` 없이는 배포 명령이 실행되지 않는다.\n\n- 관련 문서: 배포 가이드 v27",
+            "score": 2.4
+          },
+          {
+            "document_id": "faq-q16",
+            "chunk_index": 0,
+            "heading_path": "온보딩 FAQ Q16",
+            "content": "**Q. 첫 PR을 올릴 때 규칙이 있나요?**\n\n리뷰어 2명 승인이 필요하고, 변경 티켓 번호를 PR 제목에 붙인다.",
+            "score": 1.2
+          },
+          {
+            "document_id": "faq-q27",
+            "chunk_index": 0,
+            "heading_path": "온보딩 FAQ Q27",
+            "content": "**Q. 두 명이 같은 서비스를 동시에 배포할 수 있나요?**\n\n없다. 같은 서비스의 배포는 잠금으로 한 번에 하나만 실행된다.\n\n- 관련 문서: 배포 가이드 v23",
+            "score": 1.2
+          },
+          {
+            "document_id": "deploy-guide-v26",
+            "chunk_index": 0,
+            "heading_path": "배포 가이드 v26",
+            "content": "- 변경: feature flag 없는 대규모 변경은 배포할 수 없다.\n- 이유: 장애 리포트 #21 이후 결정",
+            "score": 0.2
+          },
+          {
+            "document_id": "faq-q20",
+            "chunk_index": 0,
+            "heading_path": "온보딩 FAQ Q20",
+            "content": "**Q. feature flag는 언제 써야 하나요?**\n\n대규모 변경은 feature flag 없이 배포할 수 없다. 롤백이 불가능해지기 때문이다.\n\n- 관련 문서: 배포 가이드 v26, 장애 리포트 #21",
+            "score": 0.2
+          }
+        ],
+        "vector": [
+          {
+            "document_id": "deploy-guide-v21",
+            "chunk_index": 1,
+            "heading_path": "배포 가이드 v21 > 현재 규칙",
+            "content": "- 배포 도구: GitHub Actions\n- 배포 명령: `deploy run --env prod`\n- 롤백 명령: `deploy rollback --to <version>` (승인 불필요)\n- 배포 금지 시간: 금요일 오후, 공휴일 전날\n- 승인자: 팀 리드 + SRE 온콜\n- 이전 버전: 배포 가이드 v20",
+            "score": 0.7564211908013957
+          },
+          {
+            "document_id": "deploy-guide-v16",
+            "chunk_index": 1,
+            "heading_path": "배포 가이드 v16 > 현재 규칙",
+            "content": "- 배포 도구: GitHub Actions (Jenkins 병행)\n- 배포 명령: `deploy run --env prod`\n- 롤백 명령: `deploy rollback --to <version>`\n- 배포 금지 시간: 금요일 오후, 공휴일 전날\n- 승인자: 팀 리드 + SRE 온콜\n- 이전 버전: 배포 가이드 v15",
+            "score": 0.7544812931275012
+          },
+          {
+            "document_id": "deploy-guide-v22",
+            "chunk_index": 1,
+            "heading_path": "배포 가이드 v22 > 현재 규칙",
+            "content": "- 배포 도구: GitHub Actions\n- 배포 명령: `deploy run --env prod`\n- 롤백 명령: `deploy rollback --to <version>` (승인 불필요)\n- 배포 금지 시간: 목요일 오후, 공휴일 전날\n- 승인자: 팀 리드 + SRE 온콜\n- 이전 버전: 배포 가이드 v21",
+            "score": 0.7535804207825159
+          },
+          {
+            "document_id": "deploy-guide-v15",
+            "chunk_index": 1,
+            "heading_path": "배포 가이드 v15 > 현재 규칙",
+            "content": "- 배포 도구: GitHub Actions (Jenkins 병행)\n- 배포 명령: `deploy run --env prod`\n- 롤백 명령: `deploy rollback --to <version>`\n- 배포 금지 시간: 금요일 오후\n- 승인자: 팀 리드 + SRE 온콜\n- 이전 버전: 배포 가이드 v14",
+            "score": 0.7535410368071146
+          },
+          {
+            "document_id": "deploy-guide-v20",
+            "chunk_index": 1,
+            "heading_path": "배포 가이드 v20 > 현재 규칙",
+            "content": "- 배포 도구: GitHub Actions\n- 배포 명령: `deploy run --env prod`\n- 롤백 명령: `deploy rollback --to <version>` (승인 불필요)\n- 배포 금지 시간: 금요일 오후, 공휴일 전날\n- 승인자: 팀 리드 + SRE 온콜\n- 이전 버전: 배포 가이드 v19",
+            "score": 0.7533394229380067
+          },
+          {
+            "document_id": "deploy-guide-v19",
+            "chunk_index": 1,
+            "heading_path": "배포 가이드 v19 > 현재 규칙",
+            "content": "- 배포 도구: GitHub Actions\n- 배포 명령: `deploy run --env prod`\n- 롤백 명령: `deploy rollback --to <version>` (승인 불필요)\n- 배포 금지 시간: 금요일 오후, 공휴일 전날\n- 승인자: 팀 리드 + SRE 온콜\n- 이전 버전: 배포 가이드 v18",
+            "score": 0.752827509732097
+          },
+          {
+            "document_id": "faq-q01",
+            "chunk_index": 0,
+            "heading_path": "온보딩 FAQ Q01",
+            "content": "**Q. 프로덕션 배포는 어떻게 하나요?**\n\nGitHub Actions에서 `deploy run --env prod --ticket <id>`를 실행한다. staging 배포와 승인이 먼저 필요하다.\n\n- 관련 문서: 배포 가이드 v30",
+            "score": 0.7522944950179891
+          },
+          {
+            "document_id": "deploy-guide-v17",
+            "chunk_index": 1,
+            "heading_path": "배포 가이드 v17 > 현재 규칙",
+            "content": "- 배포 도구: GitHub Actions (Jenkins 병행)\n- 배포 명령: `deploy run --env prod`\n- 롤백 명령: `deploy rollback --to <version>`\n- 배포 금지 시간: 금요일 오후, 공휴일 전날\n- 승인자: 팀 리드 + SRE 온콜\n- 이전 버전: 배포 가이드 v16",
+            "score": 0.7514346386687164
+          },
+          {
+            "document_id": "deploy-guide-v23",
+            "chunk_index": 1,
+            "heading_path": "배포 가이드 v23 > 현재 규칙",
+            "content": "- 배포 도구: GitHub Actions\n- 배포 명령: `deploy run --env prod`\n- 롤백 명령: `deploy rollback --to <version>` (승인 불필요)\n- 배포 금지 시간: 목요일 오후, 공휴일 전날\n- 승인자: 팀 리드 + SRE 온콜\n- 이전 버전: 배포 가이드 v22",
+            "score": 0.751037575273589
+          },
+          {
+            "document_id": "deploy-guide-v18",
+            "chunk_index": 1,
+            "heading_path": "배포 가이드 v18 > 현재 규칙",
+            "content": "- 배포 도구: GitHub Actions\n- 배포 명령: `deploy run --env prod`\n- 롤백 명령: `deploy rollback --to <version>`\n- 배포 금지 시간: 금요일 오후, 공휴일 전날\n- 승인자: 팀 리드 + SRE 온콜\n- 이전 버전: 배포 가이드 v17",
+            "score": 0.7506709394439889
+          }
+        ],
+        "hybrid": [
+          {
+            "document_id": "deploy-guide-v21",
+            "chunk_index": 1,
+            "heading_path": "배포 가이드 v21 > 현재 규칙",
+            "content": "- 배포 도구: GitHub Actions\n- 배포 명령: `deploy run --env prod`\n- 롤백 명령: `deploy rollback --to <version>` (승인 불필요)\n- 배포 금지 시간: 금요일 오후, 공휴일 전날\n- 승인자: 팀 리드 + SRE 온콜\n- 이전 버전: 배포 가이드 v20",
+            "score": 0.01639344262295082
+          },
+          {
+            "document_id": "faq-q07",
+            "chunk_index": 0,
+            "heading_path": "온보딩 FAQ Q07",
+            "content": "**Q. 배포할 때 E-021이 뜨면 어떻게 하나요?**\n\n워크플로 권한 부족이다. 저장소의 워크플로 권한에 `deployments: write`가 있는지 확인한다.\n\n- 관련 문서: 에러 코드 E-021, 장애 리포트 #12",
+            "score": 0.01639344262295082
+          },
+          {
+            "document_id": "deploy-guide-v16",
+            "chunk_index": 1,
+            "heading_path": "배포 가이드 v16 > 현재 규칙",
+            "content": "- 배포 도구: GitHub Actions (Jenkins 병행)\n- 배포 명령: `deploy run --env prod`\n- 롤백 명령: `deploy rollback --to <version>`\n- 배포 금지 시간: 금요일 오후, 공휴일 전날\n- 승인자: 팀 리드 + SRE 온콜\n- 이전 버전: 배포 가이드 v15",
+            "score": 0.016129032258064516
+          },
+          {
+            "document_id": "faq-q21",
+            "chunk_index": 0,
+            "heading_path": "온보딩 FAQ Q21",
+            "content": "**Q. 배포할 때 티켓 번호가 꼭 필요한가요?**\n\n그렇다. `--ticket <id>` 없이는 배포 명령이 실행되지 않는다.\n\n- 관련 문서: 배포 가이드 v27",
+            "score": 0.016129032258064516
+          },
+          {
+            "document_id": "deploy-guide-v22",
+            "chunk_index": 1,
+            "heading_path": "배포 가이드 v22 > 현재 규칙",
+            "content": "- 배포 도구: GitHub Actions\n- 배포 명령: `deploy run --env prod`\n- 롤백 명령: `deploy rollback --to <version>` (승인 불필요)\n- 배포 금지 시간: 목요일 오후, 공휴일 전날\n- 승인자: 팀 리드 + SRE 온콜\n- 이전 버전: 배포 가이드 v21",
+            "score": 0.015873015873015872
+          },
+          {
+            "document_id": "faq-q16",
+            "chunk_index": 0,
+            "heading_path": "온보딩 FAQ Q16",
+            "content": "**Q. 첫 PR을 올릴 때 규칙이 있나요?**\n\n리뷰어 2명 승인이 필요하고, 변경 티켓 번호를 PR 제목에 붙인다.",
+            "score": 0.015873015873015872
+          },
+          {
+            "document_id": "deploy-guide-v15",
+            "chunk_index": 1,
+            "heading_path": "배포 가이드 v15 > 현재 규칙",
+            "content": "- 배포 도구: GitHub Actions (Jenkins 병행)\n- 배포 명령: `deploy run --env prod`\n- 롤백 명령: `deploy rollback --to <version>`\n- 배포 금지 시간: 금요일 오후\n- 승인자: 팀 리드 + SRE 온콜\n- 이전 버전: 배포 가이드 v14",
+            "score": 0.015625
+          },
+          {
+            "document_id": "faq-q27",
+            "chunk_index": 0,
+            "heading_path": "온보딩 FAQ Q27",
+            "content": "**Q. 두 명이 같은 서비스를 동시에 배포할 수 있나요?**\n\n없다. 같은 서비스의 배포는 잠금으로 한 번에 하나만 실행된다.\n\n- 관련 문서: 배포 가이드 v23",
+            "score": 0.015625
+          },
+          {
+            "document_id": "deploy-guide-v20",
+            "chunk_index": 1,
+            "heading_path": "배포 가이드 v20 > 현재 규칙",
+            "content": "- 배포 도구: GitHub Actions\n- 배포 명령: `deploy run --env prod`\n- 롤백 명령: `deploy rollback --to <version>` (승인 불필요)\n- 배포 금지 시간: 금요일 오후, 공휴일 전날\n- 승인자: 팀 리드 + SRE 온콜\n- 이전 버전: 배포 가이드 v19",
+            "score": 0.015384615384615385
+          },
+          {
+            "document_id": "deploy-guide-v26",
+            "chunk_index": 0,
+            "heading_path": "배포 가이드 v26",
+            "content": "- 변경: feature flag 없는 대규모 변경은 배포할 수 없다.\n- 이유: 장애 리포트 #21 이후 결정",
+            "score": 0.015384615384615385
+          }
+        ],
+        "keyword_filtered": [],
+        "vector_filtered": [
+          {
+            "document_id": "deploy-guide-v30",
+            "chunk_index": 1,
+            "heading_path": "배포 가이드 v30 > 현재 규칙",
+            "content": "- 배포 도구: GitHub Actions\n- 배포 명령: `deploy run --env prod --ticket <id>`\n- 롤백 명령: `deploy rollback --to <version>` (승인 불필요)\n- 배포 금지 시간: 목요일 오후, 공휴일 전날, 12/22~1/2 연말 동결\n- 승인자: 팀 리드 + 서비스 오너\n- 이전 버전: 배포 가이드 v29",
+            "score": 0.7498989105224663
+          }
+        ],
+        "hybrid_filtered": [
+          {
+            "document_id": "deploy-guide-v30",
+            "chunk_index": 1,
+            "heading_path": "배포 가이드 v30 > 현재 규칙",
+            "content": "- 배포 도구: GitHub Actions\n- 배포 명령: `deploy run --env prod --ticket <id>`\n- 롤백 명령: `deploy rollback --to <version>` (승인 불필요)\n- 배포 금지 시간: 목요일 오후, 공휴일 전날, 12/22~1/2 연말 동결\n- 승인자: 팀 리드 + 서비스 오너\n- 이전 버전: 배포 가이드 v29",
+            "score": 0.01639344262295082
+          }
+        ]
+      }
+    },
+    {
+      "question_id": "extra-current-02",
+      "query": "최신 배포 가이드에서는 누구의 승인을 받아야 해?",
+      "scope": {
+        "mode": "latest",
+        "version": null
+      },
+      "timings_seconds": {
+        "query_embedding": 0.4301958329997433,
+        "keyword": 0.0104370419994666,
+        "vector": 0.003479291999610723,
+        "hybrid_fusion": 7.199999890872277e-05,
+        "keyword_filtered": 0.0020422919988050126,
+        "vector_filtered": 0.002039707998847007,
+        "hybrid_filtered_fusion": 2.141699951607734e-05
+      },
+      "candidates": {
+        "keyword": [
+          {
+            "document_id": "deploy-guide-v02",
+            "chunk_index": 1,
+            "heading_path": "배포 가이드 v2 > 현재 규칙",
+            "content": "- 배포 도구: Jenkins\n- 배포 명령: Jenkins job `deploy-staging` → `deploy-prod` 순서로 실행\n- 롤백 명령: 이전 빌드를 `deploy-prod`로 재실행\n- 배포 금지 시간: 없음\n- 승인자: 팀 리드\n- 이전 버전: 배포 가이드 v1",
+            "score": 2.2
+          },
+          {
+            "document_id": "deploy-guide-v03",
+            "chunk_index": 1,
+            "heading_path": "배포 가이드 v3 > 현재 규칙",
+            "content": "-  배포 도구: Jenkins\n- 배포 명령: Jenkins job `deploy-staging` → `deploy-prod` 순서로 실행\n- 롤백 명령: 이전 빌드를`deploy-prod`로 재실행\n- 배포 금지 시간: 없음\n- 승인자: 팀 리드\n- 이전 버전: 배포 가이드 v2",
+            "score": 2.2
+          },
+          {
+            "document_id": "deploy-guide-v04",
+            "chunk_index": 1,
+            "heading_path": "배포 가이드 v4 > 현재 규칙",
+            "content": "- 배포 도구: Jenkins\n- 배포 명령: Jenkins job `deploy-staging` → `deploy-prod` 순서로 실행\n- 롤백 명령: 이전 빌드를 `deploy-prod`로 재실행\n- 배포 금지 시간: 없음\n- 승인자: 팀 리드\n- 이전 버전: 배포 가이드 v3",
+            "score": 2.2
+          },
+          {
+            "document_id": "deploy-guide-v05",
+            "chunk_index": 1,
+            "heading_path": "배포 가이드 v5 > 현재 규칙",
+            "content": "- 배포 도구: Jenkins\n- 배포 명령: Jenkins job `deploy-staging` → `deploy-prod` 순서로 실행\n- 롤백 명령: 이전 빌드를 `deploy-prod`로 재실행\n- 배포 금지 시간: 금요일 오후\n- 승인자: 팀 리드\n- 이전 버전: 배포 가이드 v4",
+            "score": 2.2
+          },
+          {
+            "document_id": "deploy-guide-v06",
+            "chunk_index": 1,
+            "heading_path": "배포 가이드 v6 > 현재 규칙",
+            "content": "- 배포 도구: Jenkins\n- 배포 명령: Jenkins job `deploy-staging` → `deploy-prod` 순서로 실행\n- 롤백 명령: Jenkins job `rollback-prod` 실행\n- 배포 금지 시간: 금요일 오후\n- 승인자: 팀 리드\n- 이전 버전: 배포 가이드 v5",
+            "score": 2.2
+          },
+          {
+            "document_id": "deploy-guide-v07",
+            "chunk_index": 1,
+            "heading_path": "배포 가이드 v7 > 현재 규칙",
+            "content": "- 배포 도구: Jenkins\n- 배포 명령: Jenkins job `deploy-staging` → `deploy-prod` 순서로 실행\n- 롤백 명령: Jenkins job `rollback-prod` 실행\n- 배포 금지 시간: 금요일 오후\n- 승인자: 팀 리드 + SRE 온콜\n- 이전 버전: 배포 가이드 v6",
+            "score": 2.2
+          },
+          {
+            "document_id": "deploy-guide-v08",
+            "chunk_index": 1,
+            "heading_path": "배포 가이드 v8 > 현재 규칙",
+            "content": "- 배포 도구: Jenkins\n- 배포 명령: Jenkins job `deploy-staging` → `deploy-prod` 순서로 실행\n- 롤백 명령: Jenkins job `rollback-prod` 실행\n- 배포 금지 시간: 금요일 오후\n- 승인자: 팀 리드 + SRE 온콜\n- 이전 버전: 배포 가이드 v7",
+            "score": 2.2
+          },
+          {
+            "document_id": "deploy-guide-v09",
+            "chunk_index": 1,
+            "heading_path": "배포 가이드 v9 > 현재 규칙",
+            "content": "- 배포 도구: Jenkins\n- 배포 명령: Jenkins job `deploy-staging` → `deploy-prod` 순서로 실행\n- 롤백 명령: Jenkins job `rollback-prod` 실행\n- 배포 금지 시간: 금요일 오후\n- 승인자: 팀 리드 + SRE 온콜\n- 이전 버전: 배포 가이드 v8",
+            "score": 2.2
+          },
+          {
+            "document_id": "deploy-guide-v10",
+            "chunk_index": 1,
+            "heading_path": "배포 가이드 v10 > 현재 규칙",
+            "content": "- 배포 도구: Jenkins\n- 배포 명령: Jenkins job `deploy-staging` → `deploy-prod` 순서로 실행\n- 롤백 명령: Jenkins job `rollback-prod` 실행\n- 배포 금지 시간: 금요일 오후\n- 승인자: 팀 리드 + SRE 온콜\n- 이전 버전: 배포 가이드 v9",
+            "score": 2.2
+          },
+          {
+            "document_id": "deploy-guide-v11",
+            "chunk_index": 1,
+            "heading_path": "배포 가이드 v11 > 현재 규칙",
+            "content": "- 배포 도구: Jenkins\n- 배포 명령: Jenkins job `deploy-staging` → `deploy-prod` 순서로 실행\n- 롤백 명령: Jenkins job `rollback-prod` 실행\n- 배포 금지 시간: 금요일 오후\n- 승인자: 팀 리드 + SRE 온콜\n- 이전 버전: 배포 가이드 v10",
+            "score": 2.2
+          }
+        ],
+        "vector": [
+          {
+            "document_id": "faq-q04",
+            "chunk_index": 0,
+            "heading_path": "온보딩 FAQ Q04",
+            "content": "**Q. 배포 승인은 누가 하나요?**\n\n팀 리드와 서비스 오너 두 명이 승인한다.\n\n- 관련 문서: 배포 가이드 v24",
+            "score": 0.782358094349744
+          },
+          {
+            "document_id": "deploy-guide-v07",
+            "chunk_index": 0,
+            "heading_path": "배포 가이드 v7",
+            "content": "- 변경: 배포 승인자를 변경한다. 팀 리드와 SRE 온콜 두 명의 승인이 필요하다.\n- 이유: 장애 리포트 #05 이후 결정",
+            "score": 0.7779311736699402
+          },
+          {
+            "document_id": "deploy-guide-v24",
+            "chunk_index": 0,
+            "heading_path": "배포 가이드 v24",
+            "content": "- 변경: 배포 승인자를 변경한다. SRE 온콜 대신 서비스 오너가 승인한다.",
+            "score": 0.7723726601217226
+          },
+          {
+            "document_id": "deploy-guide-v05",
+            "chunk_index": 1,
+            "heading_path": "배포 가이드 v5 > 현재 규칙",
+            "content": "- 배포 도구: Jenkins\n- 배포 명령: Jenkins job `deploy-staging` → `deploy-prod` 순서로 실행\n- 롤백 명령: 이전 빌드를 `deploy-prod`로 재실행\n- 배포 금지 시간: 금요일 오후\n- 승인자: 팀 리드\n- 이전 버전: 배포 가이드 v4",
+            "score": 0.7702503244726779
+          },
+          {
+            "document_id": "deploy-guide-v23",
+            "chunk_index": 1,
+            "heading_path": "배포 가이드 v23 > 현재 규칙",
+            "content": "- 배포 도구: GitHub Actions\n- 배포 명령: `deploy run --env prod`\n- 롤백 명령: `deploy rollback --to <version>` (승인 불필요)\n- 배포 금지 시간: 목요일 오후, 공휴일 전날\n- 승인자: 팀 리드 + SRE 온콜\n- 이전 버전: 배포 가이드 v22",
+            "score": 0.7701622018169731
+          },
+          {
+            "document_id": "deploy-guide-v20",
+            "chunk_index": 1,
+            "heading_path": "배포 가이드 v20 > 현재 규칙",
+            "content": "- 배포 도구: GitHub Actions\n- 배포 명령: `deploy run --env prod`\n- 롤백 명령: `deploy rollback --to <version>` (승인 불필요)\n- 배포 금지 시간: 금요일 오후, 공휴일 전날\n- 승인자: 팀 리드 + SRE 온콜\n- 이전 버전: 배포 가이드 v19",
+            "score": 0.7685995151165418
+          },
+          {
+            "document_id": "deploy-guide-v19",
+            "chunk_index": 1,
+            "heading_path": "배포 가이드 v19 > 현재 규칙",
+            "content": "- 배포 도구: GitHub Actions\n- 배포 명령: `deploy run --env prod`\n- 롤백 명령: `deploy rollback --to <version>` (승인 불필요)\n- 배포 금지 시간: 금요일 오후, 공휴일 전날\n- 승인자: 팀 리드 + SRE 온콜\n- 이전 버전: 배포 가이드 v18",
+            "score": 0.7685939487348901
+          },
+          {
+            "document_id": "deploy-guide-v26",
+            "chunk_index": 1,
+            "heading_path": "배포 가이드 v26 > 현재 규칙",
+            "content": "- 배포 도구: GitHub Actions\n- 배포 명령: `deploy run --env prod`\n- 롤백 명령: `deploy rollback --to <version>` (승인 불필요)\n- 배포 금지 시간: 목요일 오후, 공휴일 전날, 12/22~1/2 연말 동결\n- 승인자: 팀 리드 + 서비스 오너\n- 이전 버전: 배포 가이드 v25",
+            "score": 0.7670958817772995
+          },
+          {
+            "document_id": "deploy-guide-v27",
+            "chunk_index": 1,
+            "heading_path": "배포 가이드 v27 > 현재 규칙",
+            "content": "- 배포 도구: GitHub Actions\n- 배포 명령: `deploy run --env prod --ticket <id>`\n- 롤백 명령: `deploy rollback --to <version>` (승인 불필요)\n- 배포 금지 시간: 목요일 오후, 공휴일 전날, 12/22~1/2 연말 동결\n- 승인자: 팀 리드 + 서비스 오너\n- 이전 버전: 배포 가이드 v26",
+            "score": 0.7670648196146552
+          },
+          {
+            "document_id": "deploy-guide-v29",
+            "chunk_index": 1,
+            "heading_path": "배포 가이드 v29 > 현재 규칙",
+            "content": "- 배포 도구: GitHub Actions\n- 배포 명령: `deploy run --env prod --ticket <id>`\n- 롤백 명령: `deploy rollback --to <version>` (승인 불필요)\n- 배포 금지 시간: 목요일 오후, 공휴일 전날, 12/22~1/2 연말 동결\n- 승인자: 팀 리드 + 서비스 오너\n- 이전 버전: 배포 가이드 v28",
+            "score": 0.7668171704084923
+          }
+        ],
+        "hybrid": [
+          {
+            "document_id": "deploy-guide-v07",
+            "chunk_index": 0,
+            "heading_path": "배포 가이드 v7",
+            "content": "- 변경: 배포 승인자를 변경한다. 팀 리드와 SRE 온콜 두 명의 승인이 필요하다.\n- 이유: 장애 리포트 #05 이후 결정",
+            "score": 0.03128054740957967
+          },
+          {
+            "document_id": "deploy-guide-v05",
+            "chunk_index": 1,
+            "heading_path": "배포 가이드 v5 > 현재 규칙",
+            "content": "- 배포 도구: Jenkins\n- 배포 명령: Jenkins job `deploy-staging` → `deploy-prod` 순서로 실행\n- 롤백 명령: 이전 빌드를 `deploy-prod`로 재실행\n- 배포 금지 시간: 금요일 오후\n- 승인자: 팀 리드\n- 이전 버전: 배포 가이드 v4",
+            "score": 0.03125
+          },
+          {
+            "document_id": "deploy-guide-v02",
+            "chunk_index": 1,
+            "heading_path": "배포 가이드 v2 > 현재 규칙",
+            "content": "- 배포 도구: Jenkins\n- 배포 명령: Jenkins job `deploy-staging` → `deploy-prod` 순서로 실행\n- 롤백 명령: 이전 빌드를 `deploy-prod`로 재실행\n- 배포 금지 시간: 없음\n- 승인자: 팀 리드\n- 이전 버전: 배포 가이드 v1",
+            "score": 0.01639344262295082
+          },
+          {
+            "document_id": "faq-q04",
+            "chunk_index": 0,
+            "heading_path": "온보딩 FAQ Q04",
+            "content": "**Q. 배포 승인은 누가 하나요?**\n\n팀 리드와 서비스 오너 두 명이 승인한다.\n\n- 관련 문서: 배포 가이드 v24",
+            "score": 0.01639344262295082
+          },
+          {
+            "document_id": "deploy-guide-v03",
+            "chunk_index": 1,
+            "heading_path": "배포 가이드 v3 > 현재 규칙",
+            "content": "-  배포 도구: Jenkins\n- 배포 명령: Jenkins job `deploy-staging` → `deploy-prod` 순서로 실행\n- 롤백 명령: 이전 빌드를`deploy-prod`로 재실행\n- 배포 금지 시간: 없음\n- 승인자: 팀 리드\n- 이전 버전: 배포 가이드 v2",
+            "score": 0.016129032258064516
+          },
+          {
+            "document_id": "deploy-guide-v04",
+            "chunk_index": 1,
+            "heading_path": "배포 가이드 v4 > 현재 규칙",
+            "content": "- 배포 도구: Jenkins\n- 배포 명령: Jenkins job `deploy-staging` → `deploy-prod` 순서로 실행\n- 롤백 명령: 이전 빌드를 `deploy-prod`로 재실행\n- 배포 금지 시간: 없음\n- 승인자: 팀 리드\n- 이전 버전: 배포 가이드 v3",
+            "score": 0.015873015873015872
+          },
+          {
+            "document_id": "deploy-guide-v24",
+            "chunk_index": 0,
+            "heading_path": "배포 가이드 v24",
+            "content": "- 변경: 배포 승인자를 변경한다. SRE 온콜 대신 서비스 오너가 승인한다.",
+            "score": 0.015873015873015872
+          },
+          {
+            "document_id": "deploy-guide-v06",
+            "chunk_index": 1,
+            "heading_path": "배포 가이드 v6 > 현재 규칙",
+            "content": "- 배포 도구: Jenkins\n- 배포 명령: Jenkins job `deploy-staging` → `deploy-prod` 순서로 실행\n- 롤백 명령: Jenkins job `rollback-prod` 실행\n- 배포 금지 시간: 금요일 오후\n- 승인자: 팀 리드\n- 이전 버전: 배포 가이드 v5",
+            "score": 0.015384615384615385
+          },
+          {
+            "document_id": "deploy-guide-v23",
+            "chunk_index": 1,
+            "heading_path": "배포 가이드 v23 > 현재 규칙",
+            "content": "- 배포 도구: GitHub Actions\n- 배포 명령: `deploy run --env prod`\n- 롤백 명령: `deploy rollback --to <version>` (승인 불필요)\n- 배포 금지 시간: 목요일 오후, 공휴일 전날\n- 승인자: 팀 리드 + SRE 온콜\n- 이전 버전: 배포 가이드 v22",
+            "score": 0.015384615384615385
+          },
+          {
+            "document_id": "deploy-guide-v20",
+            "chunk_index": 1,
+            "heading_path": "배포 가이드 v20 > 현재 규칙",
+            "content": "- 배포 도구: GitHub Actions\n- 배포 명령: `deploy run --env prod`\n- 롤백 명령: `deploy rollback --to <version>` (승인 불필요)\n- 배포 금지 시간: 금요일 오후, 공휴일 전날\n- 승인자: 팀 리드 + SRE 온콜\n- 이전 버전: 배포 가이드 v19",
+            "score": 0.015151515151515152
+          }
+        ],
+        "keyword_filtered": [
+          {
+            "document_id": "deploy-guide-v30",
+            "chunk_index": 1,
+            "heading_path": "배포 가이드 v30 > 현재 규칙",
+            "content": "- 배포 도구: GitHub Actions\n- 배포 명령: `deploy run --env prod --ticket <id>`\n- 롤백 명령: `deploy rollback --to <version>` (승인 불필요)\n- 배포 금지 시간: 목요일 오후, 공휴일 전날, 12/22~1/2 연말 동결\n- 승인자: 팀 리드 + 서비스 오너\n- 이전 버전: 배포 가이드 v29",
+            "score": 2.2
+          }
+        ],
+        "vector_filtered": [
+          {
+            "document_id": "deploy-guide-v30",
+            "chunk_index": 1,
+            "heading_path": "배포 가이드 v30 > 현재 규칙",
+            "content": "- 배포 도구: GitHub Actions\n- 배포 명령: `deploy run --env prod --ticket <id>`\n- 롤백 명령: `deploy rollback --to <version>` (승인 불필요)\n- 배포 금지 시간: 목요일 오후, 공휴일 전날, 12/22~1/2 연말 동결\n- 승인자: 팀 리드 + 서비스 오너\n- 이전 버전: 배포 가이드 v29",
+            "score": 0.7578694820404107
+          }
+        ],
+        "hybrid_filtered": [
+          {
+            "document_id": "deploy-guide-v30",
+            "chunk_index": 1,
+            "heading_path": "배포 가이드 v30 > 현재 규칙",
+            "content": "- 배포 도구: GitHub Actions\n- 배포 명령: `deploy run --env prod --ticket <id>`\n- 롤백 명령: `deploy rollback --to <version>` (승인 불필요)\n- 배포 금지 시간: 목요일 오후, 공휴일 전날, 12/22~1/2 연말 동결\n- 승인자: 팀 리드 + 서비스 오너\n- 이전 버전: 배포 가이드 v29",
+            "score": 0.03278688524590164
+          }
+        ]
+      }
+    },
+    {
+      "question_id": "extra-version-01",
+      "query": "배포 가이드 v22의 배포 금지 시간을 알려줘.",
+      "scope": {
+        "mode": "version",
+        "version": 22
+      },
+      "timings_seconds": {
+        "query_embedding": 0.4160381249985221,
+        "keyword": 0.00904508299936424,
+        "vector": 0.00440429199989012,
+        "hybrid_fusion": 9.649999992689118e-05,
+        "keyword_filtered": 0.003021833999810042,
+        "vector_filtered": 0.0023303749985643663,
+        "hybrid_filtered_fusion": 1.7709000530885532e-05
+      },
+      "candidates": {
+        "keyword": [
+          {
+            "document_id": "error-E-030",
+            "chunk_index": 0,
+            "heading_path": "에러 코드 E-030 배포 금지 시간 위반",
+            "content": "- 발생 위치: 배포\n- 의미: 배포 금지 시간에 배포를 시도했다.\n- 원인: 배포 가이드 최신 버전의 금지 시간 미확인.\n- 대응: 금지 시간이 끝난 뒤 배포한다.\n- 관련 장애: 장애 리포트 #26",
+            "score": 4.2
+          },
+          {
+            "document_id": "deploy-guide-v02",
+            "chunk_index": 1,
+            "heading_path": "배포 가이드 v2 > 현재 규칙",
+            "content": "- 배포 도구: Jenkins\n- 배포 명령: Jenkins job `deploy-staging` → `deploy-prod` 순서로 실행\n- 롤백 명령: 이전 빌드를 `deploy-prod`로 재실행\n- 배포 금지 시간: 없음\n- 승인자: 팀 리드\n- 이전 버전: 배포 가이드 v1",
+            "score": 4.0
+          },
+          {
+            "document_id": "deploy-guide-v03",
+            "chunk_index": 1,
+            "heading_path": "배포 가이드 v3 > 현재 규칙",
+            "content": "-  배포 도구: Jenkins\n- 배포 명령: Jenkins job `deploy-staging` → `deploy-prod` 순서로 실행\n- 롤백 명령: 이전 빌드를`deploy-prod`로 재실행\n- 배포 금지 시간: 없음\n- 승인자: 팀 리드\n- 이전 버전: 배포 가이드 v2",
+            "score": 4.0
+          },
+          {
+            "document_id": "deploy-guide-v04",
+            "chunk_index": 1,
+            "heading_path": "배포 가이드 v4 > 현재 규칙",
+            "content": "- 배포 도구: Jenkins\n- 배포 명령: Jenkins job `deploy-staging` → `deploy-prod` 순서로 실행\n- 롤백 명령: 이전 빌드를 `deploy-prod`로 재실행\n- 배포 금지 시간: 없음\n- 승인자: 팀 리드\n- 이전 버전: 배포 가이드 v3",
+            "score": 4.0
+          },
+          {
+            "document_id": "deploy-guide-v05",
+            "chunk_index": 1,
+            "heading_path": "배포 가이드 v5 > 현재 규칙",
+            "content": "- 배포 도구: Jenkins\n- 배포 명령: Jenkins job `deploy-staging` → `deploy-prod` 순서로 실행\n- 롤백 명령: 이전 빌드를 `deploy-prod`로 재실행\n- 배포 금지 시간: 금요일 오후\n- 승인자: 팀 리드\n- 이전 버전: 배포 가이드 v4",
+            "score": 4.0
+          },
+          {
+            "document_id": "deploy-guide-v06",
+            "chunk_index": 1,
+            "heading_path": "배포 가이드 v6 > 현재 규칙",
+            "content": "- 배포 도구: Jenkins\n- 배포 명령: Jenkins job `deploy-staging` → `deploy-prod` 순서로 실행\n- 롤백 명령: Jenkins job `rollback-prod` 실행\n- 배포 금지 시간: 금요일 오후\n- 승인자: 팀 리드\n- 이전 버전: 배포 가이드 v5",
+            "score": 4.0
+          },
+          {
+            "document_id": "deploy-guide-v07",
+            "chunk_index": 1,
+            "heading_path": "배포 가이드 v7 > 현재 규칙",
+            "content": "- 배포 도구: Jenkins\n- 배포 명령: Jenkins job `deploy-staging` → `deploy-prod` 순서로 실행\n- 롤백 명령: Jenkins job `rollback-prod` 실행\n- 배포 금지 시간: 금요일 오후\n- 승인자: 팀 리드 + SRE 온콜\n- 이전 버전: 배포 가이드 v6",
+            "score": 4.0
+          },
+          {
+            "document_id": "deploy-guide-v08",
+            "chunk_index": 1,
+            "heading_path": "배포 가이드 v8 > 현재 규칙",
+            "content": "- 배포 도구: Jenkins\n- 배포 명령: Jenkins job `deploy-staging` → `deploy-prod` 순서로 실행\n- 롤백 명령: Jenkins job `rollback-prod` 실행\n- 배포 금지 시간: 금요일 오후\n- 승인자: 팀 리드 + SRE 온콜\n- 이전 버전: 배포 가이드 v7",
+            "score": 4.0
+          },
+          {
+            "document_id": "deploy-guide-v09",
+            "chunk_index": 1,
+            "heading_path": "배포 가이드 v9 > 현재 규칙",
+            "content": "- 배포 도구: Jenkins\n- 배포 명령: Jenkins job `deploy-staging` → `deploy-prod` 순서로 실행\n- 롤백 명령: Jenkins job `rollback-prod` 실행\n- 배포 금지 시간: 금요일 오후\n- 승인자: 팀 리드 + SRE 온콜\n- 이전 버전: 배포 가이드 v8",
+            "score": 4.0
+          },
+          {
+            "document_id": "deploy-guide-v10",
+            "chunk_index": 1,
+            "heading_path": "배포 가이드 v10 > 현재 규칙",
+            "content": "- 배포 도구: Jenkins\n- 배포 명령: Jenkins job `deploy-staging` → `deploy-prod` 순서로 실행\n- 롤백 명령: Jenkins job `rollback-prod` 실행\n- 배포 금지 시간: 금요일 오후\n- 승인자: 팀 리드 + SRE 온콜\n- 이전 버전: 배포 가이드 v9",
+            "score": 4.0
+          }
+        ],
+        "vector": [
+          {
+            "document_id": "deploy-guide-v22",
+            "chunk_index": 0,
+            "heading_path": "배포 가이드 v22",
+            "content": "- 변경: 배포 금지 시간을 변경한다. 금요일 오후 대신 목요일 오후에 배포하지 않는다. 공휴일 전날은 유지한다.\n- 이유: 장애 리포트 #18 이후 결정",
+            "score": 0.8446223550584799
+          },
+          {
+            "document_id": "faq-q02",
+            "chunk_index": 0,
+            "heading_path": "온보딩 FAQ Q02",
+            "content": "**Q. 배포 금지 시간이 있나요?**\n\n목요일 오후, 공휴일 전날, 12월 22일부터 1월 2일까지는 배포하지 않는다.\n\n- 관련 문서: 배포 가이드 v22, v25",
+            "score": 0.8378568807243341
+          },
+          {
+            "document_id": "deploy-guide-v16",
+            "chunk_index": 0,
+            "heading_path": "배포 가이드 v16",
+            "content": "- 변경: 배포 금지 시간을 확대한다. 금요일 오후와 공휴일 전날에는 배포하지 않는다.",
+            "score": 0.8209248981482977
+          },
+          {
+            "document_id": "deploy-guide-v25",
+            "chunk_index": 0,
+            "heading_path": "배포 가이드 v25",
+            "content": "- 변경: 연말 배포 동결 기간을 정한다. 12월 22일부터 1월 2일까지 배포하지 않는다.",
+            "score": 0.8061643750904605
+          },
+          {
+            "document_id": "deploy-guide-v05",
+            "chunk_index": 0,
+            "heading_path": "배포 가이드 v5",
+            "content": "- 변경: 배포 금지 시간을 추가한다. 금요일 오후에는 prod 배포를 하지 않는다.\n- 이유: 장애 리포트 #03 이후 결정",
+            "score": 0.7995477796679977
+          },
+          {
+            "document_id": "deploy-guide-v23",
+            "chunk_index": 1,
+            "heading_path": "배포 가이드 v23 > 현재 규칙",
+            "content": "- 배포 도구: GitHub Actions\n- 배포 명령: `deploy run --env prod`\n- 롤백 명령: `deploy rollback --to <version>` (승인 불필요)\n- 배포 금지 시간: 목요일 오후, 공휴일 전날\n- 승인자: 팀 리드 + SRE 온콜\n- 이전 버전: 배포 가이드 v22",
+            "score": 0.7833338355025435
+          },
+          {
+            "document_id": "deploy-guide-v27",
+            "chunk_index": 1,
+            "heading_path": "배포 가이드 v27 > 현재 규칙",
+            "content": "- 배포 도구: GitHub Actions\n- 배포 명령: `deploy run --env prod --ticket <id>`\n- 롤백 명령: `deploy rollback --to <version>` (승인 불필요)\n- 배포 금지 시간: 목요일 오후, 공휴일 전날, 12/22~1/2 연말 동결\n- 승인자: 팀 리드 + 서비스 오너\n- 이전 버전: 배포 가이드 v26",
+            "score": 0.7804041766639044
+          },
+          {
+            "document_id": "deploy-guide-v26",
+            "chunk_index": 1,
+            "heading_path": "배포 가이드 v26 > 현재 규칙",
+            "content": "- 배포 도구: GitHub Actions\n- 배포 명령: `deploy run --env prod`\n- 롤백 명령: `deploy rollback --to <version>` (승인 불필요)\n- 배포 금지 시간: 목요일 오후, 공휴일 전날, 12/22~1/2 연말 동결\n- 승인자: 팀 리드 + 서비스 오너\n- 이전 버전: 배포 가이드 v25",
+            "score": 0.773817398721247
+          },
+          {
+            "document_id": "deploy-guide-v28",
+            "chunk_index": 1,
+            "heading_path": "배포 가이드 v28 > 현재 규칙",
+            "content": "- 배포 도구: GitHub Actions\n- 배포 명령: `deploy run --env prod --ticket <id>`\n- 롤백 명령: `deploy rollback --to <version>` (승인 불필요)\n- 배포 금지 시간: 목요일 오후, 공휴일 전날, 12/22~1/2 연말 동결\n- 승인자: 팀 리드 + 서비스 오너\n- 이전 버전: 배포 가이드 v27",
+            "score": 0.7737398165052504
+          },
+          {
+            "document_id": "deploy-guide-v24",
+            "chunk_index": 1,
+            "heading_path": "배포 가이드 v24 > 현재 규칙",
+            "content": "- 배포 도구: GitHub Actions\n- 배포 명령: `deploy run --env prod`\n- 롤백 명령: `deploy rollback --to <version>` (승인 불필요)\n- 배포 금지 시간: 목요일 오후, 공휴일 전날\n- 승인자: 팀 리드 + 서비스 오너\n- 이전 버전: 배포 가이드 v23",
+            "score": 0.7729164091249054
+          }
+        ],
+        "hybrid": [
+          {
+            "document_id": "deploy-guide-v05",
+            "chunk_index": 0,
+            "heading_path": "배포 가이드 v5",
+            "content": "- 변경: 배포 금지 시간을 추가한다. 금요일 오후에는 prod 배포를 하지 않는다.\n- 이유: 장애 리포트 #03 이후 결정",
+            "score": 0.03076923076923077
+          },
+          {
+            "document_id": "deploy-guide-v22",
+            "chunk_index": 0,
+            "heading_path": "배포 가이드 v22",
+            "content": "- 변경: 배포 금지 시간을 변경한다. 금요일 오후 대신 목요일 오후에 배포하지 않는다. 공휴일 전날은 유지한다.\n- 이유: 장애 리포트 #18 이후 결정",
+            "score": 0.01639344262295082
+          },
+          {
+            "document_id": "error-E-030",
+            "chunk_index": 0,
+            "heading_path": "에러 코드 E-030 배포 금지 시간 위반",
+            "content": "- 발생 위치: 배포\n- 의미: 배포 금지 시간에 배포를 시도했다.\n- 원인: 배포 가이드 최신 버전의 금지 시간 미확인.\n- 대응: 금지 시간이 끝난 뒤 배포한다.\n- 관련 장애: 장애 리포트 #26",
+            "score": 0.01639344262295082
+          },
+          {
+            "document_id": "deploy-guide-v02",
+            "chunk_index": 1,
+            "heading_path": "배포 가이드 v2 > 현재 규칙",
+            "content": "- 배포 도구: Jenkins\n- 배포 명령: Jenkins job `deploy-staging` → `deploy-prod` 순서로 실행\n- 롤백 명령: 이전 빌드를 `deploy-prod`로 재실행\n- 배포 금지 시간: 없음\n- 승인자: 팀 리드\n- 이전 버전: 배포 가이드 v1",
+            "score": 0.016129032258064516
+          },
+          {
+            "document_id": "faq-q02",
+            "chunk_index": 0,
+            "heading_path": "온보딩 FAQ Q02",
+            "content": "**Q. 배포 금지 시간이 있나요?**\n\n목요일 오후, 공휴일 전날, 12월 22일부터 1월 2일까지는 배포하지 않는다.\n\n- 관련 문서: 배포 가이드 v22, v25",
+            "score": 0.016129032258064516
+          },
+          {
+            "document_id": "deploy-guide-v03",
+            "chunk_index": 1,
+            "heading_path": "배포 가이드 v3 > 현재 규칙",
+            "content": "-  배포 도구: Jenkins\n- 배포 명령: Jenkins job `deploy-staging` → `deploy-prod` 순서로 실행\n- 롤백 명령: 이전 빌드를`deploy-prod`로 재실행\n- 배포 금지 시간: 없음\n- 승인자: 팀 리드\n- 이전 버전: 배포 가이드 v2",
+            "score": 0.015873015873015872
+          },
+          {
+            "document_id": "deploy-guide-v16",
+            "chunk_index": 0,
+            "heading_path": "배포 가이드 v16",
+            "content": "- 변경: 배포 금지 시간을 확대한다. 금요일 오후와 공휴일 전날에는 배포하지 않는다.",
+            "score": 0.015873015873015872
+          },
+          {
+            "document_id": "deploy-guide-v04",
+            "chunk_index": 1,
+            "heading_path": "배포 가이드 v4 > 현재 규칙",
+            "content": "- 배포 도구: Jenkins\n- 배포 명령: Jenkins job `deploy-staging` → `deploy-prod` 순서로 실행\n- 롤백 명령: 이전 빌드를 `deploy-prod`로 재실행\n- 배포 금지 시간: 없음\n- 승인자: 팀 리드\n- 이전 버전: 배포 가이드 v3",
+            "score": 0.015625
+          },
+          {
+            "document_id": "deploy-guide-v25",
+            "chunk_index": 0,
+            "heading_path": "배포 가이드 v25",
+            "content": "- 변경: 연말 배포 동결 기간을 정한다. 12월 22일부터 1월 2일까지 배포하지 않는다.",
+            "score": 0.015625
+          },
+          {
+            "document_id": "deploy-guide-v06",
+            "chunk_index": 1,
+            "heading_path": "배포 가이드 v6 > 현재 규칙",
+            "content": "- 배포 도구: Jenkins\n- 배포 명령: Jenkins job `deploy-staging` → `deploy-prod` 순서로 실행\n- 롤백 명령: Jenkins job `rollback-prod` 실행\n- 배포 금지 시간: 금요일 오후\n- 승인자: 팀 리드\n- 이전 버전: 배포 가이드 v5",
+            "score": 0.015151515151515152
+          }
+        ],
+        "keyword_filtered": [
+          {
+            "document_id": "deploy-guide-v22",
+            "chunk_index": 1,
+            "heading_path": "배포 가이드 v22 > 현재 규칙",
+            "content": "- 배포 도구: GitHub Actions\n- 배포 명령: `deploy run --env prod`\n- 롤백 명령: `deploy rollback --to <version>` (승인 불필요)\n- 배포 금지 시간: 목요일 오후, 공휴일 전날\n- 승인자: 팀 리드 + SRE 온콜\n- 이전 버전: 배포 가이드 v21",
+            "score": 4.0
+          }
+        ],
+        "vector_filtered": [
+          {
+            "document_id": "deploy-guide-v22",
+            "chunk_index": 0,
+            "heading_path": "배포 가이드 v22",
+            "content": "- 변경: 배포 금지 시간을 변경한다. 금요일 오후 대신 목요일 오후에 배포하지 않는다. 공휴일 전날은 유지한다.\n- 이유: 장애 리포트 #18 이후 결정",
+            "score": 0.8446223550584799
+          }
+        ],
+        "hybrid_filtered": [
+          {
+            "document_id": "deploy-guide-v22",
+            "chunk_index": 0,
+            "heading_path": "배포 가이드 v22",
+            "content": "- 변경: 배포 금지 시간을 변경한다. 금요일 오후 대신 목요일 오후에 배포하지 않는다. 공휴일 전날은 유지한다.\n- 이유: 장애 리포트 #18 이후 결정",
+            "score": 0.03278688524590164
+          }
+        ]
+      }
+    },
+    {
+      "question_id": "extra-history-01",
+      "query": "현재 배포 정책에서 목요일 오후를 금지하게 된 원인 장애를 설명해 줘.",
+      "scope": {
+        "mode": "all",
+        "version": null
+      },
+      "timings_seconds": {
+        "query_embedding": 0.4180991669982177,
+        "keyword": 0.0048097910002979916,
+        "vector": 0.0027504580011736834,
+        "hybrid_fusion": 3.641599869297352e-05,
+        "keyword_filtered": 0.004038458999275463,
+        "vector_filtered": 0.0013090830016153632,
+        "hybrid_filtered_fusion": 2.8040998586220667e-05
+      },
+      "candidates": {
+        "keyword": [
+          {
+            "document_id": "deploy-guide-v22",
+            "chunk_index": 1,
+            "heading_path": "배포 가이드 v22 > 현재 규칙",
+            "content": "- 배포 도구: GitHub Actions\n- 배포 명령: `deploy run --env prod`\n- 롤백 명령: `deploy rollback --to <version>` (승인 불필요)\n- 배포 금지 시간: 목요일 오후, 공휴일 전날\n- 승인자: 팀 리드 + SRE 온콜\n- 이전 버전: 배포 가이드 v21",
+            "score": 2.8
+          },
+          {
+            "document_id": "deploy-guide-v23",
+            "chunk_index": 1,
+            "heading_path": "배포 가이드 v23 > 현재 규칙",
+            "content": "- 배포 도구: GitHub Actions\n- 배포 명령: `deploy run --env prod`\n- 롤백 명령: `deploy rollback --to <version>` (승인 불필요)\n- 배포 금지 시간: 목요일 오후, 공휴일 전날\n- 승인자: 팀 리드 + SRE 온콜\n- 이전 버전: 배포 가이드 v22",
+            "score": 2.8
+          },
+          {
+            "document_id": "deploy-guide-v24",
+            "chunk_index": 1,
+            "heading_path": "배포 가이드 v24 > 현재 규칙",
+            "content": "- 배포 도구: GitHub Actions\n- 배포 명령: `deploy run --env prod`\n- 롤백 명령: `deploy rollback --to <version>` (승인 불필요)\n- 배포 금지 시간: 목요일 오후, 공휴일 전날\n- 승인자: 팀 리드 + 서비스 오너\n- 이전 버전: 배포 가이드 v23",
+            "score": 2.8
+          },
+          {
+            "document_id": "deploy-guide-v25",
+            "chunk_index": 1,
+            "heading_path": "배포 가이드 v25 > 현재 규칙",
+            "content": "- 배포 도구: GitHub Actions\n- 배포 명령: `deploy run --env prod`\n- 롤백 명령: `deploy rollback --to <version>` (승인 불필요)\n- 배포 금지 시간: 목요일 오후, 공휴일 전날, 12/22~1/2 연말 동결\n- 승인자: 팀 리드 + 서비스 오너\n- 이전 버전: 배포 가이드 v24",
+            "score": 2.8
+          },
+          {
+            "document_id": "deploy-guide-v26",
+            "chunk_index": 1,
+            "heading_path": "배포 가이드 v26 > 현재 규칙",
+            "content": "- 배포 도구: GitHub Actions\n- 배포 명령: `deploy run --env prod`\n- 롤백 명령: `deploy rollback --to <version>` (승인 불필요)\n- 배포 금지 시간: 목요일 오후, 공휴일 전날, 12/22~1/2 연말 동결\n- 승인자: 팀 리드 + 서비스 오너\n- 이전 버전: 배포 가이드 v25",
+            "score": 2.8
+          },
+          {
+            "document_id": "deploy-guide-v27",
+            "chunk_index": 1,
+            "heading_path": "배포 가이드 v27 > 현재 규칙",
+            "content": "- 배포 도구: GitHub Actions\n- 배포 명령: `deploy run --env prod --ticket <id>`\n- 롤백 명령: `deploy rollback --to <version>` (승인 불필요)\n- 배포 금지 시간: 목요일 오후, 공휴일 전날, 12/22~1/2 연말 동결\n- 승인자: 팀 리드 + 서비스 오너\n- 이전 버전: 배포 가이드 v26",
+            "score": 2.8
+          },
+          {
+            "document_id": "deploy-guide-v28",
+            "chunk_index": 1,
+            "heading_path": "배포 가이드 v28 > 현재 규칙",
+            "content": "- 배포 도구: GitHub Actions\n- 배포 명령: `deploy run --env prod --ticket <id>`\n- 롤백 명령: `deploy rollback --to <version>` (승인 불필요)\n- 배포 금지 시간: 목요일 오후, 공휴일 전날, 12/22~1/2 연말 동결\n- 승인자: 팀 리드 + 서비스 오너\n- 이전 버전: 배포 가이드 v27",
+            "score": 2.8
+          },
+          {
+            "document_id": "deploy-guide-v29",
+            "chunk_index": 1,
+            "heading_path": "배포 가이드 v29 > 현재 규칙",
+            "content": "- 배포 도구: GitHub Actions\n- 배포 명령: `deploy run --env prod --ticket <id>`\n- 롤백 명령: `deploy rollback --to <version>` (승인 불필요)\n- 배포 금지 시간: 목요일 오후, 공휴일 전날, 12/22~1/2 연말 동결\n- 승인자: 팀 리드 + 서비스 오너\n- 이전 버전: 배포 가이드 v28",
+            "score": 2.8
+          },
+          {
+            "document_id": "deploy-guide-v30",
+            "chunk_index": 1,
+            "heading_path": "배포 가이드 v30 > 현재 규칙",
+            "content": "- 배포 도구: GitHub Actions\n- 배포 명령: `deploy run --env prod --ticket <id>`\n- 롤백 명령: `deploy rollback --to <version>` (승인 불필요)\n- 배포 금지 시간: 목요일 오후, 공휴일 전날, 12/22~1/2 연말 동결\n- 승인자: 팀 리드 + 서비스 오너\n- 이전 버전: 배포 가이드 v29",
+            "score": 2.8
+          },
+          {
+            "document_id": "deploy-guide-v02",
+            "chunk_index": 1,
+            "heading_path": "배포 가이드 v2 > 현재 규칙",
+            "content": "- 배포 도구: Jenkins\n- 배포 명령: Jenkins job `deploy-staging` → `deploy-prod` 순서로 실행\n- 롤백 명령: 이전 빌드를 `deploy-prod`로 재실행\n- 배포 금지 시간: 없음\n- 승인자: 팀 리드\n- 이전 버전: 배포 가이드 v1",
+            "score": 2.6
+          }
+        ],
+        "vector": [
+          {
+            "document_id": "deploy-guide-v22",
+            "chunk_index": 0,
+            "heading_path": "배포 가이드 v22",
+            "content": "- 변경: 배포 금지 시간을 변경한다. 금요일 오후 대신 목요일 오후에 배포하지 않는다. 공휴일 전날은 유지한다.\n- 이유: 장애 리포트 #18 이후 결정",
+            "score": 0.8021268854113213
+          },
+          {
+            "document_id": "deploy-guide-v05",
+            "chunk_index": 0,
+            "heading_path": "배포 가이드 v5",
+            "content": "- 변경: 배포 금지 시간을 추가한다. 금요일 오후에는 prod 배포를 하지 않는다.\n- 이유: 장애 리포트 #03 이후 결정",
+            "score": 0.7934766525160842
+          },
+          {
+            "document_id": "incident-26",
+            "chunk_index": 0,
+            "heading_path": "장애 리포트 #26",
+            "content": "- 날짜: 2026-03-04\n- 서비스: payment-api\n- 등급: SEV3\n- 증상: 목요일 오후 배포 시도가 차단됐다.\n- 원인: 배포 금지 시간에 배포를 시도했다. (에러 코드 E-030)\n- 조치: 차단이 정상 작동했다. 다음 날 배포했다.",
+            "score": 0.7918463896789841
+          },
+          {
+            "document_id": "incident-18",
+            "chunk_index": 0,
+            "heading_path": "장애 리포트 #18",
+            "content": "- 날짜: 2025-10-15\n- 서비스: settlement-pipeline\n- 등급: SEV1\n- 증상: 목요일 오후 주간 정산 배치 중 배포가 실행돼 정산이 실패했다.\n- 원인: 정산 배치와 배포가 같은 시간에 겹쳤다. (에러 코드 E-009)\n- 조치: 정산을 재실행했다. 배포 금지 시간을 목요일 오후로 바꿨다.\n- 후속 조치: 배포 가이드 v22에 반영",
+            "score": 0.789606375196885
+          },
+          {
+            "document_id": "incident-05",
+            "chunk_index": 0,
+            "heading_path": "장애 리포트 #05",
+            "content": "- 날짜: 2025-03-26\n- 서비스: order-api\n- 등급: SEV2\n- 증상: 승인되지 않은 변경이 prod에 배포돼 주문 조회가 느려졌다.\n- 원인: 배포 승인 단계가 강제되지 않았다. (에러 코드 E-022)\n- 조치: 롤백하고 승인 절차를 강제했다.\n- 후속 조치: 배포 가이드 v7에 반영",
+            "score": 0.7660382555344175
+          },
+          {
+            "document_id": "incident-03",
+            "chunk_index": 0,
+            "heading_path": "장애 리포트 #03",
+            "content": "- 날짜: 2025-02-28\n- 서비스: payment-api\n- 등급: SEV1\n- 증상: 금요일 오후 배포 직후 결제가 전부 실패했다. 주말 동안 대응이 늦어졌다.\n- 원인: PG사 연동 환경 변수가 누락된 채 배포됐다. (에러 코드 E-016)\n- 조치: 롤백 후 환경 변수를 추가했다.\n- 후속 조치: 배포 가이드 v5에 반영",
+            "score": 0.7623745034819873
+          },
+          {
+            "document_id": "incident-20",
+            "chunk_index": 0,
+            "heading_path": "장애 리포트 #20",
+            "content": "- 날짜: 2025-11-05\n- 서비스: payment-api\n- 등급: SEV2\n- 증상: 두 명이 동시에 배포해 서로 다른 버전이 섞였다.\n- 원인: 같은 서비스의 동시 배포를 막는 장치가 없었다. (에러 코드 E-025)\n- 조치: 한 버전으로 재배포했다. 배포 잠금을 도입했다.\n- 후속 조치: 배포 가이드 v23에 반영",
+            "score": 0.7578177840927381
+          },
+          {
+            "document_id": "incident-14",
+            "chunk_index": 0,
+            "heading_path": "장애 리포트 #14",
+            "content": "- 날짜: 2025-08-13\n- 서비스: order-api\n- 등급: SEV1\n- 증상: 장애 발생 후 롤백 승인 대기로 복구가 40분 지연됐다.\n- 원인: 검증 규칙 회귀. 롤백에 SRE 승인이 필요해 지연됐다. (에러 코드 E-001)\n- 조치: 롤백 승인 절차를 폐지했다.\n- 후속 조치: 배포 가이드 v19에 반영",
+            "score": 0.7531872484254563
+          },
+          {
+            "document_id": "incident-19",
+            "chunk_index": 0,
+            "heading_path": "장애 리포트 #19",
+            "content": "- 날짜: 2025-10-29\n- 서비스: order-api\n- 등급: SEV3\n- 증상: 카나리 10% 단계에서 오류율이 올라 배포가 자동 중단됐다.\n- 원인: 새 버전의 직렬화 오류. (에러 코드 E-024)\n- 조치: 자동 중단이 정상 작동했다. 수정 후 재배포했다.",
+            "score": 0.7501558437900215
+          },
+          {
+            "document_id": "error-E-030",
+            "chunk_index": 0,
+            "heading_path": "에러 코드 E-030 배포 금지 시간 위반",
+            "content": "- 발생 위치: 배포\n- 의미: 배포 금지 시간에 배포를 시도했다.\n- 원인: 배포 가이드 최신 버전의 금지 시간 미확인.\n- 대응: 금지 시간이 끝난 뒤 배포한다.\n- 관련 장애: 장애 리포트 #26",
+            "score": 0.7499903365909449
+          }
+        ],
+        "hybrid": [
+          {
+            "document_id": "deploy-guide-v22",
+            "chunk_index": 0,
+            "heading_path": "배포 가이드 v22",
+            "content": "- 변경: 배포 금지 시간을 변경한다. 금요일 오후 대신 목요일 오후에 배포하지 않는다. 공휴일 전날은 유지한다.\n- 이유: 장애 리포트 #18 이후 결정",
+            "score": 0.03278688524590164
+          },
+          {
+            "document_id": "deploy-guide-v05",
+            "chunk_index": 0,
+            "heading_path": "배포 가이드 v5",
+            "content": "- 변경: 배포 금지 시간을 추가한다. 금요일 오후에는 prod 배포를 하지 않는다.\n- 이유: 장애 리포트 #03 이후 결정",
+            "score": 0.016129032258064516
+          },
+          {
+            "document_id": "deploy-guide-v23",
+            "chunk_index": 1,
+            "heading_path": "배포 가이드 v23 > 현재 규칙",
+            "content": "- 배포 도구: GitHub Actions\n- 배포 명령: `deploy run --env prod`\n- 롤백 명령: `deploy rollback --to <version>` (승인 불필요)\n- 배포 금지 시간: 목요일 오후, 공휴일 전날\n- 승인자: 팀 리드 + SRE 온콜\n- 이전 버전: 배포 가이드 v22",
+            "score": 0.016129032258064516
+          },
+          {
+            "document_id": "deploy-guide-v24",
+            "chunk_index": 1,
+            "heading_path": "배포 가이드 v24 > 현재 규칙",
+            "content": "- 배포 도구: GitHub Actions\n- 배포 명령: `deploy run --env prod`\n- 롤백 명령: `deploy rollback --to <version>` (승인 불필요)\n- 배포 금지 시간: 목요일 오후, 공휴일 전날\n- 승인자: 팀 리드 + 서비스 오너\n- 이전 버전: 배포 가이드 v23",
+            "score": 0.015873015873015872
+          },
+          {
+            "document_id": "incident-26",
+            "chunk_index": 0,
+            "heading_path": "장애 리포트 #26",
+            "content": "- 날짜: 2026-03-04\n- 서비스: payment-api\n- 등급: SEV3\n- 증상: 목요일 오후 배포 시도가 차단됐다.\n- 원인: 배포 금지 시간에 배포를 시도했다. (에러 코드 E-030)\n- 조치: 차단이 정상 작동했다. 다음 날 배포했다.",
+            "score": 0.015873015873015872
+          },
+          {
+            "document_id": "deploy-guide-v25",
+            "chunk_index": 1,
+            "heading_path": "배포 가이드 v25 > 현재 규칙",
+            "content": "- 배포 도구: GitHub Actions\n- 배포 명령: `deploy run --env prod`\n- 롤백 명령: `deploy rollback --to <version>` (승인 불필요)\n- 배포 금지 시간: 목요일 오후, 공휴일 전날, 12/22~1/2 연말 동결\n- 승인자: 팀 리드 + 서비스 오너\n- 이전 버전: 배포 가이드 v24",
+            "score": 0.015625
+          },
+          {
+            "document_id": "incident-18",
+            "chunk_index": 0,
+            "heading_path": "장애 리포트 #18",
+            "content": "- 날짜: 2025-10-15\n- 서비스: settlement-pipeline\n- 등급: SEV1\n- 증상: 목요일 오후 주간 정산 배치 중 배포가 실행돼 정산이 실패했다.\n- 원인: 정산 배치와 배포가 같은 시간에 겹쳤다. (에러 코드 E-009)\n- 조치: 정산을 재실행했다. 배포 금지 시간을 목요일 오후로 바꿨다.\n- 후속 조치: 배포 가이드 v22에 반영",
+            "score": 0.015625
+          },
+          {
+            "document_id": "deploy-guide-v26",
+            "chunk_index": 1,
+            "heading_path": "배포 가이드 v26 > 현재 규칙",
+            "content": "- 배포 도구: GitHub Actions\n- 배포 명령: `deploy run --env prod`\n- 롤백 명령: `deploy rollback --to <version>` (승인 불필요)\n- 배포 금지 시간: 목요일 오후, 공휴일 전날, 12/22~1/2 연말 동결\n- 승인자: 팀 리드 + 서비스 오너\n- 이전 버전: 배포 가이드 v25",
+            "score": 0.015384615384615385
+          },
+          {
+            "document_id": "incident-05",
+            "chunk_index": 0,
+            "heading_path": "장애 리포트 #05",
+            "content": "- 날짜: 2025-03-26\n- 서비스: order-api\n- 등급: SEV2\n- 증상: 승인되지 않은 변경이 prod에 배포돼 주문 조회가 느려졌다.\n- 원인: 배포 승인 단계가 강제되지 않았다. (에러 코드 E-022)\n- 조치: 롤백하고 승인 절차를 강제했다.\n- 후속 조치: 배포 가이드 v7에 반영",
+            "score": 0.015384615384615385
+          },
+          {
+            "document_id": "deploy-guide-v27",
+            "chunk_index": 1,
+            "heading_path": "배포 가이드 v27 > 현재 규칙",
+            "content": "- 배포 도구: GitHub Actions\n- 배포 명령: `deploy run --env prod --ticket <id>`\n- 롤백 명령: `deploy rollback --to <version>` (승인 불필요)\n- 배포 금지 시간: 목요일 오후, 공휴일 전날, 12/22~1/2 연말 동결\n- 승인자: 팀 리드 + 서비스 오너\n- 이전 버전: 배포 가이드 v26",
+            "score": 0.015151515151515152
+          }
+        ],
+        "keyword_filtered": [
+          {
+            "document_id": "deploy-guide-v22",
+            "chunk_index": 1,
+            "heading_path": "배포 가이드 v22 > 현재 규칙",
+            "content": "- 배포 도구: GitHub Actions\n- 배포 명령: `deploy run --env prod`\n- 롤백 명령: `deploy rollback --to <version>` (승인 불필요)\n- 배포 금지 시간: 목요일 오후, 공휴일 전날\n- 승인자: 팀 리드 + SRE 온콜\n- 이전 버전: 배포 가이드 v21",
+            "score": 2.8
+          },
+          {
+            "document_id": "deploy-guide-v23",
+            "chunk_index": 1,
+            "heading_path": "배포 가이드 v23 > 현재 규칙",
+            "content": "- 배포 도구: GitHub Actions\n- 배포 명령: `deploy run --env prod`\n- 롤백 명령: `deploy rollback --to <version>` (승인 불필요)\n- 배포 금지 시간: 목요일 오후, 공휴일 전날\n- 승인자: 팀 리드 + SRE 온콜\n- 이전 버전: 배포 가이드 v22",
+            "score": 2.8
+          },
+          {
+            "document_id": "deploy-guide-v24",
+            "chunk_index": 1,
+            "heading_path": "배포 가이드 v24 > 현재 규칙",
+            "content": "- 배포 도구: GitHub Actions\n- 배포 명령: `deploy run --env prod`\n- 롤백 명령: `deploy rollback --to <version>` (승인 불필요)\n- 배포 금지 시간: 목요일 오후, 공휴일 전날\n- 승인자: 팀 리드 + 서비스 오너\n- 이전 버전: 배포 가이드 v23",
+            "score": 2.8
+          },
+          {
+            "document_id": "deploy-guide-v25",
+            "chunk_index": 1,
+            "heading_path": "배포 가이드 v25 > 현재 규칙",
+            "content": "- 배포 도구: GitHub Actions\n- 배포 명령: `deploy run --env prod`\n- 롤백 명령: `deploy rollback --to <version>` (승인 불필요)\n- 배포 금지 시간: 목요일 오후, 공휴일 전날, 12/22~1/2 연말 동결\n- 승인자: 팀 리드 + 서비스 오너\n- 이전 버전: 배포 가이드 v24",
+            "score": 2.8
+          },
+          {
+            "document_id": "deploy-guide-v26",
+            "chunk_index": 1,
+            "heading_path": "배포 가이드 v26 > 현재 규칙",
+            "content": "- 배포 도구: GitHub Actions\n- 배포 명령: `deploy run --env prod`\n- 롤백 명령: `deploy rollback --to <version>` (승인 불필요)\n- 배포 금지 시간: 목요일 오후, 공휴일 전날, 12/22~1/2 연말 동결\n- 승인자: 팀 리드 + 서비스 오너\n- 이전 버전: 배포 가이드 v25",
+            "score": 2.8
+          },
+          {
+            "document_id": "deploy-guide-v27",
+            "chunk_index": 1,
+            "heading_path": "배포 가이드 v27 > 현재 규칙",
+            "content": "- 배포 도구: GitHub Actions\n- 배포 명령: `deploy run --env prod --ticket <id>`\n- 롤백 명령: `deploy rollback --to <version>` (승인 불필요)\n- 배포 금지 시간: 목요일 오후, 공휴일 전날, 12/22~1/2 연말 동결\n- 승인자: 팀 리드 + 서비스 오너\n- 이전 버전: 배포 가이드 v26",
+            "score": 2.8
+          },
+          {
+            "document_id": "deploy-guide-v28",
+            "chunk_index": 1,
+            "heading_path": "배포 가이드 v28 > 현재 규칙",
+            "content": "- 배포 도구: GitHub Actions\n- 배포 명령: `deploy run --env prod --ticket <id>`\n- 롤백 명령: `deploy rollback --to <version>` (승인 불필요)\n- 배포 금지 시간: 목요일 오후, 공휴일 전날, 12/22~1/2 연말 동결\n- 승인자: 팀 리드 + 서비스 오너\n- 이전 버전: 배포 가이드 v27",
+            "score": 2.8
+          },
+          {
+            "document_id": "deploy-guide-v29",
+            "chunk_index": 1,
+            "heading_path": "배포 가이드 v29 > 현재 규칙",
+            "content": "- 배포 도구: GitHub Actions\n- 배포 명령: `deploy run --env prod --ticket <id>`\n- 롤백 명령: `deploy rollback --to <version>` (승인 불필요)\n- 배포 금지 시간: 목요일 오후, 공휴일 전날, 12/22~1/2 연말 동결\n- 승인자: 팀 리드 + 서비스 오너\n- 이전 버전: 배포 가이드 v28",
+            "score": 2.8
+          },
+          {
+            "document_id": "deploy-guide-v30",
+            "chunk_index": 1,
+            "heading_path": "배포 가이드 v30 > 현재 규칙",
+            "content": "- 배포 도구: GitHub Actions\n- 배포 명령: `deploy run --env prod --ticket <id>`\n- 롤백 명령: `deploy rollback --to <version>` (승인 불필요)\n- 배포 금지 시간: 목요일 오후, 공휴일 전날, 12/22~1/2 연말 동결\n- 승인자: 팀 리드 + 서비스 오너\n- 이전 버전: 배포 가이드 v29",
+            "score": 2.8
+          },
+          {
+            "document_id": "deploy-guide-v02",
+            "chunk_index": 1,
+            "heading_path": "배포 가이드 v2 > 현재 규칙",
+            "content": "- 배포 도구: Jenkins\n- 배포 명령: Jenkins job `deploy-staging` → `deploy-prod` 순서로 실행\n- 롤백 명령: 이전 빌드를 `deploy-prod`로 재실행\n- 배포 금지 시간: 없음\n- 승인자: 팀 리드\n- 이전 버전: 배포 가이드 v1",
+            "score": 2.6
+          }
+        ],
+        "vector_filtered": [
+          {
+            "document_id": "deploy-guide-v22",
+            "chunk_index": 0,
+            "heading_path": "배포 가이드 v22",
+            "content": "- 변경: 배포 금지 시간을 변경한다. 금요일 오후 대신 목요일 오후에 배포하지 않는다. 공휴일 전날은 유지한다.\n- 이유: 장애 리포트 #18 이후 결정",
+            "score": 0.8021268854113213
+          },
+          {
+            "document_id": "deploy-guide-v05",
+            "chunk_index": 0,
+            "heading_path": "배포 가이드 v5",
+            "content": "- 변경: 배포 금지 시간을 추가한다. 금요일 오후에는 prod 배포를 하지 않는다.\n- 이유: 장애 리포트 #03 이후 결정",
+            "score": 0.7934766525160842
+          },
+          {
+            "document_id": "incident-26",
+            "chunk_index": 0,
+            "heading_path": "장애 리포트 #26",
+            "content": "- 날짜: 2026-03-04\n- 서비스: payment-api\n- 등급: SEV3\n- 증상: 목요일 오후 배포 시도가 차단됐다.\n- 원인: 배포 금지 시간에 배포를 시도했다. (에러 코드 E-030)\n- 조치: 차단이 정상 작동했다. 다음 날 배포했다.",
+            "score": 0.7918463896789841
+          },
+          {
+            "document_id": "incident-18",
+            "chunk_index": 0,
+            "heading_path": "장애 리포트 #18",
+            "content": "- 날짜: 2025-10-15\n- 서비스: settlement-pipeline\n- 등급: SEV1\n- 증상: 목요일 오후 주간 정산 배치 중 배포가 실행돼 정산이 실패했다.\n- 원인: 정산 배치와 배포가 같은 시간에 겹쳤다. (에러 코드 E-009)\n- 조치: 정산을 재실행했다. 배포 금지 시간을 목요일 오후로 바꿨다.\n- 후속 조치: 배포 가이드 v22에 반영",
+            "score": 0.789606375196885
+          },
+          {
+            "document_id": "incident-05",
+            "chunk_index": 0,
+            "heading_path": "장애 리포트 #05",
+            "content": "- 날짜: 2025-03-26\n- 서비스: order-api\n- 등급: SEV2\n- 증상: 승인되지 않은 변경이 prod에 배포돼 주문 조회가 느려졌다.\n- 원인: 배포 승인 단계가 강제되지 않았다. (에러 코드 E-022)\n- 조치: 롤백하고 승인 절차를 강제했다.\n- 후속 조치: 배포 가이드 v7에 반영",
+            "score": 0.7660382555344175
+          },
+          {
+            "document_id": "incident-03",
+            "chunk_index": 0,
+            "heading_path": "장애 리포트 #03",
+            "content": "- 날짜: 2025-02-28\n- 서비스: payment-api\n- 등급: SEV1\n- 증상: 금요일 오후 배포 직후 결제가 전부 실패했다. 주말 동안 대응이 늦어졌다.\n- 원인: PG사 연동 환경 변수가 누락된 채 배포됐다. (에러 코드 E-016)\n- 조치: 롤백 후 환경 변수를 추가했다.\n- 후속 조치: 배포 가이드 v5에 반영",
+            "score": 0.7623745034819873
+          },
+          {
+            "document_id": "incident-20",
+            "chunk_index": 0,
+            "heading_path": "장애 리포트 #20",
+            "content": "- 날짜: 2025-11-05\n- 서비스: payment-api\n- 등급: SEV2\n- 증상: 두 명이 동시에 배포해 서로 다른 버전이 섞였다.\n- 원인: 같은 서비스의 동시 배포를 막는 장치가 없었다. (에러 코드 E-025)\n- 조치: 한 버전으로 재배포했다. 배포 잠금을 도입했다.\n- 후속 조치: 배포 가이드 v23에 반영",
+            "score": 0.7578177840927381
+          },
+          {
+            "document_id": "incident-14",
+            "chunk_index": 0,
+            "heading_path": "장애 리포트 #14",
+            "content": "- 날짜: 2025-08-13\n- 서비스: order-api\n- 등급: SEV1\n- 증상: 장애 발생 후 롤백 승인 대기로 복구가 40분 지연됐다.\n- 원인: 검증 규칙 회귀. 롤백에 SRE 승인이 필요해 지연됐다. (에러 코드 E-001)\n- 조치: 롤백 승인 절차를 폐지했다.\n- 후속 조치: 배포 가이드 v19에 반영",
+            "score": 0.7531872484254563
+          },
+          {
+            "document_id": "incident-19",
+            "chunk_index": 0,
+            "heading_path": "장애 리포트 #19",
+            "content": "- 날짜: 2025-10-29\n- 서비스: order-api\n- 등급: SEV3\n- 증상: 카나리 10% 단계에서 오류율이 올라 배포가 자동 중단됐다.\n- 원인: 새 버전의 직렬화 오류. (에러 코드 E-024)\n- 조치: 자동 중단이 정상 작동했다. 수정 후 재배포했다.",
+            "score": 0.7501558437900215
+          },
+          {
+            "document_id": "error-E-030",
+            "chunk_index": 0,
+            "heading_path": "에러 코드 E-030 배포 금지 시간 위반",
+            "content": "- 발생 위치: 배포\n- 의미: 배포 금지 시간에 배포를 시도했다.\n- 원인: 배포 가이드 최신 버전의 금지 시간 미확인.\n- 대응: 금지 시간이 끝난 뒤 배포한다.\n- 관련 장애: 장애 리포트 #26",
+            "score": 0.7499903365909449
+          }
+        ],
+        "hybrid_filtered": [
+          {
+            "document_id": "deploy-guide-v22",
+            "chunk_index": 0,
+            "heading_path": "배포 가이드 v22",
+            "content": "- 변경: 배포 금지 시간을 변경한다. 금요일 오후 대신 목요일 오후에 배포하지 않는다. 공휴일 전날은 유지한다.\n- 이유: 장애 리포트 #18 이후 결정",
+            "score": 0.03278688524590164
+          },
+          {
+            "document_id": "deploy-guide-v05",
+            "chunk_index": 0,
+            "heading_path": "배포 가이드 v5",
+            "content": "- 변경: 배포 금지 시간을 추가한다. 금요일 오후에는 prod 배포를 하지 않는다.\n- 이유: 장애 리포트 #03 이후 결정",
+            "score": 0.016129032258064516
+          },
+          {
+            "document_id": "deploy-guide-v23",
+            "chunk_index": 1,
+            "heading_path": "배포 가이드 v23 > 현재 규칙",
+            "content": "- 배포 도구: GitHub Actions\n- 배포 명령: `deploy run --env prod`\n- 롤백 명령: `deploy rollback --to <version>` (승인 불필요)\n- 배포 금지 시간: 목요일 오후, 공휴일 전날\n- 승인자: 팀 리드 + SRE 온콜\n- 이전 버전: 배포 가이드 v22",
+            "score": 0.016129032258064516
+          },
+          {
+            "document_id": "deploy-guide-v24",
+            "chunk_index": 1,
+            "heading_path": "배포 가이드 v24 > 현재 규칙",
+            "content": "- 배포 도구: GitHub Actions\n- 배포 명령: `deploy run --env prod`\n- 롤백 명령: `deploy rollback --to <version>` (승인 불필요)\n- 배포 금지 시간: 목요일 오후, 공휴일 전날\n- 승인자: 팀 리드 + 서비스 오너\n- 이전 버전: 배포 가이드 v23",
+            "score": 0.015873015873015872
+          },
+          {
+            "document_id": "incident-26",
+            "chunk_index": 0,
+            "heading_path": "장애 리포트 #26",
+            "content": "- 날짜: 2026-03-04\n- 서비스: payment-api\n- 등급: SEV3\n- 증상: 목요일 오후 배포 시도가 차단됐다.\n- 원인: 배포 금지 시간에 배포를 시도했다. (에러 코드 E-030)\n- 조치: 차단이 정상 작동했다. 다음 날 배포했다.",
+            "score": 0.015873015873015872
+          },
+          {
+            "document_id": "deploy-guide-v25",
+            "chunk_index": 1,
+            "heading_path": "배포 가이드 v25 > 현재 규칙",
+            "content": "- 배포 도구: GitHub Actions\n- 배포 명령: `deploy run --env prod`\n- 롤백 명령: `deploy rollback --to <version>` (승인 불필요)\n- 배포 금지 시간: 목요일 오후, 공휴일 전날, 12/22~1/2 연말 동결\n- 승인자: 팀 리드 + 서비스 오너\n- 이전 버전: 배포 가이드 v24",
+            "score": 0.015625
+          },
+          {
+            "document_id": "incident-18",
+            "chunk_index": 0,
+            "heading_path": "장애 리포트 #18",
+            "content": "- 날짜: 2025-10-15\n- 서비스: settlement-pipeline\n- 등급: SEV1\n- 증상: 목요일 오후 주간 정산 배치 중 배포가 실행돼 정산이 실패했다.\n- 원인: 정산 배치와 배포가 같은 시간에 겹쳤다. (에러 코드 E-009)\n- 조치: 정산을 재실행했다. 배포 금지 시간을 목요일 오후로 바꿨다.\n- 후속 조치: 배포 가이드 v22에 반영",
+            "score": 0.015625
+          },
+          {
+            "document_id": "deploy-guide-v26",
+            "chunk_index": 1,
+            "heading_path": "배포 가이드 v26 > 현재 규칙",
+            "content": "- 배포 도구: GitHub Actions\n- 배포 명령: `deploy run --env prod`\n- 롤백 명령: `deploy rollback --to <version>` (승인 불필요)\n- 배포 금지 시간: 목요일 오후, 공휴일 전날, 12/22~1/2 연말 동결\n- 승인자: 팀 리드 + 서비스 오너\n- 이전 버전: 배포 가이드 v25",
+            "score": 0.015384615384615385
+          },
+          {
+            "document_id": "incident-05",
+            "chunk_index": 0,
+            "heading_path": "장애 리포트 #05",
+            "content": "- 날짜: 2025-03-26\n- 서비스: order-api\n- 등급: SEV2\n- 증상: 승인되지 않은 변경이 prod에 배포돼 주문 조회가 느려졌다.\n- 원인: 배포 승인 단계가 강제되지 않았다. (에러 코드 E-022)\n- 조치: 롤백하고 승인 절차를 강제했다.\n- 후속 조치: 배포 가이드 v7에 반영",
+            "score": 0.015384615384615385
+          },
+          {
+            "document_id": "deploy-guide-v27",
+            "chunk_index": 1,
+            "heading_path": "배포 가이드 v27 > 현재 규칙",
+            "content": "- 배포 도구: GitHub Actions\n- 배포 명령: `deploy run --env prod --ticket <id>`\n- 롤백 명령: `deploy rollback --to <version>` (승인 불필요)\n- 배포 금지 시간: 목요일 오후, 공휴일 전날, 12/22~1/2 연말 동결\n- 승인자: 팀 리드 + 서비스 오너\n- 이전 버전: 배포 가이드 v26",
+            "score": 0.015151515151515152
+          }
+        ]
+      }
+    },
+    {
+      "question_id": "extra-ambiguous-01",
+      "query": "배포 중 같은 서비스의 작업이 겹치지 않게 하는 방법은?",
+      "scope": {
+        "mode": "all",
+        "version": null
+      },
+      "timings_seconds": {
+        "query_embedding": 0.5112711250003485,
+        "keyword": 0.013367333998758113,
+        "vector": 0.005017499999667052,
+        "hybrid_fusion": 9.737500113260467e-05,
+        "keyword_filtered": 0.008225042000049143,
+        "vector_filtered": 0.0031182500006252667,
+        "hybrid_filtered_fusion": 0.0001021249991026707
+      },
+      "candidates": {
+        "keyword": [
+          {
+            "document_id": "faq-q26",
+            "chunk_index": 0,
+            "heading_path": "온보딩 FAQ Q26",
+            "content": "**Q. 배포 중 헬스체크가 실패하면 어떻게 되나요?**\n\n배포가 자동 중단된다. Pod 로그와 readiness 경로를 확인한다.\n\n- 관련 문서: 에러 코드 E-015, 장애 리포트 #30",
+            "score": 2.4
+          },
+          {
+            "document_id": "deploy-guide-v02",
+            "chunk_index": 1,
+            "heading_path": "배포 가이드 v2 > 현재 규칙",
+            "content": "- 배포 도구: Jenkins\n- 배포 명령: Jenkins job `deploy-staging` → `deploy-prod` 순서로 실행\n- 롤백 명령: 이전 빌드를 `deploy-prod`로 재실행\n- 배포 금지 시간: 없음\n- 승인자: 팀 리드\n- 이전 버전: 배포 가이드 v1",
+            "score": 2.2
+          },
+          {
+            "document_id": "deploy-guide-v03",
+            "chunk_index": 1,
+            "heading_path": "배포 가이드 v3 > 현재 규칙",
+            "content": "-  배포 도구: Jenkins\n- 배포 명령: Jenkins job `deploy-staging` → `deploy-prod` 순서로 실행\n- 롤백 명령: 이전 빌드를`deploy-prod`로 재실행\n- 배포 금지 시간: 없음\n- 승인자: 팀 리드\n- 이전 버전: 배포 가이드 v2",
+            "score": 2.2
+          },
+          {
+            "document_id": "deploy-guide-v04",
+            "chunk_index": 1,
+            "heading_path": "배포 가이드 v4 > 현재 규칙",
+            "content": "- 배포 도구: Jenkins\n- 배포 명령: Jenkins job `deploy-staging` → `deploy-prod` 순서로 실행\n- 롤백 명령: 이전 빌드를 `deploy-prod`로 재실행\n- 배포 금지 시간: 없음\n- 승인자: 팀 리드\n- 이전 버전: 배포 가이드 v3",
+            "score": 2.2
+          },
+          {
+            "document_id": "deploy-guide-v05",
+            "chunk_index": 1,
+            "heading_path": "배포 가이드 v5 > 현재 규칙",
+            "content": "- 배포 도구: Jenkins\n- 배포 명령: Jenkins job `deploy-staging` → `deploy-prod` 순서로 실행\n- 롤백 명령: 이전 빌드를 `deploy-prod`로 재실행\n- 배포 금지 시간: 금요일 오후\n- 승인자: 팀 리드\n- 이전 버전: 배포 가이드 v4",
+            "score": 2.2
+          },
+          {
+            "document_id": "deploy-guide-v06",
+            "chunk_index": 1,
+            "heading_path": "배포 가이드 v6 > 현재 규칙",
+            "content": "- 배포 도구: Jenkins\n- 배포 명령: Jenkins job `deploy-staging` → `deploy-prod` 순서로 실행\n- 롤백 명령: Jenkins job `rollback-prod` 실행\n- 배포 금지 시간: 금요일 오후\n- 승인자: 팀 리드\n- 이전 버전: 배포 가이드 v5",
+            "score": 2.2
+          },
+          {
+            "document_id": "deploy-guide-v07",
+            "chunk_index": 1,
+            "heading_path": "배포 가이드 v7 > 현재 규칙",
+            "content": "- 배포 도구: Jenkins\n- 배포 명령: Jenkins job `deploy-staging` → `deploy-prod` 순서로 실행\n- 롤백 명령: Jenkins job `rollback-prod` 실행\n- 배포 금지 시간: 금요일 오후\n- 승인자: 팀 리드 + SRE 온콜\n- 이전 버전: 배포 가이드 v6",
+            "score": 2.2
+          },
+          {
+            "document_id": "deploy-guide-v08",
+            "chunk_index": 1,
+            "heading_path": "배포 가이드 v8 > 현재 규칙",
+            "content": "- 배포 도구: Jenkins\n- 배포 명령: Jenkins job `deploy-staging` → `deploy-prod` 순서로 실행\n- 롤백 명령: Jenkins job `rollback-prod` 실행\n- 배포 금지 시간: 금요일 오후\n- 승인자: 팀 리드 + SRE 온콜\n- 이전 버전: 배포 가이드 v7",
+            "score": 2.2
+          },
+          {
+            "document_id": "deploy-guide-v09",
+            "chunk_index": 1,
+            "heading_path": "배포 가이드 v9 > 현재 규칙",
+            "content": "- 배포 도구: Jenkins\n- 배포 명령: Jenkins job `deploy-staging` → `deploy-prod` 순서로 실행\n- 롤백 명령: Jenkins job `rollback-prod` 실행\n- 배포 금지 시간: 금요일 오후\n- 승인자: 팀 리드 + SRE 온콜\n- 이전 버전: 배포 가이드 v8",
+            "score": 2.2
+          },
+          {
+            "document_id": "deploy-guide-v10",
+            "chunk_index": 1,
+            "heading_path": "배포 가이드 v10 > 현재 규칙",
+            "content": "- 배포 도구: Jenkins\n- 배포 명령: Jenkins job `deploy-staging` → `deploy-prod` 순서로 실행\n- 롤백 명령: Jenkins job `rollback-prod` 실행\n- 배포 금지 시간: 금요일 오후\n- 승인자: 팀 리드 + SRE 온콜\n- 이전 버전: 배포 가이드 v9",
+            "score": 2.2
+          }
+        ],
+        "vector": [
+          {
+            "document_id": "faq-q27",
+            "chunk_index": 0,
+            "heading_path": "온보딩 FAQ Q27",
+            "content": "**Q. 두 명이 같은 서비스를 동시에 배포할 수 있나요?**\n\n없다. 같은 서비스의 배포는 잠금으로 한 번에 하나만 실행된다.\n\n- 관련 문서: 배포 가이드 v23",
+            "score": 0.7981369741583588
+          },
+          {
+            "document_id": "deploy-guide-v23",
+            "chunk_index": 0,
+            "heading_path": "배포 가이드 v23",
+            "content": "- 변경: GitHub Actions 오류 수정 (E-025 동시 배포 충돌). 같은 서비스의 동시 배포를 잠금으로 막는다.\n- 이유: 장애 리포트 #20 이후 결정",
+            "score": 0.768896900809925
+          },
+          {
+            "document_id": "error-E-025",
+            "chunk_index": 0,
+            "heading_path": "에러 코드 E-025 동시 배포 충돌",
+            "content": "- 발생 위치: 배포 (GitHub Actions)\n- 의미: 같은 서비스에 두 배포가 동시에 실행됐다.\n- 원인: 배포 잠금 부재.\n- 대응: 한 버전으로 재배포한다. 배포 가이드 v23에서 잠금이 도입됐다.\n- 관련 장애: 장애 리포트 #20",
+            "score": 0.7381487545257785
+          },
+          {
+            "document_id": "incident-20",
+            "chunk_index": 0,
+            "heading_path": "장애 리포트 #20",
+            "content": "- 날짜: 2025-11-05\n- 서비스: payment-api\n- 등급: SEV2\n- 증상: 두 명이 동시에 배포해 서로 다른 버전이 섞였다.\n- 원인: 같은 서비스의 동시 배포를 막는 장치가 없었다. (에러 코드 E-025)\n- 조치: 한 버전으로 재배포했다. 배포 잠금을 도입했다.\n- 후속 조치: 배포 가이드 v23에 반영",
+            "score": 0.7368223729980597
+          },
+          {
+            "document_id": "deploy-guide-v26",
+            "chunk_index": 1,
+            "heading_path": "배포 가이드 v26 > 현재 규칙",
+            "content": "- 배포 도구: GitHub Actions\n- 배포 명령: `deploy run --env prod`\n- 롤백 명령: `deploy rollback --to <version>` (승인 불필요)\n- 배포 금지 시간: 목요일 오후, 공휴일 전날, 12/22~1/2 연말 동결\n- 승인자: 팀 리드 + 서비스 오너\n- 이전 버전: 배포 가이드 v25",
+            "score": 0.7125439047814226
+          },
+          {
+            "document_id": "deploy-guide-v27",
+            "chunk_index": 1,
+            "heading_path": "배포 가이드 v27 > 현재 규칙",
+            "content": "- 배포 도구: GitHub Actions\n- 배포 명령: `deploy run --env prod --ticket <id>`\n- 롤백 명령: `deploy rollback --to <version>` (승인 불필요)\n- 배포 금지 시간: 목요일 오후, 공휴일 전날, 12/22~1/2 연말 동결\n- 승인자: 팀 리드 + 서비스 오너\n- 이전 버전: 배포 가이드 v26",
+            "score": 0.7112407273098339
+          },
+          {
+            "document_id": "deploy-guide-v28",
+            "chunk_index": 1,
+            "heading_path": "배포 가이드 v28 > 현재 규칙",
+            "content": "- 배포 도구: GitHub Actions\n- 배포 명령: `deploy run --env prod --ticket <id>`\n- 롤백 명령: `deploy rollback --to <version>` (승인 불필요)\n- 배포 금지 시간: 목요일 오후, 공휴일 전날, 12/22~1/2 연말 동결\n- 승인자: 팀 리드 + 서비스 오너\n- 이전 버전: 배포 가이드 v27",
+            "score": 0.7106201860494389
+          },
+          {
+            "document_id": "deploy-guide-v25",
+            "chunk_index": 1,
+            "heading_path": "배포 가이드 v25 > 현재 규칙",
+            "content": "- 배포 도구: GitHub Actions\n- 배포 명령: `deploy run --env prod`\n- 롤백 명령: `deploy rollback --to <version>` (승인 불필요)\n- 배포 금지 시간: 목요일 오후, 공휴일 전날, 12/22~1/2 연말 동결\n- 승인자: 팀 리드 + 서비스 오너\n- 이전 버전: 배포 가이드 v24",
+            "score": 0.7101694457612209
+          },
+          {
+            "document_id": "deploy-guide-v29",
+            "chunk_index": 1,
+            "heading_path": "배포 가이드 v29 > 현재 규칙",
+            "content": "- 배포 도구: GitHub Actions\n- 배포 명령: `deploy run --env prod --ticket <id>`\n- 롤백 명령: `deploy rollback --to <version>` (승인 불필요)\n- 배포 금지 시간: 목요일 오후, 공휴일 전날, 12/22~1/2 연말 동결\n- 승인자: 팀 리드 + 서비스 오너\n- 이전 버전: 배포 가이드 v28",
+            "score": 0.7100846767426344
+          },
+          {
+            "document_id": "deploy-guide-v16",
+            "chunk_index": 1,
+            "heading_path": "배포 가이드 v16 > 현재 규칙",
+            "content": "- 배포 도구: GitHub Actions (Jenkins 병행)\n- 배포 명령: `deploy run --env prod`\n- 롤백 명령: `deploy rollback --to <version>`\n- 배포 금지 시간: 금요일 오후, 공휴일 전날\n- 승인자: 팀 리드 + SRE 온콜\n- 이전 버전: 배포 가이드 v15",
+            "score": 0.7088103603818516
+          }
+        ],
+        "hybrid": [
+          {
+            "document_id": "faq-q26",
+            "chunk_index": 0,
+            "heading_path": "온보딩 FAQ Q26",
+            "content": "**Q. 배포 중 헬스체크가 실패하면 어떻게 되나요?**\n\n배포가 자동 중단된다. Pod 로그와 readiness 경로를 확인한다.\n\n- 관련 문서: 에러 코드 E-015, 장애 리포트 #30",
+            "score": 0.01639344262295082
+          },
+          {
+            "document_id": "faq-q27",
+            "chunk_index": 0,
+            "heading_path": "온보딩 FAQ Q27",
+            "content": "**Q. 두 명이 같은 서비스를 동시에 배포할 수 있나요?**\n\n없다. 같은 서비스의 배포는 잠금으로 한 번에 하나만 실행된다.\n\n- 관련 문서: 배포 가이드 v23",
+            "score": 0.01639344262295082
+          },
+          {
+            "document_id": "deploy-guide-v02",
+            "chunk_index": 1,
+            "heading_path": "배포 가이드 v2 > 현재 규칙",
+            "content": "- 배포 도구: Jenkins\n- 배포 명령: Jenkins job `deploy-staging` → `deploy-prod` 순서로 실행\n- 롤백 명령: 이전 빌드를 `deploy-prod`로 재실행\n- 배포 금지 시간: 없음\n- 승인자: 팀 리드\n- 이전 버전: 배포 가이드 v1",
+            "score": 0.016129032258064516
+          },
+          {
+            "document_id": "deploy-guide-v23",
+            "chunk_index": 0,
+            "heading_path": "배포 가이드 v23",
+            "content": "- 변경: GitHub Actions 오류 수정 (E-025 동시 배포 충돌). 같은 서비스의 동시 배포를 잠금으로 막는다.\n- 이유: 장애 리포트 #20 이후 결정",
+            "score": 0.016129032258064516
+          },
+          {
+            "document_id": "deploy-guide-v03",
+            "chunk_index": 1,
+            "heading_path": "배포 가이드 v3 > 현재 규칙",
+            "content": "-  배포 도구: Jenkins\n- 배포 명령: Jenkins job `deploy-staging` → `deploy-prod` 순서로 실행\n- 롤백 명령: 이전 빌드를`deploy-prod`로 재실행\n- 배포 금지 시간: 없음\n- 승인자: 팀 리드\n- 이전 버전: 배포 가이드 v2",
+            "score": 0.015873015873015872
+          },
+          {
+            "document_id": "error-E-025",
+            "chunk_index": 0,
+            "heading_path": "에러 코드 E-025 동시 배포 충돌",
+            "content": "- 발생 위치: 배포 (GitHub Actions)\n- 의미: 같은 서비스에 두 배포가 동시에 실행됐다.\n- 원인: 배포 잠금 부재.\n- 대응: 한 버전으로 재배포한다. 배포 가이드 v23에서 잠금이 도입됐다.\n- 관련 장애: 장애 리포트 #20",
+            "score": 0.015873015873015872
+          },
+          {
+            "document_id": "deploy-guide-v04",
+            "chunk_index": 1,
+            "heading_path": "배포 가이드 v4 > 현재 규칙",
+            "content": "- 배포 도구: Jenkins\n- 배포 명령: Jenkins job `deploy-staging` → `deploy-prod` 순서로 실행\n- 롤백 명령: 이전 빌드를 `deploy-prod`로 재실행\n- 배포 금지 시간: 없음\n- 승인자: 팀 리드\n- 이전 버전: 배포 가이드 v3",
+            "score": 0.015625
+          },
+          {
+            "document_id": "incident-20",
+            "chunk_index": 0,
+            "heading_path": "장애 리포트 #20",
+            "content": "- 날짜: 2025-11-05\n- 서비스: payment-api\n- 등급: SEV2\n- 증상: 두 명이 동시에 배포해 서로 다른 버전이 섞였다.\n- 원인: 같은 서비스의 동시 배포를 막는 장치가 없었다. (에러 코드 E-025)\n- 조치: 한 버전으로 재배포했다. 배포 잠금을 도입했다.\n- 후속 조치: 배포 가이드 v23에 반영",
+            "score": 0.015625
+          },
+          {
+            "document_id": "deploy-guide-v05",
+            "chunk_index": 1,
+            "heading_path": "배포 가이드 v5 > 현재 규칙",
+            "content": "- 배포 도구: Jenkins\n- 배포 명령: Jenkins job `deploy-staging` → `deploy-prod` 순서로 실행\n- 롤백 명령: 이전 빌드를 `deploy-prod`로 재실행\n- 배포 금지 시간: 금요일 오후\n- 승인자: 팀 리드\n- 이전 버전: 배포 가이드 v4",
+            "score": 0.015384615384615385
+          },
+          {
+            "document_id": "deploy-guide-v26",
+            "chunk_index": 1,
+            "heading_path": "배포 가이드 v26 > 현재 규칙",
+            "content": "- 배포 도구: GitHub Actions\n- 배포 명령: `deploy run --env prod`\n- 롤백 명령: `deploy rollback --to <version>` (승인 불필요)\n- 배포 금지 시간: 목요일 오후, 공휴일 전날, 12/22~1/2 연말 동결\n- 승인자: 팀 리드 + 서비스 오너\n- 이전 버전: 배포 가이드 v25",
+            "score": 0.015384615384615385
+          }
+        ],
+        "keyword_filtered": [
+          {
+            "document_id": "faq-q26",
+            "chunk_index": 0,
+            "heading_path": "온보딩 FAQ Q26",
+            "content": "**Q. 배포 중 헬스체크가 실패하면 어떻게 되나요?**\n\n배포가 자동 중단된다. Pod 로그와 readiness 경로를 확인한다.\n\n- 관련 문서: 에러 코드 E-015, 장애 리포트 #30",
+            "score": 2.4
+          },
+          {
+            "document_id": "deploy-guide-v02",
+            "chunk_index": 1,
+            "heading_path": "배포 가이드 v2 > 현재 규칙",
+            "content": "- 배포 도구: Jenkins\n- 배포 명령: Jenkins job `deploy-staging` → `deploy-prod` 순서로 실행\n- 롤백 명령: 이전 빌드를 `deploy-prod`로 재실행\n- 배포 금지 시간: 없음\n- 승인자: 팀 리드\n- 이전 버전: 배포 가이드 v1",
+            "score": 2.2
+          },
+          {
+            "document_id": "deploy-guide-v03",
+            "chunk_index": 1,
+            "heading_path": "배포 가이드 v3 > 현재 규칙",
+            "content": "-  배포 도구: Jenkins\n- 배포 명령: Jenkins job `deploy-staging` → `deploy-prod` 순서로 실행\n- 롤백 명령: 이전 빌드를`deploy-prod`로 재실행\n- 배포 금지 시간: 없음\n- 승인자: 팀 리드\n- 이전 버전: 배포 가이드 v2",
+            "score": 2.2
+          },
+          {
+            "document_id": "deploy-guide-v04",
+            "chunk_index": 1,
+            "heading_path": "배포 가이드 v4 > 현재 규칙",
+            "content": "- 배포 도구: Jenkins\n- 배포 명령: Jenkins job `deploy-staging` → `deploy-prod` 순서로 실행\n- 롤백 명령: 이전 빌드를 `deploy-prod`로 재실행\n- 배포 금지 시간: 없음\n- 승인자: 팀 리드\n- 이전 버전: 배포 가이드 v3",
+            "score": 2.2
+          },
+          {
+            "document_id": "deploy-guide-v05",
+            "chunk_index": 1,
+            "heading_path": "배포 가이드 v5 > 현재 규칙",
+            "content": "- 배포 도구: Jenkins\n- 배포 명령: Jenkins job `deploy-staging` → `deploy-prod` 순서로 실행\n- 롤백 명령: 이전 빌드를 `deploy-prod`로 재실행\n- 배포 금지 시간: 금요일 오후\n- 승인자: 팀 리드\n- 이전 버전: 배포 가이드 v4",
+            "score": 2.2
+          },
+          {
+            "document_id": "deploy-guide-v06",
+            "chunk_index": 1,
+            "heading_path": "배포 가이드 v6 > 현재 규칙",
+            "content": "- 배포 도구: Jenkins\n- 배포 명령: Jenkins job `deploy-staging` → `deploy-prod` 순서로 실행\n- 롤백 명령: Jenkins job `rollback-prod` 실행\n- 배포 금지 시간: 금요일 오후\n- 승인자: 팀 리드\n- 이전 버전: 배포 가이드 v5",
+            "score": 2.2
+          },
+          {
+            "document_id": "deploy-guide-v07",
+            "chunk_index": 1,
+            "heading_path": "배포 가이드 v7 > 현재 규칙",
+            "content": "- 배포 도구: Jenkins\n- 배포 명령: Jenkins job `deploy-staging` → `deploy-prod` 순서로 실행\n- 롤백 명령: Jenkins job `rollback-prod` 실행\n- 배포 금지 시간: 금요일 오후\n- 승인자: 팀 리드 + SRE 온콜\n- 이전 버전: 배포 가이드 v6",
+            "score": 2.2
+          },
+          {
+            "document_id": "deploy-guide-v08",
+            "chunk_index": 1,
+            "heading_path": "배포 가이드 v8 > 현재 규칙",
+            "content": "- 배포 도구: Jenkins\n- 배포 명령: Jenkins job `deploy-staging` → `deploy-prod` 순서로 실행\n- 롤백 명령: Jenkins job `rollback-prod` 실행\n- 배포 금지 시간: 금요일 오후\n- 승인자: 팀 리드 + SRE 온콜\n- 이전 버전: 배포 가이드 v7",
+            "score": 2.2
+          },
+          {
+            "document_id": "deploy-guide-v09",
+            "chunk_index": 1,
+            "heading_path": "배포 가이드 v9 > 현재 규칙",
+            "content": "- 배포 도구: Jenkins\n- 배포 명령: Jenkins job `deploy-staging` → `deploy-prod` 순서로 실행\n- 롤백 명령: Jenkins job `rollback-prod` 실행\n- 배포 금지 시간: 금요일 오후\n- 승인자: 팀 리드 + SRE 온콜\n- 이전 버전: 배포 가이드 v8",
+            "score": 2.2
+          },
+          {
+            "document_id": "deploy-guide-v10",
+            "chunk_index": 1,
+            "heading_path": "배포 가이드 v10 > 현재 규칙",
+            "content": "- 배포 도구: Jenkins\n- 배포 명령: Jenkins job `deploy-staging` → `deploy-prod` 순서로 실행\n- 롤백 명령: Jenkins job `rollback-prod` 실행\n- 배포 금지 시간: 금요일 오후\n- 승인자: 팀 리드 + SRE 온콜\n- 이전 버전: 배포 가이드 v9",
+            "score": 2.2
+          }
+        ],
+        "vector_filtered": [
+          {
+            "document_id": "faq-q27",
+            "chunk_index": 0,
+            "heading_path": "온보딩 FAQ Q27",
+            "content": "**Q. 두 명이 같은 서비스를 동시에 배포할 수 있나요?**\n\n없다. 같은 서비스의 배포는 잠금으로 한 번에 하나만 실행된다.\n\n- 관련 문서: 배포 가이드 v23",
+            "score": 0.7981369741583588
+          },
+          {
+            "document_id": "deploy-guide-v23",
+            "chunk_index": 0,
+            "heading_path": "배포 가이드 v23",
+            "content": "- 변경: GitHub Actions 오류 수정 (E-025 동시 배포 충돌). 같은 서비스의 동시 배포를 잠금으로 막는다.\n- 이유: 장애 리포트 #20 이후 결정",
+            "score": 0.768896900809925
+          },
+          {
+            "document_id": "error-E-025",
+            "chunk_index": 0,
+            "heading_path": "에러 코드 E-025 동시 배포 충돌",
+            "content": "- 발생 위치: 배포 (GitHub Actions)\n- 의미: 같은 서비스에 두 배포가 동시에 실행됐다.\n- 원인: 배포 잠금 부재.\n- 대응: 한 버전으로 재배포한다. 배포 가이드 v23에서 잠금이 도입됐다.\n- 관련 장애: 장애 리포트 #20",
+            "score": 0.7381487545257785
+          },
+          {
+            "document_id": "incident-20",
+            "chunk_index": 0,
+            "heading_path": "장애 리포트 #20",
+            "content": "- 날짜: 2025-11-05\n- 서비스: payment-api\n- 등급: SEV2\n- 증상: 두 명이 동시에 배포해 서로 다른 버전이 섞였다.\n- 원인: 같은 서비스의 동시 배포를 막는 장치가 없었다. (에러 코드 E-025)\n- 조치: 한 버전으로 재배포했다. 배포 잠금을 도입했다.\n- 후속 조치: 배포 가이드 v23에 반영",
+            "score": 0.7368223729980597
+          },
+          {
+            "document_id": "deploy-guide-v26",
+            "chunk_index": 1,
+            "heading_path": "배포 가이드 v26 > 현재 규칙",
+            "content": "- 배포 도구: GitHub Actions\n- 배포 명령: `deploy run --env prod`\n- 롤백 명령: `deploy rollback --to <version>` (승인 불필요)\n- 배포 금지 시간: 목요일 오후, 공휴일 전날, 12/22~1/2 연말 동결\n- 승인자: 팀 리드 + 서비스 오너\n- 이전 버전: 배포 가이드 v25",
+            "score": 0.7125439047814226
+          },
+          {
+            "document_id": "deploy-guide-v27",
+            "chunk_index": 1,
+            "heading_path": "배포 가이드 v27 > 현재 규칙",
+            "content": "- 배포 도구: GitHub Actions\n- 배포 명령: `deploy run --env prod --ticket <id>`\n- 롤백 명령: `deploy rollback --to <version>` (승인 불필요)\n- 배포 금지 시간: 목요일 오후, 공휴일 전날, 12/22~1/2 연말 동결\n- 승인자: 팀 리드 + 서비스 오너\n- 이전 버전: 배포 가이드 v26",
+            "score": 0.7112407273098339
+          },
+          {
+            "document_id": "deploy-guide-v28",
+            "chunk_index": 1,
+            "heading_path": "배포 가이드 v28 > 현재 규칙",
+            "content": "- 배포 도구: GitHub Actions\n- 배포 명령: `deploy run --env prod --ticket <id>`\n- 롤백 명령: `deploy rollback --to <version>` (승인 불필요)\n- 배포 금지 시간: 목요일 오후, 공휴일 전날, 12/22~1/2 연말 동결\n- 승인자: 팀 리드 + 서비스 오너\n- 이전 버전: 배포 가이드 v27",
+            "score": 0.7106201860494389
+          },
+          {
+            "document_id": "deploy-guide-v25",
+            "chunk_index": 1,
+            "heading_path": "배포 가이드 v25 > 현재 규칙",
+            "content": "- 배포 도구: GitHub Actions\n- 배포 명령: `deploy run --env prod`\n- 롤백 명령: `deploy rollback --to <version>` (승인 불필요)\n- 배포 금지 시간: 목요일 오후, 공휴일 전날, 12/22~1/2 연말 동결\n- 승인자: 팀 리드 + 서비스 오너\n- 이전 버전: 배포 가이드 v24",
+            "score": 0.7101694457612209
+          },
+          {
+            "document_id": "deploy-guide-v29",
+            "chunk_index": 1,
+            "heading_path": "배포 가이드 v29 > 현재 규칙",
+            "content": "- 배포 도구: GitHub Actions\n- 배포 명령: `deploy run --env prod --ticket <id>`\n- 롤백 명령: `deploy rollback --to <version>` (승인 불필요)\n- 배포 금지 시간: 목요일 오후, 공휴일 전날, 12/22~1/2 연말 동결\n- 승인자: 팀 리드 + 서비스 오너\n- 이전 버전: 배포 가이드 v28",
+            "score": 0.7100846767426344
+          },
+          {
+            "document_id": "deploy-guide-v16",
+            "chunk_index": 1,
+            "heading_path": "배포 가이드 v16 > 현재 규칙",
+            "content": "- 배포 도구: GitHub Actions (Jenkins 병행)\n- 배포 명령: `deploy run --env prod`\n- 롤백 명령: `deploy rollback --to <version>`\n- 배포 금지 시간: 금요일 오후, 공휴일 전날\n- 승인자: 팀 리드 + SRE 온콜\n- 이전 버전: 배포 가이드 v15",
+            "score": 0.7088103603818516
+          }
+        ],
+        "hybrid_filtered": [
+          {
+            "document_id": "faq-q26",
+            "chunk_index": 0,
+            "heading_path": "온보딩 FAQ Q26",
+            "content": "**Q. 배포 중 헬스체크가 실패하면 어떻게 되나요?**\n\n배포가 자동 중단된다. Pod 로그와 readiness 경로를 확인한다.\n\n- 관련 문서: 에러 코드 E-015, 장애 리포트 #30",
+            "score": 0.01639344262295082
+          },
+          {
+            "document_id": "faq-q27",
+            "chunk_index": 0,
+            "heading_path": "온보딩 FAQ Q27",
+            "content": "**Q. 두 명이 같은 서비스를 동시에 배포할 수 있나요?**\n\n없다. 같은 서비스의 배포는 잠금으로 한 번에 하나만 실행된다.\n\n- 관련 문서: 배포 가이드 v23",
+            "score": 0.01639344262295082
+          },
+          {
+            "document_id": "deploy-guide-v02",
+            "chunk_index": 1,
+            "heading_path": "배포 가이드 v2 > 현재 규칙",
+            "content": "- 배포 도구: Jenkins\n- 배포 명령: Jenkins job `deploy-staging` → `deploy-prod` 순서로 실행\n- 롤백 명령: 이전 빌드를 `deploy-prod`로 재실행\n- 배포 금지 시간: 없음\n- 승인자: 팀 리드\n- 이전 버전: 배포 가이드 v1",
+            "score": 0.016129032258064516
+          },
+          {
+            "document_id": "deploy-guide-v23",
+            "chunk_index": 0,
+            "heading_path": "배포 가이드 v23",
+            "content": "- 변경: GitHub Actions 오류 수정 (E-025 동시 배포 충돌). 같은 서비스의 동시 배포를 잠금으로 막는다.\n- 이유: 장애 리포트 #20 이후 결정",
+            "score": 0.016129032258064516
+          },
+          {
+            "document_id": "deploy-guide-v03",
+            "chunk_index": 1,
+            "heading_path": "배포 가이드 v3 > 현재 규칙",
+            "content": "-  배포 도구: Jenkins\n- 배포 명령: Jenkins job `deploy-staging` → `deploy-prod` 순서로 실행\n- 롤백 명령: 이전 빌드를`deploy-prod`로 재실행\n- 배포 금지 시간: 없음\n- 승인자: 팀 리드\n- 이전 버전: 배포 가이드 v2",
+            "score": 0.015873015873015872
+          },
+          {
+            "document_id": "error-E-025",
+            "chunk_index": 0,
+            "heading_path": "에러 코드 E-025 동시 배포 충돌",
+            "content": "- 발생 위치: 배포 (GitHub Actions)\n- 의미: 같은 서비스에 두 배포가 동시에 실행됐다.\n- 원인: 배포 잠금 부재.\n- 대응: 한 버전으로 재배포한다. 배포 가이드 v23에서 잠금이 도입됐다.\n- 관련 장애: 장애 리포트 #20",
+            "score": 0.015873015873015872
+          },
+          {
+            "document_id": "deploy-guide-v04",
+            "chunk_index": 1,
+            "heading_path": "배포 가이드 v4 > 현재 규칙",
+            "content": "- 배포 도구: Jenkins\n- 배포 명령: Jenkins job `deploy-staging` → `deploy-prod` 순서로 실행\n- 롤백 명령: 이전 빌드를 `deploy-prod`로 재실행\n- 배포 금지 시간: 없음\n- 승인자: 팀 리드\n- 이전 버전: 배포 가이드 v3",
+            "score": 0.015625
+          },
+          {
+            "document_id": "incident-20",
+            "chunk_index": 0,
+            "heading_path": "장애 리포트 #20",
+            "content": "- 날짜: 2025-11-05\n- 서비스: payment-api\n- 등급: SEV2\n- 증상: 두 명이 동시에 배포해 서로 다른 버전이 섞였다.\n- 원인: 같은 서비스의 동시 배포를 막는 장치가 없었다. (에러 코드 E-025)\n- 조치: 한 버전으로 재배포했다. 배포 잠금을 도입했다.\n- 후속 조치: 배포 가이드 v23에 반영",
+            "score": 0.015625
+          },
+          {
+            "document_id": "deploy-guide-v05",
+            "chunk_index": 1,
+            "heading_path": "배포 가이드 v5 > 현재 규칙",
+            "content": "- 배포 도구: Jenkins\n- 배포 명령: Jenkins job `deploy-staging` → `deploy-prod` 순서로 실행\n- 롤백 명령: 이전 빌드를 `deploy-prod`로 재실행\n- 배포 금지 시간: 금요일 오후\n- 승인자: 팀 리드\n- 이전 버전: 배포 가이드 v4",
+            "score": 0.015384615384615385
+          },
+          {
+            "document_id": "deploy-guide-v26",
+            "chunk_index": 1,
+            "heading_path": "배포 가이드 v26 > 현재 규칙",
+            "content": "- 배포 도구: GitHub Actions\n- 배포 명령: `deploy run --env prod`\n- 롤백 명령: `deploy rollback --to <version>` (승인 불필요)\n- 배포 금지 시간: 목요일 오후, 공휴일 전날, 12/22~1/2 연말 동결\n- 승인자: 팀 리드 + 서비스 오너\n- 이전 버전: 배포 가이드 v25",
+            "score": 0.015384615384615385
+          }
+        ]
+      }
+    },
+    {
+      "question_id": "extra-code-01",
+      "query": "현재 배포 중 E-021 오류가 났는데 무엇을 확인해야 해?",
+      "scope": {
+        "mode": "all",
+        "version": null
+      },
+      "timings_seconds": {
+        "query_embedding": 0.5218674580009974,
+        "keyword": 0.01584316700063937,
+        "vector": 0.0040526669999962905,
+        "hybrid_fusion": 9.066699931281619e-05,
+        "keyword_filtered": 0.00890149999941059,
+        "vector_filtered": 0.0030773329999647103,
+        "hybrid_filtered_fusion": 6.86250004946487e-05
+      },
+      "candidates": {
+        "keyword": [
+          {
+            "document_id": "faq-q18",
+            "chunk_index": 0,
+            "heading_path": "온보딩 FAQ Q18",
+            "content": "**Q. 배포 후에 무엇을 확인해야 하나요?**\n\n15분 동안 Grafana 대시보드에서 오류율과 지연 시간을 지켜본다.\n\n- 관련 문서: 배포 가이드 v20, 장애 리포트 #15",
+            "score": 3.8
+          },
+          {
+            "document_id": "error-E-025",
+            "chunk_index": 0,
+            "heading_path": "에러 코드 E-025 동시 배포 충돌",
+            "content": "- 발생 위치: 배포 (GitHub Actions)\n- 의미: 같은 서비스에 두 배포가 동시에 실행됐다.\n- 원인: 배포 잠금 부재.\n- 대응: 한 버전으로 재배포한다. 배포 가이드 v23에서 잠금이 도입됐다.\n- 관련 장애: 장애 리포트 #20",
+            "score": 3.4
+          },
+          {
+            "document_id": "error-E-030",
+            "chunk_index": 0,
+            "heading_path": "에러 코드 E-030 배포 금지 시간 위반",
+            "content": "- 발생 위치: 배포\n- 의미: 배포 금지 시간에 배포를 시도했다.\n- 원인: 배포 가이드 최신 버전의 금지 시간 미확인.\n- 대응: 금지 시간이 끝난 뒤 배포한다.\n- 관련 장애: 장애 리포트 #26",
+            "score": 3.4
+          },
+          {
+            "document_id": "error-E-017",
+            "chunk_index": 0,
+            "heading_path": "에러 코드 E-017 배포 타임아웃",
+            "content": "- 발생 위치: 배포 (Jenkins)\n- 의미: 배포가 제한 시간 안에 끝나지 않았다.\n- 원인: 느린 롤아웃, 타임아웃 설정 부족.\n- 대응: 타임아웃 설정을 확인한다. 배포 가이드 v4에서 20분으로 늘렸다.",
+            "score": 3.2
+          },
+          {
+            "document_id": "error-E-021",
+            "chunk_index": 0,
+            "heading_path": "에러 코드 E-021 워크플로 권한 부족",
+            "content": "- 발생 위치: 배포 (GitHub Actions)\n- 의미: 워크플로에 배포 권한이 없다.\n- 원인: `deployments: write` 권한 누락. 저장소 생성·이전 시 자주 발생.\n- 대응: 워크플로 권한 설정을 확인한다.\n- 관련 장애: 장애 리포트 #12, #13, #17",
+            "score": 3.2
+          },
+          {
+            "document_id": "deploy-guide-v02",
+            "chunk_index": 1,
+            "heading_path": "배포 가이드 v2 > 현재 규칙",
+            "content": "- 배포 도구: Jenkins\n- 배포 명령: Jenkins job `deploy-staging` → `deploy-prod` 순서로 실행\n- 롤백 명령: 이전 빌드를 `deploy-prod`로 재실행\n- 배포 금지 시간: 없음\n- 승인자: 팀 리드\n- 이전 버전: 배포 가이드 v1",
+            "score": 2.6
+          },
+          {
+            "document_id": "deploy-guide-v03",
+            "chunk_index": 1,
+            "heading_path": "배포 가이드 v3 > 현재 규칙",
+            "content": "-  배포 도구: Jenkins\n- 배포 명령: Jenkins job `deploy-staging` → `deploy-prod` 순서로 실행\n- 롤백 명령: 이전 빌드를`deploy-prod`로 재실행\n- 배포 금지 시간: 없음\n- 승인자: 팀 리드\n- 이전 버전: 배포 가이드 v2",
+            "score": 2.6
+          },
+          {
+            "document_id": "deploy-guide-v04",
+            "chunk_index": 1,
+            "heading_path": "배포 가이드 v4 > 현재 규칙",
+            "content": "- 배포 도구: Jenkins\n- 배포 명령: Jenkins job `deploy-staging` → `deploy-prod` 순서로 실행\n- 롤백 명령: 이전 빌드를 `deploy-prod`로 재실행\n- 배포 금지 시간: 없음\n- 승인자: 팀 리드\n- 이전 버전: 배포 가이드 v3",
+            "score": 2.6
+          },
+          {
+            "document_id": "deploy-guide-v05",
+            "chunk_index": 1,
+            "heading_path": "배포 가이드 v5 > 현재 규칙",
+            "content": "- 배포 도구: Jenkins\n- 배포 명령: Jenkins job `deploy-staging` → `deploy-prod` 순서로 실행\n- 롤백 명령: 이전 빌드를 `deploy-prod`로 재실행\n- 배포 금지 시간: 금요일 오후\n- 승인자: 팀 리드\n- 이전 버전: 배포 가이드 v4",
+            "score": 2.6
+          },
+          {
+            "document_id": "deploy-guide-v06",
+            "chunk_index": 1,
+            "heading_path": "배포 가이드 v6 > 현재 규칙",
+            "content": "- 배포 도구: Jenkins\n- 배포 명령: Jenkins job `deploy-staging` → `deploy-prod` 순서로 실행\n- 롤백 명령: Jenkins job `rollback-prod` 실행\n- 배포 금지 시간: 금요일 오후\n- 승인자: 팀 리드\n- 이전 버전: 배포 가이드 v5",
+            "score": 2.6
+          }
+        ],
+        "vector": [
+          {
+            "document_id": "faq-q07",
+            "chunk_index": 0,
+            "heading_path": "온보딩 FAQ Q07",
+            "content": "**Q. 배포할 때 E-021이 뜨면 어떻게 하나요?**\n\n워크플로 권한 부족이다. 저장소의 워크플로 권한에 `deployments: write`가 있는지 확인한다.\n\n- 관련 문서: 에러 코드 E-021, 장애 리포트 #12",
+            "score": 0.8078867564066587
+          },
+          {
+            "document_id": "error-E-021",
+            "chunk_index": 0,
+            "heading_path": "에러 코드 E-021 워크플로 권한 부족",
+            "content": "- 발생 위치: 배포 (GitHub Actions)\n- 의미: 워크플로에 배포 권한이 없다.\n- 원인: `deployments: write` 권한 누락. 저장소 생성·이전 시 자주 발생.\n- 대응: 워크플로 권한 설정을 확인한다.\n- 관련 장애: 장애 리포트 #12, #13, #17",
+            "score": 0.8026274693621485
+          },
+          {
+            "document_id": "error-E-022",
+            "chunk_index": 0,
+            "heading_path": "에러 코드 E-022 승인 누락",
+            "content": "- 발생 위치: 배포\n- 의미: 필요한 승인 없이 배포가 실행됐다.\n- 원인: 승인 단계 미강제.\n- 대응: 승인 단계를 확인한다. 승인자는 배포 가이드 최신 버전을 따른다.\n- 관련 장애: 장애 리포트 #05",
+            "score": 0.7888935645438965
+          },
+          {
+            "document_id": "error-E-020",
+            "chunk_index": 0,
+            "heading_path": "에러 코드 E-020 롤백 대상 없음",
+            "content": "- 발생 위치: 배포\n- 의미: 롤백할 이전 버전이 없거나 동작하지 않는다.\n- 원인: 스키마 변경이 함께 배포돼 이전 버전이 호환되지 않음.\n- 대응: 핫픽스로 복구한다. 대규모 변경은 feature flag를 사용한다.\n- 관련 장애: 장애 리포트 #21",
+            "score": 0.7868991582153724
+          },
+          {
+            "document_id": "error-E-016",
+            "chunk_index": 0,
+            "heading_path": "에러 코드 E-016 설정 누락",
+            "content": "- 발생 위치: 배포\n- 의미: 필수 환경 변수가 없다.\n- 원인: 배포 설정에 항목 누락.\n- 대응: 환경 변수 목록을 배포 설정과 비교한다.\n- 관련 장애: 장애 리포트 #03",
+            "score": 0.7816093488671003
+          },
+          {
+            "document_id": "error-E-023",
+            "chunk_index": 0,
+            "heading_path": "에러 코드 E-023 아티팩트 업로드 실패",
+            "content": "- 발생 위치: 배포 (GitHub Actions)\n- 의미: 빌드 결과물 업로드가 실패했다.\n- 원인: 일시적 네트워크 오류.\n- 대응: 재시도한다. 배포 가이드 v17에서 3회 자동 재시도됐다.",
+            "score": 0.7725653783938077
+          },
+          {
+            "document_id": "error-E-025",
+            "chunk_index": 0,
+            "heading_path": "에러 코드 E-025 동시 배포 충돌",
+            "content": "- 발생 위치: 배포 (GitHub Actions)\n- 의미: 같은 서비스에 두 배포가 동시에 실행됐다.\n- 원인: 배포 잠금 부재.\n- 대응: 한 버전으로 재배포한다. 배포 가이드 v23에서 잠금이 도입됐다.\n- 관련 장애: 장애 리포트 #20",
+            "score": 0.7714136924106922
+          },
+          {
+            "document_id": "error-E-030",
+            "chunk_index": 0,
+            "heading_path": "에러 코드 E-030 배포 금지 시간 위반",
+            "content": "- 발생 위치: 배포\n- 의미: 배포 금지 시간에 배포를 시도했다.\n- 원인: 배포 가이드 최신 버전의 금지 시간 미확인.\n- 대응: 금지 시간이 끝난 뒤 배포한다.\n- 관련 장애: 장애 리포트 #26",
+            "score": 0.7713439191990021
+          },
+          {
+            "document_id": "error-E-017",
+            "chunk_index": 0,
+            "heading_path": "에러 코드 E-017 배포 타임아웃",
+            "content": "- 발생 위치: 배포 (Jenkins)\n- 의미: 배포가 제한 시간 안에 끝나지 않았다.\n- 원인: 느린 롤아웃, 타임아웃 설정 부족.\n- 대응: 타임아웃 설정을 확인한다. 배포 가이드 v4에서 20분으로 늘렸다.",
+            "score": 0.7709064670038208
+          },
+          {
+            "document_id": "error-E-027",
+            "chunk_index": 0,
+            "heading_path": "에러 코드 E-027 시크릿 누락",
+            "content": "- 발생 위치: 배포\n- 의미: 필요한 시크릿이 Vault에 없다.\n- 원인: 새 기능의 시크릿 미등록.\n- 대응: 시크릿을 등록한다. 배포 가이드 v28에서 배포 전 검사가 추가됐다.\n- 관련 장애: 장애 리포트 #23",
+            "score": 0.7694624203763963
+          }
+        ],
+        "hybrid": [
+          {
+            "document_id": "error-E-021",
+            "chunk_index": 0,
+            "heading_path": "에러 코드 E-021 워크플로 권한 부족",
+            "content": "- 발생 위치: 배포 (GitHub Actions)\n- 의미: 워크플로에 배포 권한이 없다.\n- 원인: `deployments: write` 권한 누락. 저장소 생성·이전 시 자주 발생.\n- 대응: 워크플로 권한 설정을 확인한다.\n- 관련 장애: 장애 리포트 #12, #13, #17",
+            "score": 0.0315136476426799
+          },
+          {
+            "document_id": "error-E-025",
+            "chunk_index": 0,
+            "heading_path": "에러 코드 E-025 동시 배포 충돌",
+            "content": "- 발생 위치: 배포 (GitHub Actions)\n- 의미: 같은 서비스에 두 배포가 동시에 실행됐다.\n- 원인: 배포 잠금 부재.\n- 대응: 한 버전으로 재배포한다. 배포 가이드 v23에서 잠금이 도입됐다.\n- 관련 장애: 장애 리포트 #20",
+            "score": 0.031054405392392875
+          },
+          {
+            "document_id": "error-E-030",
+            "chunk_index": 0,
+            "heading_path": "에러 코드 E-030 배포 금지 시간 위반",
+            "content": "- 발생 위치: 배포\n- 의미: 배포 금지 시간에 배포를 시도했다.\n- 원인: 배포 가이드 최신 버전의 금지 시간 미확인.\n- 대응: 금지 시간이 끝난 뒤 배포한다.\n- 관련 장애: 장애 리포트 #26",
+            "score": 0.03057889822595705
+          },
+          {
+            "document_id": "error-E-017",
+            "chunk_index": 0,
+            "heading_path": "에러 코드 E-017 배포 타임아웃",
+            "content": "- 발생 위치: 배포 (Jenkins)\n- 의미: 배포가 제한 시간 안에 끝나지 않았다.\n- 원인: 느린 롤아웃, 타임아웃 설정 부족.\n- 대응: 타임아웃 설정을 확인한다. 배포 가이드 v4에서 20분으로 늘렸다.",
+            "score": 0.030117753623188408
+          },
+          {
+            "document_id": "faq-q07",
+            "chunk_index": 0,
+            "heading_path": "온보딩 FAQ Q07",
+            "content": "**Q. 배포할 때 E-021이 뜨면 어떻게 하나요?**\n\n워크플로 권한 부족이다. 저장소의 워크플로 권한에 `deployments: write`가 있는지 확인한다.\n\n- 관련 문서: 에러 코드 E-021, 장애 리포트 #12",
+            "score": 0.01639344262295082
+          },
+          {
+            "document_id": "faq-q18",
+            "chunk_index": 0,
+            "heading_path": "온보딩 FAQ Q18",
+            "content": "**Q. 배포 후에 무엇을 확인해야 하나요?**\n\n15분 동안 Grafana 대시보드에서 오류율과 지연 시간을 지켜본다.\n\n- 관련 문서: 배포 가이드 v20, 장애 리포트 #15",
+            "score": 0.01639344262295082
+          },
+          {
+            "document_id": "error-E-022",
+            "chunk_index": 0,
+            "heading_path": "에러 코드 E-022 승인 누락",
+            "content": "- 발생 위치: 배포\n- 의미: 필요한 승인 없이 배포가 실행됐다.\n- 원인: 승인 단계 미강제.\n- 대응: 승인 단계를 확인한다. 승인자는 배포 가이드 최신 버전을 따른다.\n- 관련 장애: 장애 리포트 #05",
+            "score": 0.015873015873015872
+          },
+          {
+            "document_id": "error-E-020",
+            "chunk_index": 0,
+            "heading_path": "에러 코드 E-020 롤백 대상 없음",
+            "content": "- 발생 위치: 배포\n- 의미: 롤백할 이전 버전이 없거나 동작하지 않는다.\n- 원인: 스키마 변경이 함께 배포돼 이전 버전이 호환되지 않음.\n- 대응: 핫픽스로 복구한다. 대규모 변경은 feature flag를 사용한다.\n- 관련 장애: 장애 리포트 #21",
+            "score": 0.015625
+          },
+          {
+            "document_id": "error-E-016",
+            "chunk_index": 0,
+            "heading_path": "에러 코드 E-016 설정 누락",
+            "content": "- 발생 위치: 배포\n- 의미: 필수 환경 변수가 없다.\n- 원인: 배포 설정에 항목 누락.\n- 대응: 환경 변수 목록을 배포 설정과 비교한다.\n- 관련 장애: 장애 리포트 #03",
+            "score": 0.015384615384615385
+          },
+          {
+            "document_id": "deploy-guide-v02",
+            "chunk_index": 1,
+            "heading_path": "배포 가이드 v2 > 현재 규칙",
+            "content": "- 배포 도구: Jenkins\n- 배포 명령: Jenkins job `deploy-staging` → `deploy-prod` 순서로 실행\n- 롤백 명령: 이전 빌드를 `deploy-prod`로 재실행\n- 배포 금지 시간: 없음\n- 승인자: 팀 리드\n- 이전 버전: 배포 가이드 v1",
+            "score": 0.015151515151515152
+          }
+        ],
+        "keyword_filtered": [
+          {
+            "document_id": "faq-q18",
+            "chunk_index": 0,
+            "heading_path": "온보딩 FAQ Q18",
+            "content": "**Q. 배포 후에 무엇을 확인해야 하나요?**\n\n15분 동안 Grafana 대시보드에서 오류율과 지연 시간을 지켜본다.\n\n- 관련 문서: 배포 가이드 v20, 장애 리포트 #15",
+            "score": 3.8
+          },
+          {
+            "document_id": "error-E-025",
+            "chunk_index": 0,
+            "heading_path": "에러 코드 E-025 동시 배포 충돌",
+            "content": "- 발생 위치: 배포 (GitHub Actions)\n- 의미: 같은 서비스에 두 배포가 동시에 실행됐다.\n- 원인: 배포 잠금 부재.\n- 대응: 한 버전으로 재배포한다. 배포 가이드 v23에서 잠금이 도입됐다.\n- 관련 장애: 장애 리포트 #20",
+            "score": 3.4
+          },
+          {
+            "document_id": "error-E-030",
+            "chunk_index": 0,
+            "heading_path": "에러 코드 E-030 배포 금지 시간 위반",
+            "content": "- 발생 위치: 배포\n- 의미: 배포 금지 시간에 배포를 시도했다.\n- 원인: 배포 가이드 최신 버전의 금지 시간 미확인.\n- 대응: 금지 시간이 끝난 뒤 배포한다.\n- 관련 장애: 장애 리포트 #26",
+            "score": 3.4
+          },
+          {
+            "document_id": "error-E-017",
+            "chunk_index": 0,
+            "heading_path": "에러 코드 E-017 배포 타임아웃",
+            "content": "- 발생 위치: 배포 (Jenkins)\n- 의미: 배포가 제한 시간 안에 끝나지 않았다.\n- 원인: 느린 롤아웃, 타임아웃 설정 부족.\n- 대응: 타임아웃 설정을 확인한다. 배포 가이드 v4에서 20분으로 늘렸다.",
+            "score": 3.2
+          },
+          {
+            "document_id": "error-E-021",
+            "chunk_index": 0,
+            "heading_path": "에러 코드 E-021 워크플로 권한 부족",
+            "content": "- 발생 위치: 배포 (GitHub Actions)\n- 의미: 워크플로에 배포 권한이 없다.\n- 원인: `deployments: write` 권한 누락. 저장소 생성·이전 시 자주 발생.\n- 대응: 워크플로 권한 설정을 확인한다.\n- 관련 장애: 장애 리포트 #12, #13, #17",
+            "score": 3.2
+          },
+          {
+            "document_id": "deploy-guide-v02",
+            "chunk_index": 1,
+            "heading_path": "배포 가이드 v2 > 현재 규칙",
+            "content": "- 배포 도구: Jenkins\n- 배포 명령: Jenkins job `deploy-staging` → `deploy-prod` 순서로 실행\n- 롤백 명령: 이전 빌드를 `deploy-prod`로 재실행\n- 배포 금지 시간: 없음\n- 승인자: 팀 리드\n- 이전 버전: 배포 가이드 v1",
+            "score": 2.6
+          },
+          {
+            "document_id": "deploy-guide-v03",
+            "chunk_index": 1,
+            "heading_path": "배포 가이드 v3 > 현재 규칙",
+            "content": "-  배포 도구: Jenkins\n- 배포 명령: Jenkins job `deploy-staging` → `deploy-prod` 순서로 실행\n- 롤백 명령: 이전 빌드를`deploy-prod`로 재실행\n- 배포 금지 시간: 없음\n- 승인자: 팀 리드\n- 이전 버전: 배포 가이드 v2",
+            "score": 2.6
+          },
+          {
+            "document_id": "deploy-guide-v04",
+            "chunk_index": 1,
+            "heading_path": "배포 가이드 v4 > 현재 규칙",
+            "content": "- 배포 도구: Jenkins\n- 배포 명령: Jenkins job `deploy-staging` → `deploy-prod` 순서로 실행\n- 롤백 명령: 이전 빌드를 `deploy-prod`로 재실행\n- 배포 금지 시간: 없음\n- 승인자: 팀 리드\n- 이전 버전: 배포 가이드 v3",
+            "score": 2.6
+          },
+          {
+            "document_id": "deploy-guide-v05",
+            "chunk_index": 1,
+            "heading_path": "배포 가이드 v5 > 현재 규칙",
+            "content": "- 배포 도구: Jenkins\n- 배포 명령: Jenkins job `deploy-staging` → `deploy-prod` 순서로 실행\n- 롤백 명령: 이전 빌드를 `deploy-prod`로 재실행\n- 배포 금지 시간: 금요일 오후\n- 승인자: 팀 리드\n- 이전 버전: 배포 가이드 v4",
+            "score": 2.6
+          },
+          {
+            "document_id": "deploy-guide-v06",
+            "chunk_index": 1,
+            "heading_path": "배포 가이드 v6 > 현재 규칙",
+            "content": "- 배포 도구: Jenkins\n- 배포 명령: Jenkins job `deploy-staging` → `deploy-prod` 순서로 실행\n- 롤백 명령: Jenkins job `rollback-prod` 실행\n- 배포 금지 시간: 금요일 오후\n- 승인자: 팀 리드\n- 이전 버전: 배포 가이드 v5",
+            "score": 2.6
+          }
+        ],
+        "vector_filtered": [
+          {
+            "document_id": "faq-q07",
+            "chunk_index": 0,
+            "heading_path": "온보딩 FAQ Q07",
+            "content": "**Q. 배포할 때 E-021이 뜨면 어떻게 하나요?**\n\n워크플로 권한 부족이다. 저장소의 워크플로 권한에 `deployments: write`가 있는지 확인한다.\n\n- 관련 문서: 에러 코드 E-021, 장애 리포트 #12",
+            "score": 0.8078867564066587
+          },
+          {
+            "document_id": "error-E-021",
+            "chunk_index": 0,
+            "heading_path": "에러 코드 E-021 워크플로 권한 부족",
+            "content": "- 발생 위치: 배포 (GitHub Actions)\n- 의미: 워크플로에 배포 권한이 없다.\n- 원인: `deployments: write` 권한 누락. 저장소 생성·이전 시 자주 발생.\n- 대응: 워크플로 권한 설정을 확인한다.\n- 관련 장애: 장애 리포트 #12, #13, #17",
+            "score": 0.8026274693621485
+          },
+          {
+            "document_id": "error-E-022",
+            "chunk_index": 0,
+            "heading_path": "에러 코드 E-022 승인 누락",
+            "content": "- 발생 위치: 배포\n- 의미: 필요한 승인 없이 배포가 실행됐다.\n- 원인: 승인 단계 미강제.\n- 대응: 승인 단계를 확인한다. 승인자는 배포 가이드 최신 버전을 따른다.\n- 관련 장애: 장애 리포트 #05",
+            "score": 0.7888935645438965
+          },
+          {
+            "document_id": "error-E-020",
+            "chunk_index": 0,
+            "heading_path": "에러 코드 E-020 롤백 대상 없음",
+            "content": "- 발생 위치: 배포\n- 의미: 롤백할 이전 버전이 없거나 동작하지 않는다.\n- 원인: 스키마 변경이 함께 배포돼 이전 버전이 호환되지 않음.\n- 대응: 핫픽스로 복구한다. 대규모 변경은 feature flag를 사용한다.\n- 관련 장애: 장애 리포트 #21",
+            "score": 0.7868991582153724
+          },
+          {
+            "document_id": "error-E-016",
+            "chunk_index": 0,
+            "heading_path": "에러 코드 E-016 설정 누락",
+            "content": "- 발생 위치: 배포\n- 의미: 필수 환경 변수가 없다.\n- 원인: 배포 설정에 항목 누락.\n- 대응: 환경 변수 목록을 배포 설정과 비교한다.\n- 관련 장애: 장애 리포트 #03",
+            "score": 0.7816093488671003
+          },
+          {
+            "document_id": "error-E-023",
+            "chunk_index": 0,
+            "heading_path": "에러 코드 E-023 아티팩트 업로드 실패",
+            "content": "- 발생 위치: 배포 (GitHub Actions)\n- 의미: 빌드 결과물 업로드가 실패했다.\n- 원인: 일시적 네트워크 오류.\n- 대응: 재시도한다. 배포 가이드 v17에서 3회 자동 재시도됐다.",
+            "score": 0.7725653783938077
+          },
+          {
+            "document_id": "error-E-025",
+            "chunk_index": 0,
+            "heading_path": "에러 코드 E-025 동시 배포 충돌",
+            "content": "- 발생 위치: 배포 (GitHub Actions)\n- 의미: 같은 서비스에 두 배포가 동시에 실행됐다.\n- 원인: 배포 잠금 부재.\n- 대응: 한 버전으로 재배포한다. 배포 가이드 v23에서 잠금이 도입됐다.\n- 관련 장애: 장애 리포트 #20",
+            "score": 0.7714136924106922
+          },
+          {
+            "document_id": "error-E-030",
+            "chunk_index": 0,
+            "heading_path": "에러 코드 E-030 배포 금지 시간 위반",
+            "content": "- 발생 위치: 배포\n- 의미: 배포 금지 시간에 배포를 시도했다.\n- 원인: 배포 가이드 최신 버전의 금지 시간 미확인.\n- 대응: 금지 시간이 끝난 뒤 배포한다.\n- 관련 장애: 장애 리포트 #26",
+            "score": 0.7713439191990021
+          },
+          {
+            "document_id": "error-E-017",
+            "chunk_index": 0,
+            "heading_path": "에러 코드 E-017 배포 타임아웃",
+            "content": "- 발생 위치: 배포 (Jenkins)\n- 의미: 배포가 제한 시간 안에 끝나지 않았다.\n- 원인: 느린 롤아웃, 타임아웃 설정 부족.\n- 대응: 타임아웃 설정을 확인한다. 배포 가이드 v4에서 20분으로 늘렸다.",
+            "score": 0.7709064670038208
+          },
+          {
+            "document_id": "error-E-027",
+            "chunk_index": 0,
+            "heading_path": "에러 코드 E-027 시크릿 누락",
+            "content": "- 발생 위치: 배포\n- 의미: 필요한 시크릿이 Vault에 없다.\n- 원인: 새 기능의 시크릿 미등록.\n- 대응: 시크릿을 등록한다. 배포 가이드 v28에서 배포 전 검사가 추가됐다.\n- 관련 장애: 장애 리포트 #23",
+            "score": 0.7694624203763963
+          }
+        ],
+        "hybrid_filtered": [
+          {
+            "document_id": "error-E-021",
+            "chunk_index": 0,
+            "heading_path": "에러 코드 E-021 워크플로 권한 부족",
+            "content": "- 발생 위치: 배포 (GitHub Actions)\n- 의미: 워크플로에 배포 권한이 없다.\n- 원인: `deployments: write` 권한 누락. 저장소 생성·이전 시 자주 발생.\n- 대응: 워크플로 권한 설정을 확인한다.\n- 관련 장애: 장애 리포트 #12, #13, #17",
+            "score": 0.0315136476426799
+          },
+          {
+            "document_id": "error-E-025",
+            "chunk_index": 0,
+            "heading_path": "에러 코드 E-025 동시 배포 충돌",
+            "content": "- 발생 위치: 배포 (GitHub Actions)\n- 의미: 같은 서비스에 두 배포가 동시에 실행됐다.\n- 원인: 배포 잠금 부재.\n- 대응: 한 버전으로 재배포한다. 배포 가이드 v23에서 잠금이 도입됐다.\n- 관련 장애: 장애 리포트 #20",
+            "score": 0.031054405392392875
+          },
+          {
+            "document_id": "error-E-030",
+            "chunk_index": 0,
+            "heading_path": "에러 코드 E-030 배포 금지 시간 위반",
+            "content": "- 발생 위치: 배포\n- 의미: 배포 금지 시간에 배포를 시도했다.\n- 원인: 배포 가이드 최신 버전의 금지 시간 미확인.\n- 대응: 금지 시간이 끝난 뒤 배포한다.\n- 관련 장애: 장애 리포트 #26",
+            "score": 0.03057889822595705
+          },
+          {
+            "document_id": "error-E-017",
+            "chunk_index": 0,
+            "heading_path": "에러 코드 E-017 배포 타임아웃",
+            "content": "- 발생 위치: 배포 (Jenkins)\n- 의미: 배포가 제한 시간 안에 끝나지 않았다.\n- 원인: 느린 롤아웃, 타임아웃 설정 부족.\n- 대응: 타임아웃 설정을 확인한다. 배포 가이드 v4에서 20분으로 늘렸다.",
+            "score": 0.030117753623188408
+          },
+          {
+            "document_id": "faq-q07",
+            "chunk_index": 0,
+            "heading_path": "온보딩 FAQ Q07",
+            "content": "**Q. 배포할 때 E-021이 뜨면 어떻게 하나요?**\n\n워크플로 권한 부족이다. 저장소의 워크플로 권한에 `deployments: write`가 있는지 확인한다.\n\n- 관련 문서: 에러 코드 E-021, 장애 리포트 #12",
+            "score": 0.01639344262295082
+          },
+          {
+            "document_id": "faq-q18",
+            "chunk_index": 0,
+            "heading_path": "온보딩 FAQ Q18",
+            "content": "**Q. 배포 후에 무엇을 확인해야 하나요?**\n\n15분 동안 Grafana 대시보드에서 오류율과 지연 시간을 지켜본다.\n\n- 관련 문서: 배포 가이드 v20, 장애 리포트 #15",
+            "score": 0.01639344262295082
+          },
+          {
+            "document_id": "error-E-022",
+            "chunk_index": 0,
+            "heading_path": "에러 코드 E-022 승인 누락",
+            "content": "- 발생 위치: 배포\n- 의미: 필요한 승인 없이 배포가 실행됐다.\n- 원인: 승인 단계 미강제.\n- 대응: 승인 단계를 확인한다. 승인자는 배포 가이드 최신 버전을 따른다.\n- 관련 장애: 장애 리포트 #05",
+            "score": 0.015873015873015872
+          },
+          {
+            "document_id": "error-E-020",
+            "chunk_index": 0,
+            "heading_path": "에러 코드 E-020 롤백 대상 없음",
+            "content": "- 발생 위치: 배포\n- 의미: 롤백할 이전 버전이 없거나 동작하지 않는다.\n- 원인: 스키마 변경이 함께 배포돼 이전 버전이 호환되지 않음.\n- 대응: 핫픽스로 복구한다. 대규모 변경은 feature flag를 사용한다.\n- 관련 장애: 장애 리포트 #21",
+            "score": 0.015625
+          },
+          {
+            "document_id": "error-E-016",
+            "chunk_index": 0,
+            "heading_path": "에러 코드 E-016 설정 누락",
+            "content": "- 발생 위치: 배포\n- 의미: 필수 환경 변수가 없다.\n- 원인: 배포 설정에 항목 누락.\n- 대응: 환경 변수 목록을 배포 설정과 비교한다.\n- 관련 장애: 장애 리포트 #03",
+            "score": 0.015384615384615385
+          },
+          {
+            "document_id": "deploy-guide-v02",
+            "chunk_index": 1,
+            "heading_path": "배포 가이드 v2 > 현재 규칙",
+            "content": "- 배포 도구: Jenkins\n- 배포 명령: Jenkins job `deploy-staging` → `deploy-prod` 순서로 실행\n- 롤백 명령: 이전 빌드를 `deploy-prod`로 재실행\n- 배포 금지 시간: 없음\n- 승인자: 팀 리드\n- 이전 버전: 배포 가이드 v1",
+            "score": 0.015151515151515152
+          }
+        ]
+      }
+    }
+  ]
+}
