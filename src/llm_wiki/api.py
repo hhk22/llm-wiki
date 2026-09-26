@@ -2,12 +2,22 @@
 
 from __future__ import annotations
 
-from typing import Protocol
+import os
+import time
+from pathlib import Path
+from typing import Literal, Protocol
 
 from fastapi import FastAPI, HTTPException
-from pydantic import BaseModel, Field, field_validator
+from pydantic import BaseModel, Field, field_validator, model_validator
 
 from llm_wiki.answering import GeminiAnswerProvider, GenerationSettings, answer_with_retry
+from llm_wiki.conversation import (
+    AnswerMethod,
+    ConversationTurn,
+    GeminiJsonModel,
+    InputBudgetExceeded,
+    resolve_question,
+)
 from llm_wiki.database import DatabaseSettings, connect_database
 from llm_wiki.embedding import EmbeddingSettings, GeminiEmbeddingProvider
 from llm_wiki.references import follow_causal_reference
@@ -21,6 +31,7 @@ from llm_wiki.search import (
     vector_search,
 )
 from llm_wiki.search_scope import infer_search_scope
+from llm_wiki.wiki_query import ROOT, WikiCitation, WikiReader, answer_wiki
 
 
 class QueryRequest(BaseModel):
@@ -59,6 +70,21 @@ class SearchItem(BaseModel):
         )
 
 
+class AnswerRequest(QueryRequest):
+    query: str = Field(min_length=1, max_length=2000)
+    method: AnswerMethod = "vector"
+    history: list[ConversationTurn] = Field(default_factory=list, max_length=12)
+    max_input_tokens: int = Field(default=48000, ge=1000, le=100000)
+
+    @model_validator(mode="after")
+    def bounded(self):
+        if sum(len(turn.content) for turn in self.history) > 16000:
+            raise ValueError("history must contain at most 16000 characters")
+        if self.method == "wiki" and self.top_k > 3:
+            raise ValueError("Wiki top_k must be 1..3")
+        return self
+
+
 class SearchResponse(BaseModel):
     query: str
     method: SearchMethod
@@ -67,9 +93,14 @@ class SearchResponse(BaseModel):
 
 class AnswerResponse(BaseModel):
     query: str
-    method: SearchMethod
+    method: AnswerMethod
     answer: str
-    sources: list[SearchItem]
+    sources: list[SearchItem | WikiCitation]
+    resolved_query: str | None = None
+    status: Literal[
+        "answered", "clarification_required", "insufficient_evidence", "budget_exceeded"
+    ] = "answered"
+    trace: dict = Field(default_factory=dict)
 
 
 class ApiService(Protocol):
@@ -142,8 +173,15 @@ class WikiService:
         return result.answer, list(result.sources)
 
 
-def create_app(service: ApiService | None = None) -> FastAPI:
+def create_app(service: ApiService | None = None, *, model_factory=None, reader_factory=None) -> FastAPI:
     service = service or WikiService()
+    model_factory = model_factory or (
+        lambda budget: GeminiJsonModel(GenerationSettings.from_env(), budget=budget)
+    )
+    reader_factory = reader_factory or (lambda: WikiReader(
+        Path(os.getenv("LLM_WIKI_DIR", str(ROOT / "wiki"))),
+        Path(os.getenv("LLM_WIKI_SOURCES", str(ROOT / "sources"))),
+    ))
     app = FastAPI(title="LLM Wiki API", version="1.0.0")
 
     @app.get("/health")
@@ -167,17 +205,41 @@ def create_app(service: ApiService | None = None) -> FastAPI:
         )
 
     @app.post("/answer", response_model=AnswerResponse)
-    def answer(request: QueryRequest) -> AnswerResponse:
+    def answer(request: AnswerRequest) -> AnswerResponse:
+        started = time.monotonic()
+        model = None
+        reads = []
+
+        def response(text, sources, status, resolved_query):
+            return AnswerResponse(
+                query=request.query, method=request.method, answer=text, sources=sources,
+                status=status, resolved_query=resolved_query,
+                trace={"elapsed_ms": round((time.monotonic() - started) * 1000, 2),
+                       "calls": model.calls if model else [], "reads": reads,
+                       "max_input_tokens": request.max_input_tokens,
+                       "usage_scope": "question_resolution_and_wiki_only"},
+            )
+
         try:
-            text, sources = service.answer(request.query, request.method, request.top_k)
+            if request.history or request.method == "wiki":
+                model = model_factory(request.max_input_tokens)
+            resolution = resolve_question(request.query, request.history, model)
+            if resolution.status == "clarification_required":
+                return response(resolution.clarification, [], resolution.status, None)
+            query = resolution.resolved_query
+            if request.method == "wiki":
+                reader = reader_factory()
+                reads = reader.reads
+                result = answer_wiki(query, model, reader, max_pages=request.top_k)
+                return response(result["answer"], result["sources"], result["status"], query)
+            text, sources = service.answer(query, request.method, request.top_k)
+            return response(text, [SearchItem.from_result(source) for source in sources],
+                            "answered" if sources else "insufficient_evidence", query)
+        except InputBudgetExceeded:
+            return response("입력 토큰 한도 내에서 질문을 해석하지 못했습니다.", [],
+                            "budget_exceeded", None)
         except Exception as exc:
             raise HTTPException(status_code=502, detail="answer unavailable") from exc
-        return AnswerResponse(
-            query=request.query,
-            method=request.method,
-            answer=text,
-            sources=[SearchItem.from_result(source) for source in sources],
-        )
 
     return app
 

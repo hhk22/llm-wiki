@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import asyncio
+import json
 
 import httpx
 
@@ -37,3 +38,20 @@ def test_api_client_raises_for_api_error() -> None:
         assert exc.response.status_code == 503
     else:
         raise AssertionError("HTTPStatusError was not raised")
+
+
+def test_api_client_forwards_wiki_history_and_budget():
+    history = [{"role": "user", "content": "배포 금지 시간은?"}]
+
+    def handler(request):
+        assert request.url.path == "/answer"
+        payload = json.loads(request.content)
+        assert payload["method"] == "wiki"
+        assert payload["history"] == history
+        assert payload["max_input_tokens"] == 9000
+        return httpx.Response(200, json={"status": "clarification_required", "sources": []})
+
+    client = WikiApiClient("http://wiki.test", transport=httpx.MockTransport(handler))
+    result = asyncio.run(client.answer("그 전에는?", "wiki", 3,
+                                      history=history, max_input_tokens=9000))
+    assert result["status"] == "clarification_required"

@@ -1,0 +1,32 @@
+{
+  "scope": "Single-run functional probes, not a RAG/Wiki quality comparison",
+  "cases": [
+    {
+      "id": "current_and_reason",
+      "query": "현재 배포가 금지되는 시간과, 목요일 오후가 금지된 이유를 함께 알려줘.",
+      "history": [],
+      "expected": "목요일 오후·공휴일 전날·12/22~1/2 및 주간 정산 배치와 배포의 충돌을 원본 근거와 함께 설명"
+    },
+    {
+      "id": "followup",
+      "query": "그럼 바뀌기 전에는 언제였어?",
+      "history_from": "current_and_reason",
+      "expected": "배포 금지 시간의 목요일 변경 전을 해석하고 금요일 오후·공휴일 전날을 근거로 답변"
+    },
+    {
+      "id": "ambiguous",
+      "query": "그럼 바뀌기 전에는?",
+      "history": [
+        {"role": "user", "content": "배포 금지 시간과 승인자가 각각 어떻게 변경됐어?"},
+        {"role": "assistant", "content": "배포 금지 시간과 승인자 모두 변경 이력이 있습니다. 어느 항목을 더 보고 싶으신가요?"}
+      ],
+      "expected": "clarification_required, 출처와 Wiki 읽기 기록 없음"
+    },
+    {
+      "id": "missing_evidence",
+      "query": "사내 식대 지원 한도는 월 얼마야?",
+      "history": [],
+      "expected": "insufficient_evidence, 금액을 만들어 답하지 않음"
+    }
+  ]
+}

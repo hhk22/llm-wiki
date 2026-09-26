@@ -26,16 +26,20 @@ class WikiApiClient:
             {"query": query, "method": method, "top_k": top_k},
         )
 
-    async def answer(self, query: str, method: str, top_k: int) -> dict[str, Any]:
-        return await self._post(
-            "/answer",
-            {"query": query, "method": method, "top_k": top_k},
-        )
+    async def answer(
+        self, query: str, method: str, top_k: int, *,
+        history: list[dict[str, str]] | None = None, max_input_tokens: int = 48000,
+    ) -> dict[str, Any]:
+        payload = {"query": query, "method": method, "top_k": top_k}
+        if history:
+            payload["history"] = history
+        payload["max_input_tokens"] = max_input_tokens
+        return await self._post("/answer", payload)
 
     async def _post(self, path: str, payload: dict[str, Any]) -> dict[str, Any]:
         async with httpx.AsyncClient(
             base_url=self.base_url,
-            timeout=60,
+            timeout=300,
             transport=self.transport,
         ) as client:
             response = await client.post(path, json=payload)
