@@ -1,0 +1,52 @@
+{
+  "properties": {
+    "reviewed_ids": {
+      "items": {
+        "type": "string"
+      },
+      "type": "array"
+    },
+    "findings": {
+      "items": {
+        "properties": {
+          "rule": {
+            "type": "string"
+          },
+          "description": {
+            "type": "string"
+          },
+          "evidence": {
+            "items": {
+              "properties": {
+                "document_id": {
+                  "type": "string"
+                },
+                "quote": {
+                  "type": "string"
+                }
+              },
+              "required": [
+                "document_id",
+                "quote"
+              ],
+              "type": "object"
+            },
+            "type": "array"
+          }
+        },
+        "required": [
+          "rule",
+          "description",
+          "evidence"
+        ],
+        "type": "object"
+      },
+      "type": "array"
+    }
+  },
+  "required": [
+    "reviewed_ids",
+    "findings"
+  ],
+  "type": "object"
+}

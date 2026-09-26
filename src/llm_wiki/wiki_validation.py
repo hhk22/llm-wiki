@@ -15,9 +15,17 @@ from llm_wiki.wiki_content import (
     WikiIndex,
     WikiValidationError,
     load_wiki_sources,
+    render_page,
     validate_index,
     validate_links,
     validate_pages,
+)
+from llm_wiki.wiki_history import (
+    TemporalReview,
+    conflicting_values,
+    deployment_history,
+    review_sources,
+    validate_review,
 )
 
 
@@ -48,6 +56,7 @@ def verify_wiki(source_root: Path, output: Path) -> dict:
         ] for s in sources.values()
     }
     pages, links, indexes = [], [], []
+    page_data, link_data = {}, {}
     evidence_count = 0
     for job, data in state["jobs"].items():
         if job.startswith("pages-"):
@@ -57,6 +66,7 @@ def verify_wiki(source_root: Path, output: Path) -> dict:
                 raise WikiValidationError("Unknown page ID in manifest.")
             validate_pages(batch, ids, sources)
             pages.extend(ids)
+            page_data.update({p.document_id: p for p in batch.pages})
             evidence_count += sum(
                 len(statement.evidence)
                 for p in batch.pages
@@ -66,6 +76,7 @@ def verify_wiki(source_root: Path, output: Path) -> dict:
             batch = LinkBatch.model_validate(data["result"])
             validate_links(batch, groups[job.removeprefix("links-")], sources)
             links.extend(p.document_id for p in batch.pages)
+            link_data.update({p.document_id: p for p in batch.pages})
         elif job.startswith("index-"):
             folder = job.removeprefix("index-")
             validate_index(
@@ -86,6 +97,23 @@ def verify_wiki(source_root: Path, output: Path) -> dict:
               if "_build" not in p.relative_to(output).parts}
     if actual != expected:
         raise WikiValidationError("Missing or unexpected Markdown files.")
+    temporal = "wiki_history.py" in state["settings"]["implementation"]
+    history = deployment_history(sources) if temporal else []
+    review = TemporalReview(reviewed_ids=[], findings=[])
+    if temporal:
+        if not state.get("temporal"):
+            raise WikiValidationError("Missing temporal validation record.")
+        review_input = review_sources(sources)
+        if review_input:
+            record = state["jobs"].get("review-deployments")
+            if record is None:
+                raise WikiValidationError("Missing deployment conflict review.")
+            review = TemporalReview.model_validate(record["result"])
+            validate_review(review, review_input)
+    latest_id = max(
+        (key for key, s in sources.items() if s.document.topic == "deploy-guide"),
+        key=lambda key: int(sources[key].document.metadata["version"]), default=None,
+    )
     link_count = 0
     for relative, expected_hash in state["artifacts"].items():
         path = output / relative
@@ -112,9 +140,21 @@ def verify_wiki(source_root: Path, output: Path) -> dict:
                 if not 1 <= first <= last <= len(target.read_text(encoding="utf-8").splitlines()):
                     raise WikiValidationError("Source line range is out of bounds.")
             link_count += 1
+        if temporal:
+            key = next((key for key, s in sources.items() if s.wiki_path == relative), None)
+            if key is not None:
+                regenerated = render_page(
+                    page_data[key], link_data[key], sources, output, latest_id, history, review,
+                )
+                if content.replace("\r\n", "\n") != regenerated:
+                    raise WikiValidationError(f"Page differs from verified data/history: {relative}")
     return {
         "status": "PASS", "source_documents": len(sources), "pages": len(pages),
         "indexes": len(indexes), "checked_links": link_count,
         "checked_evidence_quotes": evidence_count,
+        "temporal_validation": temporal,
+        "rule_changes": len(history),
+        "reviewed_sources": len(review.reviewed_ids),
+        "conflict_candidates": len(review.findings) + (len(conflicting_values(sources)) if temporal else 0),
         "semantic_review": "Quote existence does not prove claim entailment or completeness.",
     }

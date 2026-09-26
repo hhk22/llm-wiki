@@ -1,0 +1,225 @@
+{
+  "validation": {
+    "status": "PASS",
+    "source_documents": 120,
+    "pages": 120,
+    "indexes": 5,
+    "checked_links": 2166,
+    "checked_evidence_quotes": 978,
+    "temporal_validation": true,
+    "rule_changes": 14,
+    "reviewed_sources": 67,
+    "conflict_candidates": 0,
+    "semantic_review": "Quote existence does not prove claim entailment or completeness."
+  },
+  "build_fingerprint": "958f66965faaf1ccee2efd073641ef4ebe29436989a9b97f623e0aa753a3e53d",
+  "model": "gemini-3.5-flash-lite",
+  "tests": {
+    "passed": 146,
+    "skipped": 0,
+    "database_tests_included": true
+  },
+  "reused_initial_jobs": 33,
+  "additional_build_calls": 2,
+  "additional_reported_tokens": {
+    "prompt_token_count": 38815,
+    "candidates_token_count": 1372,
+    "total_token_count": 40187
+  },
+  "controlled_live_cases": [
+    {
+      "name": "normal_version_history",
+      "pass": true,
+      "findings": 0
+    },
+    {
+      "name": "contradictory_faq",
+      "pass": true,
+      "findings": 1
+    }
+  ],
+  "history": [
+    {
+      "rule": "배포 명령",
+      "before": {
+        "document_id": "deploy-guide-v01",
+        "quote": "- 배포 명령: Jenkins job `deploy-prod` 실행"
+      },
+      "after": {
+        "document_id": "deploy-guide-v02",
+        "quote": "- 배포 명령: Jenkins job `deploy-staging` → `deploy-prod` 순서로 실행"
+      },
+      "incident_ids": []
+    },
+    {
+      "rule": "배포 금지 시간",
+      "before": {
+        "document_id": "deploy-guide-v04",
+        "quote": "- 배포 금지 시간: 없음"
+      },
+      "after": {
+        "document_id": "deploy-guide-v05",
+        "quote": "- 배포 금지 시간: 금요일 오후"
+      },
+      "incident_ids": [
+        "incident-03"
+      ]
+    },
+    {
+      "rule": "롤백 명령",
+      "before": {
+        "document_id": "deploy-guide-v05",
+        "quote": "- 롤백 명령: 이전 빌드를 `deploy-prod`로 재실행"
+      },
+      "after": {
+        "document_id": "deploy-guide-v06",
+        "quote": "- 롤백 명령: Jenkins job `rollback-prod` 실행"
+      },
+      "incident_ids": []
+    },
+    {
+      "rule": "승인자",
+      "before": {
+        "document_id": "deploy-guide-v06",
+        "quote": "- 승인자: 팀 리드"
+      },
+      "after": {
+        "document_id": "deploy-guide-v07",
+        "quote": "- 승인자: 팀 리드 + SRE 온콜"
+      },
+      "incident_ids": [
+        "incident-05"
+      ]
+    },
+    {
+      "rule": "배포 도구",
+      "before": {
+        "document_id": "deploy-guide-v13",
+        "quote": "- 배포 도구: Jenkins"
+      },
+      "after": {
+        "document_id": "deploy-guide-v14",
+        "quote": "- 배포 도구: GitHub Actions (Jenkins 병행)"
+      },
+      "incident_ids": []
+    },
+    {
+      "rule": "배포 명령",
+      "before": {
+        "document_id": "deploy-guide-v13",
+        "quote": "- 배포 명령: Jenkins job `deploy-staging` → `deploy-prod` 순서로 실행"
+      },
+      "after": {
+        "document_id": "deploy-guide-v14",
+        "quote": "- 배포 명령: `deploy run --env prod`"
+      },
+      "incident_ids": []
+    },
+    {
+      "rule": "롤백 명령",
+      "before": {
+        "document_id": "deploy-guide-v13",
+        "quote": "- 롤백 명령: Jenkins job `rollback-prod` 실행"
+      },
+      "after": {
+        "document_id": "deploy-guide-v14",
+        "quote": "- 롤백 명령: `deploy rollback --to <version>`"
+      },
+      "incident_ids": []
+    },
+    {
+      "rule": "배포 금지 시간",
+      "before": {
+        "document_id": "deploy-guide-v15",
+        "quote": "- 배포 금지 시간: 금요일 오후"
+      },
+      "after": {
+        "document_id": "deploy-guide-v16",
+        "quote": "- 배포 금지 시간: 금요일 오후, 공휴일 전날"
+      },
+      "incident_ids": []
+    },
+    {
+      "rule": "배포 도구",
+      "before": {
+        "document_id": "deploy-guide-v17",
+        "quote": "- 배포 도구: GitHub Actions (Jenkins 병행)"
+      },
+      "after": {
+        "document_id": "deploy-guide-v18",
+        "quote": "- 배포 도구: GitHub Actions"
+      },
+      "incident_ids": []
+    },
+    {
+      "rule": "롤백 명령",
+      "before": {
+        "document_id": "deploy-guide-v18",
+        "quote": "- 롤백 명령: `deploy rollback --to <version>`"
+      },
+      "after": {
+        "document_id": "deploy-guide-v19",
+        "quote": "- 롤백 명령: `deploy rollback --to <version>` (승인 불필요)"
+      },
+      "incident_ids": [
+        "incident-14"
+      ]
+    },
+    {
+      "rule": "배포 금지 시간",
+      "before": {
+        "document_id": "deploy-guide-v21",
+        "quote": "- 배포 금지 시간: 금요일 오후, 공휴일 전날"
+      },
+      "after": {
+        "document_id": "deploy-guide-v22",
+        "quote": "- 배포 금지 시간: 목요일 오후, 공휴일 전날"
+      },
+      "incident_ids": [
+        "incident-18"
+      ]
+    },
+    {
+      "rule": "승인자",
+      "before": {
+        "document_id": "deploy-guide-v23",
+        "quote": "- 승인자: 팀 리드 + SRE 온콜"
+      },
+      "after": {
+        "document_id": "deploy-guide-v24",
+        "quote": "- 승인자: 팀 리드 + 서비스 오너"
+      },
+      "incident_ids": []
+    },
+    {
+      "rule": "배포 금지 시간",
+      "before": {
+        "document_id": "deploy-guide-v24",
+        "quote": "- 배포 금지 시간: 목요일 오후, 공휴일 전날"
+      },
+      "after": {
+        "document_id": "deploy-guide-v25",
+        "quote": "- 배포 금지 시간: 목요일 오후, 공휴일 전날, 12/22~1/2 연말 동결"
+      },
+      "incident_ids": []
+    },
+    {
+      "rule": "배포 명령",
+      "before": {
+        "document_id": "deploy-guide-v26",
+        "quote": "- 배포 명령: `deploy run --env prod`"
+      },
+      "after": {
+        "document_id": "deploy-guide-v27",
+        "quote": "- 배포 명령: `deploy run --env prod --ticket <id>`"
+      },
+      "incident_ids": []
+    }
+  ],
+  "limitations": [
+    "Consecutive deployment snapshots and labeled current-rule fields only.",
+    "Review findings are candidates, not automatic policy adjudication.",
+    "No guarantee of exhaustive conflict detection; live probes are single runs.",
+    "checked_evidence_quotes counts existing generated-body evidence; history provenance is recomputed and rendered files are compared."
+  ]
+}

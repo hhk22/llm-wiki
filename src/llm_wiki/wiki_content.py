@@ -6,11 +6,15 @@ import os
 import re
 from dataclasses import dataclass
 from pathlib import Path
+from typing import TYPE_CHECKING
 from urllib.parse import quote
 
 from pydantic import BaseModel, ConfigDict, Field
 
 from llm_wiki.documents import Document, load_documents
+
+if TYPE_CHECKING:
+    from llm_wiki.wiki_history import RuleChange, TemporalReview
 
 TOPICS = {
     "deploy-guide": ("deployments", "배포"),
@@ -226,10 +230,18 @@ def evidence_location(source: WikiSource, evidence: Evidence) -> tuple[int, int]
 def render_page(
     page: WikiPage, links: PageLinks, sources: dict[str, WikiSource], output: Path,
     latest_id: str | None,
+    history: list[RuleChange] | None = None, review: TemporalReview | None = None,
 ) -> str:
     source = sources[page.document_id]
     origin = output / source.wiki_path
     citations: list[Evidence] = []
+    historical = source.document.topic == "deploy-guide" and page.document_id != latest_id
+    version = source.document.metadata.get("version")
+
+    def scoped(text: str) -> str:
+        if historical:
+            return text.replace("현재 규칙", f"v{version} 당시 규칙").replace("현재 배포", f"v{version} 당시 배포")
+        return text
 
     def render_statement(statement: Statement) -> str:
         refs = []
@@ -237,17 +249,27 @@ def render_page(
             if evidence not in citations:
                 citations.append(evidence)
             refs.append(f"[{citations.index(evidence) + 1}]")
-        return f"{plain_text(statement.text)} {' '.join(refs)}"
+        return f"{plain_text(scoped(statement.text))} {' '.join(refs)}"
 
     lines = [f"# {source.document.title}", ""]
     if source.document.topic == "deploy-guide":
         status = "구축 원본 기준 최신" if page.document_id == latest_id else "과거 버전"
         lines += [f"> v{source.document.metadata['version']} 시점 · {status}", ""]
+        if historical and latest_id:
+            latest = sources[latest_id]
+            href = relative_link(origin, output / latest.wiki_path)
+            lines += [f"현재 적용 기준은 [{latest.document.title}]({href})에서 확인한다.", ""]
     lines += [render_statement(page.summary), ""]
     for section in page.sections:
-        lines += [f"## {plain_text(section.heading)}", ""]
+        lines += [f"## {plain_text(scoped(section.heading))}", ""]
         lines += [f"- {render_statement(s)}" for s in section.statements]
         lines.append("")
+    if history is not None and review is not None:
+        from llm_wiki.wiki_history import render_history_sections
+
+        lines += render_history_sections(
+            page.document_id, sources, output, latest_id, history, review, render_statement,
+        )
     lines += ["## 관련 Wiki", ""]
     for related in links.related:
         target = sources[related.document_id]

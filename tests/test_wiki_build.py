@@ -27,6 +27,7 @@ from llm_wiki.wiki_content import (
     validate_links,
     validate_pages,
 )
+from llm_wiki.wiki_history import TemporalReview, review_sources
 from llm_wiki.wiki_validation import verify_wiki
 
 
@@ -90,6 +91,7 @@ def successful_responses(sources):
         LinkBatch(pages=[PageLinks(document_id=key, related=[]) for key in inc]),
         index(inc),
         index(["deployments", "incidents"]),
+        TemporalReview(reviewed_ids=list(review_sources(sources)), findings=[]),
     ]
 
 
@@ -107,7 +109,7 @@ def test_build_citations_navigation_and_resume(source_root, tmp_path):
     task, queue = builder(source_root, output, successful_responses(sources))
     report = task.build()
     assert report["pages"] == 3 and report["indexes"] == 3
-    assert len(queue.requests) == 7
+    assert len(queue.requests) == 8
     text = (output / "deployments/v22.md").read_text(encoding="utf-8")
     assert "과거 버전" in text
     assert "../incidents/18.md" in text
@@ -300,3 +302,34 @@ def test_code_change_requires_opt_in_and_cannot_accept_source_change(source_root
     source.write_bytes(source.read_bytes() + b"\nchanged source\n")
     with pytest.raises(WikiValidationError, match="changed"):
         builder(source_root, task.output, [], resume=True, accept_code_change=True)
+
+
+def test_changed_job_prompt_requires_opt_in_and_archives_previous_result(source_root, tmp_path):
+    sources = load_wiki_sources(source_root)
+    responses = successful_responses(sources)
+    task, _ = builder(source_root, tmp_path / "wiki", responses)
+    task.build()
+    state = json.loads(task.state_path.read_text(encoding="utf-8"))
+    state["jobs"]["pages-deployments-000"]["prompt_sha256"] = "old-prompt"
+    task.state_path.write_text(json.dumps(state), encoding="utf-8")
+    task, _ = builder(source_root, task.output, [], resume=True)
+    with pytest.raises(WikiValidationError, match="Checkpoint prompt changed"):
+        task.build()
+    task, queue = builder(source_root, task.output, [responses[0]], resume=True, accept_code_change=True)
+    task.build()
+    assert len(queue.requests) == 1
+    assert task.state["superseded_jobs"]["pages-deployments-000"][0]["prompt_sha256"] == "old-prompt"
+
+
+def test_history_rendering_tamper_is_rejected_even_if_artifact_hash_is_updated(source_root, tmp_path):
+    sources = load_wiki_sources(source_root)
+    task, _ = builder(source_root, tmp_path / "wiki", successful_responses(sources))
+    task.build()
+    path = task.output / "deployments/v22.md"
+    text = path.read_text(encoding="utf-8").replace("과거 버전", "구축 원본 기준 최신")
+    path.write_text(text, encoding="utf-8", newline="\n")
+    state = json.loads(task.state_path.read_text(encoding="utf-8"))
+    state["artifacts"]["deployments/v22.md"] = hashlib.sha256(path.read_bytes()).hexdigest()
+    task.state_path.write_text(json.dumps(state), encoding="utf-8")
+    with pytest.raises(WikiValidationError, match="verified data/history"):
+        verify_wiki(source_root, task.output)
