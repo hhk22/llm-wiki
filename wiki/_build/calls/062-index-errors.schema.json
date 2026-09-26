@@ -1,0 +1,33 @@
+{
+  "properties": {
+    "description": {
+      "type": "string"
+    },
+    "groups": {
+      "items": {
+        "properties": {
+          "heading": {
+            "type": "string"
+          },
+          "ids": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array"
+          }
+        },
+        "required": [
+          "heading",
+          "ids"
+        ],
+        "type": "object"
+      },
+      "type": "array"
+    }
+  },
+  "required": [
+    "description",
+    "groups"
+  ],
+  "type": "object"
+}

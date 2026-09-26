@@ -1,0 +1,292 @@
+{
+  "pages": [
+    {
+      "document_id": "incident-01",
+      "summary": {
+        "text": "주문 생성 요청이 검증 규칙 오류로 인해 30% 실패하여 이전 빌드로 롤백하는 장애가 발생했다.",
+        "evidence": [
+          {
+            "document_id": "incident-01",
+            "quote": "- 증상: 주문 생성 요청의 30%가 실패했다."
+          }
+        ]
+      },
+      "sections": [
+        {
+          "heading": "장애 개요",
+          "statements": [
+            {
+              "text": "2025-01-15에 order-api 서비스에서 SEV2 등급의 장애가 발생했다.",
+              "evidence": [
+                {
+                  "document_id": "incident-01",
+                  "quote": "- 날짜: 2025-01-15"
+                },
+                {
+                  "document_id": "incident-01",
+                  "quote": "- 서비스: order-api"
+                },
+                {
+                  "document_id": "incident-01",
+                  "quote": "- 등급: SEV2"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "heading": "원인 및 조치",
+          "statements": [
+            {
+              "text": "잘못된 주문 검증 규칙이 배포되어 에러 코드 E-001이 발생했으며 이전 빌드로 롤백했다.",
+              "evidence": [
+                {
+                  "document_id": "incident-01",
+                  "quote": "- 원인: 잘못된 주문 검증 규칙이 배포됐다. (에러 코드 E-001)"
+                },
+                {
+                  "document_id": "incident-01",
+                  "quote": "- 조치: 이전 빌드로 롤백했다."
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "document_id": "incident-02",
+      "summary": {
+        "text": "잘못된 토큰 TTL 설정으로 사용자가 주기적으로 재로그인해야 했던 SEV3 등급 장애가 발생하여 수정 재배포되었다.",
+        "evidence": [
+          {
+            "document_id": "incident-02",
+            "quote": "- 증상: 사용자가 5분마다 재로그인해야 했다."
+          }
+        ]
+      },
+      "sections": [
+        {
+          "heading": "장애 개요",
+          "statements": [
+            {
+              "text": "2025-02-05에 api-gateway 서비스에서 SEV3 등급의 장애가 발생했다.",
+              "evidence": [
+                {
+                  "document_id": "incident-02",
+                  "quote": "- 날짜: 2025-02-05"
+                },
+                {
+                  "document_id": "incident-02",
+                  "quote": "- 서비스: api-gateway"
+                },
+                {
+                  "document_id": "incident-02",
+                  "quote": "- 등급: SEV3"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "heading": "원인 및 조치",
+          "statements": [
+            {
+              "text": "토큰 TTL 설정이 300초로 잘못 배포되어 에러 코드 E-005가 발생함에 따라 TTL을 3600초로 수정해 재배포했다.",
+              "evidence": [
+                {
+                  "document_id": "incident-02",
+                  "quote": "- 원인: 토큰 TTL 설정이 300초로 잘못 배포됐다. (에러 코드 E-005)"
+                },
+                {
+                  "document_id": "incident-02",
+                  "quote": "- 조치: TTL을 3600초로 수정해 재배포했다."
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "document_id": "incident-03",
+      "summary": {
+        "text": "금요일 오후 환경 변수 누락 채 배포된 결제 API 장애로 인해 배포 가이드 v5에 배포 금지 시간이 추가되었다.",
+        "evidence": [
+          {
+            "document_id": "incident-03",
+            "quote": "- 증상: 금요일 오후 배포 직후 결제가 전부 실패했다. 주말 동안 대응이 늦어졌다."
+          }
+        ]
+      },
+      "sections": [
+        {
+          "heading": "장애 개요",
+          "statements": [
+            {
+              "text": "2025-02-28에 payment-api 서비스에서 SEV1 등급의 장애가 발생했다.",
+              "evidence": [
+                {
+                  "document_id": "incident-03",
+                  "quote": "- 날짜: 2025-02-28"
+                },
+                {
+                  "document_id": "incident-03",
+                  "quote": "- 서비스: payment-api"
+                },
+                {
+                  "document_id": "incident-03",
+                  "quote": "- 등급: SEV1"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "heading": "원인 및 조치",
+          "statements": [
+            {
+              "text": "PG사 연동 환경 변수가 누락된 채 배포되어 에러 코드 E-016이 발생함에 따라 롤백 후 환경 변수를 추가했다.",
+              "evidence": [
+                {
+                  "document_id": "incident-03",
+                  "quote": "- 원인: PG사 연동 환경 변수가 누락된 채 배포됐다. (에러 코드 E-016)"
+                },
+                {
+                  "document_id": "incident-03",
+                  "quote": "- 조치: 롤백 후 환경 변수를 추가했다."
+                }
+              ]
+            },
+            {
+              "text": "이후 변경으로 본 장애의 후속 조치가 배포 가이드 v5에 반영되었다.",
+              "evidence": [
+                {
+                  "document_id": "incident-03",
+                  "quote": "- 후속 조치: 배포 가이드 v5에 반영"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "document_id": "incident-04",
+      "summary": {
+        "text": "동시성 처리 부재로 상품 재고가 음수로 표시된 SEV3 등급 장애가 발생하여 단일 트랜잭션으로 변경되었다.",
+        "evidence": [
+          {
+            "document_id": "incident-04",
+            "quote": "- 증상: 일부 상품의 재고가 음수로 표시됐다."
+          }
+        ]
+      },
+      "sections": [
+        {
+          "heading": "장애 개요",
+          "statements": [
+            {
+              "text": "2025-03-12에 catalog-api 서비스에서 SEV3 등급의 장애가 발생했다.",
+              "evidence": [
+                {
+                  "document_id": "incident-04",
+                  "quote": "- 날짜: 2025-03-12"
+                },
+                {
+                  "document_id": "incident-04",
+                  "quote": "- 서비스: catalog-api"
+                },
+                {
+                  "document_id": "incident-04",
+                  "quote": "- 등급: SEV3"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "heading": "원인 및 조치",
+          "statements": [
+            {
+              "text": "재고 차감 시 동시성 처리가 없어 에러 코드 E-002가 발생함에 따라 재고 차감을 단일 트랜잭션으로 변경했다.",
+              "evidence": [
+                {
+                  "document_id": "incident-04",
+                  "quote": "- 원인: 재고 차감 시 동시성 처리가 없었다. (에러 코드 E-002)"
+                },
+                {
+                  "document_id": "incident-04",
+                  "quote": "- 조치: 재고 차감을 단일 트랜잭션으로 변경했다."
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "document_id": "incident-05",
+      "summary": {
+        "text": "승인 단계 미강제로 승인되지 않은 변경이 배포되어 발생한 SEV2 등급 장애로 인해 배포 가이드 v7에 승인 절차가 반영되었다.",
+        "evidence": [
+          {
+            "document_id": "incident-05",
+            "quote": "- 증상: 승인되지 않은 변경이 prod에 배포돼 주문 조회가 느려졌다."
+          }
+        ]
+      },
+      "sections": [
+        {
+          "heading": "장애 개요",
+          "statements": [
+            {
+              "text": "2025-03-26에 order-api 서비스에서 SEV2 등급의 장애가 발생했다.",
+              "evidence": [
+                {
+                  "document_id": "incident-05",
+                  "quote": "- 날짜: 2025-03-26"
+                },
+                {
+                  "document_id": "incident-05",
+                  "quote": "- 서비스: order-api"
+                },
+                {
+                  "document_id": "incident-05",
+                  "quote": "- 등급: SEV2"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "heading": "원인 및 조치",
+          "statements": [
+            {
+              "text": "배포 승인 단계가 강제되지 않아 에러 코드 E-022가 발생함에 따라 롤백하고 승인 절차를 강제했다.",
+              "evidence": [
+                {
+                  "document_id": "incident-05",
+                  "quote": "- 원인: 배포 승인 단계가 강제되지 않았다. (에러 코드 E-022)"
+                },
+                {
+                  "document_id": "incident-05",
+                  "quote": "- 조치: 롤백하고 승인 절차를 강제했다."
+                }
+              ]
+            },
+            {
+              "text": "이후 변경으로 본 장애의 후속 조치가 배포 가이드 v7에 반영되었다.",
+              "evidence": [
+                {
+                  "document_id": "incident-05",
+                  "quote": "- 후속 조치: 배포 가이드 v7에 반영"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

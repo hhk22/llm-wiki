@@ -1,0 +1,356 @@
+{
+  "pages": [
+    {
+      "document_id": "incident-16",
+      "summary": {
+        "text": "외부 요청이 전부 TLS 오류로 실패한 api-gateway 인증서 만료 장애입니다.",
+        "evidence": [
+          {
+            "document_id": "incident-16",
+            "quote": "- 증상: 외부 요청이 전부 TLS 오류로 실패했다."
+          }
+        ]
+      },
+      "sections": [
+        {
+          "heading": "장애 개요",
+          "statements": [
+            {
+              "text": "2025-09-10에 api-gateway 서비스에서 SEV2 등급의 장애가 발생했다.",
+              "evidence": [
+                {
+                  "document_id": "incident-16",
+                  "quote": "- 날짜: 2025-09-10"
+                },
+                {
+                  "document_id": "incident-16",
+                  "quote": "- 서비스: api-gateway"
+                },
+                {
+                  "document_id": "incident-16",
+                  "quote": "- 등급: SEV2"
+                }
+              ]
+            },
+            {
+              "text": "외부 요청이 전부 TLS 오류로 실패하는 증상이 있었다.",
+              "evidence": [
+                {
+                  "document_id": "incident-16",
+                  "quote": "- 증상: 외부 요청이 전부 TLS 오류로 실패했다."
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "heading": "원인 및 조치",
+          "statements": [
+            {
+              "text": "인증서 만료와 갱신 알림 부재가 원인이었다.",
+              "evidence": [
+                {
+                  "document_id": "incident-16",
+                  "quote": "- 원인: 인증서가 만료됐다. 갱신 알림이 없었다. (에러 코드 E-029)"
+                }
+              ]
+            },
+            {
+              "text": "인증서를 갱신하고 만료 30일 전 알림을 추가하는 조치를 취했다.",
+              "evidence": [
+                {
+                  "document_id": "incident-16",
+                  "quote": "- 조치: 인증서를 갱신하고 만료 30일 전 알림을 추가했다."
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "document_id": "incident-17",
+      "summary": {
+        "text": "저장소 이전으로 초기화된 워크플로 권한 오류로 긴급 수정 배포가 1시간 지연된 장애입니다.",
+        "evidence": [
+          {
+            "document_id": "incident-17",
+            "quote": "- 증상: 긴급 수정 배포가 권한 오류로 1시간 지연됐다."
+          }
+        ]
+      },
+      "sections": [
+        {
+          "heading": "장애 개요",
+          "statements": [
+            {
+              "text": "2025-09-24에 notification-worker 서비스에서 SEV3 등급의 장애가 발생했다.",
+              "evidence": [
+                {
+                  "document_id": "incident-17",
+                  "quote": "- 날짜: 2025-09-24"
+                },
+                {
+                  "document_id": "incident-17",
+                  "quote": "- 서비스: notification-worker"
+                },
+                {
+                  "document_id": "incident-17",
+                  "quote": "- 등급: SEV3"
+                }
+              ]
+            },
+            {
+              "text": "긴급 수정 배포가 권한 오류로 1시간 지연되는 증상이 있었다.",
+              "evidence": [
+                {
+                  "document_id": "incident-17",
+                  "quote": "- 증상: 긴급 수정 배포가 권한 오류로 1시간 지연됐다."
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "heading": "원인 및 조치",
+          "statements": [
+            {
+              "text": "저장소 이전 과정에서 워크플로 권한이 초기화된 것이 원인이었다.",
+              "evidence": [
+                {
+                  "document_id": "incident-17",
+                  "quote": "- 원인: 워크플로 권한이 저장소 이전 과정에서 초기화됐다. (에러 코드 E-021)"
+                }
+              ]
+            },
+            {
+              "text": "권한을 복구하고 권한 점검을 배포 체크리스트에 넣는 조치를 취했다.",
+              "evidence": [
+                {
+                  "document_id": "incident-17",
+                  "quote": "- 조치: 권한을 복구했다. 권한 점검을 배포 체크리스트에 넣었다."
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "document_id": "incident-18",
+      "summary": {
+        "text": "목요일 오후 주간 정산 배치 중 배포가 겹쳐 정산이 실패한 장애입니다.",
+        "evidence": [
+          {
+            "document_id": "incident-18",
+            "quote": "- 증상: 목요일 오후 주간 정산 배치 중 배포가 실행돼 정산이 실패했다."
+          }
+        ]
+      },
+      "sections": [
+        {
+          "heading": "장애 개요",
+          "statements": [
+            {
+              "text": "2025-10-15에 settlement-pipeline 서비스에서 SEV1 등급의 장애가 발생했다.",
+              "evidence": [
+                {
+                  "document_id": "incident-18",
+                  "quote": "- 날짜: 2025-10-15"
+                },
+                {
+                  "document_id": "incident-18",
+                  "quote": "- 서비스: settlement-pipeline"
+                },
+                {
+                  "document_id": "incident-18",
+                  "quote": "- 등급: SEV1"
+                }
+              ]
+            },
+            {
+              "text": "목요일 오후 주간 정산 배치 중 배포가 실행돼 정산이 실패하는 증상이 있었다.",
+              "evidence": [
+                {
+                  "document_id": "incident-18",
+                  "quote": "- 증상: 목요일 오후 주간 정산 배치 중 배포가 실행돼 정산이 실패했다."
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "heading": "원인 및 조치",
+          "statements": [
+            {
+              "text": "정산 배치와 배포가 같은 시간에 겹친 것이 원인이었다.",
+              "evidence": [
+                {
+                  "document_id": "incident-18",
+                  "quote": "- 원인: 정산 배치와 배포가 같은 시간에 겹쳤다. (E-009 관련 오류)"
+                },
+                {
+                  "document_id": "error-E-009",
+                  "quote": "- 원인: 브로커 재시작, 네트워크 오류, 재시도 부재."
+                }
+              ]
+            },
+            {
+              "text": "정산을 재실행하고 배포 금지 시간을 목요일 오후로 바꾸었으며, 이후 변경으로 배포 가이드 v22에 반영되었다.",
+              "evidence": [
+                {
+                  "document_id": "incident-18",
+                  "quote": "- 조치: 정산을 재실행했다. 배포 금지 시간을 목요일 오후로 바꿨다."
+                },
+                {
+                  "document_id": "incident-18",
+                  "quote": "- 후속 조치: 배포 가이드 v22에 반영"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "document_id": "incident-19",
+      "summary": {
+        "text": "카나리 10% 단계에서 오류율이 올라 배포가 자동 중단된 장애입니다.",
+        "evidence": [
+          {
+            "document_id": "incident-19",
+            "quote": "- 증상: 카나리 10% 단계에서 오류율이 올라 배포가 자동 중단됐다."
+          }
+        ]
+      },
+      "sections": [
+        {
+          "heading": "장애 개요",
+          "statements": [
+            {
+              "text": "2025-10-29에 order-api 서비스에서 SEV3 등급의 장애가 발생했다.",
+              "evidence": [
+                {
+                  "document_id": "incident-19",
+                  "quote": "- 날짜: 2025-10-29"
+                },
+                {
+                  "document_id": "incident-19",
+                  "quote": "- 서비스: order-api"
+                },
+                {
+                  "document_id": "incident-19",
+                  "quote": "- 등급: SEV3"
+                }
+              ]
+            },
+            {
+              "text": "카나리 10% 단계에서 오류율이 올라 배포가 자동 중단되는 증상이 있었다.",
+              "evidence": [
+                {
+                  "document_id": "incident-19",
+                  "quote": "- 증상: 카나리 10% 단계에서 오류율이 올라 배포가 자동 중단됐다."
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "heading": "원인 및 조치",
+          "statements": [
+            {
+              "text": "새 버전의 직렬화 오류가 원인이었다.",
+              "evidence": [
+                {
+                  "document_id": "incident-19",
+                  "quote": "- 원인: 새 버전의 직렬화 오류. (에러 코드 E-024)"
+                }
+              ]
+            },
+            {
+              "text": "자동 중단이 정상 작동했으며, 수정 후 재배포하는 조치를 취했다.",
+              "evidence": [
+                {
+                  "document_id": "incident-19",
+                  "quote": "- 조치: 자동 중단이 정상 작동했다. 수정 후 재배포했다."
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "document_id": "incident-20",
+      "summary": {
+        "text": "두 명이 동시에 배포해 서로 다른 버전이 섞인 장애입니다.",
+        "evidence": [
+          {
+            "document_id": "incident-20",
+            "quote": "- 증상: 두 명이 동시에 배포해 서로 다른 버전이 섞였다."
+          }
+        ]
+      },
+      "sections": [
+        {
+          "heading": "장애 개요",
+          "statements": [
+            {
+              "text": "2025-11-05에 payment-api 서비스에서 SEV2 등급의 장애가 발생했다.",
+              "evidence": [
+                {
+                  "document_id": "incident-20",
+                  "quote": "- 날짜: 2025-11-05"
+                },
+                {
+                  "document_id": "incident-20",
+                  "quote": "- 서비스: payment-api"
+                },
+                {
+                  "document_id": "incident-20",
+                  "quote": "- 등급: SEV2"
+                }
+              ]
+            },
+            {
+              "text": "두 명이 동시에 배포해 서로 다른 버전이 섞이는 증상이 있었다.",
+              "evidence": [
+                {
+                  "document_id": "incident-20",
+                  "quote": "- 증상: 두 명이 동시에 배포해 서로 다른 버전이 섞였다."
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "heading": "원인 및 조치",
+          "statements": [
+            {
+              "text": "같은 서비스의 동시 배포를 막는 장치가 없었던 것이 원인이었다.",
+              "evidence": [
+                {
+                  "document_id": "incident-20",
+                  "quote": "- 원인: 같은 서비스의 동시 배포를 막는 장치가 없었다. (에러 코드 E-025)"
+                }
+              ]
+            },
+            {
+              "text": "한 버전으로 재배포하고 배포 잠금을 도입했으며, 이후 변경으로 배포 가이드 v23에 반영되었다.",
+              "evidence": [
+                {
+                  "document_id": "incident-20",
+                  "quote": "- 조치: 한 버전으로 재배포했다. 배포 잠금을 도입했다."
+                },
+                {
+                  "document_id": "incident-20",
+                  "quote": "- 후속 조치: 배포 가이드 v23에 반영"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

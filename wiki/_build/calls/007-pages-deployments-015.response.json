@@ -1,0 +1,453 @@
+{
+  "pages": [
+    {
+      "document_id": "deploy-guide-v16",
+      "summary": {
+        "text": "배포 금지 시간이 금요일 오후와 공휴일 전날로 확대되었다.",
+        "evidence": [
+          {
+            "document_id": "deploy-guide-v16",
+            "quote": "- 변경: 배포 금지 시간을 확대한다. 금요일 오후와 공휴일 전날에는 배포하지 않는다."
+          }
+        ]
+      },
+      "sections": [
+        {
+          "heading": "변경 사항 및 현재 규칙",
+          "statements": [
+            {
+              "text": "금요일 오후와 공휴일 전날에는 배포가 금지된다.",
+              "evidence": [
+                {
+                  "document_id": "deploy-guide-v16",
+                  "quote": "- 변경: 배포 금지 시간을 확대한다. 금요일 오후와 공휴일 전날에는 배포하지 않는다."
+                },
+                {
+                  "document_id": "deploy-guide-v16",
+                  "quote": "- 배포 금지 시간: 금요일 오후, 공휴일 전날"
+                }
+              ]
+            },
+            {
+              "text": "배포 도구는 GitHub Actions를 사용하며 Jenkins를 병행 운영한다.",
+              "evidence": [
+                {
+                  "document_id": "deploy-guide-v16",
+                  "quote": "- 배포 도구: GitHub Actions (Jenkins 병행)"
+                }
+              ]
+            },
+            {
+              "text": "배포 및 롤백 명령어는 각각 `deploy run --env prod`와 `deploy rollback --to <version>`을 사용한다.",
+              "evidence": [
+                {
+                  "document_id": "deploy-guide-v16",
+                  "quote": "- 배포 명령: `deploy run --env prod`"
+                },
+                {
+                  "document_id": "deploy-guide-v16",
+                  "quote": "- 롤백 명령: `deploy rollback --to <version>`"
+                }
+              ]
+            },
+            {
+              "text": "승인자는 팀 리드와 SRE 온콜이다.",
+              "evidence": [
+                {
+                  "document_id": "deploy-guide-v16",
+                  "quote": "- 승인자: 팀 리드 + SRE 온콜"
+                }
+              ]
+            },
+            {
+              "text": "이전 버전은 배포 가이드 v15이다.",
+              "evidence": [
+                {
+                  "document_id": "deploy-guide-v16",
+                  "quote": "- 이전 버전: 배포 가이드 v15"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "document_id": "deploy-guide-v17",
+      "summary": {
+        "text": "아티팩트 업로드 실패 오류(E-023)에 대응하기 위해 업로드 재시도가 3회로 설정되었다.",
+        "evidence": [
+          {
+            "document_id": "deploy-guide-v17",
+            "quote": "- 변경: GitHub Actions 오류 수정 (E-023 아티팩트 업로드 실패). 업로드 재시도를 3회로 설정한다."
+          },
+          {
+            "document_id": "error-E-023",
+            "quote": "- 원인: 일시적 네트워크 오류."
+          }
+        ]
+      },
+      "sections": [
+        {
+          "heading": "변경 사항 및 에러 대응",
+          "statements": [
+            {
+              "text": "GitHub Actions 아티팩트 업로드 실패(E-023) 오류를 수정하기 위해 업로드 재시도가 3회로 설정되었다.",
+              "evidence": [
+                {
+                  "document_id": "deploy-guide-v17",
+                  "quote": "- 변경: GitHub Actions 오류 수정 (E-023 아티팩트 업로드 실패). 업로드 재시도를 3회로 설정한다."
+                },
+                {
+                  "document_id": "error-E-023",
+                  "quote": "- 의미: 빌드 결과물 업로드가 실패했다."
+                },
+                {
+                  "document_id": "error-E-023",
+                  "quote": "- 원인: 일시적 네트워크 오류."
+                }
+              ]
+            },
+            {
+              "text": "에러 코드 E-023의 대응은 재시도하는 것이며 배포 가이드 v17에서 3회 자동 재시도되었다.",
+              "evidence": [
+                {
+                  "document_id": "error-E-023",
+                  "quote": "- 대응: 재시도한다. 배포 가이드 v17에서 3회 자동 재시도됐다."
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "heading": "현재 규칙",
+          "statements": [
+            {
+              "text": "배포 도구는 GitHub Actions이며 Jenkins를 병행 운영한다.",
+              "evidence": [
+                {
+                  "document_id": "deploy-guide-v17",
+                  "quote": "- 배포 도구: GitHub Actions (Jenkins 병행)"
+                }
+              ]
+            },
+            {
+              "text": "배포 명령은 `deploy run --env prod`이며 롤백 명령은 `deploy rollback --to <version>`이다.",
+              "evidence": [
+                {
+                  "document_id": "deploy-guide-v17",
+                  "quote": "- 배포 명령: `deploy run --env prod`"
+                },
+                {
+                  "document_id": "deploy-guide-v17",
+                  "quote": "- 롤백 명령: `deploy rollback --to <version>`"
+                }
+              ]
+            },
+            {
+              "text": "배포 금지 시간은 금요일 오후와 공휴일 전날이다.",
+              "evidence": [
+                {
+                  "document_id": "deploy-guide-v17",
+                  "quote": "- 배포 금지 시간: 금요일 오후, 공휴일 전날"
+                }
+              ]
+            },
+            {
+              "text": "승인자는 팀 리드와 SRE 온콜이다.",
+              "evidence": [
+                {
+                  "document_id": "deploy-guide-v17",
+                  "quote": "- 승인자: 팀 리드 + SRE 온콜"
+                }
+              ]
+            },
+            {
+              "text": "이전 버전은 배포 가이드 v16이다.",
+              "evidence": [
+                {
+                  "document_id": "deploy-guide-v17",
+                  "quote": "- 이전 버전: 배포 가이드 v16"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "document_id": "deploy-guide-v18",
+      "summary": {
+        "text": "Jenkins가 완전히 종료되어 관련 절차가 더 이상 유효하지 않게 되었다.",
+        "evidence": [
+          {
+            "document_id": "deploy-guide-v18",
+            "quote": "- 변경: Jenkins를 완전히 종료한다. Jenkins 관련 절차는 더 이상 유효하지 않다."
+          }
+        ]
+      },
+      "sections": [
+        {
+          "heading": "변경 사항 및 현재 규칙",
+          "statements": [
+            {
+              "text": "Jenkins가 완전히 종료되어 관련 절차는 더 이상 유효하지 않다.",
+              "evidence": [
+                {
+                  "document_id": "deploy-guide-v18",
+                  "quote": "- 변경: Jenkins를 완전히 종료한다. Jenkins 관련 절차는 더 이상 유효하지 않다."
+                },
+                {
+                  "document_id": "faq-q05",
+                  "quote": "아니다. 2025년 9월에 종료됐다. 배포 가이드 v13 이전 문서의 Jenkins 절차는 유효하지 않다."
+                }
+              ]
+            },
+            {
+              "text": "배포 도구는 GitHub Actions 단독으로 운영된다.",
+              "evidence": [
+                {
+                  "document_id": "deploy-guide-v18",
+                  "quote": "- 배포 도구: GitHub Actions"
+                }
+              ]
+            },
+            {
+              "text": "배포 및 롤백 명령은 각각 `deploy run --env prod`와 `deploy rollback --to <version>`이다.",
+              "evidence": [
+                {
+                  "document_id": "deploy-guide-v18",
+                  "quote": "- 배포 명령: `deploy run --env prod`"
+                },
+                {
+                  "document_id": "deploy-guide-v18",
+                  "quote": "- 롤백 명령: `deploy rollback --to <version>`"
+                }
+              ]
+            },
+            {
+              "text": "배포 금지 시간은 금요일 오후와 공휴일 전날이다.",
+              "evidence": [
+                {
+                  "document_id": "deploy-guide-v18",
+                  "quote": "- 배포 금지 시간: 금요일 오후, 공휴일 전날"
+                }
+              ]
+            },
+            {
+              "text": "승인자는 팀 리드와 SRE 온콜이며 이전 버전은 배포 가이드 v17이다.",
+              "evidence": [
+                {
+                  "document_id": "deploy-guide-v18",
+                  "quote": "- 승인자: 팀 리드 + SRE 온콜"
+                },
+                {
+                  "document_id": "deploy-guide-v18",
+                  "quote": "- 이전 버전: 배포 가이드 v17"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "document_id": "deploy-guide-v19",
+      "summary": {
+        "text": "장애 리포트 #14 이후 롤백 승인 절차가 폐지되어 배포자가 즉시 롤백을 실행할 수 있게 되었다.",
+        "evidence": [
+          {
+            "document_id": "deploy-guide-v19",
+            "quote": "- 변경: 롤백은 승인 없이 배포자가 즉시 실행할 수 있다."
+          },
+          {
+            "document_id": "deploy-guide-v19",
+            "quote": "- 이유: 장애 리포트 #14 이후 결정"
+          }
+        ]
+      },
+      "sections": [
+        {
+          "heading": "변경 이유 및 장애 배경",
+          "statements": [
+            {
+              "text": "장애 리포트 #14 당시 order-api 서비스에 잘못된 검증 규칙이 배포되어(에러 코드 E-001) 주문 생성 요청의 장애가 발생했으나, 롤백에 SRE 승인이 필요해 복구가 40분 지연되었다.",
+              "evidence": [
+                {
+                  "document_id": "incident-14",
+                  "quote": "- 서비스: order-api"
+                },
+                {
+                  "document_id": "incident-14",
+                  "quote": "- 증상: 장애 발생 후 롤백 승인 대기로 복구가 40분 지연됐다."
+                },
+                {
+                  "document_id": "incident-14",
+                  "quote": "- 원인: 검증 규칙 회귀. 롤백에 SRE 승인이 필요해 지연됐다. (에러 코드 E-001)"
+                }
+              ]
+            },
+            {
+              "text": "이에 대한 조치로 롤백 승인 절차를 폐지하였고 이는 배포 가이드 v19에 반영되었다.",
+              "evidence": [
+                {
+                  "document_id": "incident-14",
+                  "quote": "- 조치: 롤백 승인 절차를 폐지했다."
+                },
+                {
+                  "document_id": "incident-14",
+                  "quote": "- 후속 조치: 배포 가이드 v19에 반영"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "heading": "현재 규칙",
+          "statements": [
+            {
+              "text": "배포 도구는 GitHub Actions를 사용한다.",
+              "evidence": [
+                {
+                  "document_id": "deploy-guide-v19",
+                  "quote": "- 배포 도구: GitHub Actions"
+                }
+              ]
+            },
+            {
+              "text": "배포 명령은 `deploy run --env prod`이며 롤백 명령은 `deploy rollback --to <version>`이고 승인이 불필요하다.",
+              "evidence": [
+                {
+                  "document_id": "deploy-guide-v19",
+                  "quote": "- 배포 명령: `deploy run --env prod`"
+                },
+                {
+                  "document_id": "deploy-guide-v19",
+                  "quote": "- 롤백 명령: `deploy rollback --to <version>` (승인 불필요)"
+                }
+              ]
+            },
+            {
+              "text": "배포 금지 시간은 금요일 오후와 공휴일 전날이며, 승인자는 팀 리드와 SRE 온콜이고 이전 버전은 배포 가이드 v18이다.",
+              "evidence": [
+                {
+                  "document_id": "deploy-guide-v19",
+                  "quote": "- 배포 금지 시간: 금요일 오후, 공휴일 전날"
+                },
+                {
+                  "document_id": "deploy-guide-v19",
+                  "quote": "- 승인자: 팀 리드 + SRE 온콜"
+                },
+                {
+                  "document_id": "deploy-guide-v19",
+                  "quote": "- 이전 버전: 배포 가이드 v18"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "document_id": "deploy-guide-v20",
+      "summary": {
+        "text": "장애 리포트 #15 이후 배포 후 15분 동안 대시보드 모니터링이 의무화되었다.",
+        "evidence": [
+          {
+            "document_id": "deploy-guide-v20",
+            "quote": "- 변경: 배포 후 15분 동안 대시보드 모니터링을 의무화한다."
+          },
+          {
+            "document_id": "deploy-guide-v20",
+            "quote": "- 이유: 장애 리포트 #15 이후 결정"
+          }
+        ]
+      },
+      "sections": [
+        {
+          "heading": "변경 이유 및 장애 배경",
+          "statements": [
+            {
+              "text": "장애 리포트 #15 당시 user-api 서비스 배포 2시간 뒤 메모리 부족으로 Pod가 반복 재시작되는 SEV2 장애가 발생했다.",
+              "evidence": [
+                {
+                  "document_id": "incident-15",
+                  "quote": "- 서비스: user-api"
+                },
+                {
+                  "document_id": "incident-15",
+                  "quote": "- 등급: SEV2"
+                },
+                {
+                  "document_id": "incident-15",
+                  "quote": "- 증상: 배포 2시간 뒤 메모리 부족으로 Pod가 반복 재시작됐다."
+                }
+              ]
+            },
+            {
+              "text": "메모리 누수가 배포 직후 헬스체크에서는 드러나지 않아(에러 코드 E-015) 롤백을 수행하고 배포 후 모니터링을 의무화하는 후속 조치가 배포 가이드 v20에 반영되었다.",
+              "evidence": [
+                {
+                  "document_id": "incident-15",
+                  "quote": "- 원인: 메모리 누수가 배포 직후 헬스체크에서는 드러나지 않았다. (에러 코드 E-015)"
+                },
+                {
+                  "document_id": "incident-15",
+                  "quote": "- 조치: 롤백했다. 배포 후 모니터링을 의무화했다."
+                },
+                {
+                  "document_id": "incident-15",
+                  "quote": "- 후속 조치: 배포 가이드 v20에 반영"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "heading": "현재 규칙",
+          "statements": [
+            {
+              "text": "배포 도구는 GitHub Actions이며 배포 명령은 `deploy run --env prod`이다.",
+              "evidence": [
+                {
+                  "document_id": "deploy-guide-v20",
+                  "quote": "- 배포 도구: GitHub Actions"
+                },
+                {
+                  "document_id": "deploy-guide-v20",
+                  "quote": "- 배포 명령: `deploy run --env prod`"
+                }
+              ]
+            },
+            {
+              "text": "롤백 명령은 `deploy rollback --to <version>`으로 승인이 불필요하다.",
+              "evidence": [
+                {
+                  "document_id": "deploy-guide-v20",
+                  "quote": "- 롤백 명령: `deploy rollback --to <version>` (승인 불필요)"
+                }
+              ]
+            },
+            {
+              "text": "배포 금지 시간은 금요일 오후와 공휴일 전날이며, 승인자는 팀 리드와 SRE 온콜이고 이전 버전은 배포 가이드 v19이다.",
+              "evidence": [
+                {
+                  "document_id": "deploy-guide-v20",
+                  "quote": "- 배포 금지 시간: 금요일 오후, 공휴일 전날"
+                },
+                {
+                  "document_id": "deploy-guide-v20",
+                  "quote": "- 승인자: 팀 리드 + SRE 온콜"
+                },
+                {
+                  "document_id": "deploy-guide-v20",
+                  "quote": "- 이전 버전: 배포 가이드 v19"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

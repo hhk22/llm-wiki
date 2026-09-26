@@ -1,0 +1,50 @@
+{
+  "description": "에러 코드 및 관련 장애에 대한 탐색 가이드입니다.",
+  "groups": [
+    {
+      "heading": "API 및 인프라 에러",
+      "ids": [
+        "error-E-001",
+        "error-E-002",
+        "error-E-003",
+        "error-E-004",
+        "error-E-005",
+        "error-E-006",
+        "error-E-007",
+        "error-E-008",
+        "error-E-009",
+        "error-E-010"
+      ]
+    },
+    {
+      "heading": "빌드 및 배포 에러",
+      "ids": [
+        "error-E-011",
+        "error-E-012",
+        "error-E-013",
+        "error-E-014",
+        "error-E-015",
+        "error-E-016",
+        "error-E-017",
+        "error-E-018",
+        "error-E-019",
+        "error-E-020"
+      ]
+    },
+    {
+      "heading": "권한 및 보안 에러",
+      "ids": [
+        "error-E-021",
+        "error-E-022",
+        "error-E-023",
+        "error-E-024",
+        "error-E-025",
+        "error-E-026",
+        "error-E-027",
+        "error-E-028",
+        "error-E-029",
+        "error-E-030"
+      ]
+    }
+  ]
+}

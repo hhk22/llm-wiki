@@ -1,0 +1,251 @@
+한국어 Wiki 목차를 만든다. 제공한 모든 ID를 정확히 한 번 배치하고 탐색하기 쉬운 소그룹으로 묶는다. description은 한 줄짜리 탐색 안내다. 새로운 정책·사실을 추가하지 않는다. 링크나 HTML은 쓰지 않는다.
+[
+  {
+    "id": "faq-q01",
+    "title": "온보딩 FAQ Q01 프로덕션 배포는 어떻게 하나요?",
+    "summary": "프로덕션 배포는 GitHub Actions를 통해 실행하며 사전 승인과 staging 배포가 필요하다.",
+    "source_ids": [
+      "faq-q01"
+    ]
+  },
+  {
+    "id": "faq-q02",
+    "title": "온보딩 FAQ Q02 배포 금지 시간이 있나요?",
+    "summary": "목요일 오후, 공휴일 전날, 그리고 연말 동결 기간에는 배포를 진행하지 않는다.",
+    "source_ids": [
+      "faq-q02"
+    ]
+  },
+  {
+    "id": "faq-q03",
+    "title": "온보딩 FAQ Q03 배포를 되돌리려면 어떻게 하나요?",
+    "summary": "배포 롤백은 승인 없이 배포자가 즉시 명령을 실행하여 되돌릴 수 있다.",
+    "source_ids": [
+      "faq-q03"
+    ]
+  },
+  {
+    "id": "faq-q04",
+    "title": "온보딩 FAQ Q04 배포 승인은 누가 하나요?",
+    "summary": "프로덕션 배포 승인은 팀 리드와 서비스 오너가 공동으로 수행한다.",
+    "source_ids": [
+      "faq-q04"
+    ]
+  },
+  {
+    "id": "faq-q05",
+    "title": "온보딩 FAQ Q05 Jenkins는 아직 사용하나요?",
+    "summary": "Jenkins는 2025년 9월에 종료되어 더 이상 사용되지 않으며 관련 절차도 무효하다.",
+    "source_ids": [
+      "faq-q05"
+    ]
+  },
+  {
+    "id": "faq-q06",
+    "title": "온보딩 FAQ Q06 에러 코드는 어디서 확인하나요?",
+    "summary": "에러 코드는 E-001부터 E-030까지 코드별 의미, 원인 및 대응이 정리되어 있다.",
+    "source_ids": [
+      "faq-q06"
+    ]
+  },
+  {
+    "id": "faq-q07",
+    "title": "온보딩 FAQ Q07 배포할 때 E-021이 뜨면 어떻게 하나요?",
+    "summary": "배포 시 E-021 에러가 발생하면 저장소 워크플로에 deployments: write 권한이 있는지 확인한다.",
+    "source_ids": [
+      "faq-q07",
+      "incident-12"
+    ]
+  },
+  {
+    "id": "faq-q08",
+    "title": "온보딩 FAQ Q08 장애가 나면 누구에게 알리나요?",
+    "summary": "장애 발생 시 SRE 온콜에게 알리고 Slack #incident 채널에 상황을 공유한다.",
+    "source_ids": [
+      "faq-q08"
+    ]
+  },
+  {
+    "id": "faq-q09",
+    "title": "온보딩 FAQ Q09 장애 등급 SEV1, SEV2, SEV3는 무엇인가요?",
+    "summary": "장애 등급은 서비스 전체 중단인 SEV1, 주요 기능 저하인 SEV2, 일부 사용자 영향인 SEV3로 나뉜다.",
+    "source_ids": [
+      "faq-q09"
+    ]
+  },
+  {
+    "id": "faq-q10",
+    "title": "온보딩 FAQ Q10 포스트모템은 언제 써야 하나요?",
+    "summary": "롤백한 장애의 포스트모템은 48시간 안에 작성해야 한다.",
+    "source_ids": [
+      "faq-q10",
+      "incident-24"
+    ]
+  },
+  {
+    "id": "faq-q11",
+    "title": "온보딩 FAQ Q11 카나리 배포 비율은 어떻게 되나요?",
+    "summary": "카나리 배포 비율은 모든 서비스에 10프로에서 50프로 그리고 100프로 순서로 진행된다.",
+    "source_ids": [
+      "faq-q11"
+    ]
+  },
+  {
+    "id": "faq-q12",
+    "title": "온보딩 FAQ Q12 이미지 태그는 어떻게 붙이나요?",
+    "summary": "이미지 태그는 서비스명과 깃 에스에이치에이 형식만 허용되며 레이테스트는 금지된다.",
+    "source_ids": [
+      "faq-q12"
+    ]
+  },
+  {
+    "id": "faq-q13",
+    "title": "온보딩 FAQ Q13 DB 마이그레이션은 배포와 함께 하나요?",
+    "summary": "디비 마이그레이션은 배포와 함께하지 않으며 배포 전에 별도로 먼저 실행한다.",
+    "source_ids": [
+      "faq-q13",
+      "incident-08"
+    ]
+  },
+  {
+    "id": "faq-q14",
+    "title": "온보딩 FAQ Q14 시크릿은 어디에 저장하나요?",
+    "summary": "시크릿은 볼트에 저장되며 배포 전에 필수 시크릿 존재 여부가 자동 검사된다.",
+    "source_ids": [
+      "faq-q14"
+    ]
+  },
+  {
+    "id": "faq-q15",
+    "title": "온보딩 FAQ Q15 로컬 개발 환경은 어떻게 구성하나요?",
+    "summary": "로컬 개발 환경은 저장소 루트에서 도커 컴포즈 업을 실행하여 구성한다.",
+    "source_ids": [
+      "faq-q15"
+    ]
+  },
+  {
+    "id": "faq-q16",
+    "title": "온보딩 FAQ Q16 첫 PR을 올릴 때 규칙이 있나요?",
+    "summary": "첫 PR 등록 시 리뷰어 승인과 티켓 번호 명시 규칙이 안내된다.",
+    "source_ids": [
+      "faq-q16"
+    ]
+  },
+  {
+    "id": "faq-q17",
+    "title": "온보딩 FAQ Q17 온콜은 언제부터 참여하나요?",
+    "summary": "SRE 온콜 로테이션 참여 시점이 입사 3개월 후로 규정된다.",
+    "source_ids": [
+      "faq-q17"
+    ]
+  },
+  {
+    "id": "faq-q18",
+    "title": "온보딩 FAQ Q18 배포 후에 무엇을 확인해야 하나요?",
+    "summary": "배포 후에는 Grafana 대시보드 모니터링을 진행하며 관련 장애 및 가이드가 참조된다.",
+    "source_ids": [
+      "faq-q18",
+      "incident-15"
+    ]
+  },
+  {
+    "id": "faq-q19",
+    "title": "온보딩 FAQ Q19 staging 배포는 꼭 해야 하나요?",
+    "summary": "프로덕션 배포 전 staging 배포와 헬스체크 통과가 필수로 요구된다.",
+    "source_ids": [
+      "deploy-guide-v02",
+      "faq-q19"
+    ]
+  },
+  {
+    "id": "faq-q20",
+    "title": "온보딩 FAQ Q20 feature flag는 언제 써야 하나요?",
+    "summary": "대규모 변경 시 롤백 불능 방지를 위해 feature flag 사용이 필수화된다.",
+    "source_ids": [
+      "faq-q20",
+      "incident-21"
+    ]
+  },
+  {
+    "id": "faq-q21",
+    "title": "온보딩 FAQ Q21 배포할 때 티켓 번호가 꼭 필요한가요?",
+    "summary": "배포 시 티켓 번호 필수 입력에 관한 FAQ 내용이다.",
+    "source_ids": [
+      "faq-q21"
+    ]
+  },
+  {
+    "id": "faq-q22",
+    "title": "온보딩 FAQ Q22 서비스 목록과 담당 팀은 어디서 보나요?",
+    "summary": "서비스 목록과 담당 팀 안내에 관한 FAQ 내용이다.",
+    "source_ids": [
+      "faq-q22"
+    ]
+  },
+  {
+    "id": "faq-q23",
+    "title": "온보딩 FAQ Q23 Slack 채널은 무엇을 쓰나요?",
+    "summary": "업무용 Slack 채널 용도에 관한 FAQ 내용이다.",
+    "source_ids": [
+      "faq-q23"
+    ]
+  },
+  {
+    "id": "faq-q24",
+    "title": "온보딩 FAQ Q24 배포 알림은 어디로 오나요?",
+    "summary": "배포 알림 수신처에 관한 FAQ 내용이다.",
+    "source_ids": [
+      "faq-q24"
+    ]
+  },
+  {
+    "id": "faq-q25",
+    "title": "온보딩 FAQ Q25 API 요청 한도는 어떻게 되나요?",
+    "summary": "API 요청 한도 기준과 초과 시 에러 코드에 관한 FAQ 내용이다.",
+    "source_ids": [
+      "faq-q25"
+    ]
+  },
+  {
+    "id": "faq-q26",
+    "title": "온보딩 FAQ Q26 배포 중 헬스체크가 실패하면 어떻게 되나요?",
+    "summary": "배포 중 헬스체크 실패로 인한 자동 중단 및 대응 절차를 안내한다.",
+    "source_ids": [
+      "faq-q26",
+      "incident-30"
+    ]
+  },
+  {
+    "id": "faq-q27",
+    "title": "온보딩 FAQ Q27 두 명이 같은 서비스를 동시에 배포할 수 있나요?",
+    "summary": "동시 배포 제한과 잠금 메커니즘을 설명한다.",
+    "source_ids": [
+      "faq-q27"
+    ]
+  },
+  {
+    "id": "faq-q28",
+    "title": "온보딩 FAQ Q28 인증서 갱신은 누가 하나요?",
+    "summary": "SRE 팀이 담당하는 인증서 갱신과 사전 알림 일정을 안내한다.",
+    "source_ids": [
+      "faq-q28",
+      "incident-16"
+    ]
+  },
+  {
+    "id": "faq-q29",
+    "title": "온보딩 FAQ Q29 Kafka 발행이 실패하면 어떻게 하나요?",
+    "summary": "Kafka 발행 실패 시의 점검 사항과 정산 지연 대응 방법을 설명한다.",
+    "source_ids": [
+      "faq-q29"
+    ]
+  },
+  {
+    "id": "faq-q30",
+    "title": "온보딩 FAQ Q30 배포 가이드가 v1부터 v30까지 있는데 어떤 걸 봐야 하나요?",
+    "summary": "다수의 배포 가이드 버전 중 최신 버전을 참조해야 함을 안내한다.",
+    "source_ids": [
+      "faq-q30"
+    ]
+  }
+]

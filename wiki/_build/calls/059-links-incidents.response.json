@@ -1,0 +1,286 @@
+{
+  "pages": [
+    {
+      "document_id": "incident-01",
+      "related": [
+        {
+          "document_id": "error-E-001",
+          "reason": "주문 검증 실패 에러 코드 E-001과 관련이 있습니다."
+        }
+      ]
+    },
+    {
+      "document_id": "incident-02",
+      "related": [
+        {
+          "document_id": "error-E-005",
+          "reason": "인증 토큰 만료 에러 코드 E-005와 관련이 있습니다."
+        }
+      ]
+    },
+    {
+      "document_id": "incident-03",
+      "related": [
+        {
+          "document_id": "error-E-016",
+          "reason": "설정 누락 에러 코드 E-016과 관련이 있습니다."
+        },
+        {
+          "document_id": "deploy-guide-v05",
+          "reason": "배포 금지 시간 추가의 원인이 된 장애입니다."
+        }
+      ]
+    },
+    {
+      "document_id": "incident-04",
+      "related": [
+        {
+          "document_id": "error-E-002",
+          "reason": "재고 부족 에러 코드 E-002와 관련이 있습니다."
+        }
+      ]
+    },
+    {
+      "document_id": "incident-05",
+      "related": [
+        {
+          "document_id": "error-E-022",
+          "reason": "승인 누락 에러 코드 E-022와 관련이 있습니다."
+        },
+        {
+          "document_id": "deploy-guide-v07",
+          "reason": "배포 승인자 변경 절차가 반영된 원인 장애입니다."
+        }
+      ]
+    },
+    {
+      "document_id": "incident-06",
+      "related": [
+        {
+          "document_id": "error-E-014",
+          "reason": "이미지 태그 없음 에러 코드 E-014와 관련이 있습니다."
+        }
+      ]
+    },
+    {
+      "document_id": "incident-07",
+      "related": [
+        {
+          "document_id": "error-E-007",
+          "reason": "요청 한도 초과 에러 코드 E-007과 관련이 있습니다."
+        }
+      ]
+    },
+    {
+      "document_id": "incident-08",
+      "related": [
+        {
+          "document_id": "error-E-018",
+          "reason": "마이그레이션 실패 에러 코드 E-018과 관련이 있습니다."
+        }
+      ]
+    },
+    {
+      "document_id": "incident-09",
+      "related": [
+        {
+          "document_id": "error-E-008",
+          "reason": "DB 커넥션 고갈 에러 코드 E-008과 관련이 있습니다."
+        }
+      ]
+    },
+    {
+      "document_id": "incident-10",
+      "related": [
+        {
+          "document_id": "error-E-004",
+          "reason": "결제 타임아웃 에러 코드 E-004와 관련이 있습니다."
+        }
+      ]
+    },
+    {
+      "document_id": "incident-11",
+      "related": [
+        {
+          "document_id": "error-E-009",
+          "reason": "Kafka 발행 실패 에러 코드 E-009와 관련이 있습니다."
+        }
+      ]
+    },
+    {
+      "document_id": "incident-12",
+      "related": [
+        {
+          "document_id": "error-E-021",
+          "reason": "워크플로 권한 부족 에러 코드 E-021과 관련이 있습니다."
+        }
+      ]
+    },
+    {
+      "document_id": "incident-13",
+      "related": [
+        {
+          "document_id": "error-E-021",
+          "reason": "워크플로 권한 부족 에러 코드 E-021과 관련이 있습니다."
+        }
+      ]
+    },
+    {
+      "document_id": "incident-14",
+      "related": [
+        {
+          "document_id": "error-E-001",
+          "reason": "주문 검증 실패 에러 코드 E-001과 관련이 있습니다."
+        }
+      ]
+    },
+    {
+      "document_id": "incident-15",
+      "related": [
+        {
+          "document_id": "error-E-015",
+          "reason": "헬스체크 실패 에러 코드 E-015와 관련이 있습니다."
+        }
+      ]
+    },
+    {
+      "document_id": "incident-16",
+      "related": [
+        {
+          "document_id": "error-E-029",
+          "reason": "인증서 만료 에러 코드 E-029와 관련이 있습니다."
+        }
+      ]
+    },
+    {
+      "document_id": "incident-17",
+      "related": [
+        {
+          "document_id": "error-E-021",
+          "reason": "워크플로 권한 부족 에러 코드 E-021과 관련이 있습니다."
+        }
+      ]
+    },
+    {
+      "document_id": "incident-18",
+      "related": [
+        {
+          "document_id": "error-E-009",
+          "reason": "Kafka 발행 실패 에러 코드 E-009와 관련이 있습니다."
+        },
+        {
+          "document_id": "deploy-guide-v22",
+          "reason": "배포 금지 시간이 목요일 오후로 변경된 원인입니다."
+        }
+      ]
+    },
+    {
+      "document_id": "incident-19",
+      "related": [
+        {
+          "document_id": "error-E-024",
+          "reason": "카나리 지표 이상 에러 코드 E-024와 관련이 있습니다."
+        }
+      ]
+    },
+    {
+      "document_id": "incident-20",
+      "related": [
+        {
+          "document_id": "error-E-025",
+          "reason": "동시 배포 충돌 에러 코드 E-025와 관련이 있습니다."
+        }
+      ]
+    },
+    {
+      "document_id": "incident-21",
+      "related": [
+        {
+          "document_id": "error-E-020",
+          "reason": "롤백 대상 없음 에러 코드 E-020과 관련이 있습니다."
+        }
+      ]
+    },
+    {
+      "document_id": "incident-22",
+      "related": [
+        {
+          "document_id": "error-E-026",
+          "reason": "시크릿 접근 거부 에러 코드 E-026과 관련이 있습니다."
+        }
+      ]
+    },
+    {
+      "document_id": "incident-23",
+      "related": [
+        {
+          "document_id": "error-E-027",
+          "reason": "시크릿 누락 에러 코드 E-027과 관련이 있습니다."
+        }
+      ]
+    },
+    {
+      "document_id": "incident-24",
+      "related": [
+        {
+          "document_id": "error-E-001",
+          "reason": "주문 검증 실패 에러 코드 E-001과 관련이 있습니다."
+        }
+      ]
+    },
+    {
+      "document_id": "incident-25",
+      "related": [
+        {
+          "document_id": "error-E-028",
+          "reason": "노드 리소스 부족 에러 코드 E-028과 관련이 있습니다."
+        }
+      ]
+    },
+    {
+      "document_id": "incident-26",
+      "related": [
+        {
+          "document_id": "error-E-030",
+          "reason": "배포 금지 시간 위반 에러 코드 E-030과 관련이 있습니다."
+        }
+      ]
+    },
+    {
+      "document_id": "incident-27",
+      "related": [
+        {
+          "document_id": "error-E-006",
+          "reason": "권한 없음 에러 코드 E-006과 관련이 있습니다."
+        }
+      ]
+    },
+    {
+      "document_id": "incident-28",
+      "related": [
+        {
+          "document_id": "error-E-010",
+          "reason": "알림 발송 실패 에러 코드 E-010과 관련이 있습니다."
+        }
+      ]
+    },
+    {
+      "document_id": "incident-29",
+      "related": [
+        {
+          "document_id": "error-E-008",
+          "reason": "DB 커넥션 고갈 에러 코드 E-008과 관련이 있습니다."
+        }
+      ]
+    },
+    {
+      "document_id": "incident-30",
+      "related": [
+        {
+          "document_id": "error-E-015",
+          "reason": "헬스체크 실패 에러 코드 E-015와 관련이 있습니다."
+        }
+      ]
+    }
+  ]
+}

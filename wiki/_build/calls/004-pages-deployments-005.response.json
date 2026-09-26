@@ -1,0 +1,553 @@
+{
+  "pages": [
+    {
+      "document_id": "deploy-guide-v06",
+      "summary": {
+        "text": "배포 가이드 v6는 Jenkins job rollback-prod를 사용하는 롤백 절차를 명문화했습니다.",
+        "evidence": [
+          {
+            "document_id": "deploy-guide-v06",
+            "quote": "- 변경: 롤백 절차를 명문화한다. Jenkins job `rollback-prod`를 사용한다."
+          }
+        ]
+      },
+      "sections": [
+        {
+          "heading": "변경 사항",
+          "statements": [
+            {
+              "text": "롤백 절차로 Jenkins job rollback-prod를 사용하는 것이 명문화되었습니다.",
+              "evidence": [
+                {
+                  "document_id": "deploy-guide-v06",
+                  "quote": "- 변경: 롤백 절차를 명문화한다. Jenkins job `rollback-prod`를 사용한다."
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "heading": "현재 규칙",
+          "statements": [
+            {
+              "text": "배포 도구는 Jenkins를 사용합니다.",
+              "evidence": [
+                {
+                  "document_id": "deploy-guide-v06",
+                  "quote": "- 배포 도구: Jenkins"
+                }
+              ]
+            },
+            {
+              "text": "배포 명령은 Jenkins job deploy-staging에서 deploy-prod 순서로 실행합니다.",
+              "evidence": [
+                {
+                  "document_id": "deploy-guide-v06",
+                  "quote": "- 배포 명령: Jenkins job `deploy-staging` → `deploy-prod` 순서로 실행"
+                }
+              ]
+            },
+            {
+              "text": "롤백 명령은 Jenkins job rollback-prod를 실행합니다.",
+              "evidence": [
+                {
+                  "document_id": "deploy-guide-v06",
+                  "quote": "- 롤백 명령: Jenkins job `rollback-prod` 실행"
+                }
+              ]
+            },
+            {
+              "text": "배포 금지 시간은 금요일 오후입니다.",
+              "evidence": [
+                {
+                  "document_id": "deploy-guide-v06",
+                  "quote": "- 배포 금지 시간: 금요일 오후"
+                }
+              ]
+            },
+            {
+              "text": "승인자는 팀 리드입니다.",
+              "evidence": [
+                {
+                  "document_id": "deploy-guide-v06",
+                  "quote": "- 승인자: 팀 리드"
+                }
+              ]
+            },
+            {
+              "text": "이전 버전은 배포 가이드 v5입니다.",
+              "evidence": [
+                {
+                  "document_id": "deploy-guide-v06",
+                  "quote": "- 이전 버전: 배포 가이드 v5"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "document_id": "deploy-guide-v07",
+      "summary": {
+        "text": "장애 리포트 #05에 따라 배포 승인자가 팀 리드와 SRE 온콜 두 명으로 변경되었습니다.",
+        "evidence": [
+          {
+            "document_id": "deploy-guide-v07",
+            "quote": "- 변경: 배포 승인자를 변경한다. 팀 리드와 SRE 온콜 두 명의 승인이 필요하다."
+          },
+          {
+            "document_id": "deploy-guide-v07",
+            "quote": "- 이유: 장애 리포트 #05 이후 결정"
+          },
+          {
+            "document_id": "incident-05",
+            "quote": "- 원인: 배포 승인 단계가 강제되지 않았다. (에러 코드 E-022)"
+          },
+          {
+            "document_id": "incident-05",
+            "quote": "- 조치: 롤백하고 승인 절차를 강제했다."
+          }
+        ]
+      },
+      "sections": [
+        {
+          "heading": "변경 이유와 배경",
+          "statements": [
+            {
+              "text": "주문 조회 지연을 유발한 승인되지 않은 변경 배포 사고 이후에 변경되었습니다.",
+              "evidence": [
+                {
+                  "document_id": "deploy-guide-v07",
+                  "quote": "- 이유: 장애 리포트 #05 이후 결정"
+                },
+                {
+                  "document_id": "incident-05",
+                  "quote": "- 증상: 승인되지 않은 변경이 prod에 배포돼 주문 조회가 느려졌다."
+                }
+              ]
+            },
+            {
+              "text": "배포 승인 단계가 강제되지 않은 원인으로 에러 코드 E-022가 발생했으며, 롤백 후 승인 절차가 강제되었습니다.",
+              "evidence": [
+                {
+                  "document_id": "incident-05",
+                  "quote": "- 원인: 배포 승인 단계가 강제되지 않았다. (에러 코드 E-022)"
+                },
+                {
+                  "document_id": "incident-05",
+                  "quote": "- 조치: 롤백하고 승인 절차를 강제했다."
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "heading": "변경 사항 및 현재 규칙",
+          "statements": [
+            {
+              "text": "배포 승인자가 팀 리드와 SRE 온콜 두 명의 승인이 필요하도록 변경되었습니다.",
+              "evidence": [
+                {
+                  "document_id": "deploy-guide-v07",
+                  "quote": "- 변경: 배포 승인자를 변경한다. 팀 리드와 SRE 온콜 두 명의 승인이 필요하다."
+                }
+              ]
+            },
+            {
+              "text": "배포 도구는 Jenkins를 사용합니다.",
+              "evidence": [
+                {
+                  "document_id": "deploy-guide-v07",
+                  "quote": "- 배포 도구: Jenkins"
+                }
+              ]
+            },
+            {
+              "text": "배포 명령은 Jenkins job deploy-staging에서 deploy-prod 순서로 실행합니다.",
+              "evidence": [
+                {
+                  "document_id": "deploy-guide-v07",
+                  "quote": "- 배포 명령: Jenkins job `deploy-staging` → `deploy-prod` 순서로 실행"
+                }
+              ]
+            },
+            {
+              "text": "롤백 명령은 Jenkins job rollback-prod를 실행합니다.",
+              "evidence": [
+                {
+                  "document_id": "deploy-guide-v07",
+                  "quote": "- 롤백 명령: Jenkins job `rollback-prod` 실행"
+                }
+              ]
+            },
+            {
+              "text": "배포 금지 시간은 금요일 오후입니다.",
+              "evidence": [
+                {
+                  "document_id": "deploy-guide-v07",
+                  "quote": "- 배포 금지 시간: 금요일 오후"
+                }
+              ]
+            },
+            {
+              "text": "승인자는 팀 리드와 SRE 온콜입니다.",
+              "evidence": [
+                {
+                  "document_id": "deploy-guide-v07",
+                  "quote": "- 승인자: 팀 리드 + SRE 온콜"
+                }
+              ]
+            },
+            {
+              "text": "이전 버전은 배포 가이드 v6입니다.",
+              "evidence": [
+                {
+                  "document_id": "deploy-guide-v07",
+                  "quote": "- 이전 버전: 배포 가이드 v6"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "document_id": "deploy-guide-v08",
+      "summary": {
+        "text": "장애 리포트 #06에 따라 이미지 태그 형식을 service:git-sha로 제한하고 latest 태그를 금지했습니다.",
+        "evidence": [
+          {
+            "document_id": "deploy-guide-v08",
+            "quote": "- 변경: 이미지 태그 규칙을 정한다. `<service>:<git-sha>` 형식만 허용하고 `latest`를 금지한다."
+          },
+          {
+            "document_id": "deploy-guide-v08",
+            "quote": "- 이유: 장애 리포트 #06 이후 결정"
+          },
+          {
+            "document_id": "incident-06",
+            "quote": "- 원인: `latest` 태그가 캐시된 구버전 이미지를 가리켰다. (에러 코드 E-014)"
+          },
+          {
+            "document_id": "incident-06",
+            "quote": "- 조치: git-sha 태그로 재배포했다."
+          }
+        ]
+      },
+      "sections": [
+        {
+          "heading": "변경 이유와 배경",
+          "statements": [
+            {
+              "text": "알림이 구버전 템플릿으로 발송된 사고 이후에 변경되었습니다.",
+              "evidence": [
+                {
+                  "document_id": "deploy-guide-v08",
+                  "quote": "- 이유: 장애 리포트 #06 이후 결정"
+                },
+                {
+                  "document_id": "incident-06",
+                  "quote": "- 증상: 알림이 구버전 템플릿으로 발송됐다."
+                }
+              ]
+            },
+            {
+              "text": "latest 태그가 캐시된 구버전 이미지를 가리킨 원인으로 에러 코드 E-014가 발생했으며, git-sha 태그로 재배포하는 조치가 취해졌습니다.",
+              "evidence": [
+                {
+                  "document_id": "incident-06",
+                  "quote": "- 원인: `latest` 태그가 캐시된 구버전 이미지를 가리켰다. (에러 코드 E-014)"
+                },
+                {
+                  "document_id": "incident-06",
+                  "quote": "- 조치: git-sha 태그로 재배포했다."
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "heading": "변경 사항 및 현재 규칙",
+          "statements": [
+            {
+              "text": "이미지 태그 규칙으로 service:git-sha 형식만 허용하고 latest를 금지하도록 변경되었습니다.",
+              "evidence": [
+                {
+                  "document_id": "deploy-guide-v08",
+                  "quote": "- 변경: 이미지 태그 규칙을 정한다. `<service>:<git-sha>` 형식만 허용하고 `latest`를 금지한다."
+                }
+              ]
+            },
+            {
+              "text": "배포 도구는 Jenkins를 사용합니다.",
+              "evidence": [
+                {
+                  "document_id": "deploy-guide-v08",
+                  "quote": "- 배포 도구: Jenkins"
+                }
+              ]
+            },
+            {
+              "text": "배포 명령은 Jenkins job deploy-staging에서 deploy-prod 순서로 실행합니다.",
+              "evidence": [
+                {
+                  "document_id": "deploy-guide-v08",
+                  "quote": "- 배포 명령: Jenkins job `deploy-staging` → `deploy-prod` 순서로 실행"
+                }
+              ]
+            },
+            {
+              "text": "롤백 명령은 Jenkins job rollback-prod를 실행합니다.",
+              "evidence": [
+                {
+                  "document_id": "deploy-guide-v08",
+                  "quote": "- 롤백 명령: Jenkins job `rollback-prod` 실행"
+                }
+              ]
+            },
+            {
+              "text": "배포 금지 시간은 금요일 오후입니다.",
+              "evidence": [
+                {
+                  "document_id": "deploy-guide-v08",
+                  "quote": "- 배포 금지 시간: 금요일 오후"
+                }
+              ]
+            },
+            {
+              "text": "승인자는 팀 리드와 SRE 온콜입니다.",
+              "evidence": [
+                {
+                  "document_id": "deploy-guide-v08",
+                  "quote": "- 승인자: 팀 리드 + SRE 온콜"
+                }
+              ]
+            },
+            {
+              "text": "이전 버전은 배포 가이드 v7입니다.",
+              "evidence": [
+                {
+                  "document_id": "deploy-guide-v08",
+                  "quote": "- 이전 버전: 배포 가이드 v7"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "document_id": "deploy-guide-v09",
+      "summary": {
+        "text": "장애 리포트 #08에 따라 DB 마이그레이션을 배포와 분리하여 별도 job으로 먼저 실행하도록 변경되었습니다.",
+        "evidence": [
+          {
+            "document_id": "deploy-guide-v09",
+            "quote": "- 변경: DB 마이그레이션은 배포와 분리한다. 배포 전에 별도 job으로 먼저 실행한다."
+          },
+          {
+            "document_id": "deploy-guide-v09",
+            "quote": "- 이유: 장애 리포트 #08 이후 결정"
+          },
+          {
+            "document_id": "incident-08",
+            "quote": "- 원인: 배포와 동시에 실행된 마이그레이션이 실패했다. (에러 코드 E-018)"
+          },
+          {
+            "document_id": "incident-08",
+            "quote": "- 조치: 마이그레이션을 수동 완료한 뒤 재배포했다."
+          }
+        ]
+      },
+      "sections": [
+        {
+          "heading": "변경 이유와 배경",
+          "statements": [
+            {
+              "text": "서비스 다운을 유발한 마이그레이션 실패 사고 이후에 변경되었습니다.",
+              "evidence": [
+                {
+                  "document_id": "deploy-guide-v09",
+                  "quote": "- 이유: 장애 리포트 #08 이후 결정"
+                },
+                {
+                  "document_id": "incident-08",
+                  "quote": "- 증상: 배포 중 서비스가 20분간 다운됐다."
+                }
+              ]
+            },
+            {
+              "text": "배포와 동시에 실행된 마이그레이션이 실패한 원인으로 에러 코드 E-018이 발생했으며, 마이그레이션을 수동 완료한 뒤 재배포하는 조치가 취해졌습니다.",
+              "evidence": [
+                {
+                  "document_id": "incident-08",
+                  "quote": "- 원인: 배포와 동시에 실행된 마이그레이션이 실패했다. (에러 코드 E-018)"
+                },
+                {
+                  "document_id": "incident-08",
+                  "quote": "- 조치: 마이그레이션을 수동 완료한 뒤 재배포했다."
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "heading": "변경 사항 및 현재 규칙",
+          "statements": [
+            {
+              "text": "DB 마이그레이션을 배포와 분리하여 배포 전에 별도 job으로 먼저 실행하도록 변경되었습니다.",
+              "evidence": [
+                {
+                  "document_id": "deploy-guide-v09",
+                  "quote": "- 변경: DB 마이그레이션은 배포와 분리한다. 배포 전에 별도 job으로 먼저 실행한다."
+                }
+              ]
+            },
+            {
+              "text": "배포 도구는 Jenkins를 사용합니다.",
+              "evidence": [
+                {
+                  "document_id": "deploy-guide-v09",
+                  "quote": "- 배포 도구: Jenkins"
+                }
+              ]
+            },
+            {
+              "text": "배포 명령은 Jenkins job deploy-staging에서 deploy-prod 순서로 실행합니다.",
+              "evidence": [
+                {
+                  "document_id": "deploy-guide-v09",
+                  "quote": "- 배포 명령: Jenkins job `deploy-staging` → `deploy-prod` 순서로 실행"
+                }
+              ]
+            },
+            {
+              "text": "롤백 명령은 Jenkins job rollback-prod를 실행합니다.",
+              "evidence": [
+                {
+                  "document_id": "deploy-guide-v09",
+                  "quote": "- 롤백 명령: Jenkins job `rollback-prod` 실행"
+                }
+              ]
+            },
+            {
+              "text": "배포 금지 시간은 금요일 오후입니다.",
+              "evidence": [
+                {
+                  "document_id": "deploy-guide-v09",
+                  "quote": "- 배포 금지 시간: 금요일 오후"
+                }
+              ]
+            },
+            {
+              "text": "승인자는 팀 리드와 SRE 온콜입니다.",
+              "evidence": [
+                {
+                  "document_id": "deploy-guide-v09",
+                  "quote": "- 승인자: 팀 리드 + SRE 온콜"
+                }
+              ]
+            },
+            {
+              "text": "이전 버전은 배포 가이드 v8입니다.",
+              "evidence": [
+                {
+                  "document_id": "deploy-guide-v09",
+                  "quote": "- 이전 버전: 배포 가이드 v8"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "document_id": "deploy-guide-v10",
+      "summary": {
+        "text": "배포 가이드 v10은 Slack #deploy 채널로 배포 시작 및 완료 알림을 자동 전송하도록 변경했습니다.",
+        "evidence": [
+          {
+            "document_id": "deploy-guide-v10",
+            "quote": "- 변경: 배포 시작·완료 알림을 Slack `#deploy` 채널로 자동 전송한다."
+          }
+        ]
+      },
+      "sections": [
+        {
+          "heading": "변경 사항",
+          "statements": [
+            {
+              "text": "배포 시작과 완료 알림을 Slack #deploy 채널로 자동 전송하는 기능이 추가되었습니다.",
+              "evidence": [
+                {
+                  "document_id": "deploy-guide-v10",
+                  "quote": "- 변경: 배포 시작·완료 알림을 Slack `#deploy` 채널로 자동 전송한다."
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "heading": "현재 규칙",
+          "statements": [
+            {
+              "text": "배포 도구는 Jenkins를 사용합니다.",
+              "evidence": [
+                {
+                  "document_id": "deploy-guide-v10",
+                  "quote": "- 배포 도구: Jenkins"
+                }
+              ]
+            },
+            {
+              "text": "배포 명령은 Jenkins job deploy-staging에서 deploy-prod 순서로 실행합니다.",
+              "evidence": [
+                {
+                  "document_id": "deploy-guide-v10",
+                  "quote": "- 배포 명령: Jenkins job `deploy-staging` → `deploy-prod` 순서로 실행"
+                }
+              ]
+            },
+            {
+              "text": "롤백 명령은 Jenkins job rollback-prod를 실행합니다.",
+              "evidence": [
+                {
+                  "document_id": "deploy-guide-v10",
+                  "quote": "- 롤백 명령: Jenkins job `rollback-prod` 실행"
+                }
+              ]
+            },
+            {
+              "text": "배포 금지 시간은 금요일 오후입니다.",
+              "evidence": [
+                {
+                  "document_id": "deploy-guide-v10",
+                  "quote": "- 배포 금지 시간: 금요일 오후"
+                }
+              ]
+            },
+            {
+              "text": "승인자는 팀 리드와 SRE 온콜입니다.",
+              "evidence": [
+                {
+                  "document_id": "deploy-guide-v10",
+                  "quote": "- 승인자: 팀 리드 + SRE 온콜"
+                }
+              ]
+            },
+            {
+              "text": "이전 버전은 배포 가이드 v9입니다.",
+              "evidence": [
+                {
+                  "document_id": "deploy-guide-v10",
+                  "quote": "- 이전 버전: 배포 가이드 v9"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

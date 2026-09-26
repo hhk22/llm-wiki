@@ -1,0 +1,841 @@
+{
+  "started_at": "2026-09-26T03:58:17.441105+00:00",
+  "code_commit": "88112dc1401ae502de34e68a59b91f4b58778604",
+  "status": "complete",
+  "method": "vector",
+  "top_k_documents": 3,
+  "chunks_per_document": 2,
+  "embedding_model": "gemini-embedding-2",
+  "embedding_dimensions": 768,
+  "generation_model": "gemini-3.6-flash",
+  "temperature": 0,
+  "history_supported": false,
+  "python": "3.14.0",
+  "sdk_version": "1.75.0",
+  "fixture_sha256": "ce937c4cac6436af19f9fd37ecc887f2bf646d5e7ed5af60d0cccceb7ca7f464",
+  "runner_sha256": "ddda1ce8b648aca387a9f25a98488eb907031aa8a8572266c1782223527f6071",
+  "source_sha256": {
+    "sources/deploy-guide/v01.md": "5ea639565d355ab54ce64be301b564074120af1b74b24b997331030dc249f106",
+    "sources/deploy-guide/v02.md": "513125e6b229c80a93b660d9d666dbca92a3767bf3e5668f123cbbc511311822",
+    "sources/deploy-guide/v03.md": "f601ead24d4c68423ee40185ee486ccfe5a237b3c6573e7a946773a03a3b79fe",
+    "sources/deploy-guide/v04.md": "c1b5ae9b8cbf3d547b7f755f8c8ea3bb271ae3750e5b6d49fd777773a448b444",
+    "sources/deploy-guide/v05.md": "a09b788ff3b5f82e771f10b8c04478c385b7d3928702905bc87fa5f2376c7791",
+    "sources/deploy-guide/v06.md": "fd567d434d6e5bb147ecec1e2b83b791de7fca3c1bc6b52da43fcb59b8db2979",
+    "sources/deploy-guide/v07.md": "b9f797f1721707c5a0ed3d56fd38a9b0b54984c4e449934bdb5f5b0b94eade0e",
+    "sources/deploy-guide/v08.md": "4c83b7f44a3294bee732427d8a48299926d99a3c0e14234ecd0ca5e7501f4ae6",
+    "sources/deploy-guide/v09.md": "753f3c9a5f0d817931c7ba7daace28e7c04698bdd7ffe43d6d393a1d1dbcd58f",
+    "sources/deploy-guide/v10.md": "eec7c4663d427be33cc007870164607c76930e3797f93596ddd509da4bb9eba6",
+    "sources/deploy-guide/v11.md": "0fc57fd14503c813572bb48bc171fc8bc6c951b892a6bf373fbbe59c252b9850",
+    "sources/deploy-guide/v12.md": "e032c891c76f477b2e7fe93946fe832f72c1cb921e4bd6767ba815aff2f95696",
+    "sources/deploy-guide/v13.md": "5d578254743ac37a002b0756998b958643ca61d7468e461c68eee54c273dee7b",
+    "sources/deploy-guide/v14.md": "54a671ef8955297b4d92c4dc1c94476719d9bdb9287de31835a43ea340893264",
+    "sources/deploy-guide/v15.md": "04ed7d8784d4c8769e7e6e337e4a639833f880b692e46bc02b31c4df66082261",
+    "sources/deploy-guide/v16.md": "b2418833e9997fb9aca459b4b0911df7fc0f74c9e7f335d8ff7546d0c2aca90c",
+    "sources/deploy-guide/v17.md": "f38d25f937ab904fdc2b9e084a5372dfe49cd12dda9bae50495f04ffd514e915",
+    "sources/deploy-guide/v18.md": "b617fb6610ede209c2afeb54da7b1ee4e46f77db39aac602887a0149a180783d",
+    "sources/deploy-guide/v19.md": "800854958fef2d9e01c9d84d65c44c95f50d4c3f8bd6cf2fe900fe11692a54e1",
+    "sources/deploy-guide/v20.md": "96e5f00afa23c132962c96cbd2f2c93abd382e43dd7b461fd5d5638ce16ff086",
+    "sources/deploy-guide/v21.md": "a8879cf3665efc74bd1cf40b03a2d311fd5fba08dea844979fa8079df9b99302",
+    "sources/deploy-guide/v22.md": "f5dea2db974d3e1fdcb7ea1a024058b0f64076d5ceed5aedde4f50fd3ad63a72",
+    "sources/deploy-guide/v23.md": "ccf5d6247b7be2b5b3e7c2a559959815dfeda83a22c96df523f7eb617d63d074",
+    "sources/deploy-guide/v24.md": "064b71b6b801da35b483b5f830f704643621c739db847bd2cce61decd59983e7",
+    "sources/deploy-guide/v25.md": "c2834e53ed28f7da9376cf777404b303283b36abedea1fb15227d044e13dd7e6",
+    "sources/deploy-guide/v26.md": "a14a31b334509dd1186acb64c5ad7a7f5ab864b54ade42c8cf44d8ea0fb1d546",
+    "sources/deploy-guide/v27.md": "c0d9f9e8203c7821f46db0832388cf30052c82d758d9269d795a72db88cc5d74",
+    "sources/deploy-guide/v28.md": "90b3879f790730d9894fdf4cbe209442e97e0beba61b92569b04661ebc9b7518",
+    "sources/deploy-guide/v29.md": "7b1f2588d4e39a3aa1c6134e375b66b93f6a90966d7862f8220226104cc6bb65",
+    "sources/deploy-guide/v30.md": "a90890f41852fb1971d763e7905b3d22d4f4b3295da321c405d78316834e46d8",
+    "sources/error-codes/E-001.md": "0a0f0bf1166a0fb74f2505cfa8523a2998c96ba013ca02061c3e615802d1df7b",
+    "sources/error-codes/E-002.md": "36e7c70fa613519ec8425942c7b812ba3e16a32982928d634ed5c6eeedc5d272",
+    "sources/error-codes/E-003.md": "85a679378ad1939253fa484e7b16f08d1647d7f018043957772fdcdf1452f5d9",
+    "sources/error-codes/E-004.md": "e55332b1ca5ea3e2bce3864668fbd7dd098306487589a6d7ef543425e0b3bb31",
+    "sources/error-codes/E-005.md": "31ceb76c9c8e6b00d8422e70c46ed890642ab395dab73955b23086187193e906",
+    "sources/error-codes/E-006.md": "2680156a252eed78c1c9a2c65bf5b18830110403b950bc9d78fa9fcd7ccd65f1",
+    "sources/error-codes/E-007.md": "68705470ff9bc67607d160e2eeba485972de7b9c40e7fba781130100e0ad9c19",
+    "sources/error-codes/E-008.md": "b7774433c7e45fac1c14e84478209871f9abce29d0ad2b0bbb5ed102e0facc1c",
+    "sources/error-codes/E-009.md": "835c812ce49e0edb818c2ac8bfb6595aebf5f239a26235aafe0cc40663cc5c31",
+    "sources/error-codes/E-010.md": "20a6689bd7527f876d8c9dc54724232a42cf80f8ad75ff9eba91aad9fc63d21b",
+    "sources/error-codes/E-011.md": "2bab3e34a37bee533f938b3f5178299c316f80e745b855aa16bcf8604e9669dc",
+    "sources/error-codes/E-012.md": "a399aed8564c1453121ac8f71207dd462f572e8fd3f0319c735569e0dd46c940",
+    "sources/error-codes/E-013.md": "1fb93be6171189eb34b068a148c6084b99477eb5f1af730f9d1201fe9e0f761c",
+    "sources/error-codes/E-014.md": "af6971f3505e322ea3d444b9835d53e391a4c01db26aa0235def04a1c6433af1",
+    "sources/error-codes/E-015.md": "323180407866a038f918fc232766ac550b49a48b91207ec817f372854c069213",
+    "sources/error-codes/E-016.md": "da7227188f7a501415472077698a6f2f5edbfc4e04b795a302fe757db8255df7",
+    "sources/error-codes/E-017.md": "1f1f5a76767b1ff27e9dbf1e90372eedd412a7ce3e2d60b106273dad7ae83ceb",
+    "sources/error-codes/E-018.md": "573a9114b61b4c8838d7116148090f5edc8fe2edb0283e304cb0a6deaf8083df",
+    "sources/error-codes/E-019.md": "04985f0926a1800fbeefee7abfebb7cab7ebff2fa0261102e19251b3ce569b1d",
+    "sources/error-codes/E-020.md": "c2f30ce88e31d691b69cd4fdc49d9f62c640ad5ef7eaca22f1ebc6ebd3f1ac76",
+    "sources/error-codes/E-021.md": "adc224cd5fa88f0e3029bdfde31a00a4afcaa990f22d55b6ae9e57422131d93a",
+    "sources/error-codes/E-022.md": "23f869198fe58f30df24da64286c7705806992294f4dfa9f1ff27bf21ad529f1",
+    "sources/error-codes/E-023.md": "f03b013490037393bab5083541c533f9f100db7e6867483f4ebcfbfb1a72223c",
+    "sources/error-codes/E-024.md": "f264af3d348f0f7ce17e8843acfd31c399ec12fe825c54f50578bdfe76af242d",
+    "sources/error-codes/E-025.md": "22f7220585a223317f275e3441f0e2a87bdf1a7a8987a0ccc542e0c6b9349292",
+    "sources/error-codes/E-026.md": "2fb4e709947265bb991ec292df5b15e622d062b25f22ec5c681c294f83a449b2",
+    "sources/error-codes/E-027.md": "f53b7be2d414e1fdbbbe79d57deac9f9f1f2048e8b1d1410662607b82ee6cd8e",
+    "sources/error-codes/E-028.md": "6ba77f774206b58bd72d504e0c8b73dd400fbb4a6cddb6b38a2628bb1f1db4cb",
+    "sources/error-codes/E-029.md": "7dc8cc2d71d84c51ae651537a63b568ddc87290cf41e102a5227e34daae2cb1d",
+    "sources/error-codes/E-030.md": "97a5b9cf168f9999b30ad7513e79ebe0e773b72b3c3213787f20d55dcc6f6659",
+    "sources/incidents/01.md": "f284d9da249a46151d8964fe3bbc1ad4f5b5651436f10fed8296d48abbcbeb5b",
+    "sources/incidents/02.md": "247d212952e4eb953b3fc3a53dc0a2869d0b95aafbf600b5be0af9bfbbaea47c",
+    "sources/incidents/03.md": "9a8193ca9343be56eb94e131efead2222c30fa071939ced6a6460358ca3a5e09",
+    "sources/incidents/04.md": "0be88511ae07911104fb9f4a7c1a78b535622d2cde78401488202d215685890c",
+    "sources/incidents/05.md": "5966d4d90863c2e1730727aca778969d730981292564b361e0e641a4cd9fb022",
+    "sources/incidents/06.md": "d447ce5fc14d6ed7eb3851ed46e4305e2af986d5d621ef1f20c296aa87229e71",
+    "sources/incidents/07.md": "6abf8424f2d72bffed512d5525716abf53f2af20898664494ccc67fed0f082ff",
+    "sources/incidents/08.md": "994bce2ae882461109346954472284bcae11eb0c49fd3237f65894cb1dc529c3",
+    "sources/incidents/09.md": "630962ea6e616205110036590f08ad5d5fc871df53e70a346f58bc52a867f264",
+    "sources/incidents/10.md": "6e5ad2df85dc558e47bd1db28c4b72f6112ac229145e1c31b4e3b78d58422a25",
+    "sources/incidents/11.md": "5f5baaf76e6f213f367bd82f168666ea9936181404b730d4cbe7a44cb8278122",
+    "sources/incidents/12.md": "a70609c906cf26c6f6cd77c2a47f2c20d642fbe0134bb24b0768e0d71cb6af85",
+    "sources/incidents/13.md": "5aa28776bff49784639faba41971ec3d55a16daa0100057a0f20a64a94dcbb8f",
+    "sources/incidents/14.md": "df884d4151d1018ce777c12f8bf8e1a17f969c21c4df75c3f5d40bb841a8d72f",
+    "sources/incidents/15.md": "6522d857d0c63b067e6016cb5805572537912d9ce1626d5cd125116a0ff9aa7c",
+    "sources/incidents/16.md": "7af430e21d205f37587ed05239aef0d9e5dd2a084e44ee799412314585d3968f",
+    "sources/incidents/17.md": "bc3c54e85e39058e64298ab5ffc877b2fe523edec422178746e7f9982a013592",
+    "sources/incidents/18.md": "4736081546865837d589da3e95ebc262f4c08d841131e5c37a0dc56faf3c966c",
+    "sources/incidents/19.md": "0d9fda556d90a48efb294096d3303b80215112ba8c89ba6384ed0fe02811cc45",
+    "sources/incidents/20.md": "e52da5bdb6c42087ec774249535a043e238a70a94fb0d3abe3b9b3fee04c07c7",
+    "sources/incidents/21.md": "c8e23946edbdfa5d7755bb5c437b478e5719b6e00c91d60e456582c881004833",
+    "sources/incidents/22.md": "ea83c000b40db07b4d3b01ba0d813ebc91894bf743bc27c366a19611312fe390",
+    "sources/incidents/23.md": "70bb47407b022df0621b84a58e6babc3556d53a081f3583be2c7372c842d6809",
+    "sources/incidents/24.md": "21d73f588313162b93964cccfe6e7dc10752fe99e7bfd15f384574bce92479a5",
+    "sources/incidents/25.md": "3e3cdd866d6f51a70e1b6c27e28a42683aa400c75dc5b716f8413dfcdd8f0cc5",
+    "sources/incidents/26.md": "1c30b52180c665cdd1157377bac058999358c61bcb0cf9a0903c742b519785d1",
+    "sources/incidents/27.md": "76a071dccc3035b134ab36ed145bdeecd0880634c0b9b40770fb58203d18f05f",
+    "sources/incidents/28.md": "cbb2d59bb429bc2331918c9b161234947044abaa4e5a2bc56d0e8e701c39169f",
+    "sources/incidents/29.md": "02e92fce6f3d71eef4455b736aaad0b682c5fb0b04609ffc5ae37042111e16f3",
+    "sources/incidents/30.md": "9c55df290dbc343326187579f311a88659c14084729bfe6f0a539aaf6736a719",
+    "sources/onboarding-faq/Q01.md": "09e901700ea6327956327151d4136552872239150751973156f4be734ce431f6",
+    "sources/onboarding-faq/Q02.md": "8182e18777628fc89eeabb87539565fed9e0e34e5e6c9576e1f1218f35c4b7cc",
+    "sources/onboarding-faq/Q03.md": "25c28e3a3db3f288c5fd7e70e98a317e481cbaa0d7ae321470019e6fa2350753",
+    "sources/onboarding-faq/Q04.md": "987e1b26d2684d19e8ffed5db44a4b387034481cf441145a291240f6bef1b28e",
+    "sources/onboarding-faq/Q05.md": "e9e5b02df193592867d1b71fbf5ba74b1622f4430ea69b56e1413201e284dd42",
+    "sources/onboarding-faq/Q06.md": "85bf6951426be84b2bfcdedf86b30f5c98836d54ece5a55e10806ddcfc31a9c4",
+    "sources/onboarding-faq/Q07.md": "319cf8a3be89be2666c36fa64c36f2e94bd657e2fb83533fb6352e9547029fdd",
+    "sources/onboarding-faq/Q08.md": "00b590f2e15235bddda9e8bf857e6f38fc47a114835c68a5416520b630467bbd",
+    "sources/onboarding-faq/Q09.md": "5db20459163ade17c26094fce60ab5843793f7cc2be4ef631c8e15964d8d28dd",
+    "sources/onboarding-faq/Q10.md": "e159f4940a72d1b1b244cfb0e0bd2b6d0693cd98b7af4fb20a1076b4773a603e",
+    "sources/onboarding-faq/Q11.md": "3c95254d290508359c50f9e1ae5384d1b0f637799736933046db30014a9a8f94",
+    "sources/onboarding-faq/Q12.md": "ddcb636a3a7eca41a1760ce2f8793aa123a14b3fe9dcb3b7150d907d968bbb0f",
+    "sources/onboarding-faq/Q13.md": "7871e0507e4e70071c9bf1af4818f46848102da658b58c3c4bf428f412334965",
+    "sources/onboarding-faq/Q14.md": "77a13b3f7a78c4cc453edc1c407124932726f824b4e5e3aae4b08dbacac67d08",
+    "sources/onboarding-faq/Q15.md": "488f82afa08c048889d3f8d11bdc7d11b5715336b2ad0300288b84c1f6186b25",
+    "sources/onboarding-faq/Q16.md": "61ca17f5d3dd7d4a58390bf8b29865a63088cf106c228726a6cc699df5e6d7c5",
+    "sources/onboarding-faq/Q17.md": "d6e1fa402bca63d8bad20a70adf9cadc1af443ca4e1f71dcc3604a737d6409d3",
+    "sources/onboarding-faq/Q18.md": "437c784afc962a46cbe6cd0d303d64e760abb28c23f2966755b687cc7b00402f",
+    "sources/onboarding-faq/Q19.md": "6bc006e7d24a63d8f436c1462f26df060dad5e7a60cdf35936e1924d0e6f1287",
+    "sources/onboarding-faq/Q20.md": "776827e87158b4df4589067b7c67f402e761c5984b47bc7eb316568e8b3a5ab6",
+    "sources/onboarding-faq/Q21.md": "f520a813e52f24f0483d0b9b9b7570508a00cf2fd7a151998adac8a517c0593c",
+    "sources/onboarding-faq/Q22.md": "0128061962791cb8d1f55ecb53a226acb1c37b10288fc8ece9fc2241d97e7720",
+    "sources/onboarding-faq/Q23.md": "8d70dee57b9ba2d1d7fea6c7ee2ae74789756d04f1e40eee0df65cad04df6261",
+    "sources/onboarding-faq/Q24.md": "9eff9ea8e20052fadf5aefaca99ca00d0a5436a9662dc21c7ac19a8c374daf2d",
+    "sources/onboarding-faq/Q25.md": "255135e4c4e063e1d29a2fb298c41de752ba936ca1fee219bb56e97d0206d2b3",
+    "sources/onboarding-faq/Q26.md": "75208396406f489645dec88a00606215bbad20563ddc04131e0e49d919c67119",
+    "sources/onboarding-faq/Q27.md": "77a28eca47751786700b4cc6db37bb2e35b798afe007030cf5a970ad5d4b1de8",
+    "sources/onboarding-faq/Q28.md": "cb2f10af5642c39827c4968266e67def6209f702025097eeb19c988be6a0f702",
+    "sources/onboarding-faq/Q29.md": "b1cf067f30b39467b6032432fee65978aa5126c23da64e587ef6c9ce0281ca7e",
+    "sources/onboarding-faq/Q30.md": "666885ca6c8dfef78612bdd5a50ccdffc4dffc78516335531e544391bed566ff"
+  },
+  "note": "Fresh local index; live v2 retrieval and generation. One run per query. Raw follow-up has no history. Manual rewrite is diagnostic, not condition B. Token counts are SDK-reported; null means unavailable. No monetary cost inferred.",
+  "cases": [
+    {
+      "id": "control-cause",
+      "kind": "existing_control",
+      "query": "목요일 오후가 배포 금지 시간으로 바뀐 계기가 된 장애는 무엇인가요?",
+      "expected": [
+        "장애 #18",
+        "주간 정산 배치와 배포가 겹쳐 정산 실패"
+      ],
+      "evidence": [
+        "deploy-guide-v22",
+        "incident-18"
+      ],
+      "calls": [
+        {
+          "operation": "embed_content",
+          "model": "gemini-embedding-2",
+          "usage": null,
+          "status": "ok",
+          "elapsed_ms": 589.48
+        },
+        {
+          "operation": "generate_content",
+          "model": "gemini-3.6-flash",
+          "usage": {
+            "cache_tokens_details": null,
+            "cached_content_token_count": null,
+            "candidates_token_count": 71,
+            "candidates_tokens_details": null,
+            "prompt_token_count": 609,
+            "prompt_tokens_details": [
+              {
+                "modality": "TEXT",
+                "token_count": 609
+              }
+            ],
+            "thoughts_token_count": 605,
+            "tool_use_prompt_token_count": null,
+            "tool_use_prompt_tokens_details": null,
+            "total_token_count": 1285,
+            "traffic_type": null
+          },
+          "status": "ok",
+          "elapsed_ms": 4707.48
+        }
+      ],
+      "status": "complete",
+      "scope": {
+        "mode": "all",
+        "version": null
+      },
+      "sources_before_reference": [
+        {
+          "document_id": "deploy-guide-v22",
+          "chunk_index": 0,
+          "title": "배포 가이드 v22",
+          "topic": "deploy-guide",
+          "version": "22",
+          "heading_path": "배포 가이드 v22",
+          "content": "- 변경: 배포 금지 시간을 변경한다. 금요일 오후 대신 목요일 오후에 배포하지 않는다. 공휴일 전날은 유지한다.\n- 이유: 장애 리포트 #18 이후 결정",
+          "score": 0.7675807198978383,
+          "reference_from": null
+        },
+        {
+          "document_id": "deploy-guide-v22",
+          "chunk_index": 1,
+          "title": "배포 가이드 v22",
+          "topic": "deploy-guide",
+          "version": "22",
+          "heading_path": "배포 가이드 v22 > 현재 규칙",
+          "content": "- 배포 도구: GitHub Actions\n- 배포 명령: `deploy run --env prod`\n- 롤백 명령: `deploy rollback --to <version>` (승인 불필요)\n- 배포 금지 시간: 목요일 오후, 공휴일 전날\n- 승인자: 팀 리드 + SRE 온콜\n- 이전 버전: 배포 가이드 v21",
+          "score": 0.6494751185491899,
+          "reference_from": null
+        },
+        {
+          "document_id": "incident-26",
+          "chunk_index": 0,
+          "title": "장애 리포트 #26",
+          "topic": "incidents",
+          "version": null,
+          "heading_path": "장애 리포트 #26",
+          "content": "- 날짜: 2026-03-04\n- 서비스: payment-api\n- 등급: SEV3\n- 증상: 목요일 오후 배포 시도가 차단됐다.\n- 원인: 배포 금지 시간에 배포를 시도했다. (에러 코드 E-030)\n- 조치: 차단이 정상 작동했다. 다음 날 배포했다.",
+          "score": 0.7556053863779876,
+          "reference_from": null
+        },
+        {
+          "document_id": "deploy-guide-v05",
+          "chunk_index": 0,
+          "title": "배포 가이드 v5",
+          "topic": "deploy-guide",
+          "version": "5",
+          "heading_path": "배포 가이드 v5",
+          "content": "- 변경: 배포 금지 시간을 추가한다. 금요일 오후에는 prod 배포를 하지 않는다.\n- 이유: 장애 리포트 #03 이후 결정",
+          "score": 0.7554164515933772,
+          "reference_from": null
+        },
+        {
+          "document_id": "deploy-guide-v05",
+          "chunk_index": 1,
+          "title": "배포 가이드 v5",
+          "topic": "deploy-guide",
+          "version": "5",
+          "heading_path": "배포 가이드 v5 > 현재 규칙",
+          "content": "- 배포 도구: Jenkins\n- 배포 명령: Jenkins job `deploy-staging` → `deploy-prod` 순서로 실행\n- 롤백 명령: 이전 빌드를 `deploy-prod`로 재실행\n- 배포 금지 시간: 금요일 오후\n- 승인자: 팀 리드\n- 이전 버전: 배포 가이드 v4",
+          "score": 0.6500366389621558,
+          "reference_from": null
+        }
+      ],
+      "retrieval_ms": 11.98,
+      "sources": [
+        {
+          "document_id": "deploy-guide-v22",
+          "chunk_index": 0,
+          "title": "배포 가이드 v22",
+          "topic": "deploy-guide",
+          "version": "22",
+          "heading_path": "배포 가이드 v22",
+          "content": "- 변경: 배포 금지 시간을 변경한다. 금요일 오후 대신 목요일 오후에 배포하지 않는다. 공휴일 전날은 유지한다.\n- 이유: 장애 리포트 #18 이후 결정",
+          "score": 0.7675807198978383,
+          "reference_from": null
+        },
+        {
+          "document_id": "deploy-guide-v22",
+          "chunk_index": 1,
+          "title": "배포 가이드 v22",
+          "topic": "deploy-guide",
+          "version": "22",
+          "heading_path": "배포 가이드 v22 > 현재 규칙",
+          "content": "- 배포 도구: GitHub Actions\n- 배포 명령: `deploy run --env prod`\n- 롤백 명령: `deploy rollback --to <version>` (승인 불필요)\n- 배포 금지 시간: 목요일 오후, 공휴일 전날\n- 승인자: 팀 리드 + SRE 온콜\n- 이전 버전: 배포 가이드 v21",
+          "score": 0.6494751185491899,
+          "reference_from": null
+        },
+        {
+          "document_id": "incident-18",
+          "chunk_index": 0,
+          "title": "장애 리포트 #18",
+          "topic": "incidents",
+          "version": null,
+          "heading_path": "장애 리포트 #18",
+          "content": "- 날짜: 2025-10-15\n- 서비스: settlement-pipeline\n- 등급: SEV1\n- 증상: 목요일 오후 주간 정산 배치 중 배포가 실행돼 정산이 실패했다.\n- 원인: 정산 배치와 배포가 같은 시간에 겹쳤다. (에러 코드 E-009)\n- 조치: 정산을 재실행했다. 배포 금지 시간을 목요일 오후로 바꿨다.\n- 후속 조치: 배포 가이드 v22에 반영",
+          "score": 0.0,
+          "reference_from": "deploy-guide-v22"
+        },
+        {
+          "document_id": "incident-26",
+          "chunk_index": 0,
+          "title": "장애 리포트 #26",
+          "topic": "incidents",
+          "version": null,
+          "heading_path": "장애 리포트 #26",
+          "content": "- 날짜: 2026-03-04\n- 서비스: payment-api\n- 등급: SEV3\n- 증상: 목요일 오후 배포 시도가 차단됐다.\n- 원인: 배포 금지 시간에 배포를 시도했다. (에러 코드 E-030)\n- 조치: 차단이 정상 작동했다. 다음 날 배포했다.",
+          "score": 0.7556053863779876,
+          "reference_from": null
+        }
+      ],
+      "answer": "목요일 오후가 배포 금지 시간으로 바뀐 계기가 된 장애는 **장애 리포트 #18**입니다 [1], [3]. \n\n해당 장애는 settlement-pipeline 서비스의 목요일 오후 주간 정산 배치 실행 중 배포가 함께 진행되어 정산이 실패한 사고입니다 [3].",
+      "elapsed_ms": 5309.35
+    },
+    {
+      "id": "current-and-cause",
+      "kind": "new_composite",
+      "query": "현재 배포가 금지되는 시간과, 목요일 오후가 금지된 이유를 함께 알려줘.",
+      "expected": [
+        "목요일 오후",
+        "공휴일 전날",
+        "12/22~1/2 연말 동결",
+        "장애 #18에서 주간 정산 배치와 배포가 겹쳐 정산 실패"
+      ],
+      "evidence": [
+        "deploy-guide-v30",
+        "deploy-guide-v22",
+        "incident-18"
+      ],
+      "calls": [
+        {
+          "operation": "embed_content",
+          "model": "gemini-embedding-2",
+          "usage": null,
+          "status": "ok",
+          "elapsed_ms": 723.27
+        },
+        {
+          "operation": "generate_content",
+          "model": "gemini-3.6-flash",
+          "usage": {
+            "cache_tokens_details": null,
+            "cached_content_token_count": null,
+            "candidates_token_count": 120,
+            "candidates_tokens_details": null,
+            "prompt_token_count": 586,
+            "prompt_tokens_details": [
+              {
+                "modality": "TEXT",
+                "token_count": 586
+              }
+            ],
+            "thoughts_token_count": 1092,
+            "tool_use_prompt_token_count": null,
+            "tool_use_prompt_tokens_details": null,
+            "total_token_count": 1798,
+            "traffic_type": null
+          },
+          "status": "ok",
+          "elapsed_ms": 6507.64
+        }
+      ],
+      "status": "complete",
+      "scope": {
+        "mode": "all",
+        "version": null
+      },
+      "sources_before_reference": [
+        {
+          "document_id": "faq-q02",
+          "chunk_index": 0,
+          "title": "온보딩 FAQ Q02 배포 금지 시간이 있나요?",
+          "topic": "onboarding-faq",
+          "version": null,
+          "heading_path": "온보딩 FAQ Q02",
+          "content": "**Q. 배포 금지 시간이 있나요?**\n\n목요일 오후, 공휴일 전날, 12월 22일부터 1월 2일까지는 배포하지 않는다.\n\n- 관련 문서: 배포 가이드 v22, v25",
+          "score": 0.7814309597017379,
+          "reference_from": null
+        },
+        {
+          "document_id": "deploy-guide-v22",
+          "chunk_index": 0,
+          "title": "배포 가이드 v22",
+          "topic": "deploy-guide",
+          "version": "22",
+          "heading_path": "배포 가이드 v22",
+          "content": "- 변경: 배포 금지 시간을 변경한다. 금요일 오후 대신 목요일 오후에 배포하지 않는다. 공휴일 전날은 유지한다.\n- 이유: 장애 리포트 #18 이후 결정",
+          "score": 0.7794406606767698,
+          "reference_from": null
+        },
+        {
+          "document_id": "deploy-guide-v22",
+          "chunk_index": 1,
+          "title": "배포 가이드 v22",
+          "topic": "deploy-guide",
+          "version": "22",
+          "heading_path": "배포 가이드 v22 > 현재 규칙",
+          "content": "- 배포 도구: GitHub Actions\n- 배포 명령: `deploy run --env prod`\n- 롤백 명령: `deploy rollback --to <version>` (승인 불필요)\n- 배포 금지 시간: 목요일 오후, 공휴일 전날\n- 승인자: 팀 리드 + SRE 온콜\n- 이전 버전: 배포 가이드 v21",
+          "score": 0.7121485227741888,
+          "reference_from": null
+        },
+        {
+          "document_id": "deploy-guide-v16",
+          "chunk_index": 0,
+          "title": "배포 가이드 v16",
+          "topic": "deploy-guide",
+          "version": "16",
+          "heading_path": "배포 가이드 v16",
+          "content": "- 변경: 배포 금지 시간을 확대한다. 금요일 오후와 공휴일 전날에는 배포하지 않는다.",
+          "score": 0.7672630091154431,
+          "reference_from": null
+        },
+        {
+          "document_id": "deploy-guide-v16",
+          "chunk_index": 1,
+          "title": "배포 가이드 v16",
+          "topic": "deploy-guide",
+          "version": "16",
+          "heading_path": "배포 가이드 v16 > 현재 규칙",
+          "content": "- 배포 도구: GitHub Actions (Jenkins 병행)\n- 배포 명령: `deploy run --env prod`\n- 롤백 명령: `deploy rollback --to <version>`\n- 배포 금지 시간: 금요일 오후, 공휴일 전날\n- 승인자: 팀 리드 + SRE 온콜\n- 이전 버전: 배포 가이드 v15",
+          "score": 0.7027282585877896,
+          "reference_from": null
+        }
+      ],
+      "retrieval_ms": 7.81,
+      "sources": [
+        {
+          "document_id": "faq-q02",
+          "chunk_index": 0,
+          "title": "온보딩 FAQ Q02 배포 금지 시간이 있나요?",
+          "topic": "onboarding-faq",
+          "version": null,
+          "heading_path": "온보딩 FAQ Q02",
+          "content": "**Q. 배포 금지 시간이 있나요?**\n\n목요일 오후, 공휴일 전날, 12월 22일부터 1월 2일까지는 배포하지 않는다.\n\n- 관련 문서: 배포 가이드 v22, v25",
+          "score": 0.7814309597017379,
+          "reference_from": null
+        },
+        {
+          "document_id": "deploy-guide-v22",
+          "chunk_index": 0,
+          "title": "배포 가이드 v22",
+          "topic": "deploy-guide",
+          "version": "22",
+          "heading_path": "배포 가이드 v22",
+          "content": "- 변경: 배포 금지 시간을 변경한다. 금요일 오후 대신 목요일 오후에 배포하지 않는다. 공휴일 전날은 유지한다.\n- 이유: 장애 리포트 #18 이후 결정",
+          "score": 0.7794406606767698,
+          "reference_from": null
+        },
+        {
+          "document_id": "deploy-guide-v22",
+          "chunk_index": 1,
+          "title": "배포 가이드 v22",
+          "topic": "deploy-guide",
+          "version": "22",
+          "heading_path": "배포 가이드 v22 > 현재 규칙",
+          "content": "- 배포 도구: GitHub Actions\n- 배포 명령: `deploy run --env prod`\n- 롤백 명령: `deploy rollback --to <version>` (승인 불필요)\n- 배포 금지 시간: 목요일 오후, 공휴일 전날\n- 승인자: 팀 리드 + SRE 온콜\n- 이전 버전: 배포 가이드 v21",
+          "score": 0.7121485227741888,
+          "reference_from": null
+        },
+        {
+          "document_id": "incident-18",
+          "chunk_index": 0,
+          "title": "장애 리포트 #18",
+          "topic": "incidents",
+          "version": null,
+          "heading_path": "장애 리포트 #18",
+          "content": "- 날짜: 2025-10-15\n- 서비스: settlement-pipeline\n- 등급: SEV1\n- 증상: 목요일 오후 주간 정산 배치 중 배포가 실행돼 정산이 실패했다.\n- 원인: 정산 배치와 배포가 같은 시간에 겹쳤다. (에러 코드 E-009)\n- 조치: 정산을 재실행했다. 배포 금지 시간을 목요일 오후로 바꿨다.\n- 후속 조치: 배포 가이드 v22에 반영",
+          "score": 0.0,
+          "reference_from": "deploy-guide-v22"
+        }
+      ],
+      "answer": "현재 배포가 금지되는 시간과 목요일 오후가 금지된 이유는 다음과 같습니다.\n\n- **현재 배포 금지 시간:** 목요일 오후, 공휴일 전날, 12월 22일부터 1월 2일입니다 [1][3].\n- **목요일 오후가 금지된 이유:** 목요일 오후 주간 정산 배치 작업과 배포 시간이 겹쳐 정산이 실패하는 장애(장애 리포트 #18)가 발생하여 배포 금지 시간으로 변경되었습니다 [2][4].",
+      "elapsed_ms": 7239.08
+    },
+    {
+      "id": "followup-raw",
+      "kind": "v2_without_history",
+      "query": "그럼 바뀌기 전에는 언제였어?",
+      "intended_previous_case": "current-and-cause",
+      "history_sent": false,
+      "expected": [
+        "목요일 오후로 변경되기 전에는 금요일 오후 금지"
+      ],
+      "evidence": [
+        "deploy-guide-v22"
+      ],
+      "note": "v2 API는 대화 이력 입력이 없다. 단독 실행으로 현재 기능을 확인하며, 실패를 RAG 자체의 한계나 Wiki의 우위로 해석하지 않는다.",
+      "calls": [
+        {
+          "operation": "embed_content",
+          "model": "gemini-embedding-2",
+          "usage": null,
+          "status": "ok",
+          "elapsed_ms": 672.63
+        },
+        {
+          "operation": "generate_content",
+          "model": "gemini-3.6-flash",
+          "usage": {
+            "cache_tokens_details": null,
+            "cached_content_token_count": null,
+            "candidates_token_count": 32,
+            "candidates_tokens_details": null,
+            "prompt_token_count": 694,
+            "prompt_tokens_details": [
+              {
+                "modality": "TEXT",
+                "token_count": 694
+              }
+            ],
+            "thoughts_token_count": 1973,
+            "tool_use_prompt_token_count": null,
+            "tool_use_prompt_tokens_details": null,
+            "total_token_count": 2699,
+            "traffic_type": null
+          },
+          "status": "ok",
+          "elapsed_ms": 11958.2
+        }
+      ],
+      "status": "complete",
+      "scope": {
+        "mode": "all",
+        "version": null
+      },
+      "sources_before_reference": [
+        {
+          "document_id": "deploy-guide-v30",
+          "chunk_index": 0,
+          "title": "배포 가이드 v30",
+          "topic": "deploy-guide",
+          "version": "30",
+          "heading_path": "배포 가이드 v30",
+          "content": "- 변경: 현재 규칙 정리본. 변경 없음.",
+          "score": 0.6749266587176166,
+          "reference_from": null
+        },
+        {
+          "document_id": "deploy-guide-v30",
+          "chunk_index": 1,
+          "title": "배포 가이드 v30",
+          "topic": "deploy-guide",
+          "version": "30",
+          "heading_path": "배포 가이드 v30 > 현재 규칙",
+          "content": "- 배포 도구: GitHub Actions\n- 배포 명령: `deploy run --env prod --ticket <id>`\n- 롤백 명령: `deploy rollback --to <version>` (승인 불필요)\n- 배포 금지 시간: 목요일 오후, 공휴일 전날, 12/22~1/2 연말 동결\n- 승인자: 팀 리드 + 서비스 오너\n- 이전 버전: 배포 가이드 v29",
+          "score": 0.6231549079787523,
+          "reference_from": null
+        },
+        {
+          "document_id": "deploy-guide-v16",
+          "chunk_index": 0,
+          "title": "배포 가이드 v16",
+          "topic": "deploy-guide",
+          "version": "16",
+          "heading_path": "배포 가이드 v16",
+          "content": "- 변경: 배포 금지 시간을 확대한다. 금요일 오후와 공휴일 전날에는 배포하지 않는다.",
+          "score": 0.6672038438337418,
+          "reference_from": null
+        },
+        {
+          "document_id": "deploy-guide-v16",
+          "chunk_index": 1,
+          "title": "배포 가이드 v16",
+          "topic": "deploy-guide",
+          "version": "16",
+          "heading_path": "배포 가이드 v16 > 현재 규칙",
+          "content": "- 배포 도구: GitHub Actions (Jenkins 병행)\n- 배포 명령: `deploy run --env prod`\n- 롤백 명령: `deploy rollback --to <version>`\n- 배포 금지 시간: 금요일 오후, 공휴일 전날\n- 승인자: 팀 리드 + SRE 온콜\n- 이전 버전: 배포 가이드 v15",
+          "score": 0.6161246025748027,
+          "reference_from": null
+        },
+        {
+          "document_id": "deploy-guide-v25",
+          "chunk_index": 0,
+          "title": "배포 가이드 v25",
+          "topic": "deploy-guide",
+          "version": "25",
+          "heading_path": "배포 가이드 v25",
+          "content": "- 변경: 연말 배포 동결 기간을 정한다. 12월 22일부터 1월 2일까지 배포하지 않는다.",
+          "score": 0.666321893337869,
+          "reference_from": null
+        },
+        {
+          "document_id": "deploy-guide-v25",
+          "chunk_index": 1,
+          "title": "배포 가이드 v25",
+          "topic": "deploy-guide",
+          "version": "25",
+          "heading_path": "배포 가이드 v25 > 현재 규칙",
+          "content": "- 배포 도구: GitHub Actions\n- 배포 명령: `deploy run --env prod`\n- 롤백 명령: `deploy rollback --to <version>` (승인 불필요)\n- 배포 금지 시간: 목요일 오후, 공휴일 전날, 12/22~1/2 연말 동결\n- 승인자: 팀 리드 + 서비스 오너\n- 이전 버전: 배포 가이드 v24",
+          "score": 0.6287183267336619,
+          "reference_from": null
+        }
+      ],
+      "retrieval_ms": 3.93,
+      "sources": [
+        {
+          "document_id": "deploy-guide-v30",
+          "chunk_index": 0,
+          "title": "배포 가이드 v30",
+          "topic": "deploy-guide",
+          "version": "30",
+          "heading_path": "배포 가이드 v30",
+          "content": "- 변경: 현재 규칙 정리본. 변경 없음.",
+          "score": 0.6749266587176166,
+          "reference_from": null
+        },
+        {
+          "document_id": "deploy-guide-v30",
+          "chunk_index": 1,
+          "title": "배포 가이드 v30",
+          "topic": "deploy-guide",
+          "version": "30",
+          "heading_path": "배포 가이드 v30 > 현재 규칙",
+          "content": "- 배포 도구: GitHub Actions\n- 배포 명령: `deploy run --env prod --ticket <id>`\n- 롤백 명령: `deploy rollback --to <version>` (승인 불필요)\n- 배포 금지 시간: 목요일 오후, 공휴일 전날, 12/22~1/2 연말 동결\n- 승인자: 팀 리드 + 서비스 오너\n- 이전 버전: 배포 가이드 v29",
+          "score": 0.6231549079787523,
+          "reference_from": null
+        },
+        {
+          "document_id": "deploy-guide-v16",
+          "chunk_index": 0,
+          "title": "배포 가이드 v16",
+          "topic": "deploy-guide",
+          "version": "16",
+          "heading_path": "배포 가이드 v16",
+          "content": "- 변경: 배포 금지 시간을 확대한다. 금요일 오후와 공휴일 전날에는 배포하지 않는다.",
+          "score": 0.6672038438337418,
+          "reference_from": null
+        },
+        {
+          "document_id": "deploy-guide-v16",
+          "chunk_index": 1,
+          "title": "배포 가이드 v16",
+          "topic": "deploy-guide",
+          "version": "16",
+          "heading_path": "배포 가이드 v16 > 현재 규칙",
+          "content": "- 배포 도구: GitHub Actions (Jenkins 병행)\n- 배포 명령: `deploy run --env prod`\n- 롤백 명령: `deploy rollback --to <version>`\n- 배포 금지 시간: 금요일 오후, 공휴일 전날\n- 승인자: 팀 리드 + SRE 온콜\n- 이전 버전: 배포 가이드 v15",
+          "score": 0.6161246025748027,
+          "reference_from": null
+        },
+        {
+          "document_id": "deploy-guide-v25",
+          "chunk_index": 0,
+          "title": "배포 가이드 v25",
+          "topic": "deploy-guide",
+          "version": "25",
+          "heading_path": "배포 가이드 v25",
+          "content": "- 변경: 연말 배포 동결 기간을 정한다. 12월 22일부터 1월 2일까지 배포하지 않는다.",
+          "score": 0.666321893337869,
+          "reference_from": null
+        },
+        {
+          "document_id": "deploy-guide-v25",
+          "chunk_index": 1,
+          "title": "배포 가이드 v25",
+          "topic": "deploy-guide",
+          "version": "25",
+          "heading_path": "배포 가이드 v25 > 현재 규칙",
+          "content": "- 배포 도구: GitHub Actions\n- 배포 명령: `deploy run --env prod`\n- 롤백 명령: `deploy rollback --to <version>` (승인 불필요)\n- 배포 금지 시간: 목요일 오후, 공휴일 전날, 12/22~1/2 연말 동결\n- 승인자: 팀 리드 + 서비스 오너\n- 이전 버전: 배포 가이드 v24",
+          "score": 0.6287183267336619,
+          "reference_from": null
+        }
+      ],
+      "answer": "배포 금지 시간이 목요일 오후로 바뀌기 전(v16)에는 금요일 오후와 공휴일 전날이었습니다 [4].",
+      "elapsed_ms": 12635.12
+    },
+    {
+      "id": "followup-explicit-diagnostic",
+      "kind": "manual_rewrite_diagnostic",
+      "query": "배포 금지 시간이 목요일 오후로 바뀌기 이전에는 언제가 금지 시간이었어?",
+      "expected": [
+        "금요일 오후",
+        "공휴일 전날은 유지"
+      ],
+      "evidence": [
+        "deploy-guide-v22",
+        "deploy-guide-v21"
+      ],
+      "note": "사람이 대상을 명시한 별도 질문이다. 실제 대화 맥락 처리 구현이나 B 조건의 측정으로 계산하지 않는다. v21은 변경 직전 규칙을 확인할 대체 근거다.",
+      "calls": [
+        {
+          "operation": "embed_content",
+          "model": "gemini-embedding-2",
+          "usage": null,
+          "status": "ok",
+          "elapsed_ms": 717.08
+        },
+        {
+          "operation": "generate_content",
+          "model": "gemini-3.6-flash",
+          "usage": {
+            "cache_tokens_details": null,
+            "cached_content_token_count": null,
+            "candidates_token_count": 27,
+            "candidates_tokens_details": null,
+            "prompt_token_count": 612,
+            "prompt_tokens_details": [
+              {
+                "modality": "TEXT",
+                "token_count": 612
+              }
+            ],
+            "thoughts_token_count": 459,
+            "tool_use_prompt_token_count": null,
+            "tool_use_prompt_tokens_details": null,
+            "total_token_count": 1098,
+            "traffic_type": null
+          },
+          "status": "ok",
+          "elapsed_ms": 3492.68
+        }
+      ],
+      "status": "complete",
+      "scope": {
+        "mode": "all",
+        "version": null
+      },
+      "sources_before_reference": [
+        {
+          "document_id": "deploy-guide-v22",
+          "chunk_index": 0,
+          "title": "배포 가이드 v22",
+          "topic": "deploy-guide",
+          "version": "22",
+          "heading_path": "배포 가이드 v22",
+          "content": "- 변경: 배포 금지 시간을 변경한다. 금요일 오후 대신 목요일 오후에 배포하지 않는다. 공휴일 전날은 유지한다.\n- 이유: 장애 리포트 #18 이후 결정",
+          "score": 0.7686594724655151,
+          "reference_from": null
+        },
+        {
+          "document_id": "deploy-guide-v22",
+          "chunk_index": 1,
+          "title": "배포 가이드 v22",
+          "topic": "deploy-guide",
+          "version": "22",
+          "heading_path": "배포 가이드 v22 > 현재 규칙",
+          "content": "- 배포 도구: GitHub Actions\n- 배포 명령: `deploy run --env prod`\n- 롤백 명령: `deploy rollback --to <version>` (승인 불필요)\n- 배포 금지 시간: 목요일 오후, 공휴일 전날\n- 승인자: 팀 리드 + SRE 온콜\n- 이전 버전: 배포 가이드 v21",
+          "score": 0.6859794820583902,
+          "reference_from": null
+        },
+        {
+          "document_id": "faq-q02",
+          "chunk_index": 0,
+          "title": "온보딩 FAQ Q02 배포 금지 시간이 있나요?",
+          "topic": "onboarding-faq",
+          "version": null,
+          "heading_path": "온보딩 FAQ Q02",
+          "content": "**Q. 배포 금지 시간이 있나요?**\n\n목요일 오후, 공휴일 전날, 12월 22일부터 1월 2일까지는 배포하지 않는다.\n\n- 관련 문서: 배포 가이드 v22, v25",
+          "score": 0.7541500642836806,
+          "reference_from": null
+        },
+        {
+          "document_id": "deploy-guide-v16",
+          "chunk_index": 0,
+          "title": "배포 가이드 v16",
+          "topic": "deploy-guide",
+          "version": "16",
+          "heading_path": "배포 가이드 v16",
+          "content": "- 변경: 배포 금지 시간을 확대한다. 금요일 오후와 공휴일 전날에는 배포하지 않는다.",
+          "score": 0.7518019532567457,
+          "reference_from": null
+        },
+        {
+          "document_id": "deploy-guide-v16",
+          "chunk_index": 1,
+          "title": "배포 가이드 v16",
+          "topic": "deploy-guide",
+          "version": "16",
+          "heading_path": "배포 가이드 v16 > 현재 규칙",
+          "content": "- 배포 도구: GitHub Actions (Jenkins 병행)\n- 배포 명령: `deploy run --env prod`\n- 롤백 명령: `deploy rollback --to <version>`\n- 배포 금지 시간: 금요일 오후, 공휴일 전날\n- 승인자: 팀 리드 + SRE 온콜\n- 이전 버전: 배포 가이드 v15",
+          "score": 0.6773995161056519,
+          "reference_from": null
+        }
+      ],
+      "retrieval_ms": 13.61,
+      "sources": [
+        {
+          "document_id": "deploy-guide-v22",
+          "chunk_index": 0,
+          "title": "배포 가이드 v22",
+          "topic": "deploy-guide",
+          "version": "22",
+          "heading_path": "배포 가이드 v22",
+          "content": "- 변경: 배포 금지 시간을 변경한다. 금요일 오후 대신 목요일 오후에 배포하지 않는다. 공휴일 전날은 유지한다.\n- 이유: 장애 리포트 #18 이후 결정",
+          "score": 0.7686594724655151,
+          "reference_from": null
+        },
+        {
+          "document_id": "deploy-guide-v22",
+          "chunk_index": 1,
+          "title": "배포 가이드 v22",
+          "topic": "deploy-guide",
+          "version": "22",
+          "heading_path": "배포 가이드 v22 > 현재 규칙",
+          "content": "- 배포 도구: GitHub Actions\n- 배포 명령: `deploy run --env prod`\n- 롤백 명령: `deploy rollback --to <version>` (승인 불필요)\n- 배포 금지 시간: 목요일 오후, 공휴일 전날\n- 승인자: 팀 리드 + SRE 온콜\n- 이전 버전: 배포 가이드 v21",
+          "score": 0.6859794820583902,
+          "reference_from": null
+        },
+        {
+          "document_id": "faq-q02",
+          "chunk_index": 0,
+          "title": "온보딩 FAQ Q02 배포 금지 시간이 있나요?",
+          "topic": "onboarding-faq",
+          "version": null,
+          "heading_path": "온보딩 FAQ Q02",
+          "content": "**Q. 배포 금지 시간이 있나요?**\n\n목요일 오후, 공휴일 전날, 12월 22일부터 1월 2일까지는 배포하지 않는다.\n\n- 관련 문서: 배포 가이드 v22, v25",
+          "score": 0.7541500642836806,
+          "reference_from": null
+        },
+        {
+          "document_id": "deploy-guide-v16",
+          "chunk_index": 0,
+          "title": "배포 가이드 v16",
+          "topic": "deploy-guide",
+          "version": "16",
+          "heading_path": "배포 가이드 v16",
+          "content": "- 변경: 배포 금지 시간을 확대한다. 금요일 오후와 공휴일 전날에는 배포하지 않는다.",
+          "score": 0.7518019532567457,
+          "reference_from": null
+        },
+        {
+          "document_id": "deploy-guide-v16",
+          "chunk_index": 1,
+          "title": "배포 가이드 v16",
+          "topic": "deploy-guide",
+          "version": "16",
+          "heading_path": "배포 가이드 v16 > 현재 규칙",
+          "content": "- 배포 도구: GitHub Actions (Jenkins 병행)\n- 배포 명령: `deploy run --env prod`\n- 롤백 명령: `deploy rollback --to <version>`\n- 배포 금지 시간: 금요일 오후, 공휴일 전날\n- 승인자: 팀 리드 + SRE 온콜\n- 이전 버전: 배포 가이드 v15",
+          "score": 0.6773995161056519,
+          "reference_from": null
+        }
+      ],
+      "answer": "배포 금지 시간이 목요일 오후로 바뀌기 이전에는 금요일 오후와 공휴일 전날이었습니다 [1].",
+      "elapsed_ms": 4223.87
+    }
+  ],
+  "storage_validation": {
+    "source_documents": 120,
+    "expected_chunks": 150,
+    "stored_documents": 120,
+    "stored_chunks": 150,
+    "stored_tsv": 150,
+    "minimum_embedding_dimensions": 768,
+    "maximum_embedding_dimensions": 768,
+    "invalid_content_hashes": 0,
+    "duplicate_chunks": 0,
+    "missing_documents": 0,
+    "unexpected_documents": 0,
+    "content_hash_mismatches": 0,
+    "missing_chunks": 0,
+    "unexpected_chunks": 0,
+    "chunk_content_mismatches": 0,
+    "invalid_embedding_dimensions": 0
+  },
+  "database_versions": [
+    "17.11 (Debian 17.11-1.pgdg12+2)",
+    "0.8.6"
+  ]
+}

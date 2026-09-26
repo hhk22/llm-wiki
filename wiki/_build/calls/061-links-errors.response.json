@@ -1,0 +1,267 @@
+{
+  "pages": [
+    {
+      "document_id": "error-E-001",
+      "related": [
+        {
+          "document_id": "incident-01",
+          "reason": "주문 검증 실패 장애로 인해 발생했습니다."
+        },
+        {
+          "document_id": "incident-14",
+          "reason": "검증 규칙 회귀로 인한 복구 지연 장애가 발생했습니다."
+        },
+        {
+          "document_id": "incident-24",
+          "reason": "주문 검증 오류 장애가 재발했습니다."
+        }
+      ]
+    },
+    {
+      "document_id": "error-E-002",
+      "related": [
+        {
+          "document_id": "incident-04",
+          "reason": "동시성 처리 부재로 재고 부족 및 음수 표시 장애가 발생했습니다."
+        }
+      ]
+    },
+    {
+      "document_id": "error-E-003",
+      "related": []
+    },
+    {
+      "document_id": "error-E-004",
+      "related": [
+        {
+          "document_id": "incident-10",
+          "reason": "전체 배포 후 결제 타임아웃이 급증하는 장애가 발생했습니다."
+        }
+      ]
+    },
+    {
+      "document_id": "error-E-005",
+      "related": [
+        {
+          "document_id": "incident-02",
+          "reason": "잘못된 토큰 TTL 설정으로 재로그인 장애가 발생했습니다."
+        }
+      ]
+    },
+    {
+      "document_id": "error-E-006",
+      "related": [
+        {
+          "document_id": "incident-27",
+          "reason": "관리자 API 권한 오류로 역할 매핑 설정 수정 후 재배포했습니다."
+        }
+      ]
+    },
+    {
+      "document_id": "error-E-007",
+      "related": [
+        {
+          "document_id": "incident-07",
+          "reason": "정상 사용자가 요청 한도 초과로 차단되는 장애가 발생했습니다."
+        }
+      ]
+    },
+    {
+      "document_id": "error-E-008",
+      "related": [
+        {
+          "document_id": "incident-09",
+          "reason": "모든 API 응답이 지연되는 DB 연결 실패 장애가 발생했습니다."
+        },
+        {
+          "document_id": "incident-29",
+          "reason": "배치 커넥션 미반환으로 DB 연결 실패 정산 중단 장애가 발생했습니다."
+        }
+      ]
+    },
+    {
+      "document_id": "error-E-009",
+      "related": [
+        {
+          "document_id": "incident-11",
+          "reason": "일일 정산 서비스의 Kafka 발행 실패로 정산 지연 장애가 발생했습니다."
+        },
+        {
+          "document_id": "incident-18",
+          "reason": "배치 중 배포 실행으로 정산이 실패하는 장애가 발생했습니다."
+        }
+      ]
+    },
+    {
+      "document_id": "error-E-010",
+      "related": [
+        {
+          "document_id": "incident-28",
+          "reason": "API 키 회수로 인한 주문 완료 알림 미발송 장애가 발생했습니다."
+        }
+      ]
+    },
+    {
+      "document_id": "error-E-011",
+      "related": []
+    },
+    {
+      "document_id": "error-E-012",
+      "related": []
+    },
+    {
+      "document_id": "error-E-013",
+      "related": []
+    },
+    {
+      "document_id": "error-E-014",
+      "related": [
+        {
+          "document_id": "incident-06",
+          "reason": "구버전 템플릿 발송 및 이미지 태그 규칙 위반 장애가 발생했습니다."
+        }
+      ]
+    },
+    {
+      "document_id": "error-E-015",
+      "related": [
+        {
+          "document_id": "incident-15",
+          "reason": "헬스체크에서 드러나지 않은 메모리 누수로 Pod 반복 재시작 장애가 발생했습니다."
+        },
+        {
+          "document_id": "incident-30",
+          "reason": "readiness 경로 변경으로 헬스체크 실패 자동 중단 장애가 발생했습니다."
+        }
+      ]
+    },
+    {
+      "document_id": "error-E-016",
+      "related": [
+        {
+          "document_id": "incident-03",
+          "reason": "환경 변수 누락 배포로 결제 API 장애가 발생했습니다."
+        }
+      ]
+    },
+    {
+      "document_id": "error-E-017",
+      "related": []
+    },
+    {
+      "document_id": "error-E-018",
+      "related": [
+        {
+          "document_id": "incident-08",
+          "reason": "배포 중 서비스가 다운되는 마이그레이션 실패 장애가 발생했습니다."
+        }
+      ]
+    },
+    {
+      "document_id": "error-E-019",
+      "related": []
+    },
+    {
+      "document_id": "error-E-020",
+      "related": [
+        {
+          "document_id": "incident-21",
+          "reason": "대규모 리팩터링 후 롤백이 불가능한 스키마 변경 장애가 발생했습니다."
+        }
+      ]
+    },
+    {
+      "document_id": "error-E-021",
+      "related": [
+        {
+          "document_id": "incident-12",
+          "reason": "GitHub Actions 전환 후 배포 권한 부족으로 배포가 실패했습니다."
+        },
+        {
+          "document_id": "incident-13",
+          "reason": "새 저장소 워크플로 권한 설정 누락으로 카탈로그 API 배포가 연속 실패했습니다."
+        },
+        {
+          "document_id": "incident-17",
+          "reason": "저장소 이전으로 권한이 초기화되어 긴급 수정 배포가 지연되었습니다."
+        }
+      ]
+    },
+    {
+      "document_id": "error-E-022",
+      "related": [
+        {
+          "document_id": "incident-05",
+          "reason": "승인 단계 미강제로 승인되지 않은 변경이 배포되어 장애가 발생했습니다."
+        }
+      ]
+    },
+    {
+      "document_id": "error-E-023",
+      "related": []
+    },
+    {
+      "document_id": "error-E-024",
+      "related": [
+        {
+          "document_id": "incident-19",
+          "reason": "카나리 10% 단계에서 오류율 증가로 배포가 자동 중단되었습니다."
+        }
+      ]
+    },
+    {
+      "document_id": "error-E-025",
+      "related": [
+        {
+          "document_id": "incident-20",
+          "reason": "두 명이 동시에 배포하여 버전이 섞인 결제 API 장애가 발생했습니다."
+        }
+      ]
+    },
+    {
+      "document_id": "error-E-026",
+      "related": [
+        {
+          "document_id": "incident-22",
+          "reason": "Vault 정책 변경으로 시크릿 읽기가 거부되는 장애가 발생했습니다."
+        }
+      ]
+    },
+    {
+      "document_id": "error-E-027",
+      "related": [
+        {
+          "document_id": "incident-23",
+          "reason": "시크릿 누락으로 인해 서비스 배포가 실패하는 장애가 발생했습니다."
+        }
+      ]
+    },
+    {
+      "document_id": "error-E-028",
+      "related": [
+        {
+          "document_id": "incident-25",
+          "reason": "노드 리소스 부족으로 새 Pod가 Pending 상태로 시작되지 않는 장애가 발생했습니다."
+        }
+      ]
+    },
+    {
+      "document_id": "error-E-029",
+      "related": [
+        {
+          "document_id": "incident-16",
+          "reason": "인증서 만료로 외부 요청이 TLS 오류로 실패하는 장애가 발생했습니다."
+        }
+      ]
+    },
+    {
+      "document_id": "error-E-030",
+      "related": [
+        {
+          "document_id": "incident-26",
+          "reason": "배포 금지 시간 위반 에러 코드로 인해 목요일 오후 배포가 차단되었습니다."
+        }
+      ]
+    }
+  ]
+}

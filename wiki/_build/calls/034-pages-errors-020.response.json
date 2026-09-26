@@ -1,0 +1,284 @@
+{
+  "pages": [
+    {
+      "document_id": "error-E-021",
+      "summary": {
+        "text": "에러 코드 E-021은 배포 과정에서 워크플로에 필요한 권한이 없을 때 발생한다.",
+        "evidence": [
+          {
+            "document_id": "error-E-021",
+            "quote": "- 발생 위치: 배포 (GitHub Actions)"
+          },
+          {
+            "document_id": "error-E-021",
+            "quote": "- 의미: 워크플로에 배포 권한이 없다."
+          }
+        ]
+      },
+      "sections": [
+        {
+          "heading": "발생 원인과 대응",
+          "statements": [
+            {
+              "text": "저장소 생성이나 이전 과정에서 deployments: write 권한이 누락되어 발생하며 설정 확인이 필요하다.",
+              "evidence": [
+                {
+                  "document_id": "error-E-021",
+                  "quote": "- 원인: `deployments: write` 권한 누락. 저장소 생성·이전 시 자주 발생."
+                },
+                {
+                  "document_id": "error-E-021",
+                  "quote": "- 대응: 워크플로 권한 설정을 확인한다."
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "heading": "관련 장애 사례",
+          "statements": [
+            {
+              "text": "이 에러는 장애 리포트 12번, 13번, 17번과 연관이 있다.",
+              "evidence": [
+                {
+                  "document_id": "error-E-021",
+                  "quote": "- 관련 장애: 장애 리포트 #12, #13, #17"
+                }
+              ]
+            },
+            {
+              "text": "장애 리포트 12번에서는 GitHub Actions 전환 후 배포가 중간에 실패하여 절반의 Pod만 새 버전이 되었고 워크플로에 배포 권한이 없어 발생했다.",
+              "evidence": [
+                {
+                  "document_id": "incident-12",
+                  "quote": "- 증상: GitHub Actions 전환 후 배포가 중간에 실패해 절반의 Pod만 새 버전이었다."
+                },
+                {
+                  "document_id": "incident-12",
+                  "quote": "- 원인: 워크플로에 배포 권한이 없었다. (에러 코드 E-021)"
+                }
+              ]
+            },
+            {
+              "text": "장애 리포트 13번에서는 새 저장소에 워크플로 권한 설정이 누락되어 배포가 세 번 연속 실패하는 원인이 되었다.",
+              "evidence": [
+                {
+                  "document_id": "incident-13",
+                  "quote": "- 증상: 배포가 세 번 연속 실패했다."
+                },
+                {
+                  "document_id": "incident-13",
+                  "quote": "- 원인: 새 저장소에 워크플로 권한 설정이 누락됐다. (에러 코드 E-021)"
+                }
+              ]
+            },
+            {
+              "text": "장애 리포트 17번에서는 저장소 이전 과정에서 권한이 초기화되어 긴급 수정 배포가 1시간 지연되었다.",
+              "evidence": [
+                {
+                  "document_id": "incident-17",
+                  "quote": "- 증상: 긴급 수정 배포가 권한 오류로 1시간 지연됐다."
+                },
+                {
+                  "document_id": "incident-17",
+                  "quote": "- 원인: 워크플로 권한이 저장소 이전 과정에서 초기화됐다. (에러 코드 E-021)"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "document_id": "error-E-022",
+      "summary": {
+        "text": "에러 코드 E-022는 필요한 승인 단계가 강제되지 않아 승인 없이 배포가 실행되었을 때 발생한다.",
+        "evidence": [
+          {
+            "document_id": "error-E-022",
+            "quote": "- 발생 위치: 배포"
+          },
+          {
+            "document_id": "error-E-022",
+            "quote": "- 의미: 필요한 승인 없이 배포가 실행됐다."
+          },
+          {
+            "document_id": "error-E-022",
+            "quote": "- 원인: 승인 단계 미강제."
+          }
+        ]
+      },
+      "sections": [
+        {
+          "heading": "대응 및 관련 장애",
+          "statements": [
+            {
+              "text": "승인 단계를 확인해야 하며 승인자는 배포 가이드 최신 버전을 따른다.",
+              "evidence": [
+                {
+                  "document_id": "error-E-022",
+                  "quote": "- 대응: 승인 단계를 확인한다. 승인자는 배포 가이드 최신 버전을 따른다."
+                }
+              ]
+            },
+            {
+              "text": "장애 리포트 5번에서는 승인되지 않은 변경이 prod에 배포되어 주문 조회가 느려지는 증상이 발생했다.",
+              "evidence": [
+                {
+                  "document_id": "error-E-022",
+                  "quote": "- 관련 장애: 장애 리포트 #05"
+                },
+                {
+                  "document_id": "incident-05",
+                  "quote": "- 증상: 승인되지 않은 변경이 prod에 배포돼 주문 조회가 느려졌다."
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "document_id": "error-E-023",
+      "summary": {
+        "text": "에러 코드 E-023은 일시적 네트워크 오류로 인해 빌드 결과물 업로드가 실패할 때 발생한다.",
+        "evidence": [
+          {
+            "document_id": "error-E-023",
+            "quote": "- 발생 위치: 배포 (GitHub Actions)"
+          },
+          {
+            "document_id": "error-E-023",
+            "quote": "- 의미: 빌드 결과물 업로드가 실패했다."
+          },
+          {
+            "document_id": "error-E-023",
+            "quote": "- 원인: 일시적 네트워크 오류."
+          }
+        ]
+      },
+      "sections": [
+        {
+          "heading": "대응 방법",
+          "statements": [
+            {
+              "text": "재시도를 수행하며 배포 가이드 v17에서는 3회 자동 재시도가 설정되었다.",
+              "evidence": [
+                {
+                  "document_id": "error-E-023",
+                  "quote": "- 대응: 재시도한다. 배포 가이드 v17에서 3회 자동 재시도됐다."
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "document_id": "error-E-024",
+      "summary": {
+        "text": "에러 코드 E-024는 카나리 단계에서 새 버전 결함으로 오류율이 기준을 초과해 배포가 자동 중단될 때 발생한다.",
+        "evidence": [
+          {
+            "document_id": "error-E-024",
+            "quote": "- 발생 위치: 배포"
+          },
+          {
+            "document_id": "error-E-024",
+            "quote": "- 의미: 카나리 단계에서 오류율이 기준을 넘어 배포가 자동 중단됐다."
+          },
+          {
+            "document_id": "error-E-024",
+            "quote": "- 원인: 새 버전 결함."
+          }
+        ]
+      },
+      "sections": [
+        {
+          "heading": "대응 및 관련 장애",
+          "statements": [
+            {
+              "text": "이는 정상 동작이므로 원인을 수정해 재배포한다.",
+              "evidence": [
+                {
+                  "document_id": "error-E-024",
+                  "quote": "- 대응: 정상 동작이다. 원인을 수정해 재배포한다."
+                }
+              ]
+            },
+            {
+              "text": "장애 리포트 19번에서는 order-api 서비스의 카나리 10% 단계에서 직렬화 오류로 인해 오류율이 올라 배포가 자동 중단되었다.",
+              "evidence": [
+                {
+                  "document_id": "error-E-024",
+                  "quote": "- 관련 장애: 장애 리포트 #19"
+                },
+                {
+                  "document_id": "incident-19",
+                  "quote": "- 증상: 카나리 10% 단계에서 오류율이 올라 배포가 자동 중단됐다."
+                },
+                {
+                  "document_id": "incident-19",
+                  "quote": "- 원인: 새 버전의 직렬화 오류. (에러 코드 E-024)"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "document_id": "error-E-025",
+      "summary": {
+        "text": "에러 코드 E-025는 배포 잠금이 없어 같은 서비스에 두 배포가 동시에 실행될 때 발생한다.",
+        "evidence": [
+          {
+            "document_id": "error-E-025",
+            "quote": "- 발생 위치: 배포 (GitHub Actions)"
+          },
+          {
+            "document_id": "error-E-025",
+            "quote": "- 의미: 같은 서비스에 두 배포가 동시에 실행됐다."
+          },
+          {
+            "document_id": "error-E-025",
+            "quote": "- 원인: 배포 잠금 부재."
+          }
+        ]
+      },
+      "sections": [
+        {
+          "heading": "대응 및 관련 장애",
+          "statements": [
+            {
+              "text": "한 버전으로 재배포하며 이후 배포 가이드 v23에서 잠금이 도입되었다.",
+              "evidence": [
+                {
+                  "document_id": "error-E-025",
+                  "quote": "- 대응: 한 버전으로 재배포한다. 배포 가이드 v23에서 잠금이 도입됐다."
+                }
+              ]
+            },
+            {
+              "text": "장애 리포트 20번에서는 payment-api 서비스에 두 명이 동시에 배포하여 서로 다른 버전이 섞이는 증상이 발생했다.",
+              "evidence": [
+                {
+                  "document_id": "error-E-025",
+                  "quote": "- 관련 장애: 장애 리포트 #20"
+                },
+                {
+                  "document_id": "incident-20",
+                  "quote": "- 증상: 두 명이 동시에 배포해 서로 다른 버전이 섞였다."
+                },
+                {
+                  "document_id": "incident-20",
+                  "quote": "- 원인: 같은 서비스의 동시 배포를 막는 장치가 없었다. (에러 코드 E-025)"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

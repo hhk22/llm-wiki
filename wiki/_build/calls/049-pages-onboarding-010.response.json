@@ -1,0 +1,195 @@
+{
+  "pages": [
+    {
+      "document_id": "faq-q11",
+      "summary": {
+        "text": "카나리 배포 비율은 모든 서비스에 적용되며 세 단계로 진행된다.",
+        "evidence": [
+          {
+            "document_id": "faq-q11",
+            "quote": "10% → 50% → 100% 순서로 진행한다. 모든 서비스에 적용된다."
+          }
+        ]
+      },
+      "sections": [
+        {
+          "heading": "진행 순서",
+          "statements": [
+            {
+              "text": "카나리 배포는 10%에서 시작하여 50%를 거쳐 100% 순서로 진행된다.",
+              "evidence": [
+                {
+                  "document_id": "faq-q11",
+                  "quote": "10% → 50% → 100% 순서로 진행한다. 모든 서비스에 적용된다."
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "heading": "적용 범위",
+          "statements": [
+            {
+              "text": "카나리 배포 규칙은 모든 서비스에 적용된다.",
+              "evidence": [
+                {
+                  "document_id": "faq-q11",
+                  "quote": "10% → 50% → 100% 순서로 진행한다. 모든 서비스에 적용된다."
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "document_id": "faq-q12",
+      "summary": {
+        "text": "이미지 태그는 정해진 형식만 허용하고 latest를 금지한다.",
+        "evidence": [
+          {
+            "document_id": "faq-q12",
+            "quote": "<service>:<git-sha> 형식만 허용한다. `latest`는 금지다."
+          }
+        ]
+      },
+      "sections": [
+        {
+          "heading": "태그 형식",
+          "statements": [
+            {
+              "text": "이미지 태그는 <service>:<git-sha> 형식만 허용된다.",
+              "evidence": [
+                {
+                  "document_id": "faq-q12",
+                  "quote": "<service>:<git-sha> 형식만 허용한다. `latest`는 금지다."
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "heading": "사용 제한",
+          "statements": [
+            {
+              "text": "이미지 태그에서 latest 사용은 금지된다.",
+              "evidence": [
+                {
+                  "document_id": "faq-q12",
+                  "quote": "<service>:<git-sha> 형식만 허용한다. `latest`는 금지다."
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "document_id": "faq-q13",
+      "summary": {
+        "text": "DB 마이그레이션은 배포와 함께 하지 않고 사전에 별도로 실행한다.",
+        "evidence": [
+          {
+            "document_id": "faq-q13",
+            "quote": "아니다. 배포 전에 별도로 먼저 실행한다."
+          }
+        ]
+      },
+      "sections": [
+        {
+          "heading": "실행 시점",
+          "statements": [
+            {
+              "text": "DB 마이그레이션은 배포와 함께 진행하지 않는다.",
+              "evidence": [
+                {
+                  "document_id": "faq-q13",
+                  "quote": "아니다. 배포 전에 별도로 먼저 실행한다."
+                }
+              ]
+            },
+            {
+              "text": "DB 마이그레이션은 배포 전에 별도로 먼저 실행한다.",
+              "evidence": [
+                {
+                  "document_id": "faq-q13",
+                  "quote": "아니다. 배포 전에 별도로 먼저 실행한다."
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "document_id": "faq-q14",
+      "summary": {
+        "text": "시크릿은 Vault에 저장하고 배포 전 자동 검사한다.",
+        "evidence": [
+          {
+            "document_id": "faq-q14",
+            "quote": "Vault에 저장한다. 배포 전에 필수 시크릿 존재 여부가 자동 검사된다."
+          }
+        ]
+      },
+      "sections": [
+        {
+          "heading": "저장소 위치",
+          "statements": [
+            {
+              "text": "시크릿은 Vault에 저장한다.",
+              "evidence": [
+                {
+                  "document_id": "faq-q14",
+                  "quote": "Vault에 저장한다. 배포 전에 필수 시크릿 존재 여부가 자동 검사된다."
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "heading": "배포 전 검사",
+          "statements": [
+            {
+              "text": "배포 전에 필수 시크릿 존재 여부가 자동 검사된다.",
+              "evidence": [
+                {
+                  "document_id": "faq-q14",
+                  "quote": "Vault에 저장한다. 배포 전에 필수 시크릿 존재 여부가 자동 검사된다."
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "document_id": "faq-q15",
+      "summary": {
+        "text": "로컬 개발 환경은 저장소 루트에서 지정된 명령으로 구성한다.",
+        "evidence": [
+          {
+            "document_id": "faq-q15",
+            "quote": "저장소 루트에서 `docker compose up`을 실행하면 API·DB·Kafka가 함께 뜬다."
+          }
+        ]
+      },
+      "sections": [
+        {
+          "heading": "구성 방법",
+          "statements": [
+            {
+              "text": "저장소 루트에서 docker compose up을 실행하면 API·DB·Kafka가 함께 뜬다.",
+              "evidence": [
+                {
+                  "document_id": "faq-q15",
+                  "quote": "저장소 루트에서 `docker compose up`을 실행하면 API·DB·Kafka가 함께 뜬다."
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

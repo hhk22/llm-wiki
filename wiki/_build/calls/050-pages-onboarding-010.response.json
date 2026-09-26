@@ -1,0 +1,189 @@
+{
+  "pages": [
+    {
+      "document_id": "faq-q11",
+      "summary": {
+        "text": "카나리 배포는 10퍼센트, 50퍼센트, 100퍼센트 순서로 모든 서비스에 적용된다.",
+        "evidence": [
+          {
+            "document_id": "faq-q11",
+            "quote": "10% → 50% → 100% 순서로 진행한다. 모든 서비스에 적용된다."
+          }
+        ]
+      },
+      "sections": [
+        {
+          "heading": "진행 순서 및 적용 범위",
+          "statements": [
+            {
+              "text": "카나리 배포는 10%에서 50%, 그리고 100% 순서로 진행한다.",
+              "evidence": [
+                {
+                  "document_id": "faq-q11",
+                  "quote": "10% → 50% → 100% 순서로 진행한다. 모든 서비스에 적용된다."
+                }
+              ]
+            },
+            {
+              "text": "해당 배포 방식은 모든 서비스에 적용된다.",
+              "evidence": [
+                {
+                  "document_id": "faq-q11",
+                  "quote": "10% → 50% → 100% 순서로 진행한다. 모든 서비스에 적용된다."
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "document_id": "faq-q12",
+      "summary": {
+        "text": "이미지 태그는 서비스명과 깃 에스에이치에이 형식만 허용되고 최신 태그는 금지된다.",
+        "evidence": [
+          {
+            "document_id": "faq-q12",
+            "quote": "`<service>:<git-sha>` 형식만 허용한다. `latest`는 금지다."
+          }
+        ]
+      },
+      "sections": [
+        {
+          "heading": "태그 규칙",
+          "statements": [
+            {
+              "text": "이미지 태그는 `<service>:<git-sha>` 형식만 허용한다.",
+              "evidence": [
+                {
+                  "document_id": "faq-q12",
+                  "quote": "`<service>:<git-sha>` 형식만 허용한다. `latest`는 금지다."
+                }
+              ]
+            },
+            {
+              "text": "`latest` 태그 사용은 금지된다.",
+              "evidence": [
+                {
+                  "document_id": "faq-q12",
+                  "quote": "`<service>:<git-sha>` 형식만 허용한다. `latest`는 금지다."
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "document_id": "faq-q13",
+      "summary": {
+        "text": "디비 마이그레이션은 배포와 함께하지 않고 별도로 먼저 실행한다.",
+        "evidence": [
+          {
+            "document_id": "faq-q13",
+            "quote": "아니다. 배포 전에 별도로 먼저 실행한다."
+          }
+        ]
+      },
+      "sections": [
+        {
+          "heading": "실행 시점",
+          "statements": [
+            {
+              "text": "디비 마이그레이션은 배포와 함께 수행하지 않는다.",
+              "evidence": [
+                {
+                  "document_id": "faq-q13",
+                  "quote": "아니다. 배포 전에 별도로 먼저 실행한다."
+                }
+              ]
+            },
+            {
+              "text": "배포 전에 별도로 먼저 실행한다.",
+              "evidence": [
+                {
+                  "document_id": "faq-q13",
+                  "quote": "아니다. 배포 전에 별도로 먼저 실행한다."
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "document_id": "faq-q14",
+      "summary": {
+        "text": "시크릿은 볼트에 저장되며 배포 전에 필수 시크릿 존재 여부가 자동 검사된다.",
+        "evidence": [
+          {
+            "document_id": "faq-q14",
+            "quote": "Vault에 저장한다. 배포 전에 필수 시크릿 존재 여부가 자동 검사된다."
+          }
+        ]
+      },
+      "sections": [
+        {
+          "heading": "저장소 및 검사",
+          "statements": [
+            {
+              "text": "시크릿은 Vault에 저장한다.",
+              "evidence": [
+                {
+                  "document_id": "faq-q14",
+                  "quote": "Vault에 저장한다. 배포 전에 필수 시크릿 존재 여부가 자동 검사된다."
+                }
+              ]
+            },
+            {
+              "text": "배포 전에 필수 시크릿 존재 여부가 자동 검사된다.",
+              "evidence": [
+                {
+                  "document_id": "faq-q14",
+                  "quote": "Vault에 저장한다. 배포 전에 필수 시크릿 존재 여부가 자동 검사된다."
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "document_id": "faq-q15",
+      "summary": {
+        "text": "로컬 개발 환경은 저장소 루트에서 도커 컴포즈 업 명령으로 구성할 수 있다.",
+        "evidence": [
+          {
+            "document_id": "faq-q15",
+            "quote": "저장소 루트에서 `docker compose up`을 실행하면 API·DB·Kafka가 함께 뜬다."
+          }
+        ]
+      },
+      "sections": [
+        {
+          "heading": "로컬 구성",
+          "statements": [
+            {
+              "text": "저장소 루트에서 `docker compose up`을 실행한다.",
+              "evidence": [
+                {
+                  "document_id": "faq-q15",
+                  "quote": "저장소 루트에서 `docker compose up`을 실행하면 API·DB·Kafka가 함께 뜬다."
+                }
+              ]
+            },
+            {
+              "text": "이를 통해 API와 DB, Kafka가 함께 실행된다.",
+              "evidence": [
+                {
+                  "document_id": "faq-q15",
+                  "quote": "저장소 루트에서 `docker compose up`을 실행하면 API·DB·Kafka가 함께 뜬다."
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

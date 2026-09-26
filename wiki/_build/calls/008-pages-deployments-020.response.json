@@ -1,0 +1,473 @@
+{
+  "pages": [
+    {
+      "document_id": "deploy-guide-v21",
+      "summary": {
+        "text": "카나리 배포가 모든 서비스로 확대되어 10퍼센트에서 50퍼센트를 거쳐 100퍼센트 순서로 진행하도록 변경되었다.",
+        "evidence": [
+          {
+            "document_id": "deploy-guide-v21",
+            "quote": "- 변경: 카나리 배포를 모든 서비스로 확대한다. 10% → 50% → 100% 순서로 진행한다."
+          }
+        ]
+      },
+      "sections": [
+        {
+          "heading": "변경 사항",
+          "statements": [
+            {
+              "text": "카나리 배포를 모든 서비스로 확대하고 10%에서 50%를 거쳐 100% 순서로 진행하도록 변경되었다.",
+              "evidence": [
+                {
+                  "document_id": "deploy-guide-v21",
+                  "quote": "- 변경: 카나리 배포를 모든 서비스로 확대한다. 10% → 50% → 100% 순서로 진행한다."
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "heading": "현재 규칙",
+          "statements": [
+            {
+              "text": "배포 도구는 GitHub Actions를 사용한다.",
+              "evidence": [
+                {
+                  "document_id": "deploy-guide-v21",
+                  "quote": "- 배포 도구: GitHub Actions"
+                }
+              ]
+            },
+            {
+              "text": "배포 명령은 `deploy run --env prod`이다.",
+              "evidence": [
+                {
+                  "document_id": "deploy-guide-v21",
+                  "quote": "- 배포 명령: `deploy run --env prod`"
+                }
+              ]
+            },
+            {
+              "text": "롤백 명령은 `deploy rollback --to <version>`이며 승인이 불필요하다.",
+              "evidence": [
+                {
+                  "document_id": "deploy-guide-v21",
+                  "quote": "- 롤백 명령: `deploy rollback --to <version>` (승인 불필요)"
+                }
+              ]
+            },
+            {
+              "text": "배포 금지 시간은 금요일 오후와 공휴일 전날이다.",
+              "evidence": [
+                {
+                  "document_id": "deploy-guide-v21",
+                  "quote": "- 배포 금지 시간: 금요일 오후, 공휴일 전날"
+                }
+              ]
+            },
+            {
+              "text": "승인자는 팀 리드와 SRE 온콜이다.",
+              "evidence": [
+                {
+                  "document_id": "deploy-guide-v21",
+                  "quote": "- 승인자: 팀 리드 + SRE 온콜"
+                }
+              ]
+            },
+            {
+              "text": "이전 버전은 배포 가이드 v20이다.",
+              "evidence": [
+                {
+                  "document_id": "deploy-guide-v21",
+                  "quote": "- 이전 버전: 배포 가이드 v20"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "document_id": "deploy-guide-v22",
+      "summary": {
+        "text": "장애 리포트 #18 이후 목요일 오후 주간 정산 배치와의 충돌을 막기 위해 배포 금지 시간이 금요일 오후에서 목요일 오후로 변경되었다.",
+        "evidence": [
+          {
+            "document_id": "deploy-guide-v22",
+            "quote": "- 변경: 배포 금지 시간을 변경한다. 금요일 오후 대신 목요일 오후에 배포하지 않는다. 공휴일 전날은 유지한다."
+          },
+          {
+            "document_id": "deploy-guide-v22",
+            "quote": "- 이유: 장애 리포트 #18 이후 결정"
+          }
+        ]
+      },
+      "sections": [
+        {
+          "heading": "변경 및 이유",
+          "statements": [
+            {
+              "text": "금요일 오후 대신 목요일 오후에 배포하지 않도록 배포 금지 시간이 변경되었고 공휴일 전날은 유지된다.",
+              "evidence": [
+                {
+                  "document_id": "deploy-guide-v22",
+                  "quote": "- 변경: 배포 금지 시간을 변경한다. 금요일 오후 대신 목요일 오후에 배포하지 않는다. 공휴일 전날은 유지한다."
+                }
+              ]
+            },
+            {
+              "text": "목요일 오후 주간 정산 배치 중 배포가 실행되어 정산이 실패한 장애 리포트 #18 이후 결정되었다.",
+              "evidence": [
+                {
+                  "document_id": "deploy-guide-v22",
+                  "quote": "- 이유: 장애 리포트 #18 이후 결정"
+                },
+                {
+                  "document_id": "incident-18",
+                  "quote": "- 증상: 목요일 오후 주간 정산 배치 중 배포가 실행돼 정산이 실패했다."
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "heading": "현재 규칙",
+          "statements": [
+            {
+              "text": "배포 도구는 GitHub Actions이다.",
+              "evidence": [
+                {
+                  "document_id": "deploy-guide-v22",
+                  "quote": "- 배포 도구: GitHub Actions"
+                }
+              ]
+            },
+            {
+              "text": "배포 명령은 `deploy run --env prod`이다.",
+              "evidence": [
+                {
+                  "document_id": "deploy-guide-v22",
+                  "quote": "- 배포 명령: `deploy run --env prod`"
+                }
+              ]
+            },
+            {
+              "text": "롤백 명령은 `deploy rollback --to <version>`이며 승인이 불필요하다.",
+              "evidence": [
+                {
+                  "document_id": "deploy-guide-v22",
+                  "quote": "- 롤백 명령: `deploy rollback --to <version>` (승인 불필요)"
+                }
+              ]
+            },
+            {
+              "text": "배포 금지 시간은 목요일 오후와 공휴일 전날이다.",
+              "evidence": [
+                {
+                  "document_id": "deploy-guide-v22",
+                  "quote": "- 배포 금지 시간: 목요일 오후, 공휴일 전날"
+                }
+              ]
+            },
+            {
+              "text": "승인자는 팀 리드와 SRE 온콜이다.",
+              "evidence": [
+                {
+                  "document_id": "deploy-guide-v22",
+                  "quote": "- 승인자: 팀 리드 + SRE 온콜"
+                }
+              ]
+            },
+            {
+              "text": "이전 버전은 배포 가이드 v21이다.",
+              "evidence": [
+                {
+                  "document_id": "deploy-guide-v22",
+                  "quote": "- 이전 버전: 배포 가이드 v21"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "document_id": "deploy-guide-v23",
+      "summary": {
+        "text": "장애 리포트 #20의 동시 배포 충돌 문제 이후 동일 서비스의 동시 배포를 잠금으로 막도록 규칙이 변경되었다.",
+        "evidence": [
+          {
+            "document_id": "deploy-guide-v23",
+            "quote": "- 변경: GitHub Actions 오류 수정 (E-025 동시 배포 충돌). 같은 서비스의 동시 배포를 잠금으로 막는다."
+          },
+          {
+            "document_id": "deploy-guide-v23",
+            "quote": "- 이유: 장애 리포트 #20 이후 결정"
+          }
+        ]
+      },
+      "sections": [
+        {
+          "heading": "변경 및 이유",
+          "statements": [
+            {
+              "text": "GitHub Actions 오류 수정으로 E-025 동시 배포 충돌을 막기 위해 같은 서비스의 동시 배포를 잠금으로 막는다.",
+              "evidence": [
+                {
+                  "document_id": "deploy-guide-v23",
+                  "quote": "- 변경: GitHub Actions 오류 수정 (E-025 동시 배포 충돌). 같은 서비스의 동시 배포를 잠금으로 막는다."
+                }
+              ]
+            },
+            {
+              "text": "두 명이 동시에 배포해 버전이 섞인 장애 리포트 #20 이후 결정되었다.",
+              "evidence": [
+                {
+                  "document_id": "deploy-guide-v23",
+                  "quote": "- 이유: 장애 리포트 #20 이후 결정"
+                },
+                {
+                  "document_id": "incident-20",
+                  "quote": "- 원인: 같은 서비스의 동시 배포를 막는 장치가 없었다. (에러 코드 E-025)"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "heading": "현재 규칙",
+          "statements": [
+            {
+              "text": "배포 도구는 GitHub Actions이다.",
+              "evidence": [
+                {
+                  "document_id": "deploy-guide-v23",
+                  "quote": "- 배포 도구: GitHub Actions"
+                }
+              ]
+            },
+            {
+              "text": "배포 명령은 `deploy run --env prod`이다.",
+              "evidence": [
+                {
+                  "document_id": "deploy-guide-v23",
+                  "quote": "- 배포 명령: `deploy run --env prod`"
+                }
+              ]
+            },
+            {
+              "text": "롤백 명령은 `deploy rollback --to <version>`이며 승인이 불필요하다.",
+              "evidence": [
+                {
+                  "document_id": "deploy-guide-v23",
+                  "quote": "- 롤백 명령: `deploy rollback --to <version>` (승인 불필요)"
+                }
+              ]
+            },
+            {
+              "text": "배포 금지 시간은 목요일 오후와 공휴일 전날이다.",
+              "evidence": [
+                {
+                  "document_id": "deploy-guide-v23",
+                  "quote": "- 배포 금지 시간: 목요일 오후, 공휴일 전날"
+                }
+              ]
+            },
+            {
+              "text": "승인자는 팀 리드와 SRE 온콜이다.",
+              "evidence": [
+                {
+                  "document_id": "deploy-guide-v23",
+                  "quote": "- 승인자: 팀 리드 + SRE 온콜"
+                }
+              ]
+            },
+            {
+              "text": "이전 버전은 배포 가이드 v22이다.",
+              "evidence": [
+                {
+                  "document_id": "deploy-guide-v23",
+                  "quote": "- 이전 버전: 배포 가이드 v22"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "document_id": "deploy-guide-v24",
+      "summary": {
+        "text": "배포 승인자가 SRE 온콜에서 서비스 오너로 변경되었다.",
+        "evidence": [
+          {
+            "document_id": "deploy-guide-v24",
+            "quote": "- 변경: 배포 승인자를 변경한다. SRE 온콜 대신 서비스 오너가 승인한다."
+          }
+        ]
+      },
+      "sections": [
+        {
+          "heading": "변경 사항",
+          "statements": [
+            {
+              "text": "배포 승인자를 변경하여 SRE 온콜 대신 서비스 오너가 승인한다.",
+              "evidence": [
+                {
+                  "document_id": "deploy-guide-v24",
+                  "quote": "- 변경: 배포 승인자를 변경한다. SRE 온콜 대신 서비스 오너가 승인한다."
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "heading": "현재 규칙",
+          "statements": [
+            {
+              "text": "배포 도구는 GitHub Actions이다.",
+              "evidence": [
+                {
+                  "document_id": "deploy-guide-v24",
+                  "quote": "- 배포 도구: GitHub Actions"
+                }
+              ]
+            },
+            {
+              "text": "배포 명령은 `deploy run --env prod`이다.",
+              "evidence": [
+                {
+                  "document_id": "deploy-guide-v24",
+                  "quote": "- 배포 명령: `deploy run --env prod`"
+                }
+              ]
+            },
+            {
+              "text": "롤백 명령은 `deploy rollback --to <version>`이며 승인이 불필요하다.",
+              "evidence": [
+                {
+                  "document_id": "deploy-guide-v24",
+                  "quote": "- 롤백 명령: `deploy rollback --to <version>` (승인 불필요)"
+                }
+              ]
+            },
+            {
+              "text": "배포 금지 시간은 목요일 오후와 공휴일 전날이다.",
+              "evidence": [
+                {
+                  "document_id": "deploy-guide-v24",
+                  "quote": "- 배포 금지 시간: 목요일 오후, 공휴일 전날"
+                }
+              ]
+            },
+            {
+              "text": "승인자는 팀 리드와 서비스 오너이다.",
+              "evidence": [
+                {
+                  "document_id": "deploy-guide-v24",
+                  "quote": "- 승인자: 팀 리드 + 서비스 오너"
+                }
+              ]
+            },
+            {
+              "text": "이전 버전은 배포 가이드 v23이다.",
+              "evidence": [
+                {
+                  "document_id": "deploy-guide-v24",
+                  "quote": "- 이전 버전: 배포 가이드 v23"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "document_id": "deploy-guide-v25",
+      "summary": {
+        "text": "12월 22일부터 1월 2일까지의 연말 배포 동결 기간이 새롭게 지정되었다.",
+        "evidence": [
+          {
+            "document_id": "deploy-guide-v25",
+            "quote": "- 변경: 연말 배포 동결 기간을 정한다. 12월 22일부터 1월 2일까지 배포하지 않는다."
+          }
+        ]
+      },
+      "sections": [
+        {
+          "heading": "변경 사항",
+          "statements": [
+            {
+              "text": "연말 배포 동결 기간을 정하여 12월 22일부터 1월 2일까지 배포하지 않는다.",
+              "evidence": [
+                {
+                  "document_id": "deploy-guide-v25",
+                  "quote": "- 변경: 연말 배포 동결 기간을 정한다. 12월 22일부터 1월 2일까지 배포하지 않는다."
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "heading": "현재 규칙",
+          "statements": [
+            {
+              "text": "배포 도구는 GitHub Actions이다.",
+              "evidence": [
+                {
+                  "document_id": "deploy-guide-v25",
+                  "quote": "- 배포 도구: GitHub Actions"
+                }
+              ]
+            },
+            {
+              "text": "배포 명령은 `deploy run --env prod`이다.",
+              "evidence": [
+                {
+                  "document_id": "deploy-guide-v25",
+                  "quote": "- 배포 명령: `deploy run --env prod`"
+                }
+              ]
+            },
+            {
+              "text": "롤백 명령은 `deploy rollback --to <version>`이며 승인이 불필요하다.",
+              "evidence": [
+                {
+                  "document_id": "deploy-guide-v25",
+                  "quote": "- 롤백 명령: `deploy rollback --to <version>` (승인 불필요)"
+                }
+              ]
+            },
+            {
+              "text": "배포 금지 시간은 목요일 오후, 공휴일 전날, 12/22~1/2 연말 동결이다.",
+              "evidence": [
+                {
+                  "document_id": "deploy-guide-v25",
+                  "quote": "- 배포 금지 시간: 목요일 오후, 공휴일 전날, 12/22~1/2 연말 동결"
+                }
+              ]
+            },
+            {
+              "text": "승인자는 팀 리드와 서비스 오너이다.",
+              "evidence": [
+                {
+                  "document_id": "deploy-guide-v25",
+                  "quote": "- 승인자: 팀 리드 + 서비스 오너"
+                }
+              ]
+            },
+            {
+              "text": "이전 버전은 배포 가이드 v24이다.",
+              "evidence": [
+                {
+                  "document_id": "deploy-guide-v25",
+                  "quote": "- 이전 버전: 배포 가이드 v24"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

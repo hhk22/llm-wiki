@@ -1,0 +1,483 @@
+{
+  "pages": [
+    {
+      "document_id": "incident-21",
+      "summary": {
+        "text": "대규모 리팩터링 배포 후 스키마 변경으로 핫픽스 복구 및 feature flag 제한이 도입되었습니다.",
+        "evidence": [
+          {
+            "document_id": "incident-21",
+            "quote": "- 날짜: 2025-12-17"
+          },
+          {
+            "document_id": "incident-21",
+            "quote": "- 서비스: catalog-api"
+          },
+          {
+            "document_id": "incident-21",
+            "quote": "- 등급: SEV1"
+          },
+          {
+            "document_id": "incident-21",
+            "quote": "- 증상: 대규모 리팩터링 배포 후 장애가 났지만 롤백할 수 없었다."
+          },
+          {
+            "document_id": "incident-21",
+            "quote": "- 원인: DB 스키마가 함께 바뀌어 이전 버전이 동작하지 않았다. (에러 코드 E-020)"
+          },
+          {
+            "document_id": "incident-21",
+            "quote": "- 조치: 핫픽스로 복구했다. feature flag 없는 대규모 변경을 금지했다."
+          },
+          {
+            "document_id": "incident-21",
+            "quote": "- 후속 조치: 배포 가이드 v26에 반영"
+          }
+        ]
+      },
+      "sections": [
+        {
+          "heading": "장애 개요",
+          "statements": [
+            {
+              "text": "catalog-api 서비스에서 발생한 장애는 SEV1 등급으로 기록되었습니다.",
+              "evidence": [
+                {
+                  "document_id": "incident-21",
+                  "quote": "- 날짜: 2025-12-17"
+                },
+                {
+                  "document_id": "incident-21",
+                  "quote": "- 서비스: catalog-api"
+                },
+                {
+                  "document_id": "incident-21",
+                  "quote": "- 등급: SEV1"
+                }
+              ]
+            },
+            {
+              "text": "대규모 리팩터링 배포 후 장애가 발생했으나 롤백을 수행할 수 없는 증상이 나타났습니다.",
+              "evidence": [
+                {
+                  "document_id": "incident-21",
+                  "quote": "- 증상: 대규모 리팩터링 배포 후 장애가 났지만 롤백할 수 없었다."
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "heading": "원인 및 대응",
+          "statements": [
+            {
+              "text": "DB 스키마가 함께 바뀌어 이전 버전이 동작하지 않았으며 에러 코드 E-020과 연관이 있습니다.",
+              "evidence": [
+                {
+                  "document_id": "incident-21",
+                  "quote": "- 원인: DB 스키마가 함께 바뀌어 이전 버전이 동작하지 않았다. (에러 코드 E-020)"
+                }
+              ]
+            },
+            {
+              "text": "핫픽스로 복구하고 feature flag 없는 대규모 변경을 금지하는 조치가 취해졌습니다.",
+              "evidence": [
+                {
+                  "document_id": "incident-21",
+                  "quote": "- 조치: 핫픽스로 복구했다. feature flag 없는 대규모 변경을 금지했다."
+                }
+              ]
+            },
+            {
+              "text": "이후 후속 조치로 배포 가이드 v26에 반영되었습니다.",
+              "evidence": [
+                {
+                  "document_id": "incident-21",
+                  "quote": "- 후속 조치: 배포 가이드 v26에 반영"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "document_id": "incident-22",
+      "summary": {
+        "text": "Vault 정책 변경으로 인한 시크릿 읽기 거부로 Pod가 종료되어 정책이 복구되었습니다.",
+        "evidence": [
+          {
+            "document_id": "incident-22",
+            "quote": "- 날짜: 2026-01-14"
+          },
+          {
+            "document_id": "incident-22",
+            "quote": "- 서비스: order-api, user-api"
+          },
+          {
+            "document_id": "incident-22",
+            "quote": "- 등급: SEV2"
+          },
+          {
+            "document_id": "incident-22",
+            "quote": "- 증상: 배포된 Pod가 시작 직후 종료를 반복했다."
+          },
+          {
+            "document_id": "incident-22",
+            "quote": "- 원인: Vault 정책 변경으로 시크릿 읽기가 거부됐다. (에러 코드 E-026)"
+          },
+          {
+            "document_id": "incident-22",
+            "quote": "- 조치: Vault 정책을 복구했다."
+          }
+        ]
+      },
+      "sections": [
+        {
+          "heading": "장애 개요",
+          "statements": [
+            {
+              "text": "order-api와 user-api 서비스에서 SEV2 등급의 장애가 발생했습니다.",
+              "evidence": [
+                {
+                  "document_id": "incident-22",
+                  "quote": "- 날짜: 2026-01-14"
+                },
+                {
+                  "document_id": "incident-22",
+                  "quote": "- 서비스: order-api, user-api"
+                },
+                {
+                  "document_id": "incident-22",
+                  "quote": "- 등급: SEV2"
+                }
+              ]
+            },
+            {
+              "text": "배포된 Pod가 시작 직후 종료를 반복하는 증상을 보였습니다.",
+              "evidence": [
+                {
+                  "document_id": "incident-22",
+                  "quote": "- 증상: 배포된 Pod가 시작 직후 종료를 반복했다."
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "heading": "원인 및 조치",
+          "statements": [
+            {
+              "text": "Vault 정책 변경으로 시크릿 읽기가 거부되어 에러 코드 E-026이 발생했습니다.",
+              "evidence": [
+                {
+                  "document_id": "incident-22",
+                  "quote": "- 원인: Vault 정책 변경으로 시크릿 읽기가 거부됐다. (에러 코드 E-026)"
+                }
+              ]
+            },
+            {
+              "text": "대응 조치로 Vault 정책을 복구했습니다.",
+              "evidence": [
+                {
+                  "document_id": "incident-22",
+                  "quote": "- 조치: Vault 정책을 복구했다."
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "document_id": "incident-23",
+      "summary": {
+        "text": "새 기능에 필요한 시크릿 미등록으로 배포가 실패하여 시크릿 등록 및 검사가 추가되었습니다.",
+        "evidence": [
+          {
+            "document_id": "incident-23",
+            "quote": "- 날짜: 2026-01-28"
+          },
+          {
+            "document_id": "incident-23",
+            "quote": "- 서비스: user-api"
+          },
+          {
+            "document_id": "incident-23",
+            "quote": "- 등급: SEV3"
+          },
+          {
+            "document_id": "incident-23",
+            "quote": "- 증상: 배포가 시크릿 누락으로 실패했다."
+          },
+          {
+            "document_id": "incident-23",
+            "quote": "- 원인: 새 기능에 필요한 시크릿이 Vault에 등록되지 않았다. (에러 코드 E-027)"
+          },
+          {
+            "document_id": "incident-23",
+            "quote": "- 조치: 시크릿을 등록했다. 배포 전 시크릿 검사를 추가했다."
+          },
+          {
+            "document_id": "incident-23",
+            "quote": "- 후속 조치: 배포 가이드 v28에 반영"
+          }
+        ]
+      },
+      "sections": [
+        {
+          "heading": "장애 개요",
+          "statements": [
+            {
+              "text": "user-api 서비스에서 발생한 장애는 SEV3 등급이었습니다.",
+              "evidence": [
+                {
+                  "document_id": "incident-23",
+                  "quote": "- 날짜: 2026-01-28"
+                },
+                {
+                  "document_id": "incident-23",
+                  "quote": "- 서비스: user-api"
+                },
+                {
+                  "document_id": "incident-23",
+                  "quote": "- 등급: SEV3"
+                }
+              ]
+            },
+            {
+              "text": "시크릿 누락으로 인해 배포가 실패하는 증상이 발생했습니다.",
+              "evidence": [
+                {
+                  "document_id": "incident-23",
+                  "quote": "- 증상: 배포가 시크릿 누락으로 실패했다."
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "heading": "원인 및 후속 조치",
+          "statements": [
+            {
+              "text": "새 기능에 필요한 시크릿이 Vault에 등록되지 않아 에러 코드 E-027이 발생했습니다.",
+              "evidence": [
+                {
+                  "document_id": "incident-23",
+                  "quote": "- 원인: 새 기능에 필요한 시크릿이 Vault에 등록되지 않았다. (에러 코드 E-027)"
+                }
+              ]
+            },
+            {
+              "text": "시크릿을 등록하고 배포 전 시크릿 검사를 추가하는 조치가 취해졌습니다.",
+              "evidence": [
+                {
+                  "document_id": "incident-23",
+                  "quote": "- 조치: 시크릿을 등록했다. 배포 전 시크릿 검사를 추가했다."
+                }
+              ]
+            },
+            {
+              "text": "이후 후속 조치로 배포 가이드 v28에 반영되었습니다.",
+              "evidence": [
+                {
+                  "document_id": "incident-23",
+                  "quote": "- 후속 조치: 배포 가이드 v28에 반영"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "document_id": "incident-24",
+      "summary": {
+        "text": "원인 분석 미비로 이전과 동일한 장애가 재발하여 롤백 및 포스트모템 의무화가 도입되었습니다.",
+        "evidence": [
+          {
+            "document_id": "incident-24",
+            "quote": "- 날짜: 2026-02-11"
+          },
+          {
+            "document_id": "incident-24",
+            "quote": "- 서비스: order-api"
+          },
+          {
+            "document_id": "incident-24",
+            "quote": "- 등급: SEV2"
+          },
+          {
+            "document_id": "incident-24",
+            "quote": "- 증상: 1월에 롤백한 것과 같은 장애가 재발했다."
+          },
+          {
+            "document_id": "incident-24",
+            "quote": "- 원인: 이전 롤백 후 원인 분석을 하지 않아 같은 코드가 다시 배포됐다. (에러 코드 E-001)"
+          },
+          {
+            "document_id": "incident-24",
+            "quote": "- 조치: 롤백했다. 롤백 후 포스트모템 작성을 의무화했다."
+          },
+          {
+            "document_id": "incident-24",
+            "quote": "- 후속 조치: 배포 가이드 v29에 반영"
+          }
+        ]
+      },
+      "sections": [
+        {
+          "heading": "장애 개요",
+          "statements": [
+            {
+              "text": "order-api 서비스에서 SEV2 등급의 장애가 발생했습니다.",
+              "evidence": [
+                {
+                  "document_id": "incident-24",
+                  "quote": "- 날짜: 2026-02-11"
+                },
+                {
+                  "document_id": "incident-24",
+                  "quote": "- 서비스: order-api"
+                },
+                {
+                  "document_id": "incident-24",
+                  "quote": "- 등급: SEV2"
+                }
+              ]
+            },
+            {
+              "text": "1월에 롤백했던 것과 동일한 장애가 재발하는 증상이 있었습니다.",
+              "evidence": [
+                {
+                  "document_id": "incident-24",
+                  "quote": "- 증상: 1월에 롤백한 것과 같은 장애가 재발했다."
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "heading": "원인 및 조치",
+          "statements": [
+            {
+              "text": "이전 롤백 후 원인 분석을 수행하지 않아 같은 코드가 다시 배포되었으며 에러 코드 E-001과 관련이 있습니다.",
+              "evidence": [
+                {
+                  "document_id": "incident-24",
+                  "quote": "- 원인: 이전 롤백 후 원인 분석을 하지 않아 같은 코드가 다시 배포됐다. (에러 코드 E-001)"
+                }
+              ]
+            },
+            {
+              "text": "조치로 롤백을 수행하고 롤백 후 포스트모템 작성을 의무화하였습니다.",
+              "evidence": [
+                {
+                  "document_id": "incident-24",
+                  "quote": "- 조치: 롤백했다. 롤백 후 포스트모템 작성을 의무화했다."
+                }
+              ]
+            },
+            {
+              "text": "후속 조치 사항은 배포 가이드 v29에 반영되었습니다.",
+              "evidence": [
+                {
+                  "document_id": "incident-24",
+                  "quote": "- 후속 조치: 배포 가이드 v29에 반영"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "document_id": "incident-25",
+      "summary": {
+        "text": "노드 리소스 부족으로 Pod가 Pending 상태가 되어 노드가 추가되었습니다.",
+        "evidence": [
+          {
+            "document_id": "incident-25",
+            "quote": "- 날짜: 2026-02-25"
+          },
+          {
+            "document_id": "incident-25",
+            "quote": "- 서비스: admin-web"
+          },
+          {
+            "document_id": "incident-25",
+            "quote": "- 등급: SEV3"
+          },
+          {
+            "document_id": "incident-25",
+            "quote": "- 증상: 새 Pod가 Pending 상태로 10분간 시작되지 않았다."
+          },
+          {
+            "document_id": "incident-25",
+            "quote": "- 원인: 노드 리소스가 부족했다. (에러 코드 E-028)"
+          },
+          {
+            "document_id": "incident-25",
+            "quote": "- 조치: 노드를 추가했다."
+          }
+        ]
+      },
+      "sections": [
+        {
+          "heading": "장애 개요",
+          "statements": [
+            {
+              "text": "admin-web 서비스에서 SEV3 등급의 장애가 발생했습니다.",
+              "evidence": [
+                {
+                  "document_id": "incident-25",
+                  "quote": "- 날짜: 2026-02-25"
+                },
+                {
+                  "document_id": "incident-25",
+                  "quote": "- 서비스: admin-web"
+                },
+                {
+                  "document_id": "incident-25",
+                  "quote": "- 등급: SEV3"
+                }
+              ]
+            },
+            {
+              "text": "새 Pod가 Pending 상태로 10분간 시작되지 않는 증상이 발생했습니다.",
+              "evidence": [
+                {
+                  "document_id": "incident-25",
+                  "quote": "- 증상: 새 Pod가 Pending 상태로 10분간 시작되지 않았다."
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "heading": "원인 및 조치",
+          "statements": [
+            {
+              "text": "노드 리소스가 부족하여 에러 코드 E-028이 발생했습니다.",
+              "evidence": [
+                {
+                  "document_id": "incident-25",
+                  "quote": "- 원인: 노드 리소스가 부족했다. (에러 코드 E-028)"
+                }
+              ]
+            },
+            {
+              "text": "조치로 노드를 추가했습니다.",
+              "evidence": [
+                {
+                  "document_id": "incident-25",
+                  "quote": "- 조치: 노드를 추가했다."
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

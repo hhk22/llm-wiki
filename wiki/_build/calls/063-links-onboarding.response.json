@@ -1,0 +1,76 @@
+{
+  "pages": [
+    {
+      "document_id": "faq-q07",
+      "related": [
+        {
+          "document_id": "incident-12",
+          "reason": "GitHub Actions 전환 후 배포 권한 부족으로 배포가 중간에 실패하는 장애가 발생했다."
+        }
+      ]
+    },
+    {
+      "document_id": "faq-q10",
+      "related": [
+        {
+          "document_id": "incident-24",
+          "reason": "원인 분석 부재로 인해 1월에 롤백했던 것과 동일한 주문 검증 오류 장애가 재발했다."
+        }
+      ]
+    },
+    {
+      "document_id": "faq-q13",
+      "related": [
+        {
+          "document_id": "incident-08",
+          "reason": "배포 중 서비스가 다운된 장애 리포트입니다."
+        }
+      ]
+    },
+    {
+      "document_id": "faq-q18",
+      "related": [
+        {
+          "document_id": "incident-15",
+          "reason": "메모리 누수가 헬스체크에서 드러나지 않아 배포 후 Pod가 반복 재시작되는 장애가 발생했다."
+        }
+      ]
+    },
+    {
+      "document_id": "faq-q19",
+      "related": [
+        {
+          "document_id": "deploy-guide-v02",
+          "reason": "prod 배포 전에 staging 배포 단계를 추가한 배포 가이드 v2 규칙이다."
+        }
+      ]
+    },
+    {
+      "document_id": "faq-q20",
+      "related": [
+        {
+          "document_id": "incident-21",
+          "reason": "대규모 리팩터링 배포 후 스키마 변경으로 롤백이 불가능한 SEV1 등급의 catalog-api 장애가 발생했다."
+        }
+      ]
+    },
+    {
+      "document_id": "faq-q26",
+      "related": [
+        {
+          "document_id": "incident-30",
+          "reason": "readiness 경로 변경으로 인한 헬스체크 실패 자동 중단 장애를 경로 수정 후 재배포하여 조치했다."
+        }
+      ]
+    },
+    {
+      "document_id": "faq-q28",
+      "related": [
+        {
+          "document_id": "incident-16",
+          "reason": "외부 요청이 전부 TLS 오류로 실패한 api-gateway 인증서 만료 장애 리포트입니다."
+        }
+      ]
+    }
+  ]
+}

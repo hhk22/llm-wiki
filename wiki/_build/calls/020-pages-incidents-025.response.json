@@ -1,0 +1,360 @@
+{
+  "pages": [
+    {
+      "document_id": "incident-26",
+      "summary": {
+        "text": "목요일 오후 배포 시도 중 배포 금지 시간 위반 에러 코드로 인해 차단되었다.",
+        "evidence": [
+          {
+            "document_id": "incident-26",
+            "quote": "- 원인: 배포 금지 시간에 배포를 시도했다. (에러 코드 E-030)"
+          }
+        ]
+      },
+      "sections": [
+        {
+          "heading": "개요",
+          "statements": [
+            {
+              "text": "2026-03-04에 payment-api 서비스에서 SEV3 등급의 장애가 발생했다.",
+              "evidence": [
+                {
+                  "document_id": "incident-26",
+                  "quote": "- 날짜: 2026-03-04"
+                },
+                {
+                  "document_id": "incident-26",
+                  "quote": "- 서비스: payment-api"
+                },
+                {
+                  "document_id": "incident-26",
+                  "quote": "- 등급: SEV3"
+                }
+              ]
+            },
+            {
+              "text": "목요일 오후 배포 시도가 차단되었다.",
+              "evidence": [
+                {
+                  "document_id": "incident-26",
+                  "quote": "- 증상: 목요일 오후 배포 시도가 차단됐다."
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "heading": "원인과 대응",
+          "statements": [
+            {
+              "text": "배포 금지 시간에 배포를 시도하여 에러 코드 E-030이 발생했다.",
+              "evidence": [
+                {
+                  "document_id": "incident-26",
+                  "quote": "- 원인: 배포 금지 시간에 배포를 시도했다. (에러 코드 E-030)"
+                }
+              ]
+            },
+            {
+              "text": "차단이 정상 작동하여 다음 날 배포를 진행했다.",
+              "evidence": [
+                {
+                  "document_id": "incident-26",
+                  "quote": "- 조치: 차단이 정상 작동했다. 다음 날 배포했다."
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "document_id": "incident-27",
+      "summary": {
+        "text": "관리자 API 권한 오류가 발생하여 잘못 배포된 역할 매핑 설정을 수정해 재배포했다.",
+        "evidence": [
+          {
+            "document_id": "incident-27",
+            "quote": "- 원인: 역할 매핑 설정이 잘못 배포됐다. (에러 코드 E-006)"
+          },
+          {
+            "document_id": "incident-27",
+            "quote": "- 조치: 설정을 수정해 재배포했다."
+          }
+        ]
+      },
+      "sections": [
+        {
+          "heading": "장애 개요",
+          "statements": [
+            {
+              "text": "2026-03-11에 api-gateway 서비스에서 SEV2 등급의 장애가 발생했다.",
+              "evidence": [
+                {
+                  "document_id": "incident-27",
+                  "quote": "- 날짜: 2026-03-11"
+                },
+                {
+                  "document_id": "incident-27",
+                  "quote": "- 서비스: api-gateway"
+                },
+                {
+                  "document_id": "incident-27",
+                  "quote": "- 등급: SEV2"
+                }
+              ]
+            },
+            {
+              "text": "관리자 API 호출이 전부 권한 오류를 반환했다.",
+              "evidence": [
+                {
+                  "document_id": "incident-27",
+                  "quote": "- 증상: 관리자 API 호출이 전부 권한 오류를 반환했다."
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "heading": "원인과 조치",
+          "statements": [
+            {
+              "text": "역할 매핑 설정이 잘못 배포되어 에러 코드 E-006이 발생했다.",
+              "evidence": [
+                {
+                  "document_id": "incident-27",
+                  "quote": "- 원인: 역할 매핑 설정이 잘못 배포됐다. (에러 코드 E-006)"
+                }
+              ]
+            },
+            {
+              "text": "설정을 수정하여 재배포했다.",
+              "evidence": [
+                {
+                  "document_id": "incident-27",
+                  "quote": "- 조치: 설정을 수정해 재배포했다."
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "document_id": "incident-28",
+      "summary": {
+        "text": "외부 발송 서비스 API 키 회수로 인한 주문 완료 알림 미발송 장애를 새 키 발급으로 조치했다.",
+        "evidence": [
+          {
+            "document_id": "incident-28",
+            "quote": "- 원인: 외부 발송 서비스 API 키가 회수됐다. (에러 코드 E-010)"
+          },
+          {
+            "document_id": "incident-28",
+            "quote": "- 조치: 새 키를 발급받아 교체했다."
+          }
+        ]
+      },
+      "sections": [
+        {
+          "heading": "장애 개요",
+          "statements": [
+            {
+              "text": "2026-03-18에 notification-worker 서비스에서 SEV3 등급의 장애가 발생했다.",
+              "evidence": [
+                {
+                  "document_id": "incident-28",
+                  "quote": "- 날짜: 2026-03-18"
+                },
+                {
+                  "document_id": "incident-28",
+                  "quote": "- 서비스: notification-worker"
+                },
+                {
+                  "document_id": "incident-28",
+                  "quote": "- 등급: SEV3"
+                }
+              ]
+            },
+            {
+              "text": "주문 완료 알림이 발송되지 않았다.",
+              "evidence": [
+                {
+                  "document_id": "incident-28",
+                  "quote": "- 증상: 주문 완료 알림이 발송되지 않았다."
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "heading": "원인과 조치",
+          "statements": [
+            {
+              "text": "외부 발송 서비스 API 키가 회수되어 에러 코드 E-010이 발생했다.",
+              "evidence": [
+                {
+                  "document_id": "incident-28",
+                  "quote": "- 원인: 외부 발송 서비스 API 키가 회수됐다. (에러 코드 E-010)"
+                }
+              ]
+            },
+            {
+              "text": "새 키를 발급받아 교체했다.",
+              "evidence": [
+                {
+                  "document_id": "incident-28",
+                  "quote": "- 조치: 새 키를 발급받아 교체했다."
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "document_id": "incident-29",
+      "summary": {
+        "text": "커넥션을 반환하지 않고 종료된 배치로 인해 발생한 DB 연결 실패 정산 중단 장애를 조치했다.",
+        "evidence": [
+          {
+            "document_id": "incident-29",
+            "quote": "- 원인: 배치가 커넥션을 반환하지 않고 종료됐다. (에러 코드 E-008)"
+          },
+          {
+            "document_id": "incident-29",
+            "quote": "- 조치: 커넥션 반환을 수정하고 배치를 재실행했다."
+          }
+        ]
+      },
+      "sections": [
+        {
+          "heading": "장애 개요",
+          "statements": [
+            {
+              "text": "2026-03-25에 settlement-pipeline 서비스에서 SEV2 등급의 장애가 발생했다.",
+              "evidence": [
+                {
+                  "document_id": "incident-29",
+                  "quote": "- 날짜: 2026-03-25"
+                },
+                {
+                  "document_id": "incident-29",
+                  "quote": "- 서비스: settlement-pipeline"
+                },
+                {
+                  "document_id": "incident-29",
+                  "quote": "- 등급: SEV2"
+                }
+              ]
+            },
+            {
+              "text": "정산 배치가 DB 연결 실패로 중단됐다.",
+              "evidence": [
+                {
+                  "document_id": "incident-29",
+                  "quote": "- 증상: 정산 배치가 DB 연결 실패로 중단됐다."
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "heading": "원인과 조치",
+          "statements": [
+            {
+              "text": "배치가 커넥션을 반환하지 않고 종료되어 에러 코드 E-008이 발생했다.",
+              "evidence": [
+                {
+                  "document_id": "incident-29",
+                  "quote": "- 원인: 배치가 커넥션을 반환하지 않고 종료됐다. (에러 코드 E-008)"
+                }
+              ]
+            },
+            {
+              "text": "커넥션 반환을 수정하고 배치를 재실행했다.",
+              "evidence": [
+                {
+                  "document_id": "incident-29",
+                  "quote": "- 조치: 커넥션 반환을 수정하고 배치를 재실행했다."
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "document_id": "incident-30",
+      "summary": {
+        "text": "readiness 경로 변경으로 인한 헬스체크 실패 자동 중단 장애를 경로 수정 후 재배포하여 조치했다.",
+        "evidence": [
+          {
+            "document_id": "incident-30",
+            "quote": "- 원인: readiness 경로가 새 버전에서 바뀌었다. (에러 코드 E-015)"
+          },
+          {
+            "document_id": "incident-30",
+            "quote": "- 조치: 헬스체크 경로를 수정해 재배포했다."
+          }
+        ]
+      },
+      "sections": [
+        {
+          "heading": "장애 개요",
+          "statements": [
+            {
+              "text": "2026-04-01에 catalog-api 서비스에서 SEV3 등급의 장애가 발생했다.",
+              "evidence": [
+                {
+                  "document_id": "incident-30",
+                  "quote": "- 날짜: 2026-04-01"
+                },
+                {
+                  "document_id": "incident-30",
+                  "quote": "- 서비스: catalog-api"
+                },
+                {
+                  "document_id": "incident-30",
+                  "quote": "- 등급: SEV3"
+                }
+              ]
+            },
+            {
+              "text": "배포가 헬스체크 실패로 자동 중단됐다.",
+              "evidence": [
+                {
+                  "document_id": "incident-30",
+                  "quote": "- 증상: 배포가 헬스체크 실패로 자동 중단됐다."
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "heading": "원인과 조치",
+          "statements": [
+            {
+              "text": "readiness 경로가 새 버전에서 바뀌어 에러 코드 E-015가 발생했다.",
+              "evidence": [
+                {
+                  "document_id": "incident-30",
+                  "quote": "- 원인: readiness 경로가 새 버전에서 바뀌었다. (에러 코드 E-015)"
+                }
+              ]
+            },
+            {
+              "text": "헬스체크 경로를 수정해 재배포했다.",
+              "evidence": [
+                {
+                  "document_id": "incident-30",
+                  "quote": "- 조치: 헬스체크 경로를 수정해 재배포했다."
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

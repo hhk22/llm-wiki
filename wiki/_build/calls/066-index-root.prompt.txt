@@ -1,0 +1,23 @@
+한국어 Wiki 전체 목차. 각 주제 ID를 정확히 한 번 포함한다. description은 짧은 탐색 안내다. 새로운 정책·사실·링크·HTML은 추가하지 않는다.
+[
+  {
+    "id": "deployments",
+    "title": "배포",
+    "summary": "배포 가이드 버전별 문서 탐색 가이드"
+  },
+  {
+    "id": "incidents",
+    "title": "장애",
+    "summary": "한국어 Wiki의 장애 리포트 목록을 주제별로 탐색하기 위한 목차입니다."
+  },
+  {
+    "id": "errors",
+    "title": "오류 코드",
+    "summary": "에러 코드 및 관련 장애에 대한 탐색 가이드입니다."
+  },
+  {
+    "id": "onboarding",
+    "title": "온보딩 FAQ",
+    "summary": "온보딩 FAQ 항목들을 주제별로 탐색하기 위한 목차입니다."
+  }
+]

@@ -1,0 +1,194 @@
+{
+  "pages": [
+    {
+      "document_id": "faq-q21",
+      "summary": {
+        "text": "배포 시 티켓 번호 필수 입력에 관한 FAQ 내용이다.",
+        "evidence": [
+          {
+            "document_id": "faq-q21",
+            "quote": "**Q. 배포할 때 티켓 번호가 꼭 필요한가요?**"
+          }
+        ]
+      },
+      "sections": [
+        {
+          "heading": "배포 티켓 번호 필수 여부",
+          "statements": [
+            {
+              "text": "배포할 때 티켓 번호는 필수이며 `--ticket <id>` 없이는 배포 명령이 실행되지 않는다.",
+              "evidence": [
+                {
+                  "document_id": "faq-q21",
+                  "quote": "**Q. 배포할 때 티켓 번호가 꼭 필요한가요?**"
+                },
+                {
+                  "document_id": "faq-q21",
+                  "quote": "그렇다. `--ticket <id>` 없이는 배포 명령이 실행되지 않는다."
+                },
+                {
+                  "document_id": "faq-q21",
+                  "quote": "- 관련 문서: 배포 가이드 v27"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "document_id": "faq-q22",
+      "summary": {
+        "text": "서비스 목록과 담당 팀 안내에 관한 FAQ 내용이다.",
+        "evidence": [
+          {
+            "document_id": "faq-q22",
+            "quote": "**Q. 서비스 목록과 담당 팀은 어디서 보나요?**"
+          }
+        ]
+      },
+      "sections": [
+        {
+          "heading": "서비스 목록과 담당 팀",
+          "statements": [
+            {
+              "text": "order-api와 catalog-api는 Order 팀이 담당한다.",
+              "evidence": [
+                {
+                  "document_id": "faq-q22",
+                  "quote": "**Q. 서비스 목록과 담당 팀은 어디서 보나요?**"
+                },
+                {
+                  "document_id": "faq-q22",
+                  "quote": "order-api·catalog-api는 Order 팀, payment-api·settlement-pipeline은 Payment 팀, api-gateway·user-api·notification-worker·admin-web은 Platform 팀이다."
+                }
+              ]
+            },
+            {
+              "text": "payment-api와 settlement-pipeline은 Payment 팀이 담당한다.",
+              "evidence": [
+                {
+                  "document_id": "faq-q22",
+                  "quote": "order-api·catalog-api는 Order 팀, payment-api·settlement-pipeline은 Payment 팀, api-gateway·user-api·notification-worker·admin-web은 Platform 팀이다."
+                }
+              ]
+            },
+            {
+              "text": "api-gateway, user-api, notification-worker, admin-web은 Platform 팀이 담당한다.",
+              "evidence": [
+                {
+                  "document_id": "faq-q22",
+                  "quote": "order-api·catalog-api는 Order 팀, payment-api·settlement-pipeline은 Payment 팀, api-gateway·user-api·notification-worker·admin-web은 Platform 팀이다."
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "document_id": "faq-q23",
+      "summary": {
+        "text": "업무용 Slack 채널 용도에 관한 FAQ 내용이다.",
+        "evidence": [
+          {
+            "document_id": "faq-q23",
+            "quote": "**Q. Slack 채널은 무엇을 쓰나요?**"
+          }
+        ]
+      },
+      "sections": [
+        {
+          "heading": "Slack 채널 용도",
+          "statements": [
+            {
+              "text": "`#deploy`는 배포 알림, `#incident`는 장애 대응, `#onboarding`은 신규 입사자 질문 채널로 사용한다.",
+              "evidence": [
+                {
+                  "document_id": "faq-q23",
+                  "quote": "**Q. Slack 채널은 무엇을 쓰나요?**"
+                },
+                {
+                  "document_id": "faq-q23",
+                  "quote": "`#deploy`는 배포 알림, `#incident`는 장애 대응, `#onboarding`은 신규 입사자 질문이다."
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "document_id": "faq-q24",
+      "summary": {
+        "text": "배포 알림 수신처에 관한 FAQ 내용이다.",
+        "evidence": [
+          {
+            "document_id": "faq-q24",
+            "quote": "**Q. 배포 알림은 어디로 오나요?**"
+          }
+        ]
+      },
+      "sections": [
+        {
+          "heading": "배포 알림 수신처",
+          "statements": [
+            {
+              "text": "Slack `#deploy` 채널로 시작 및 완료 알림이 자동 전송된다.",
+              "evidence": [
+                {
+                  "document_id": "faq-q24",
+                  "quote": "**Q. 배포 알림은 어디로 오나요?**"
+                },
+                {
+                  "document_id": "faq-q24",
+                  "quote": "Slack `#deploy` 채널로 시작·완료 알림이 자동 전송된다."
+                },
+                {
+                  "document_id": "faq-q24",
+                  "quote": "- 관련 문서: 배포 가이드 v10"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "document_id": "faq-q25",
+      "summary": {
+        "text": "API 요청 한도 기준과 초과 시 에러 코드에 관한 FAQ 내용이다.",
+        "evidence": [
+          {
+            "document_id": "faq-q25",
+            "quote": "**Q. API 요청 한도는 어떻게 되나요?**"
+          }
+        ]
+      },
+      "sections": [
+        {
+          "heading": "API 요청 한도 규정",
+          "statements": [
+            {
+              "text": "API 요청 한도는 사용자 ID 기준으로 분당 600회이며 초과하면 E-007이 반환된다.",
+              "evidence": [
+                {
+                  "document_id": "faq-q25",
+                  "quote": "**Q. API 요청 한도는 어떻게 되나요?**"
+                },
+                {
+                  "document_id": "faq-q25",
+                  "quote": "사용자 ID 기준으로 분당 600회다. 초과하면 E-007이 반환된다."
+                },
+                {
+                  "document_id": "faq-q25",
+                  "quote": "- 관련 문서: 에러 코드 E-007"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

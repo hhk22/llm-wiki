@@ -1,0 +1,274 @@
+{
+  "pages": [
+    {
+      "document_id": "faq-q11",
+      "summary": {
+        "text": "카나리 배포 비율은 모든 서비스에 10프로에서 50프로 그리고 100프로 순서로 진행된다.",
+        "evidence": [
+          {
+            "document_id": "faq-q11",
+            "quote": "10% → 50% → 100% 순서로 진행한다. 모든 서비스에 적용된다."
+          }
+        ]
+      },
+      "sections": [
+        {
+          "heading": "진행 순서",
+          "statements": [
+            {
+              "text": "배포는 10퍼센트에서 50퍼센트를 거쳐 100퍼센트 순서로 진행된다.",
+              "evidence": [
+                {
+                  "document_id": "faq-q11",
+                  "quote": "10% → 50% → 100% 순서로 진행한다. 모든 서비스에 적용된다."
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "heading": "적용 범위",
+          "statements": [
+            {
+              "text": "해당 카나리 배포는 모든 서비스에 적용된다.",
+              "evidence": [
+                {
+                  "document_id": "faq-q11",
+                  "quote": "10% → 50% → 100% 순서로 진행한다. 모든 서비스에 적용된다."
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "heading": "관련 문서",
+          "statements": [
+            {
+              "text": "관련 문서는 배포 가이드 v21이다.",
+              "evidence": [
+                {
+                  "document_id": "faq-q11",
+                  "quote": "- 관련 문서: 배포 가이드 v21"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "document_id": "faq-q12",
+      "summary": {
+        "text": "이미지 태그는 서비스명과 깃 에스에이치에이 형식만 허용되며 레이테스트는 금지된다.",
+        "evidence": [
+          {
+            "document_id": "faq-q12",
+            "quote": "`<service>:<git-sha>` 형식만 허용한다. `latest`는 금지다."
+          }
+        ]
+      },
+      "sections": [
+        {
+          "heading": "허용 형식",
+          "statements": [
+            {
+              "text": "이미지 태그는 서비스명과 깃 에스에이치에이 형식만 허용한다.",
+              "evidence": [
+                {
+                  "document_id": "faq-q12",
+                  "quote": "`<service>:<git-sha>` 형식만 허용한다. `latest`는 금지다."
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "heading": "금지 사항",
+          "statements": [
+            {
+              "text": "레이테스트 사용은 금지된다.",
+              "evidence": [
+                {
+                  "document_id": "faq-q12",
+                  "quote": "`<service>:<git-sha>` 형식만 허용한다. `latest`는 금지다."
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "heading": "관련 문서",
+          "statements": [
+            {
+              "text": "관련 문서는 배포 가이드 v8과 에러 코드 E-014이다.",
+              "evidence": [
+                {
+                  "document_id": "faq-q12",
+                  "quote": "- 관련 문서: 배포 가이드 v8, 에러 코드 E-014"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "document_id": "faq-q13",
+      "summary": {
+        "text": "디비 마이그레이션은 배포와 함께하지 않으며 배포 전에 별도로 먼저 실행한다.",
+        "evidence": [
+          {
+            "document_id": "faq-q13",
+            "quote": "아니다. 배포 전에 별도로 먼저 실행한다."
+          }
+        ]
+      },
+      "sections": [
+        {
+          "heading": "실행 시점",
+          "statements": [
+            {
+              "text": "디비 마이그레이션은 배포와 함께하지 않으며 배포 전에 별도로 먼저 실행한다.",
+              "evidence": [
+                {
+                  "document_id": "faq-q13",
+                  "quote": "아니다. 배포 전에 별도로 먼저 실행한다."
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "heading": "관련 근거 종합",
+          "statements": [
+            {
+              "text": "장애 리포트 #08에 따르면 결제 에이피아이 서비스 배포 중 동시 실행된 마이그레이션 실패로 20분간 서비스가 다운되는 SEV1 등급 장애가 발생하여, 마이그레이션을 수동 완료한 뒤 재배포하는 조치를 거쳐 배포 가이드 v9에 반영되었다.",
+              "evidence": [
+                {
+                  "document_id": "incident-08",
+                  "quote": "- 원인: 배포와 동시에 실행된 마이그레이션이 실패했다. (에러 코드 E-018)"
+                },
+                {
+                  "document_id": "incident-08",
+                  "quote": "- 조치: 마이그레이션을 수동 완료한 뒤 재배포했다."
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "heading": "관련 문서",
+          "statements": [
+            {
+              "text": "관련 문서는 배포 가이드 v9 및 장애 리포트 #08이다.",
+              "evidence": [
+                {
+                  "document_id": "faq-q13",
+                  "quote": "- 관련 문서: 배포 가이드 v9, 장애 리포트 #08"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "document_id": "faq-q14",
+      "summary": {
+        "text": "시크릿은 볼트에 저장되며 배포 전에 필수 시크릿 존재 여부가 자동 검사된다.",
+        "evidence": [
+          {
+            "document_id": "faq-q14",
+            "quote": "Vault에 저장한다. 배포 전에 필수 시크릿 존재 여부가 자동 검사된다."
+          }
+        ]
+      },
+      "sections": [
+        {
+          "heading": "저장소",
+          "statements": [
+            {
+              "text": "시크릿은 볼트에 저장한다.",
+              "evidence": [
+                {
+                  "document_id": "faq-q14",
+                  "quote": "Vault에 저장한다. 배포 전에 필수 시크릿 존재 여부가 자동 검사된다."
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "heading": "검사 규칙",
+          "statements": [
+            {
+              "text": "배포 전에 필수 시크릿 존재 여부가 자동 검사된다.",
+              "evidence": [
+                {
+                  "document_id": "faq-q14",
+                  "quote": "Vault에 저장한다. 배포 전에 필수 시크릿 존재 여부가 자동 검사된다."
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "heading": "관련 문서",
+          "statements": [
+            {
+              "text": "관련 문서는 에러 코드 E-026 및 E-027이다.",
+              "evidence": [
+                {
+                  "document_id": "faq-q14",
+                  "quote": "- 관련 문서: 에러 코드 E-026, E-027"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "document_id": "faq-q15",
+      "summary": {
+        "text": "로컬 개발 환경은 저장소 루트에서 도커 컴포즈 업을 실행하여 구성한다.",
+        "evidence": [
+          {
+            "document_id": "faq-q15",
+            "quote": "저장소 루트에서 `docker compose up`을 실행하면 API·DB·Kafka가 함께 뜬다."
+          }
+        ]
+      },
+      "sections": [
+        {
+          "heading": "구성 방법",
+          "statements": [
+            {
+              "text": "저장소 루트에서 도커 컴포즈 업을 실행한다.",
+              "evidence": [
+                {
+                  "document_id": "faq-q15",
+                  "quote": "저장소 루트에서 `docker compose up`을 실행하면 API·DB·Kafka가 함께 뜬다."
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "heading": "실행 결과",
+          "statements": [
+            {
+              "text": "실행 시 에이피아이와 디비와 카프카가 함께 뜬다.",
+              "evidence": [
+                {
+                  "document_id": "faq-q15",
+                  "quote": "저장소 루트에서 `docker compose up`을 실행하면 API·DB·Kafka가 함께 뜬다."
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

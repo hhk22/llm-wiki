@@ -1,0 +1,217 @@
+{
+  "pages": [
+    {
+      "document_id": "faq-q06",
+      "summary": {
+        "text": "에러 코드는 E-001부터 E-030까지 코드별 의미, 원인 및 대응을 제공하는 문서에서 확인할 수 있다.",
+        "evidence": [
+          {
+            "document_id": "faq-q06",
+            "quote": "에러 코드 문서 E-001부터 E-030까지 코드별로 의미·원인·대응이 정리돼 있다."
+          },
+          {
+            "document_id": "faq-q06",
+            "quote": "- 관련 문서: 에러 코드 문서"
+          }
+        ]
+      },
+      "sections": [
+        {
+          "heading": "에러 코드 확인 방법",
+          "statements": [
+            {
+              "text": "에러 코드는 E-001부터 E-030까지 코드별로 의미·원인·대응이 정리돼 있다.",
+              "evidence": [
+                {
+                  "document_id": "faq-q06",
+                  "quote": "에러 코드 문서 E-001부터 E-030까지 코드별로 의미·원인·대응이 정리돼 있다."
+                }
+              ]
+            },
+            {
+              "text": "관련 문서는 에러 코드 문서이다.",
+              "evidence": [
+                {
+                  "document_id": "faq-q06",
+                  "quote": "- 관련 문서: 에러 코드 문서"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "document_id": "faq-q07",
+      "summary": {
+        "text": "배포 시 E-021 워크플로 권한 부족 에러가 발생하면 저장소 권한을 확인하고 장애 리포트 사례처럼 권한을 추가하여 해결한다.",
+        "evidence": [
+          {
+            "document_id": "faq-q07",
+            "quote": "워크플로 권한 부족이다. 저장소의 워크플로 권한에 `deployments: write`가 있는지 확인한다."
+          },
+          {
+            "document_id": "faq-q07",
+            "quote": "- 관련 문서: 에러 코드 E-021, 장애 리포트 #12"
+          }
+        ]
+      },
+      "sections": [
+        {
+          "heading": "E-021 에러 조치 방법",
+          "statements": [
+            {
+              "text": "워크플로 권한 부족인 경우 저장소의 워크플로 권한에 `deployments: write`가 있는지 확인한다.",
+              "evidence": [
+                {
+                  "document_id": "faq-q07",
+                  "quote": "워크플로 권한 부족이다. 저장소의 워크플로 권한에 `deployments: write`가 있는지 확인한다."
+                }
+              ]
+            },
+            {
+              "text": "관련 문서로 에러 코드 E-021과 함께, GitHub Actions 전환 후 권한 부족(에러 코드 E-021)으로 배포가 중간에 실패하여 권한을 추가하고 다시 실행했던 장애 리포트 #12를 참고한다.",
+              "evidence": [
+                {
+                  "document_id": "faq-q07",
+                  "quote": "- 관련 문서: 에러 코드 E-021, 장애 리포트 #12"
+                },
+                {
+                  "document_id": "incident-12",
+                  "quote": "- 원인: 워크플로에 배포 권한이 없었다. (에러 코드 E-021)"
+                },
+                {
+                  "document_id": "incident-12",
+                  "quote": "- 조치: 권한을 추가하고 배포를 다시 실행했다."
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "document_id": "faq-q08",
+      "summary": {
+        "text": "장애 발생 시 SRE 온콜에게 알리고 Slack `#incident` 채널에 상황을 남겨야 한다.",
+        "evidence": [
+          {
+            "document_id": "faq-q08",
+            "quote": "SRE 온콜에게 알리고 Slack `#incident` 채널에 상황을 남긴다."
+          },
+          {
+            "document_id": "faq-q08",
+            "quote": "- 관련 문서: 장애 리포트 작성 규칙"
+          }
+        ]
+      },
+      "sections": [
+        {
+          "heading": "장애 발생 시 알림 방법",
+          "statements": [
+            {
+              "text": "SRE 온콜에게 알리고 Slack `#incident` 채널에 상황을 남긴다.",
+              "evidence": [
+                {
+                  "document_id": "faq-q08",
+                  "quote": "SRE 온콜에게 알리고 Slack `#incident` 채널에 상황을 남긴다."
+                }
+              ]
+            },
+            {
+              "text": "관련 문서는 장애 리포트 작성 규칙이다.",
+              "evidence": [
+                {
+                  "document_id": "faq-q08",
+                  "quote": "- 관련 문서: 장애 리포트 작성 규칙"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "document_id": "faq-q09",
+      "summary": {
+        "text": "장애 등급은 서비스 전체 중단인 SEV1, 주요 기능 저하인 SEV2, 일부 사용자 영향인 SEV3로 구분된다.",
+        "evidence": [
+          {
+            "document_id": "faq-q09",
+            "quote": "SEV1은 서비스 전체 중단, SEV2는 주요 기능 저하, SEV3는 일부 사용자 영향이다."
+          },
+          {
+            "document_id": "faq-q09",
+            "quote": "- 관련 문서: 장애 리포트"
+          }
+        ]
+      },
+      "sections": [
+        {
+          "heading": "장애 등급 정의",
+          "statements": [
+            {
+              "text": "SEV1은 서비스 전체 중단, SEV2는 주요 기능 저하, SEV3는 일부 사용자 영향이다.",
+              "evidence": [
+                {
+                  "document_id": "faq-q09",
+                  "quote": "SEV1은 서비스 전체 중단, SEV2는 주요 기능 저하, SEV3는 일부 사용자 영향이다."
+                }
+              ]
+            },
+            {
+              "text": "관련 문서는 장애 리포트이다.",
+              "evidence": [
+                {
+                  "document_id": "faq-q09",
+                  "quote": "- 관련 문서: 장애 리포트"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "document_id": "faq-q10",
+      "summary": {
+        "text": "롤백한 장애의 경우 48시간 안에 포스트모템을 작성해야 한다.",
+        "evidence": [
+          {
+            "document_id": "faq-q10",
+            "quote": "롤백한 장애는 48시간 안에 작성한다."
+          },
+          {
+            "document_id": "faq-q10",
+            "quote": "- 관련 문서: 배포 가이드 v29, 장애 리포트 #24"
+          }
+        ]
+      },
+      "sections": [
+        {
+          "heading": "포스트모템 작성 시기",
+          "statements": [
+            {
+              "text": "롤백한 장애는 48시간 안에 작성한다.",
+              "evidence": [
+                {
+                  "document_id": "faq-q10",
+                  "quote": "롤백한 장애는 48시간 안에 작성한다."
+                }
+              ]
+            },
+            {
+              "text": "관련 문서는 배포 가이드 v29 및 장애 리포트 #24이다.",
+              "evidence": [
+                {
+                  "document_id": "faq-q10",
+                  "quote": "- 관련 문서: 배포 가이드 v29, 장애 리포트 #24"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

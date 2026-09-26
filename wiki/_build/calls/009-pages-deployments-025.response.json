@@ -1,0 +1,366 @@
+{
+  "pages": [
+    {
+      "document_id": "deploy-guide-v26",
+      "summary": {
+        "text": "feature flag 없는 대규모 변경을 금지하는 규정이 추가되었습니다.",
+        "evidence": [
+          {
+            "document_id": "deploy-guide-v26",
+            "quote": "- 변경: feature flag 없는 대규모 변경은 배포할 수 없다."
+          }
+        ]
+      },
+      "sections": [
+        {
+          "heading": "변경 사유",
+          "statements": [
+            {
+              "text": "장애 리포트 #21 이후 결정되었습니다.",
+              "evidence": [
+                {
+                  "document_id": "deploy-guide-v26",
+                  "quote": "- 이유: 장애 리포트 #21 이후 결정"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "heading": "현재 규칙",
+          "statements": [
+            {
+              "text": "배포 도구는 GitHub Actions를 사용합니다.",
+              "evidence": [
+                {
+                  "document_id": "deploy-guide-v26",
+                  "quote": "- 배포 도구: GitHub Actions"
+                }
+              ]
+            },
+            {
+              "text": "배포 명령은 `deploy run --env prod`입니다.",
+              "evidence": [
+                {
+                  "document_id": "deploy-guide-v26",
+                  "quote": "- 배포 명령: `deploy run --env prod`"
+                }
+              ]
+            },
+            {
+              "text": "롤백 명령은 `deploy rollback --to <version>`이며 승인이 불필요합니다.",
+              "evidence": [
+                {
+                  "document_id": "deploy-guide-v26",
+                  "quote": "- 롤백 명령: `deploy rollback --to <version>` (승인 불필요)"
+                }
+              ]
+            },
+            {
+              "text": "배포 금지 시간은 목요일 오후, 공휴일 전날, 12/22~1/2 연말 동결입니다.",
+              "evidence": [
+                {
+                  "document_id": "deploy-guide-v26",
+                  "quote": "- 배포 금지 시간: 목요일 오후, 공휴일 전날, 12/22~1/2 연말 동결"
+                }
+              ]
+            },
+            {
+              "text": "승인자는 팀 리드와 서비스 오너입니다.",
+              "evidence": [
+                {
+                  "document_id": "deploy-guide-v26",
+                  "quote": "- 승인자: 팀 리드 + 서비스 오너"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "document_id": "deploy-guide-v27",
+      "summary": {
+        "text": "배포 명령에 변경 티켓 번호를 필수로 입력하도록 규정이 변경되었습니다.",
+        "evidence": [
+          {
+            "document_id": "deploy-guide-v27",
+            "quote": "- 변경: 배포 명령에 변경 티켓 번호를 필수로 붙인다."
+          }
+        ]
+      },
+      "sections": [
+        {
+          "heading": "현재 규칙",
+          "statements": [
+            {
+              "text": "배포 도구는 GitHub Actions를 사용합니다.",
+              "evidence": [
+                {
+                  "document_id": "deploy-guide-v27",
+                  "quote": "- 배포 도구: GitHub Actions"
+                }
+              ]
+            },
+            {
+              "text": "배포 명령은 `deploy run --env prod --ticket <id>`입니다.",
+              "evidence": [
+                {
+                  "document_id": "deploy-guide-v27",
+                  "quote": "- 배포 명령: `deploy run --env prod --ticket <id>`"
+                }
+              ]
+            },
+            {
+              "text": "롤백 명령은 `deploy rollback --to <version>`이며 승인이 불필요합니다.",
+              "evidence": [
+                {
+                  "document_id": "deploy-guide-v27",
+                  "quote": "- 롤백 명령: `deploy rollback --to <version>` (승인 불필요)"
+                }
+              ]
+            },
+            {
+              "text": "배포 금지 시간은 목요일 오후, 공휴일 전날, 12/22~1/2 연말 동결입니다.",
+              "evidence": [
+                {
+                  "document_id": "deploy-guide-v27",
+                  "quote": "- 배포 금지 시간: 목요일 오후, 공휴일 전날, 12/22~1/2 연말 동결"
+                }
+              ]
+            },
+            {
+              "text": "승인자는 팀 리드와 서비스 오너입니다.",
+              "evidence": [
+                {
+                  "document_id": "deploy-guide-v27",
+                  "quote": "- 승인자: 팀 리드 + 서비스 오너"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "document_id": "deploy-guide-v28",
+      "summary": {
+        "text": "배포 전 필수 시크릿 존재를 검사하는 기능이 추가되었습니다.",
+        "evidence": [
+          {
+            "document_id": "deploy-guide-v28",
+            "quote": "- 변경: GitHub Actions 오류 수정 (E-027 시크릿 누락). 배포 전 필수 시크릿 존재를 검사한다."
+          }
+        ]
+      },
+      "sections": [
+        {
+          "heading": "변경 사유",
+          "statements": [
+            {
+              "text": "장애 리포트 #23 이후 결정되었습니다.",
+              "evidence": [
+                {
+                  "document_id": "deploy-guide-v28",
+                  "quote": "- 이유: 장애 리포트 #23 이후 결정"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "heading": "현재 규칙",
+          "statements": [
+            {
+              "text": "배포 도구는 GitHub Actions를 사용합니다.",
+              "evidence": [
+                {
+                  "document_id": "deploy-guide-v28",
+                  "quote": "- 배포 도구: GitHub Actions"
+                }
+              ]
+            },
+            {
+              "text": "배포 명령은 `deploy run --env prod --ticket <id>`입니다.",
+              "evidence": [
+                {
+                  "document_id": "deploy-guide-v28",
+                  "quote": "- 배포 명령: `deploy run --env prod --ticket <id>`"
+                }
+              ]
+            },
+            {
+              "text": "롤백 명령은 `deploy rollback --to <version>`이며 승인이 불필요합니다.",
+              "evidence": [
+                {
+                  "document_id": "deploy-guide-v28",
+                  "quote": "- 롤백 명령: `deploy rollback --to <version>` (승인 불필요)"
+                }
+              ]
+            },
+            {
+              "text": "배포 금지 시간은 목요일 오후, 공휴일 전날, 12/22~1/2 연말 동결입니다.",
+              "evidence": [
+                {
+                  "document_id": "deploy-guide-v28",
+                  "quote": "- 배포 금지 시간: 목요일 오후, 공휴일 전날, 12/22~1/2 연말 동결"
+                }
+              ]
+            },
+            {
+              "text": "승인자는 팀 리드와 서비스 오너입니다.",
+              "evidence": [
+                {
+                  "document_id": "deploy-guide-v28",
+                  "quote": "- 승인자: 팀 리드 + 서비스 오너"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "document_id": "deploy-guide-v29",
+      "summary": {
+        "text": "롤백 후 48시간 내 포스트모템 작성이 의무화되었습니다.",
+        "evidence": [
+          {
+            "document_id": "deploy-guide-v29",
+            "quote": "- 변경: 롤백 후 48시간 안에 포스트모템을 작성해야 한다."
+          }
+        ]
+      },
+      "sections": [
+        {
+          "heading": "변경 사유",
+          "statements": [
+            {
+              "text": "장애 리포트 #24 이후 결정되었습니다.",
+              "evidence": [
+                {
+                  "document_id": "deploy-guide-v29",
+                  "quote": "- 이유: 장애 리포트 #24 이후 결정"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "heading": "현재 규칙",
+          "statements": [
+            {
+              "text": "배포 도구는 GitHub Actions를 사용합니다.",
+              "evidence": [
+                {
+                  "document_id": "deploy-guide-v29",
+                  "quote": "- 배포 도구: GitHub Actions"
+                }
+              ]
+            },
+            {
+              "text": "배포 명령은 `deploy run --env prod --ticket <id>`입니다.",
+              "evidence": [
+                {
+                  "document_id": "deploy-guide-v29",
+                  "quote": "- 배포 명령: `deploy run --env prod --ticket <id>`"
+                }
+              ]
+            },
+            {
+              "text": "롤백 명령은 `deploy rollback --to <version>`이며 승인이 불필요합니다.",
+              "evidence": [
+                {
+                  "document_id": "deploy-guide-v29",
+                  "quote": "- 롤백 명령: `deploy rollback --to <version>` (승인 불필요)"
+                }
+              ]
+            },
+            {
+              "text": "배포 금지 시간은 목요일 오후, 공휴일 전날, 12/22~1/2 연말 동결입니다.",
+              "evidence": [
+                {
+                  "document_id": "deploy-guide-v29",
+                  "quote": "- 배포 금지 시간: 목요일 오후, 공휴일 전날, 12/22~1/2 연말 동결"
+                }
+              ]
+            },
+            {
+              "text": "승인자는 팀 리드와 서비스 오너입니다.",
+              "evidence": [
+                {
+                  "document_id": "deploy-guide-v29",
+                  "quote": "- 승인자: 팀 리드 + 서비스 오너"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "document_id": "deploy-guide-v30",
+      "summary": {
+        "text": "현재까지의 배포 규칙을 정리한 최종 버전입니다.",
+        "evidence": [
+          {
+            "document_id": "deploy-guide-v30",
+            "quote": "- 변경: 현재 규칙 정리본. 변경 없음."
+          }
+        ]
+      },
+      "sections": [
+        {
+          "heading": "현재 규칙",
+          "statements": [
+            {
+              "text": "배포 도구는 GitHub Actions를 사용합니다.",
+              "evidence": [
+                {
+                  "document_id": "deploy-guide-v30",
+                  "quote": "- 배포 도구: GitHub Actions"
+                }
+              ]
+            },
+            {
+              "text": "배포 명령은 `deploy run --env prod --ticket <id>`입니다.",
+              "evidence": [
+                {
+                  "document_id": "deploy-guide-v30",
+                  "quote": "- 배포 명령: `deploy run --env prod --ticket <id>`"
+                }
+              ]
+            },
+            {
+              "text": "롤백 명령은 `deploy rollback --to <version>`이며 승인이 불필요합니다.",
+              "evidence": [
+                {
+                  "document_id": "deploy-guide-v30",
+                  "quote": "- 롤백 명령: `deploy rollback --to <version>` (승인 불필요)"
+                }
+              ]
+            },
+            {
+              "text": "배포 금지 시간은 목요일 오후, 공휴일 전날, 12/22~1/2 연말 동결입니다.",
+              "evidence": [
+                {
+                  "document_id": "deploy-guide-v30",
+                  "quote": "- 배포 금지 시간: 목요일 오후, 공휴일 전날, 12/22~1/2 연말 동결"
+                }
+              ]
+            },
+            {
+              "text": "승인자는 팀 리드와 서비스 오너입니다.",
+              "evidence": [
+                {
+                  "document_id": "deploy-guide-v30",
+                  "quote": "- 승인자: 팀 리드 + 서비스 오너"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

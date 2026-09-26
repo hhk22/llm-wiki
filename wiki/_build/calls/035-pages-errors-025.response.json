@@ -1,0 +1,564 @@
+{
+  "pages": [
+    {
+      "document_id": "error-E-026",
+      "summary": {
+        "text": "에러 코드 E-026은 Vault 정책 변경이나 역할 매핑 오류로 인해 서비스가 시크릿을 읽지 못할 때 발생한다.",
+        "evidence": [
+          {
+            "document_id": "error-E-026",
+            "quote": "- 의미: 서비스가 Vault에서 시크릿을 읽을 수 없다."
+          },
+          {
+            "document_id": "error-E-026",
+            "quote": "- 원인: Vault 정책 변경 또는 역할 매핑 오류."
+          }
+        ]
+      },
+      "sections": [
+        {
+          "heading": "발생 정보",
+          "statements": [
+            {
+              "text": "에러 코드 E-026은 Vault에서 발생한다.",
+              "evidence": [
+                {
+                  "document_id": "error-E-026",
+                  "quote": "- 발생 위치: Vault"
+                }
+              ]
+            },
+            {
+              "text": "서비스가 Vault에서 시크릿을 읽을 수 없음을 의미한다.",
+              "evidence": [
+                {
+                  "document_id": "error-E-026",
+                  "quote": "- 의미: 서비스가 Vault에서 시크릿을 읽을 수 없다."
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "heading": "원인과 관련 장애",
+          "statements": [
+            {
+              "text": "원인은 Vault 정책 변경 또는 역할 매핑 오류이다.",
+              "evidence": [
+                {
+                  "document_id": "error-E-026",
+                  "quote": "- 원인: Vault 정책 변경 또는 역할 매핑 오류."
+                }
+              ]
+            },
+            {
+              "text": "관련 장애는 장애 리포트 #22이다.",
+              "evidence": [
+                {
+                  "document_id": "error-E-026",
+                  "quote": "- 관련 장애: 장애 리포트 #22"
+                }
+              ]
+            },
+            {
+              "text": "장애 리포트 #22의 날짜는 2026-01-14이며 order-api와 user-api 서비스에서 SEV2 등급으로 발생했다.",
+              "evidence": [
+                {
+                  "document_id": "incident-22",
+                  "quote": "- 날짜: 2026-01-14"
+                },
+                {
+                  "document_id": "incident-22",
+                  "quote": "- 서비스: order-api, user-api"
+                },
+                {
+                  "document_id": "incident-22",
+                  "quote": "- 등급: SEV2"
+                }
+              ]
+            },
+            {
+              "text": "장애 리포트 #22의 증상은 배포된 Pod가 시작 직후 종료를 반복한 것이며 원인은 Vault 정책 변경으로 시크릿 읽기가 거부된 것이고 조치는 Vault 정책을 복구한 것이다.",
+              "evidence": [
+                {
+                  "document_id": "incident-22",
+                  "quote": "- 증상: 배포된 Pod가 시작 직후 종료를 반복했다."
+                },
+                {
+                  "document_id": "incident-22",
+                  "quote": "- 원인: Vault 정책 변경으로 시크릿 읽기가 거부됐다. (에러 코드 E-026)"
+                },
+                {
+                  "document_id": "incident-22",
+                  "quote": "- 조치: Vault 정책을 복구했다."
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "heading": "대응 방법",
+          "statements": [
+            {
+              "text": "대응 방법은 Vault 정책을 확인하는 것이다.",
+              "evidence": [
+                {
+                  "document_id": "error-E-026",
+                  "quote": "- 대응: Vault 정책을 확인한다."
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "document_id": "error-E-027",
+      "summary": {
+        "text": "에러 코드 E-027은 새 기능의 시크릿이 Vault에 미등록되어 배포 시 시크릿이 누락되었을 때 발생한다.",
+        "evidence": [
+          {
+            "document_id": "error-E-027",
+            "quote": "- 의미: 필요한 시크릿이 Vault에 없다."
+          },
+          {
+            "document_id": "error-E-027",
+            "quote": "- 원인: 새 기능의 시크릿 미등록."
+          }
+        ]
+      },
+      "sections": [
+        {
+          "heading": "발생 정보",
+          "statements": [
+            {
+              "text": "에러 코드 E-027은 배포 위치에서 발생한다.",
+              "evidence": [
+                {
+                  "document_id": "error-E-027",
+                  "quote": "- 발생 위치: 배포"
+                }
+              ]
+            },
+            {
+              "text": "필요한 시크릿이 Vault에 없음을 의미한다.",
+              "evidence": [
+                {
+                  "document_id": "error-E-027",
+                  "quote": "- 의미: 필요한 시크릿이 Vault에 없다."
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "heading": "원인과 관련 장애",
+          "statements": [
+            {
+              "text": "원인은 새 기능의 시크릿 미등록이다.",
+              "evidence": [
+                {
+                  "document_id": "error-E-027",
+                  "quote": "- 원인: 새 기능의 시크릿 미등록."
+                }
+              ]
+            },
+            {
+              "text": "관련 장애는 장애 리포트 #23이다.",
+              "evidence": [
+                {
+                  "document_id": "error-E-027",
+                  "quote": "- 관련 장애: 장애 리포트 #23"
+                }
+              ]
+            },
+            {
+              "text": "장애 리포트 #23의 날짜는 2026-01-28이며 user-api 서비스에서 SEV3 등급으로 발생했다.",
+              "evidence": [
+                {
+                  "document_id": "incident-23",
+                  "quote": "- 날짜: 2026-01-28"
+                },
+                {
+                  "document_id": "incident-23",
+                  "quote": "- 서비스: user-api"
+                },
+                {
+                  "document_id": "incident-23",
+                  "quote": "- 등급: SEV3"
+                }
+              ]
+            },
+            {
+              "text": "장애 리포트 #23의 증상은 배포가 시크릿 누락으로 실패한 것이며 원인은 새 기능에 필요한 시크릿이 Vault에 등록되지 않은 것이고 조치는 시크릿을 등록하고 배포 전 시크릿 검사를 추가한 것이다.",
+              "evidence": [
+                {
+                  "document_id": "incident-23",
+                  "quote": "- 증상: 배포가 시크릿 누락으로 실패했다."
+                },
+                {
+                  "document_id": "incident-23",
+                  "quote": "- 원인: 새 기능에 필요한 시크릿이 Vault에 등록되지 않았다. (에러 코드 E-027)"
+                },
+                {
+                  "document_id": "incident-23",
+                  "quote": "- 조치: 시크릿을 등록했다. 배포 전 시크릿 검사를 추가했다."
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "heading": "대응 방법",
+          "statements": [
+            {
+              "text": "대응 방법은 시크릿을 등록하는 것이며 배포 가이드 v28에서 배포 전 검사가 추가되었다.",
+              "evidence": [
+                {
+                  "document_id": "error-E-027",
+                  "quote": "- 대응: 시크릿을 등록한다. 배포 가이드 v28에서 배포 전 검사가 추가됐다."
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "document_id": "error-E-028",
+      "summary": {
+        "text": "에러 코드 E-028은 노드의 CPU 및 메모리 부족으로 인해 Pod가 스케줄되지 못하고 Pending 상태가 될 때 발생한다.",
+        "evidence": [
+          {
+            "document_id": "error-E-028",
+            "quote": "- 의미: Pod가 스케줄되지 못하고 Pending 상태다."
+          },
+          {
+            "document_id": "error-E-028",
+            "quote": "- 원인: 노드 CPU·메모리 부족."
+          }
+        ]
+      },
+      "sections": [
+        {
+          "heading": "발생 정보",
+          "statements": [
+            {
+              "text": "에러 코드 E-028은 Kubernetes에서 발생한다.",
+              "evidence": [
+                {
+                  "document_id": "error-E-028",
+                  "quote": "- 발생 위치: Kubernetes"
+                }
+              ]
+            },
+            {
+              "text": "Pod가 스케줄되지 못하고 Pending 상태임을 의미한다.",
+              "evidence": [
+                {
+                  "document_id": "error-E-028",
+                  "quote": "- 의미: Pod가 스케줄되지 못하고 Pending 상태다."
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "heading": "원인과 관련 장애",
+          "statements": [
+            {
+              "text": "원인은 노드 CPU·메모리 부족이다.",
+              "evidence": [
+                {
+                  "document_id": "error-E-028",
+                  "quote": "- 원인: 노드 CPU·메모리 부족."
+                }
+              ]
+            },
+            {
+              "text": "관련 장애는 장애 리포트 #25이다.",
+              "evidence": [
+                {
+                  "document_id": "error-E-028",
+                  "quote": "- 관련 장애: 장애 리포트 #25"
+                }
+              ]
+            },
+            {
+              "text": "장애 리포트 #25의 날짜는 2026-02-25이며 admin-web 서비스에서 SEV3 등급으로 발생했다.",
+              "evidence": [
+                {
+                  "document_id": "incident-25",
+                  "quote": "- 날짜: 2026-02-25"
+                },
+                {
+                  "document_id": "incident-25",
+                  "quote": "- 서비스: admin-web"
+                },
+                {
+                  "document_id": "incident-25",
+                  "quote": "- 등급: SEV3"
+                }
+              ]
+            },
+            {
+              "text": "장애 리포트 #25의 증상은 새 Pod가 Pending 상태로 10분간 시작되지 않은 것이며 원인은 노드 리소스가 부족했던 것이고 조치는 노드를 추가한 것이다.",
+              "evidence": [
+                {
+                  "document_id": "incident-25",
+                  "quote": "- 증상: 새 Pod가 Pending 상태로 10분간 시작되지 않았다."
+                },
+                {
+                  "document_id": "incident-25",
+                  "quote": "- 원인: 노드 리소스가 부족했다. (에러 코드 E-028)"
+                },
+                {
+                  "document_id": "incident-25",
+                  "quote": "- 조치: 노드를 추가했다."
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "heading": "대응 방법",
+          "statements": [
+            {
+              "text": "대응 방법은 노드를 추가하거나 리소스 요청량을 조정하는 것이다.",
+              "evidence": [
+                {
+                  "document_id": "error-E-028",
+                  "quote": "- 대응: 노드를 추가하거나 리소스 요청량을 조정한다."
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "document_id": "error-E-029",
+      "summary": {
+        "text": "에러 코드 E-029는 갱신 누락으로 인해 TLS 인증서가 만료될 때 발생한다.",
+        "evidence": [
+          {
+            "document_id": "error-E-029",
+            "quote": "- 의미: TLS 인증서가 만료됐다."
+          },
+          {
+            "document_id": "error-E-029",
+            "quote": "- 원인: 갱신 누락."
+          }
+        ]
+      },
+      "sections": [
+        {
+          "heading": "발생 정보",
+          "statements": [
+            {
+              "text": "에러 코드 E-029는 api-gateway에서 발생한다.",
+              "evidence": [
+                {
+                  "document_id": "error-E-029",
+                  "quote": "- 발생 위치: api-gateway"
+                }
+              ]
+            },
+            {
+              "text": "TLS 인증서가 만료되었음을 의미한다.",
+              "evidence": [
+                {
+                  "document_id": "error-E-029",
+                  "quote": "- 의미: TLS 인증서가 만료됐다."
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "heading": "원인과 관련 장애",
+          "statements": [
+            {
+              "text": "원인은 갱신 누락이다.",
+              "evidence": [
+                {
+                  "document_id": "error-E-029",
+                  "quote": "- 원인: 갱신 누락."
+                }
+              ]
+            },
+            {
+              "text": "관련 장애는 장애 리포트 #16이다.",
+              "evidence": [
+                {
+                  "document_id": "error-E-029",
+                  "quote": "- 관련 장애: 장애 리포트 #16"
+                }
+              ]
+            },
+            {
+              "text": "장애 리포트 #16의 날짜는 2025-09-10이며 api-gateway 서비스에서 SEV2 등급으로 발생했다.",
+              "evidence": [
+                {
+                  "document_id": "incident-16",
+                  "quote": "- 날짜: 2025-09-10"
+                },
+                {
+                  "document_id": "incident-16",
+                  "quote": "- 서비스: api-gateway"
+                },
+                {
+                  "document_id": "incident-16",
+                  "quote": "- 등급: SEV2"
+                }
+              ]
+            },
+            {
+              "text": "장애 리포트 #16의 증상은 외부 요청이 전부 TLS 오류로 실패한 것이며 원인은 인증서가 만료되었고 갱신 알림이 없었던 것이고 조치는 인증서를 갱신하고 만료 30일 전 알림을 추가한 것이다.",
+              "evidence": [
+                {
+                  "document_id": "incident-16",
+                  "quote": "- 증상: 외부 요청이 전부 TLS 오류로 실패했다."
+                },
+                {
+                  "document_id": "incident-16",
+                  "quote": "- 원인: 인증서가 만료됐다. 갱신 알림이 없었다. (에러 코드 E-029)"
+                },
+                {
+                  "document_id": "incident-16",
+                  "quote": "- 조치: 인증서를 갱신하고 만료 30일 전 알림을 추가했다."
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "heading": "대응 방법",
+          "statements": [
+            {
+              "text": "대응 방법은 인증서를 갱신하는 것이며 만료 30일 전 알림을 확인한다.",
+              "evidence": [
+                {
+                  "document_id": "error-E-029",
+                  "quote": "- 대응: 인증서를 갱신한다. 만료 30일 전 알림을 확인한다."
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "document_id": "error-E-030",
+      "summary": {
+        "text": "에러 코드 E-030은 배포 가이드 최신 버전의 금지 시간을 미확인하여 배포 금지 시간에 배포를 시도할 때 발생한다.",
+        "evidence": [
+          {
+            "document_id": "error-E-030",
+            "quote": "- 의미: 배포 금지 시간에 배포를 시도했다."
+          },
+          {
+            "document_id": "error-E-030",
+            "quote": "- 원인: 배포 가이드 최신 버전의 금지 시간 미확인."
+          }
+        ]
+      },
+      "sections": [
+        {
+          "heading": "발생 정보",
+          "statements": [
+            {
+              "text": "에러 코드 E-030은 배포 위치에서 발생한다.",
+              "evidence": [
+                {
+                  "document_id": "error-E-030",
+                  "quote": "- 발생 위치: 배포"
+                }
+              ]
+            },
+            {
+              "text": "배포 금지 시간에 배포를 시도했음을 의미한다.",
+              "evidence": [
+                {
+                  "document_id": "error-E-030",
+                  "quote": "- 의미: 배포 금지 시간에 배포를 시도했다."
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "heading": "원인과 관련 장애",
+          "statements": [
+            {
+              "text": "원인은 배포 가이드 최신 버전의 금지 시간 미확인이다.",
+              "evidence": [
+                {
+                  "document_id": "error-E-030",
+                  "quote": "- 원인: 배포 가이드 최신 버전의 금지 시간 미확인."
+                }
+              ]
+            },
+            {
+              "text": "관련 장애는 장애 리포트 #26이다.",
+              "evidence": [
+                {
+                  "document_id": "error-E-030",
+                  "quote": "- 관련 장애: 장애 리포트 #26"
+                }
+              ]
+            },
+            {
+              "text": "장애 리포트 #26의 날짜는 2026-03-04이며 payment-api 서비스에서 SEV3 등급으로 발생했다.",
+              "evidence": [
+                {
+                  "document_id": "incident-26",
+                  "quote": "- 날짜: 2026-03-04"
+                },
+                {
+                  "document_id": "incident-26",
+                  "quote": "- 서비스: payment-api"
+                },
+                {
+                  "document_id": "incident-26",
+                  "quote": "- 등급: SEV3"
+                }
+              ]
+            },
+            {
+              "text": "장애 리포트 #26의 증상은 목요일 오후 배포 시도가 차단된 것이며 원인은 배포 금지 시간에 배포를 시도한 것이고 조치는 차단이 정상 작동하여 다음 날 배포한 것이다.",
+              "evidence": [
+                {
+                  "document_id": "incident-26",
+                  "quote": "- 증상: 목요일 오후 배포 시도가 차단됐다."
+                },
+                {
+                  "document_id": "incident-26",
+                  "quote": "- 원인: 배포 금지 시간에 배포를 시도했다. (에러 코드 E-030)"
+                },
+                {
+                  "document_id": "incident-26",
+                  "quote": "- 조치: 차단이 정상 작동했다. 다음 날 배포했다."
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "heading": "대응 방법",
+          "statements": [
+            {
+              "text": "대응 방법은 금지 시간이 끝난 뒤 배포하는 것이다.",
+              "evidence": [
+                {
+                  "document_id": "error-E-030",
+                  "quote": "- 대응: 금지 시간이 끝난 뒤 배포한다."
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

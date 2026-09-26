@@ -23,6 +23,7 @@ v1에서는 Markdown 문서 120개를 색인하고, 키워드·벡터 검색을 
 | v2 최신 버전 필터 | 구현·평가 완료 | 벡터 + 필터 문서 Hit@3 95%, hybrid + 필터 75% |
 | 출처 기반 답변 | 완료 | 검색 청크만 사용한 답변·출처·근거 부족 응답 |
 | API·MCP | 완료 | `health`, `search`, `answer` API와 MCP 도구 2개 |
+| v3 Wiki 생성 | 초기 구축 완료 | 본문 120개·목차 5개, 관련 링크·원본 출처 생성; Wiki 질의는 후속 구현 |
 
 ## 프로젝트 구성
 
@@ -45,6 +46,45 @@ src/llm_wiki/mcp_server.py  API를 호출하는 MCP 도구
 scripts/                    임베딩·청킹·DB·색인 스크립트
 tests/                      문서·청킹·DB·색인·평가 데이터 테스트
 ```
+
+## v3 — 원본으로 Wiki 생성
+
+`sources/`를 읽어 Gemini가 배포 버전·장애 사건·오류 코드·FAQ별 설명을 종합하고, 관련 링크와 주제별·전체 목차를 생성한다. 기존 `vector`·`hybrid`·`keyword` 검색과 답변 기능은 그대로 유지한다. Wiki를 읽어 답하는 API·MCP 경로는 아직 구현하지 않았다.
+
+`gemini-3.5-flash-lite`로 본문 120개·목차 5개를 구축했다. [Wiki 목차](wiki/index.md), [배포 v22 종합 예시](wiki/deployments/v22.md), [생성·검증 기록](evaluation/wiki-build-review.md)에서 확인할 수 있다. 링크 1,175개와 근거 인용 978개가 오프라인 검증을 통과했으며, 전체 테스트는 DB 연동을 포함해 135개 통과했다.
+
+`.env`에 `GEMINI_API_KEY`와 `GEMINI_GENERATION_MODEL`을 설정한 뒤 실행한다. 이 단계는 DB나 임베딩을 사용하지 않는다.
+
+```bash
+uv run python scripts/build_wiki.py --model gemini-3.5-flash-lite --output wiki-rebuild
+uv run python scripts/verify_wiki.py --wiki wiki-rebuild
+# 저장소에 포함된 Wiki 검증 (API 호출 없음)
+uv run python scripts/verify_wiki.py
+```
+
+중단되면 같은 원본·모델·배치 크기로 `--resume`을 사용한다. 완료된 LLM 호출은 재사용하고, 결과를 다시 검증한다. 원본이나 생성 설정을 바꾼 전체 재생성은 새 출력 폴더를 지정한다.
+
+```bash
+uv run python scripts/build_wiki.py --resume --model gemini-3.5-flash-lite --output wiki-rebuild
+```
+
+Wiki 생성 모델만 바꾸려면 `--model`을 지정한다. 기존 검색 답변의 모델 설정은 바꾸지 않는다. `--resume`에도 최초 생성 때의 모델을 동일하게 지정해야 한다.
+
+`--resume`은 생성 당시의 원본·코드·설정을 그대로 유지한 작업을 이어갈 때 사용한다. 오프라인 검증은 Git 체크아웃의 LF/CRLF 차이를 허용하지만, 재개는 원본과 생성 코드의 바이트 해시까지 일치해야 한다.
+
+생성기 코드만 수정한 작업은 `--resume --accept-code-change`로 이어갈 수 있다. 이전 코드 해시와 재사용할 작업 목록을 기록하고, 기존 결과를 현재 검증기로 다시 검사한다. 원본·모델·프롬프트 정책·스키마 변경은 이 옵션으로 허용하지 않는다.
+
+| 생성물 | 내용 |
+| --- | --- |
+| `wiki/index.md`, 각 주제의 `index.md` | LLM이 요약을 바탕으로 구성한 목차 |
+| `wiki/deployments/v*.md` | 버전별 규칙·변경 이유·원본 출처 |
+| `wiki/incidents/*.md`, `errors/*.md`, `onboarding/*.md` | 사건·코드·FAQ별 종합 설명과 관련 링크 |
+| `wiki/_build/manifest.json` | 원본 해시·모델·설정·호출 시간·토큰·검증된 구조화 결과·파일 해시 |
+| `wiki/_build/calls/` | 호출별 프롬프트·출력 스키마·원본 응답 |
+
+생성은 페이지 작성 → 관련 링크 선택 → 목차 구성 순서다. 기본적으로 5개 페이지씩 요청하며, 대상 원본과 명시적 참조로 연결된 원본을 함께 전달한다(들어오는 참조 1단계, 나가는 참조 2단계). 관련 링크와 목차는 생성된 전체 페이지의 요약을 바탕으로 작성한다. 평가 질문·정답은 입력하지 않는다. 형식·출처 검증 실패와 일시적인 API 오류는 작업당 최대 5회 시도하며, 발견한 오류를 누적해 재생성에 전달한다. 미완료 상태는 manifest에 남기며 재개할 때도 이전 오류를 전달한다.
+
+검증은 원본 인용의 존재, 핵심 원문 줄의 인용 누락, 명시된 장애 원본의 근거 포함, 페이지·목차 누락, 링크 대상, 출처 행 번호, 원본·생성 파일 해시를 확인한다. **인용이 존재한다고 종합한 주장이 정확하거나 빠짐없다는 뜻은 아니다.** 의미·인과관계·시점은 생성물과 원본을 대조해 별도로 검토한다.
 
 ## Docker Compose로 전체 실행
 
