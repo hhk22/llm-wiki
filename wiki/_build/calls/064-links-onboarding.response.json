@@ -1,0 +1,278 @@
+{
+  "pages": [
+    {
+      "document_id": "faq-q01",
+      "related": [
+        {
+          "document_id": "deploy-guide-v02",
+          "reason": "프로덕션 배포 전 staging 배포가 필요하다."
+        }
+      ]
+    },
+    {
+      "document_id": "faq-q02",
+      "related": [
+        {
+          "document_id": "deploy-guide-v22",
+          "reason": "목요일 오후 배포 금지 시간이 지정되어 있다."
+        },
+        {
+          "document_id": "deploy-guide-v25",
+          "reason": "연말 배포 동결 기간이 새롭게 지정되었다."
+        }
+      ]
+    },
+    {
+      "document_id": "faq-q03",
+      "related": [
+        {
+          "document_id": "deploy-guide-v19",
+          "reason": "롤백 승인 절차가 폐지되어 배포자가 즉시 실행할 수 있게 되었다."
+        }
+      ]
+    },
+    {
+      "document_id": "faq-q04",
+      "related": [
+        {
+          "document_id": "deploy-guide-v24",
+          "reason": "프로덕션 배포 승인자가 서비스 오너 등으로 변경되었다."
+        }
+      ]
+    },
+    {
+      "document_id": "faq-q05",
+      "related": [
+        {
+          "document_id": "deploy-guide-v18",
+          "reason": "Jenkins가 완전히 종료되어 관련 절차가 무효화되었다."
+        }
+      ]
+    },
+    {
+      "document_id": "faq-q06",
+      "related": [
+        {
+          "document_id": "error-E-001",
+          "reason": "주문 검증 실패 에러 코드가 정의되어 있다."
+        }
+      ]
+    },
+    {
+      "document_id": "faq-q07",
+      "related": [
+        {
+          "document_id": "incident-12",
+          "reason": "GitHub Actions 전환 후 배포 권한 부족 장애가 발생했다."
+        }
+      ]
+    },
+    {
+      "document_id": "faq-q08",
+      "related": [
+        {
+          "document_id": "incident-01",
+          "reason": "장애 발생 시 대응 및 롤백 절차가 수행된다."
+        }
+      ]
+    },
+    {
+      "document_id": "faq-q09",
+      "related": [
+        {
+          "document_id": "incident-02",
+          "reason": "SEV3 등급의 장애가 발생했다."
+        }
+      ]
+    },
+    {
+      "document_id": "faq-q10",
+      "related": [
+        {
+          "document_id": "incident-24",
+          "reason": "롤백한 장애의 포스트모템 작성 규칙과 연관된다."
+        }
+      ]
+    },
+    {
+      "document_id": "faq-q11",
+      "related": [
+        {
+          "document_id": "deploy-guide-v21",
+          "reason": "카나리 배포 비율이 순서대로 진행되도록 변경되었다."
+        }
+      ]
+    },
+    {
+      "document_id": "faq-q12",
+      "related": [
+        {
+          "document_id": "deploy-guide-v08",
+          "reason": "이미지 태그 형식을 제한하고 latest 태그를 금지했다."
+        }
+      ]
+    },
+    {
+      "document_id": "faq-q13",
+      "related": [
+        {
+          "document_id": "incident-08",
+          "reason": "DB 마이그레이션과 배포 분기 원인이 된 장애이다."
+        }
+      ]
+    },
+    {
+      "document_id": "faq-q14",
+      "related": [
+        {
+          "document_id": "deploy-guide-v28",
+          "reason": "배포 전 필수 시크릿 존재 검사가 추가되었다."
+        }
+      ]
+    },
+    {
+      "document_id": "faq-q15",
+      "related": [
+        {
+          "document_id": "incident-25",
+          "reason": "노드 리소스 부족으로 Pod가 스케줄되지 못했다."
+        }
+      ]
+    },
+    {
+      "document_id": "faq-q16",
+      "related": [
+        {
+          "document_id": "deploy-guide-v27",
+          "reason": "배포 명령에 변경 티켓 번호를 필수로 붙이도록 규칙이 변경되었다."
+        }
+      ]
+    },
+    {
+      "document_id": "faq-q17",
+      "related": [
+        {
+          "document_id": "deploy-guide-v07",
+          "reason": "SRE 온콜이 배포 승인자 및 관련 절차에 참여한다."
+        }
+      ]
+    },
+    {
+      "document_id": "faq-q18",
+      "related": [
+        {
+          "document_id": "incident-15",
+          "reason": "배포 후 대시보드 모니터링이 의무화되었다."
+        }
+      ]
+    },
+    {
+      "document_id": "faq-q19",
+      "related": [
+        {
+          "document_id": "deploy-guide-v02",
+          "reason": "staging 배포 단계가 필수로 추가되었다."
+        }
+      ]
+    },
+    {
+      "document_id": "faq-q20",
+      "related": [
+        {
+          "document_id": "incident-21",
+          "reason": "대규모 변경 배포 금지 규칙이 추가된 장애이다."
+        }
+      ]
+    },
+    {
+      "document_id": "faq-q21",
+      "related": [
+        {
+          "document_id": "deploy-guide-v27",
+          "reason": "배포 시 티켓 번호 필수 입력 규칙이 명시되어 있다."
+        }
+      ]
+    },
+    {
+      "document_id": "faq-q22",
+      "related": [
+        {
+          "document_id": "deploy-guide-v24",
+          "reason": "서비스 담당 팀과 오너 기반 승인 절차가 정의되어 있다."
+        }
+      ]
+    },
+    {
+      "document_id": "faq-q23",
+      "related": [
+        {
+          "document_id": "deploy-guide-v10",
+          "reason": "Slack #deploy 채널로 알림이 전송된다."
+        }
+      ]
+    },
+    {
+      "document_id": "faq-q24",
+      "related": [
+        {
+          "document_id": "deploy-guide-v10",
+          "reason": "Slack 채널로 배포 알림이 자동 전송된다."
+        }
+      ]
+    },
+    {
+      "document_id": "faq-q25",
+      "related": [
+        {
+          "document_id": "error-E-007",
+          "reason": "요청 한도 초과 시 발생하는 에러 코드이다."
+        }
+      ]
+    },
+    {
+      "document_id": "faq-q26",
+      "related": [
+        {
+          "document_id": "incident-30",
+          "reason": "헬스체크 실패로 인한 자동 중단 및 대응 장애이다."
+        }
+      ]
+    },
+    {
+      "document_id": "faq-q27",
+      "related": [
+        {
+          "document_id": "incident-20",
+          "reason": "동시 배포 충돌 문제로 잠금 규칙이 도입되었다."
+        }
+      ]
+    },
+    {
+      "document_id": "faq-q28",
+      "related": [
+        {
+          "document_id": "incident-16",
+          "reason": "인증서 만료로 인한 장애 및 갱신과 연관된다."
+        }
+      ]
+    },
+    {
+      "document_id": "faq-q29",
+      "related": [
+        {
+          "document_id": "incident-11",
+          "reason": "Kafka 발행 실패로 정산이 지연된 장애이다."
+        }
+      ]
+    },
+    {
+      "document_id": "faq-q30",
+      "related": [
+        {
+          "document_id": "deploy-guide-v30",
+          "reason": "현재 규칙을 정리한 최신 배포 가이드 버전이다."
+        }
+      ]
+    }
+  ]
+}

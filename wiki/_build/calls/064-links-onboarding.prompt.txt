@@ -1,0 +1,1061 @@
+Wiki 요약에서 관련 페이지를 선택한다. 한국어로 작성한다. 원인 사건·오류·정책 변경 등 설명 가능한 관련 링크만 선택한다. 링크 이유를 한 줄로 쓰고 추측·자기 링크·중복은 금지한다. 최대 8개이며 관련이 없으면 빈 배열이다.
+전체 카탈로그:
+[
+  {
+    "id": "deploy-guide-v01",
+    "title": "배포 가이드 v1",
+    "summary": "Jenkins를 사용하여 프로덕션 배포를 시작하는 초기 배포 가이드 v1 규칙이다.",
+    "source_ids": [
+      "deploy-guide-v01"
+    ]
+  },
+  {
+    "id": "deploy-guide-v02",
+    "title": "배포 가이드 v2",
+    "summary": "prod 배포 전에 staging 배포 단계를 추가한 배포 가이드 v2 규칙이다.",
+    "source_ids": [
+      "deploy-guide-v02"
+    ]
+  },
+  {
+    "id": "deploy-guide-v03",
+    "title": "배포 가이드 v3",
+    "summary": "빌드 전 캐시 삭제 단계를 추가하여 Jenkins 빌드 캐시 손상 오류를 수정한 배포 가이드 v3 규칙이다.",
+    "source_ids": [
+      "deploy-guide-v03"
+    ]
+  },
+  {
+    "id": "deploy-guide-v04",
+    "title": "배포 가이드 v4",
+    "summary": "배포 타임아웃 오류 수정으로 제한 시간을 20분으로 늘린 배포 가이드 v4 규칙이다.",
+    "source_ids": [
+      "deploy-guide-v04"
+    ]
+  },
+  {
+    "id": "deploy-guide-v05",
+    "title": "배포 가이드 v5",
+    "summary": "장애 리포트 #03을 반영하여 금요일 오후 prod 배포 금지 시간을 추가한 배포 가이드 v5 규칙이다.",
+    "source_ids": [
+      "deploy-guide-v05"
+    ]
+  },
+  {
+    "id": "deploy-guide-v06",
+    "title": "배포 가이드 v6",
+    "summary": "배포 가이드 v6는 Jenkins job rollback-prod를 사용하는 롤백 절차를 명문화했습니다.",
+    "source_ids": [
+      "deploy-guide-v06"
+    ]
+  },
+  {
+    "id": "deploy-guide-v07",
+    "title": "배포 가이드 v7",
+    "summary": "장애 리포트 #05에 따라 배포 승인자가 팀 리드와 SRE 온콜 두 명으로 변경되었습니다.",
+    "source_ids": [
+      "deploy-guide-v07",
+      "incident-05"
+    ]
+  },
+  {
+    "id": "deploy-guide-v08",
+    "title": "배포 가이드 v8",
+    "summary": "장애 리포트 #06에 따라 이미지 태그 형식을 service:git-sha로 제한하고 latest 태그를 금지했습니다.",
+    "source_ids": [
+      "deploy-guide-v08",
+      "incident-06"
+    ]
+  },
+  {
+    "id": "deploy-guide-v09",
+    "title": "배포 가이드 v9",
+    "summary": "장애 리포트 #08에 따라 DB 마이그레이션을 배포와 분리하여 별도 job으로 먼저 실행하도록 변경되었습니다.",
+    "source_ids": [
+      "deploy-guide-v09",
+      "incident-08"
+    ]
+  },
+  {
+    "id": "deploy-guide-v10",
+    "title": "배포 가이드 v10",
+    "summary": "배포 가이드 v10은 Slack #deploy 채널로 배포 시작 및 완료 알림을 자동 전송하도록 변경했습니다.",
+    "source_ids": [
+      "deploy-guide-v10"
+    ]
+  },
+  {
+    "id": "deploy-guide-v11",
+    "title": "배포 가이드 v11",
+    "summary": "Jenkins 자격 증명 만료 오류 수정과 자동 갱신 도입을 반영한 배포 가이드 v11이다.",
+    "source_ids": [
+      "deploy-guide-v11"
+    ]
+  },
+  {
+    "id": "deploy-guide-v12",
+    "title": "배포 가이드 v12",
+    "summary": "장애 리포트 10 이후 결정에 따라 payment-api 배포 시 카나리 10% 도입을 반영한 배포 가이드 v12이다.",
+    "source_ids": [
+      "deploy-guide-v12",
+      "incident-10"
+    ]
+  },
+  {
+    "id": "deploy-guide-v13",
+    "title": "배포 가이드 v13",
+    "summary": "배포 전 readiness 헬스체크 통과 필수를 반영한 배포 가이드 v13이다.",
+    "source_ids": [
+      "deploy-guide-v13"
+    ]
+  },
+  {
+    "id": "deploy-guide-v14",
+    "title": "배포 가이드 v14",
+    "summary": "배포 도구를 GitHub Actions로 전환하고 Jenkins를 병행 운영하는 배포 가이드 v14이다.",
+    "source_ids": [
+      "deploy-guide-v14"
+    ]
+  },
+  {
+    "id": "deploy-guide-v15",
+    "title": "배포 가이드 v15",
+    "summary": "GitHub Actions 오류 수정 및 deployments: write 권한 추가를 반영한 배포 가이드 v15이다.",
+    "source_ids": [
+      "deploy-guide-v15",
+      "incident-12"
+    ]
+  },
+  {
+    "id": "deploy-guide-v16",
+    "title": "배포 가이드 v16",
+    "summary": "배포 금지 시간이 금요일 오후와 공휴일 전날로 확대되었다.",
+    "source_ids": [
+      "deploy-guide-v16"
+    ]
+  },
+  {
+    "id": "deploy-guide-v17",
+    "title": "배포 가이드 v17",
+    "summary": "아티팩트 업로드 실패 오류(E-023)에 대응하기 위해 업로드 재시도가 3회로 설정되었다.",
+    "source_ids": [
+      "deploy-guide-v17",
+      "error-E-023"
+    ]
+  },
+  {
+    "id": "deploy-guide-v18",
+    "title": "배포 가이드 v18",
+    "summary": "Jenkins가 완전히 종료되어 관련 절차가 더 이상 유효하지 않게 되었다.",
+    "source_ids": [
+      "deploy-guide-v18",
+      "faq-q05"
+    ]
+  },
+  {
+    "id": "deploy-guide-v19",
+    "title": "배포 가이드 v19",
+    "summary": "장애 리포트 #14 이후 롤백 승인 절차가 폐지되어 배포자가 즉시 롤백을 실행할 수 있게 되었다.",
+    "source_ids": [
+      "deploy-guide-v19",
+      "incident-14"
+    ]
+  },
+  {
+    "id": "deploy-guide-v20",
+    "title": "배포 가이드 v20",
+    "summary": "장애 리포트 #15 이후 배포 후 15분 동안 대시보드 모니터링이 의무화되었다.",
+    "source_ids": [
+      "deploy-guide-v20",
+      "incident-15"
+    ]
+  },
+  {
+    "id": "deploy-guide-v21",
+    "title": "배포 가이드 v21",
+    "summary": "카나리 배포가 모든 서비스로 확대되어 10퍼센트에서 50퍼센트를 거쳐 100퍼센트 순서로 진행하도록 변경되었다.",
+    "source_ids": [
+      "deploy-guide-v21"
+    ]
+  },
+  {
+    "id": "deploy-guide-v22",
+    "title": "배포 가이드 v22",
+    "summary": "장애 리포트 #18 이후 목요일 오후 주간 정산 배치와의 충돌을 막기 위해 배포 금지 시간이 금요일 오후에서 목요일 오후로 변경되었다.",
+    "source_ids": [
+      "deploy-guide-v22",
+      "incident-18"
+    ]
+  },
+  {
+    "id": "deploy-guide-v23",
+    "title": "배포 가이드 v23",
+    "summary": "장애 리포트 #20의 동시 배포 충돌 문제 이후 동일 서비스의 동시 배포를 잠금으로 막도록 규칙이 변경되었다.",
+    "source_ids": [
+      "deploy-guide-v23",
+      "incident-20"
+    ]
+  },
+  {
+    "id": "deploy-guide-v24",
+    "title": "배포 가이드 v24",
+    "summary": "배포 승인자가 SRE 온콜에서 서비스 오너로 변경되었다.",
+    "source_ids": [
+      "deploy-guide-v24"
+    ]
+  },
+  {
+    "id": "deploy-guide-v25",
+    "title": "배포 가이드 v25",
+    "summary": "12월 22일부터 1월 2일까지의 연말 배포 동결 기간이 새롭게 지정되었다.",
+    "source_ids": [
+      "deploy-guide-v25"
+    ]
+  },
+  {
+    "id": "deploy-guide-v26",
+    "title": "배포 가이드 v26",
+    "summary": "feature flag 없는 대규모 변경 배포를 금지하도록 규칙이 변경되었습니다.",
+    "source_ids": [
+      "deploy-guide-v26",
+      "incident-21"
+    ]
+  },
+  {
+    "id": "deploy-guide-v27",
+    "title": "배포 가이드 v27",
+    "summary": "배포 명령에 변경 티켓 번호를 필수로 붙이도록 규칙이 변경되었습니다.",
+    "source_ids": [
+      "deploy-guide-v27"
+    ]
+  },
+  {
+    "id": "deploy-guide-v28",
+    "title": "배포 가이드 v28",
+    "summary": "시크릿 누락 오류를 수정하기 위해 배포 전 필수 시크릿 존재 검사가 추가되었습니다.",
+    "source_ids": [
+      "deploy-guide-v28",
+      "incident-23"
+    ]
+  },
+  {
+    "id": "deploy-guide-v29",
+    "title": "배포 가이드 v29",
+    "summary": "롤백 후 48시간 안에 포스트모템을 작성해야 하는 규칙이 추가되었습니다.",
+    "source_ids": [
+      "deploy-guide-v29",
+      "incident-24"
+    ]
+  },
+  {
+    "id": "deploy-guide-v30",
+    "title": "배포 가이드 v30",
+    "summary": "현재 규칙을 정리한 버전으로 추가적인 변경 사항은 없습니다.",
+    "source_ids": [
+      "deploy-guide-v30"
+    ]
+  },
+  {
+    "id": "incident-01",
+    "title": "장애 리포트 #01",
+    "summary": "주문 생성 요청이 검증 규칙 오류로 인해 30% 실패하여 이전 빌드로 롤백하는 장애가 발생했다.",
+    "source_ids": [
+      "incident-01"
+    ]
+  },
+  {
+    "id": "incident-02",
+    "title": "장애 리포트 #02",
+    "summary": "잘못된 토큰 TTL 설정으로 사용자가 주기적으로 재로그인해야 했던 SEV3 등급 장애가 발생하여 수정 재배포되었다.",
+    "source_ids": [
+      "incident-02"
+    ]
+  },
+  {
+    "id": "incident-03",
+    "title": "장애 리포트 #03",
+    "summary": "금요일 오후 환경 변수 누락 채 배포된 결제 API 장애로 인해 배포 가이드 v5에 배포 금지 시간이 추가되었다.",
+    "source_ids": [
+      "incident-03"
+    ]
+  },
+  {
+    "id": "incident-04",
+    "title": "장애 리포트 #04",
+    "summary": "동시성 처리 부재로 상품 재고가 음수로 표시된 SEV3 등급 장애가 발생하여 단일 트랜잭션으로 변경되었다.",
+    "source_ids": [
+      "incident-04"
+    ]
+  },
+  {
+    "id": "incident-05",
+    "title": "장애 리포트 #05",
+    "summary": "승인 단계 미강제로 승인되지 않은 변경이 배포되어 발생한 SEV2 등급 장애로 인해 배포 가이드 v7에 승인 절차가 반영되었다.",
+    "source_ids": [
+      "incident-05"
+    ]
+  },
+  {
+    "id": "incident-06",
+    "title": "장애 리포트 #06",
+    "summary": "알림이 구버전 템플릿으로 발송된 장애 리포트입니다.",
+    "source_ids": [
+      "incident-06"
+    ]
+  },
+  {
+    "id": "incident-07",
+    "title": "장애 리포트 #07",
+    "summary": "정상 사용자가 요청 한도 초과로 차단된 장애 리포트입니다.",
+    "source_ids": [
+      "incident-07"
+    ]
+  },
+  {
+    "id": "incident-08",
+    "title": "장애 리포트 #08",
+    "summary": "배포 중 서비스가 다운된 장애 리포트입니다.",
+    "source_ids": [
+      "incident-08"
+    ]
+  },
+  {
+    "id": "incident-09",
+    "title": "장애 리포트 #09",
+    "summary": "모든 API 응답이 지연된 장애 리포트입니다.",
+    "source_ids": [
+      "incident-09"
+    ]
+  },
+  {
+    "id": "incident-10",
+    "title": "장애 리포트 #10",
+    "summary": "전체 배포 후 결제 타임아웃이 급증한 장애 리포트입니다.",
+    "source_ids": [
+      "incident-10"
+    ]
+  },
+  {
+    "id": "incident-11",
+    "title": "장애 리포트 #11",
+    "summary": "일일 정산 서비스에서 Kafka 발행 실패로 정산이 3시간 지연되는 장애가 발생했다.",
+    "source_ids": [
+      "error-E-009",
+      "incident-11"
+    ]
+  },
+  {
+    "id": "incident-12",
+    "title": "장애 리포트 #12",
+    "summary": "GitHub Actions 전환 후 배포 권한 부족으로 배포가 중간에 실패하는 장애가 발생했다.",
+    "source_ids": [
+      "error-E-021",
+      "incident-12"
+    ]
+  },
+  {
+    "id": "incident-13",
+    "title": "장애 리포트 #13",
+    "summary": "새 저장소의 워크플로 권한 설정 누락으로 카탈로그 API 배포가 연속 실패했다.",
+    "source_ids": [
+      "error-E-021",
+      "incident-13"
+    ]
+  },
+  {
+    "id": "incident-14",
+    "title": "장애 리포트 #14",
+    "summary": "검증 규칙 회귀 및 롤백 승인 대기로 인해 복구가 지연되는 장애가 발생했다.",
+    "source_ids": [
+      "error-E-001",
+      "incident-14"
+    ]
+  },
+  {
+    "id": "incident-15",
+    "title": "장애 리포트 #15",
+    "summary": "메모리 누수가 헬스체크에서 드러나지 않아 배포 후 Pod가 반복 재시작되는 장애가 발생했다.",
+    "source_ids": [
+      "error-E-015",
+      "incident-15"
+    ]
+  },
+  {
+    "id": "incident-16",
+    "title": "장애 리포트 #16",
+    "summary": "외부 요청이 전부 TLS 오류로 실패한 api-gateway 인증서 만료 장애 리포트입니다.",
+    "source_ids": [
+      "incident-16"
+    ]
+  },
+  {
+    "id": "incident-17",
+    "title": "장애 리포트 #17",
+    "summary": "저장소 이전으로 권한이 초기화되어 긴급 수정 배포가 지연된 notification-worker 장애 리포트입니다.",
+    "source_ids": [
+      "incident-17"
+    ]
+  },
+  {
+    "id": "incident-18",
+    "title": "장애 리포트 #18",
+    "summary": "목요일 오후 주간 정산 배치 중 배포가 실행되어 정산이 실패한 settlement-pipeline 장애 리포트입니다.",
+    "source_ids": [
+      "incident-18"
+    ]
+  },
+  {
+    "id": "incident-19",
+    "title": "장애 리포트 #19",
+    "summary": "카나리 10% 단계에서 오류율이 올라 배포가 자동 중단된 order-api 장애 리포트입니다.",
+    "source_ids": [
+      "incident-19"
+    ]
+  },
+  {
+    "id": "incident-20",
+    "title": "장애 리포트 #20",
+    "summary": "두 명이 동시에 배포하여 서로 다른 버전이 섞인 payment-api 장애 리포트입니다.",
+    "source_ids": [
+      "incident-20"
+    ]
+  },
+  {
+    "id": "incident-21",
+    "title": "장애 리포트 #21",
+    "summary": "대규모 리팩터링 배포 후 스키마 변경으로 롤백이 불가능한 SEV1 등급의 catalog-api 장애가 발생했다.",
+    "source_ids": [
+      "error-E-020",
+      "incident-21"
+    ]
+  },
+  {
+    "id": "incident-22",
+    "title": "장애 리포트 #22",
+    "summary": "Vault 정책 변경으로 시크릿 읽기가 거부되어 order-api와 user-api에서 SEV2 등급의 장애가 발생했다.",
+    "source_ids": [
+      "error-E-026",
+      "incident-22"
+    ]
+  },
+  {
+    "id": "incident-23",
+    "title": "장애 리포트 #23",
+    "summary": "시크릿 누락으로 인해 user-api 서비스의 배포가 실패하는 SEV3 등급의 장애가 발생했다.",
+    "source_ids": [
+      "error-E-027",
+      "incident-23"
+    ]
+  },
+  {
+    "id": "incident-24",
+    "title": "장애 리포트 #24",
+    "summary": "원인 분석 부재로 인해 1월에 롤백했던 것과 동일한 주문 검증 오류 장애가 재발했다.",
+    "source_ids": [
+      "error-E-001",
+      "incident-24"
+    ]
+  },
+  {
+    "id": "incident-25",
+    "title": "장애 리포트 #25",
+    "summary": "노드 리소스 부족으로 인해 admin-web 서비스의 새 Pod가 10분간 Pending 상태로 시작되지 않는 장애가 발생했다.",
+    "source_ids": [
+      "error-E-028",
+      "incident-25"
+    ]
+  },
+  {
+    "id": "incident-26",
+    "title": "장애 리포트 #26",
+    "summary": "목요일 오후 배포 시도 중 배포 금지 시간 위반 에러 코드로 인해 차단되었다.",
+    "source_ids": [
+      "incident-26"
+    ]
+  },
+  {
+    "id": "incident-27",
+    "title": "장애 리포트 #27",
+    "summary": "관리자 API 권한 오류가 발생하여 잘못 배포된 역할 매핑 설정을 수정해 재배포했다.",
+    "source_ids": [
+      "incident-27"
+    ]
+  },
+  {
+    "id": "incident-28",
+    "title": "장애 리포트 #28",
+    "summary": "외부 발송 서비스 API 키 회수로 인한 주문 완료 알림 미발송 장애를 새 키 발급으로 조치했다.",
+    "source_ids": [
+      "incident-28"
+    ]
+  },
+  {
+    "id": "incident-29",
+    "title": "장애 리포트 #29",
+    "summary": "커넥션을 반환하지 않고 종료된 배치로 인해 발생한 DB 연결 실패 정산 중단 장애를 조치했다.",
+    "source_ids": [
+      "incident-29"
+    ]
+  },
+  {
+    "id": "incident-30",
+    "title": "장애 리포트 #30",
+    "summary": "readiness 경로 변경으로 인한 헬스체크 실패 자동 중단 장애를 경로 수정 후 재배포하여 조치했다.",
+    "source_ids": [
+      "incident-30"
+    ]
+  },
+  {
+    "id": "error-E-001",
+    "title": "에러 코드 E-001 주문 검증 실패",
+    "summary": "주문 검증 실패 에러 코드 E-001은 order-api에서 발생하며 필수 항목 누락이나 잘못된 검증 규칙 배포가 원인이다.",
+    "source_ids": [
+      "error-E-001",
+      "incident-01",
+      "incident-14",
+      "incident-24"
+    ]
+  },
+  {
+    "id": "error-E-002",
+    "title": "에러 코드 E-002 재고 부족",
+    "summary": "재고 부족 에러 코드 E-002는 catalog-api에서 발생하며 요청 수량이 재고보다 많을 때 일어난다.",
+    "source_ids": [
+      "error-E-002",
+      "incident-04"
+    ]
+  },
+  {
+    "id": "error-E-003",
+    "title": "에러 코드 E-003 결제 승인 거절",
+    "summary": "결제 승인 거절 에러 코드 E-003은 payment-api에서 발생하며 PG사가 결제를 거절했음을 의미한다.",
+    "source_ids": [
+      "error-E-003"
+    ]
+  },
+  {
+    "id": "error-E-004",
+    "title": "에러 코드 E-004 결제 타임아웃",
+    "summary": "결제 타임아웃 에러 코드 E-004는 payment-api에서 발생하며 PG사 응답 지연이 원인이다.",
+    "source_ids": [
+      "error-E-004",
+      "incident-10"
+    ]
+  },
+  {
+    "id": "error-E-005",
+    "title": "에러 코드 E-005 인증 토큰 만료",
+    "summary": "인증 토큰 만료 에러 코드 E-005는 api-gateway에서 발생하며 액세스 토큰의 유효 기간이 지난 것이다.",
+    "source_ids": [
+      "error-E-005",
+      "incident-02"
+    ]
+  },
+  {
+    "id": "error-E-006",
+    "title": "에러 코드 E-006 권한 없음",
+    "summary": "사용자 역할에 API 권한이 없을 때 발생하는 에러 코드 E-006의 원인과 대응 방법입니다.",
+    "source_ids": [
+      "error-E-006",
+      "incident-27"
+    ]
+  },
+  {
+    "id": "error-E-007",
+    "title": "에러 코드 E-007 요청 한도 초과",
+    "summary": "rate limit을 초과했을 때 발생하는 에러 코드 E-007의 정보와 관련 장애 내용입니다.",
+    "source_ids": [
+      "error-E-007",
+      "incident-07"
+    ]
+  },
+  {
+    "id": "error-E-008",
+    "title": "에러 코드 E-008 DB 커넥션 고갈",
+    "summary": "커넥션 풀에서 연결을 얻지 못할 때 발생하는 에러 코드 E-008의 원인과 관련 장애 내역입니다.",
+    "source_ids": [
+      "error-E-008",
+      "incident-09",
+      "incident-29"
+    ]
+  },
+  {
+    "id": "error-E-009",
+    "title": "에러 코드 E-009 Kafka 발행 실패",
+    "summary": "이벤트를 브로커에 발행하지 못할 때 발생하는 에러 코드 E-009의 원인과 관련 장애 내역입니다.",
+    "source_ids": [
+      "error-E-009",
+      "incident-11",
+      "incident-18"
+    ]
+  },
+  {
+    "id": "error-E-010",
+    "title": "에러 코드 E-010 알림 발송 실패",
+    "summary": "외부 발송 서비스 호출이 실패할 때 발생하는 에러 코드 E-010의 정보와 관련 장애 내용입니다.",
+    "source_ids": [
+      "error-E-010",
+      "incident-28"
+    ]
+  },
+  {
+    "id": "error-E-011",
+    "title": "에러 코드 E-011 빌드 실패: 테스트",
+    "summary": "에러 코드 E-011은 테스트 단계에서의 빌드 중단과 실패를 의미한다.",
+    "source_ids": [
+      "error-E-011"
+    ]
+  },
+  {
+    "id": "error-E-012",
+    "title": "에러 코드 E-012 빌드 캐시 손상",
+    "summary": "에러 코드 E-012는 손상된 캐시로 인한 빌드 실패를 다룬다.",
+    "source_ids": [
+      "error-E-012"
+    ]
+  },
+  {
+    "id": "error-E-013",
+    "title": "에러 코드 E-013 이미지 푸시 실패",
+    "summary": "에러 코드 E-013은 레지스트리 인증 만료 또는 용량 초과로 인한 이미지 푸시 실패를 설명한다.",
+    "source_ids": [
+      "error-E-013"
+    ]
+  },
+  {
+    "id": "error-E-014",
+    "title": "에러 코드 E-014 이미지 태그 없음",
+    "summary": "에러 코드 E-014는 태그 규칙 위반이나 latest 사용으로 인한 이미지 태그 없음 오류와 장애 리포트 #06을 다룬다.",
+    "source_ids": [
+      "error-E-014",
+      "incident-06"
+    ]
+  },
+  {
+    "id": "error-E-015",
+    "title": "에러 코드 E-015 헬스체크 실패",
+    "summary": "에러 코드 E-015는 readiness 헬스체크 실패를 의미하며 장애 리포트 #15 및 #30과 연관되어 있다.",
+    "source_ids": [
+      "error-E-015",
+      "incident-15",
+      "incident-30"
+    ]
+  },
+  {
+    "id": "error-E-016",
+    "title": "에러 코드 E-016 설정 누락",
+    "summary": "에러 코드 E-016은 필수 환경 변수 누락으로 발생하는 배포 오류이며, 장애 리포트 #03의 원인이 되었다.",
+    "source_ids": [
+      "error-E-016",
+      "incident-03"
+    ]
+  },
+  {
+    "id": "error-E-017",
+    "title": "에러 코드 E-017 배포 타임아웃",
+    "summary": "에러 코드 E-017은 배포 제한 시간 초과로 발생하며, 배포 가이드 v4에서 타임아웃이 20분으로 늘어났다.",
+    "source_ids": [
+      "error-E-017"
+    ]
+  },
+  {
+    "id": "error-E-018",
+    "title": "에러 코드 E-018 마이그레이션 실패",
+    "summary": "에러 코드 E-018은 DB 마이그레이션 실패를 의미하며 장애 리포트 #08의 원인이 되었다.",
+    "source_ids": [
+      "error-E-018",
+      "incident-08"
+    ]
+  },
+  {
+    "id": "error-E-019",
+    "title": "에러 코드 E-019 자격 증명 만료",
+    "summary": "에러 코드 E-019는 Jenkins 자격 증명 만료로 발생하며 배포 가이드 v11에서 자동 갱신되도록 수정되었다.",
+    "source_ids": [
+      "error-E-019"
+    ]
+  },
+  {
+    "id": "error-E-020",
+    "title": "에러 코드 E-020 롤백 대상 없음",
+    "summary": "에러 코드 E-020은 롤백 대상 없음이나 호환성 문제로 발생하며 장애 리포트 #21과 연관된다.",
+    "source_ids": [
+      "error-E-020",
+      "incident-21"
+    ]
+  },
+  {
+    "id": "error-E-021",
+    "title": "에러 코드 E-021 워크플로 권한 부족",
+    "summary": "에러 코드 E-021은 배포 과정에서 워크플로에 필요한 권한이 없을 때 발생한다.",
+    "source_ids": [
+      "error-E-021",
+      "incident-12",
+      "incident-13",
+      "incident-17"
+    ]
+  },
+  {
+    "id": "error-E-022",
+    "title": "에러 코드 E-022 승인 누락",
+    "summary": "에러 코드 E-022는 필요한 승인 단계가 강제되지 않아 승인 없이 배포가 실행되었을 때 발생한다.",
+    "source_ids": [
+      "error-E-022",
+      "incident-05"
+    ]
+  },
+  {
+    "id": "error-E-023",
+    "title": "에러 코드 E-023 아티팩트 업로드 실패",
+    "summary": "에러 코드 E-023은 일시적 네트워크 오류로 인해 빌드 결과물 업로드가 실패할 때 발생한다.",
+    "source_ids": [
+      "error-E-023"
+    ]
+  },
+  {
+    "id": "error-E-024",
+    "title": "에러 코드 E-024 카나리 지표 이상",
+    "summary": "에러 코드 E-024는 카나리 단계에서 새 버전 결함으로 오류율이 기준을 초과해 배포가 자동 중단될 때 발생한다.",
+    "source_ids": [
+      "error-E-024",
+      "incident-19"
+    ]
+  },
+  {
+    "id": "error-E-025",
+    "title": "에러 코드 E-025 동시 배포 충돌",
+    "summary": "에러 코드 E-025는 배포 잠금이 없어 같은 서비스에 두 배포가 동시에 실행될 때 발생한다.",
+    "source_ids": [
+      "error-E-025",
+      "incident-20"
+    ]
+  },
+  {
+    "id": "error-E-026",
+    "title": "에러 코드 E-026 시크릿 접근 거부",
+    "summary": "에러 코드 E-026은 Vault 정책 변경이나 역할 매핑 오류로 인해 서비스가 시크릿을 읽지 못할 때 발생한다.",
+    "source_ids": [
+      "error-E-026",
+      "incident-22"
+    ]
+  },
+  {
+    "id": "error-E-027",
+    "title": "에러 코드 E-027 시크릿 누락",
+    "summary": "에러 코드 E-027은 새 기능의 시크릿이 Vault에 미등록되어 배포 시 시크릿이 누락되었을 때 발생한다.",
+    "source_ids": [
+      "error-E-027",
+      "incident-23"
+    ]
+  },
+  {
+    "id": "error-E-028",
+    "title": "에러 코드 E-028 노드 리소스 부족",
+    "summary": "에러 코드 E-028은 노드의 CPU 및 메모리 부족으로 인해 Pod가 스케줄되지 못하고 Pending 상태가 될 때 발생한다.",
+    "source_ids": [
+      "error-E-028",
+      "incident-25"
+    ]
+  },
+  {
+    "id": "error-E-029",
+    "title": "에러 코드 E-029 인증서 만료",
+    "summary": "에러 코드 E-029는 갱신 누락으로 인해 TLS 인증서가 만료될 때 발생한다.",
+    "source_ids": [
+      "error-E-029",
+      "incident-16"
+    ]
+  },
+  {
+    "id": "error-E-030",
+    "title": "에러 코드 E-030 배포 금지 시간 위반",
+    "summary": "에러 코드 E-030은 배포 가이드 최신 버전의 금지 시간을 미확인하여 배포 금지 시간에 배포를 시도할 때 발생한다.",
+    "source_ids": [
+      "error-E-030",
+      "incident-26"
+    ]
+  },
+  {
+    "id": "faq-q01",
+    "title": "온보딩 FAQ Q01 프로덕션 배포는 어떻게 하나요?",
+    "summary": "프로덕션 배포는 GitHub Actions를 통해 실행하며 사전 승인과 staging 배포가 필요하다.",
+    "source_ids": [
+      "faq-q01"
+    ]
+  },
+  {
+    "id": "faq-q02",
+    "title": "온보딩 FAQ Q02 배포 금지 시간이 있나요?",
+    "summary": "목요일 오후, 공휴일 전날, 그리고 연말 동결 기간에는 배포를 진행하지 않는다.",
+    "source_ids": [
+      "faq-q02"
+    ]
+  },
+  {
+    "id": "faq-q03",
+    "title": "온보딩 FAQ Q03 배포를 되돌리려면 어떻게 하나요?",
+    "summary": "배포 롤백은 승인 없이 배포자가 즉시 명령을 실행하여 되돌릴 수 있다.",
+    "source_ids": [
+      "faq-q03"
+    ]
+  },
+  {
+    "id": "faq-q04",
+    "title": "온보딩 FAQ Q04 배포 승인은 누가 하나요?",
+    "summary": "프로덕션 배포 승인은 팀 리드와 서비스 오너가 공동으로 수행한다.",
+    "source_ids": [
+      "faq-q04"
+    ]
+  },
+  {
+    "id": "faq-q05",
+    "title": "온보딩 FAQ Q05 Jenkins는 아직 사용하나요?",
+    "summary": "Jenkins는 2025년 9월에 종료되어 더 이상 사용되지 않으며 관련 절차도 무효하다.",
+    "source_ids": [
+      "faq-q05"
+    ]
+  },
+  {
+    "id": "faq-q06",
+    "title": "온보딩 FAQ Q06 에러 코드는 어디서 확인하나요?",
+    "summary": "에러 코드는 E-001부터 E-030까지 코드별 의미, 원인 및 대응이 정리되어 있다.",
+    "source_ids": [
+      "faq-q06"
+    ]
+  },
+  {
+    "id": "faq-q07",
+    "title": "온보딩 FAQ Q07 배포할 때 E-021이 뜨면 어떻게 하나요?",
+    "summary": "배포 시 E-021 에러가 발생하면 저장소 워크플로에 deployments: write 권한이 있는지 확인한다.",
+    "source_ids": [
+      "faq-q07",
+      "incident-12"
+    ]
+  },
+  {
+    "id": "faq-q08",
+    "title": "온보딩 FAQ Q08 장애가 나면 누구에게 알리나요?",
+    "summary": "장애 발생 시 SRE 온콜에게 알리고 Slack #incident 채널에 상황을 공유한다.",
+    "source_ids": [
+      "faq-q08"
+    ]
+  },
+  {
+    "id": "faq-q09",
+    "title": "온보딩 FAQ Q09 장애 등급 SEV1, SEV2, SEV3는 무엇인가요?",
+    "summary": "장애 등급은 서비스 전체 중단인 SEV1, 주요 기능 저하인 SEV2, 일부 사용자 영향인 SEV3로 나뉜다.",
+    "source_ids": [
+      "faq-q09"
+    ]
+  },
+  {
+    "id": "faq-q10",
+    "title": "온보딩 FAQ Q10 포스트모템은 언제 써야 하나요?",
+    "summary": "롤백한 장애의 포스트모템은 48시간 안에 작성해야 한다.",
+    "source_ids": [
+      "faq-q10",
+      "incident-24"
+    ]
+  },
+  {
+    "id": "faq-q11",
+    "title": "온보딩 FAQ Q11 카나리 배포 비율은 어떻게 되나요?",
+    "summary": "카나리 배포 비율은 모든 서비스에 10프로에서 50프로 그리고 100프로 순서로 진행된다.",
+    "source_ids": [
+      "faq-q11"
+    ]
+  },
+  {
+    "id": "faq-q12",
+    "title": "온보딩 FAQ Q12 이미지 태그는 어떻게 붙이나요?",
+    "summary": "이미지 태그는 서비스명과 깃 에스에이치에이 형식만 허용되며 레이테스트는 금지된다.",
+    "source_ids": [
+      "faq-q12"
+    ]
+  },
+  {
+    "id": "faq-q13",
+    "title": "온보딩 FAQ Q13 DB 마이그레이션은 배포와 함께 하나요?",
+    "summary": "디비 마이그레이션은 배포와 함께하지 않으며 배포 전에 별도로 먼저 실행한다.",
+    "source_ids": [
+      "faq-q13",
+      "incident-08"
+    ]
+  },
+  {
+    "id": "faq-q14",
+    "title": "온보딩 FAQ Q14 시크릿은 어디에 저장하나요?",
+    "summary": "시크릿은 볼트에 저장되며 배포 전에 필수 시크릿 존재 여부가 자동 검사된다.",
+    "source_ids": [
+      "faq-q14"
+    ]
+  },
+  {
+    "id": "faq-q15",
+    "title": "온보딩 FAQ Q15 로컬 개발 환경은 어떻게 구성하나요?",
+    "summary": "로컬 개발 환경은 저장소 루트에서 도커 컴포즈 업을 실행하여 구성한다.",
+    "source_ids": [
+      "faq-q15"
+    ]
+  },
+  {
+    "id": "faq-q16",
+    "title": "온보딩 FAQ Q16 첫 PR을 올릴 때 규칙이 있나요?",
+    "summary": "첫 PR 등록 시 리뷰어 승인과 티켓 번호 명시 규칙이 안내된다.",
+    "source_ids": [
+      "faq-q16"
+    ]
+  },
+  {
+    "id": "faq-q17",
+    "title": "온보딩 FAQ Q17 온콜은 언제부터 참여하나요?",
+    "summary": "SRE 온콜 로테이션 참여 시점이 입사 3개월 후로 규정된다.",
+    "source_ids": [
+      "faq-q17"
+    ]
+  },
+  {
+    "id": "faq-q18",
+    "title": "온보딩 FAQ Q18 배포 후에 무엇을 확인해야 하나요?",
+    "summary": "배포 후에는 Grafana 대시보드 모니터링을 진행하며 관련 장애 및 가이드가 참조된다.",
+    "source_ids": [
+      "faq-q18",
+      "incident-15"
+    ]
+  },
+  {
+    "id": "faq-q19",
+    "title": "온보딩 FAQ Q19 staging 배포는 꼭 해야 하나요?",
+    "summary": "프로덕션 배포 전 staging 배포와 헬스체크 통과가 필수로 요구된다.",
+    "source_ids": [
+      "deploy-guide-v02",
+      "faq-q19"
+    ]
+  },
+  {
+    "id": "faq-q20",
+    "title": "온보딩 FAQ Q20 feature flag는 언제 써야 하나요?",
+    "summary": "대규모 변경 시 롤백 불능 방지를 위해 feature flag 사용이 필수화된다.",
+    "source_ids": [
+      "faq-q20",
+      "incident-21"
+    ]
+  },
+  {
+    "id": "faq-q21",
+    "title": "온보딩 FAQ Q21 배포할 때 티켓 번호가 꼭 필요한가요?",
+    "summary": "배포 시 티켓 번호 필수 입력에 관한 FAQ 내용이다.",
+    "source_ids": [
+      "faq-q21"
+    ]
+  },
+  {
+    "id": "faq-q22",
+    "title": "온보딩 FAQ Q22 서비스 목록과 담당 팀은 어디서 보나요?",
+    "summary": "서비스 목록과 담당 팀 안내에 관한 FAQ 내용이다.",
+    "source_ids": [
+      "faq-q22"
+    ]
+  },
+  {
+    "id": "faq-q23",
+    "title": "온보딩 FAQ Q23 Slack 채널은 무엇을 쓰나요?",
+    "summary": "업무용 Slack 채널 용도에 관한 FAQ 내용이다.",
+    "source_ids": [
+      "faq-q23"
+    ]
+  },
+  {
+    "id": "faq-q24",
+    "title": "온보딩 FAQ Q24 배포 알림은 어디로 오나요?",
+    "summary": "배포 알림 수신처에 관한 FAQ 내용이다.",
+    "source_ids": [
+      "faq-q24"
+    ]
+  },
+  {
+    "id": "faq-q25",
+    "title": "온보딩 FAQ Q25 API 요청 한도는 어떻게 되나요?",
+    "summary": "API 요청 한도 기준과 초과 시 에러 코드에 관한 FAQ 내용이다.",
+    "source_ids": [
+      "faq-q25"
+    ]
+  },
+  {
+    "id": "faq-q26",
+    "title": "온보딩 FAQ Q26 배포 중 헬스체크가 실패하면 어떻게 되나요?",
+    "summary": "배포 중 헬스체크 실패로 인한 자동 중단 및 대응 절차를 안내한다.",
+    "source_ids": [
+      "faq-q26",
+      "incident-30"
+    ]
+  },
+  {
+    "id": "faq-q27",
+    "title": "온보딩 FAQ Q27 두 명이 같은 서비스를 동시에 배포할 수 있나요?",
+    "summary": "동시 배포 제한과 잠금 메커니즘을 설명한다.",
+    "source_ids": [
+      "faq-q27"
+    ]
+  },
+  {
+    "id": "faq-q28",
+    "title": "온보딩 FAQ Q28 인증서 갱신은 누가 하나요?",
+    "summary": "SRE 팀이 담당하는 인증서 갱신과 사전 알림 일정을 안내한다.",
+    "source_ids": [
+      "faq-q28",
+      "incident-16"
+    ]
+  },
+  {
+    "id": "faq-q29",
+    "title": "온보딩 FAQ Q29 Kafka 발행이 실패하면 어떻게 하나요?",
+    "summary": "Kafka 발행 실패 시의 점검 사항과 정산 지연 대응 방법을 설명한다.",
+    "source_ids": [
+      "faq-q29"
+    ]
+  },
+  {
+    "id": "faq-q30",
+    "title": "온보딩 FAQ Q30 배포 가이드가 v1부터 v30까지 있는데 어떤 걸 봐야 하나요?",
+    "summary": "다수의 배포 가이드 버전 중 최신 버전을 참조해야 함을 안내한다.",
+    "source_ids": [
+      "faq-q30"
+    ]
+  }
+]
+대상 ID:
+[
+  "faq-q01",
+  "faq-q02",
+  "faq-q03",
+  "faq-q04",
+  "faq-q05",
+  "faq-q06",
+  "faq-q07",
+  "faq-q08",
+  "faq-q09",
+  "faq-q10",
+  "faq-q11",
+  "faq-q12",
+  "faq-q13",
+  "faq-q14",
+  "faq-q15",
+  "faq-q16",
+  "faq-q17",
+  "faq-q18",
+  "faq-q19",
+  "faq-q20",
+  "faq-q21",
+  "faq-q22",
+  "faq-q23",
+  "faq-q24",
+  "faq-q25",
+  "faq-q26",
+  "faq-q27",
+  "faq-q28",
+  "faq-q29",
+  "faq-q30"
+]
+이전 출력에서 발견한 오류를 모두 수정해 전체 결과를 다시 작성한다. 한 오류를 수정하면서 다른 항목의 근거를 빠뜨리지 않는다:
+Missing, duplicate, or unexpected IDs.

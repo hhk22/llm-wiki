@@ -1,0 +1,553 @@
+{
+  "pages": [
+    {
+      "document_id": "error-E-016",
+      "summary": {
+        "text": "에러 코드 E-016은 필수 환경 변수 누락으로 발생하는 배포 오류이며, 장애 리포트 #03의 원인이 되었다.",
+        "evidence": [
+          {
+            "document_id": "error-E-016",
+            "quote": "- 발생 위치: 배포"
+          },
+          {
+            "document_id": "error-E-016",
+            "quote": "- 의미: 필수 환경 변수가 없다."
+          },
+          {
+            "document_id": "error-E-016",
+            "quote": "- 원인: 배포 설정에 항목 누락."
+          },
+          {
+            "document_id": "error-E-016",
+            "quote": "- 대응: 환경 변수 목록을 배포 설정과 비교한다."
+          },
+          {
+            "document_id": "error-E-016",
+            "quote": "- 관련 장애: 장애 리포트 #03"
+          }
+        ]
+      },
+      "sections": [
+        {
+          "heading": "개요 및 발생",
+          "statements": [
+            {
+              "text": "에러 발생 위치는 배포 시점이다.",
+              "evidence": [
+                {
+                  "document_id": "error-E-016",
+                  "quote": "- 발생 위치: 배포"
+                }
+              ]
+            },
+            {
+              "text": "에러의 의미는 필수 환경 변수가 없는 상태이다.",
+              "evidence": [
+                {
+                  "document_id": "error-E-016",
+                  "quote": "- 의미: 필수 환경 변수가 없다."
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "heading": "원인 및 조치",
+          "statements": [
+            {
+              "text": "원인은 배포 설정에 항목이 누락된 것이다.",
+              "evidence": [
+                {
+                  "document_id": "error-E-016",
+                  "quote": "- 원인: 배포 설정에 항목 누락."
+                }
+              ]
+            },
+            {
+              "text": "대응 방법은 환경 변수 목록을 배포 설정과 비교하는 것이다.",
+              "evidence": [
+                {
+                  "document_id": "error-E-016",
+                  "quote": "- 대응: 환경 변수 목록을 배포 설정과 비교한다."
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "heading": "관련 장애",
+          "statements": [
+            {
+              "text": "관련 장애는 장애 리포트 #03이다.",
+              "evidence": [
+                {
+                  "document_id": "error-E-016",
+                  "quote": "- 관련 장애: 장애 리포트 #03"
+                }
+              ]
+            },
+            {
+              "text": "장애 리포트 #03의 날짜는 2025-02-28이다.",
+              "evidence": [
+                {
+                  "document_id": "incident-03",
+                  "quote": "- 날짜: 2025-02-28"
+                }
+              ]
+            },
+            {
+              "text": "장애 리포트 #03의 서비스는 payment-api이다.",
+              "evidence": [
+                {
+                  "document_id": "incident-03",
+                  "quote": "- 서비스: payment-api"
+                }
+              ]
+            },
+            {
+              "text": "장애 리포트 #03의 등급은 SEV1이다.",
+              "evidence": [
+                {
+                  "document_id": "incident-03",
+                  "quote": "- 등급: SEV1"
+                }
+              ]
+            },
+            {
+              "text": "장애 리포트 #03의 증상은 금요일 오후 배포 직후 결제가 전부 실패했으나 주말 동안 대응이 늦어진 것이다.",
+              "evidence": [
+                {
+                  "document_id": "incident-03",
+                  "quote": "- 증상: 금요일 오후 배포 직후 결제가 전부 실패했다. 주말 동안 대응이 늦어졌다."
+                }
+              ]
+            },
+            {
+              "text": "장애 리포트 #03의 원인은 PG사 연동 환경 변수가 누락된 채 배포된 에러 코드 E-016이다.",
+              "evidence": [
+                {
+                  "document_id": "incident-03",
+                  "quote": "- 원인: PG사 연동 환경 변수가 누락된 채 배포됐다. (에러 코드 E-016)"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "document_id": "error-E-017",
+      "summary": {
+        "text": "에러 코드 E-017은 배포 제한 시간 초과로 발생하며, 배포 가이드 v4에서 타임아웃이 20분으로 늘어났다.",
+        "evidence": [
+          {
+            "document_id": "error-E-017",
+            "quote": "- 발생 위치: 배포 (Jenkins)"
+          },
+          {
+            "document_id": "error-E-017",
+            "quote": "- 의미: 배포가 제한 시간 안에 끝나지 않았다."
+          },
+          {
+            "document_id": "error-E-017",
+            "quote": "- 원인: 느린 롤아웃, 타임아웃 설정 부족."
+          },
+          {
+            "document_id": "error-E-017",
+            "quote": "- 대응: 타임아웃 설정을 확인한다. 배포 가이드 v4에서 20분으로 늘렸다."
+          }
+        ]
+      },
+      "sections": [
+        {
+          "heading": "개요 및 발생",
+          "statements": [
+            {
+              "text": "발생 위치는 배포 (Jenkins)이다.",
+              "evidence": [
+                {
+                  "document_id": "error-E-017",
+                  "quote": "- 발생 위치: 배포 (Jenkins)"
+                }
+              ]
+            },
+            {
+              "text": "에러의 의미는 배포가 제한 시간 안에 끝나지 않은 것이다.",
+              "evidence": [
+                {
+                  "document_id": "error-E-017",
+                  "quote": "- 의미: 배포가 제한 시간 안에 끝나지 않았다."
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "heading": "원인 및 대응",
+          "statements": [
+            {
+              "text": "원인은 느린 롤아웃과 타임아웃 설정 부족이다.",
+              "evidence": [
+                {
+                  "document_id": "error-E-017",
+                  "quote": "- 원인: 느린 롤아웃, 타임아웃 설정 부족."
+                }
+              ]
+            },
+            {
+              "text": "대응은 타임아웃 설정을 확인하는 것이며 배포 가이드 v4에서 20분으로 늘렸다.",
+              "evidence": [
+                {
+                  "document_id": "error-E-017",
+                  "quote": "- 대응: 타임아웃 설정을 확인한다. 배포 가이드 v4에서 20분으로 늘렸다."
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "document_id": "error-E-018",
+      "summary": {
+        "text": "에러 코드 E-018은 DB 마이그레이션 실패를 의미하며 장애 리포트 #08의 원인이 되었다.",
+        "evidence": [
+          {
+            "document_id": "error-E-018",
+            "quote": "- 발생 위치: 배포"
+          },
+          {
+            "document_id": "error-E-018",
+            "quote": "- 의미: DB 마이그레이션이 실패했다."
+          },
+          {
+            "document_id": "error-E-018",
+            "quote": "- 원인: 잘못된 스키마 변경, 배포와 동시 실행."
+          },
+          {
+            "document_id": "error-E-018",
+            "quote": "- 대응: 마이그레이션을 배포 전에 별도로 실행한다."
+          },
+          {
+            "document_id": "error-E-018",
+            "quote": "- 관련 장애: 장애 리포트 #08"
+          }
+        ]
+      },
+      "sections": [
+        {
+          "heading": "개요 및 의미",
+          "statements": [
+            {
+              "text": "발생 위치는 배포이다.",
+              "evidence": [
+                {
+                  "document_id": "error-E-018",
+                  "quote": "- 발생 위치: 배포"
+                }
+              ]
+            },
+            {
+              "text": "에러의 의미는 DB 마이그레이션이 실패했다는 것이다.",
+              "evidence": [
+                {
+                  "document_id": "error-E-018",
+                  "quote": "- 의미: DB 마이그레이션이 실패했다."
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "heading": "원인 및 대응",
+          "statements": [
+            {
+              "text": "원인은 잘못된 스키마 변경과 배포와의 동시 실행이다.",
+              "evidence": [
+                {
+                  "document_id": "error-E-018",
+                  "quote": "- 원인: 잘못된 스키마 변경, 배포와 동시 실행."
+                }
+              ]
+            },
+            {
+              "text": "대응은 마이그레이션을 배포 전에 별도로 실행하는 것이다.",
+              "evidence": [
+                {
+                  "document_id": "error-E-018",
+                  "quote": "- 대응: 마이그레이션을 배포 전에 별도로 실행한다."
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "heading": "관련 장애",
+          "statements": [
+            {
+              "text": "관련 장애는 장애 리포트 #08이다.",
+              "evidence": [
+                {
+                  "document_id": "error-E-018",
+                  "quote": "- 관련 장애: 장애 리포트 #08"
+                }
+              ]
+            },
+            {
+              "text": "장애 리포트 #08의 날짜는 2025-05-07이다.",
+              "evidence": [
+                {
+                  "document_id": "incident-08",
+                  "quote": "- 날짜: 2025-05-07"
+                }
+              ]
+            },
+            {
+              "text": "장애 리포트 #08의 서비스는 payment-api이다.",
+              "evidence": [
+                {
+                  "document_id": "incident-08",
+                  "quote": "- 서비스: payment-api"
+                }
+              ]
+            },
+            {
+              "text": "장애 리포트 #08의 등급은 SEV1이다.",
+              "evidence": [
+                {
+                  "document_id": "incident-08",
+                  "quote": "- 등급: SEV1"
+                }
+              ]
+            },
+            {
+              "text": "장애 리포트 #08의 증상은 배포 중 서비스가 20분간 다운된 것이다.",
+              "evidence": [
+                {
+                  "document_id": "incident-08",
+                  "quote": "- 증상: 배포 중 서비스가 20분간 다운됐다."
+                }
+              ]
+            },
+            {
+              "text": "장애 리포트 #08의 원인은 배포와 동시에 실행된 마이그레이션 실패인 에러 코드 E-018이다.",
+              "evidence": [
+                {
+                  "document_id": "incident-08",
+                  "quote": "- 원인: 배포와 동시에 실행된 마이그레이션이 실패했다. (에러 코드 E-018)"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "document_id": "error-E-019",
+      "summary": {
+        "text": "에러 코드 E-019는 Jenkins 자격 증명 만료로 발생하며 배포 가이드 v11에서 자동 갱신되도록 수정되었다.",
+        "evidence": [
+          {
+            "document_id": "error-E-019",
+            "quote": "- 발생 위치: CI (Jenkins)"
+          },
+          {
+            "document_id": "error-E-019",
+            "quote": "- 의미: Jenkins 자격 증명이 만료됐다."
+          },
+          {
+            "document_id": "error-E-019",
+            "quote": "- 원인: 수동 갱신 누락."
+          },
+          {
+            "document_id": "error-E-019",
+            "quote": "- 대응: 자격 증명을 갱신한다. 배포 가이드 v11에서 자동 갱신됐다."
+          }
+        ]
+      },
+      "sections": [
+        {
+          "heading": "개요 및 의미",
+          "statements": [
+            {
+              "text": "발생 위치는 CI (Jenkins)이다.",
+              "evidence": [
+                {
+                  "document_id": "error-E-019",
+                  "quote": "- 발생 위치: CI (Jenkins)"
+                }
+              ]
+            },
+            {
+              "text": "에러의 의미는 Jenkins 자격 증명이 만료되었다는 것이다.",
+              "evidence": [
+                {
+                  "document_id": "error-E-019",
+                  "quote": "- 의미: Jenkins 자격 증명이 만료됐다."
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "heading": "원인 및 대응",
+          "statements": [
+            {
+              "text": "원인은 수동 갱신 누락이다.",
+              "evidence": [
+                {
+                  "document_id": "error-E-019",
+                  "quote": "- 원인: 수동 갱신 누락."
+                }
+              ]
+            },
+            {
+              "text": "대응은 자격 증명을 갱신하는 것이며 배포 가이드 v11에서 자동 갱신되었다.",
+              "evidence": [
+                {
+                  "document_id": "error-E-019",
+                  "quote": "- 대응: 자격 증명을 갱신한다. 배포 가이드 v11에서 자동 갱신됐다."
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "document_id": "error-E-020",
+      "summary": {
+        "text": "에러 코드 E-020은 롤백 대상 없음이나 호환성 문제로 발생하며 장애 리포트 #21과 연관된다.",
+        "evidence": [
+          {
+            "document_id": "error-E-020",
+            "quote": "- 발생 위치: 배포"
+          },
+          {
+            "document_id": "error-E-020",
+            "quote": "- 의미: 롤백할 이전 버전이 없거나 동작하지 않는다."
+          },
+          {
+            "document_id": "error-E-020",
+            "quote": "- 원인: 스키마 변경이 함께 배포돼 이전 버전이 호환되지 않음."
+          },
+          {
+            "document_id": "error-E-020",
+            "quote": "- 대응: 핫픽스로 복구한다. 대규모 변경은 feature flag를 사용한다."
+          },
+          {
+            "document_id": "error-E-020",
+            "quote": "- 관련 장애: 장애 리포트 #21"
+          }
+        ]
+      },
+      "sections": [
+        {
+          "heading": "개요 및 의미",
+          "statements": [
+            {
+              "text": "발생 위치는 배포이다.",
+              "evidence": [
+                {
+                  "document_id": "error-E-020",
+                  "quote": "- 발생 위치: 배포"
+                }
+              ]
+            },
+            {
+              "text": "에러의 의미는 롤백할 이전 버전이 없거나 동작하지 않는 것이다.",
+              "evidence": [
+                {
+                  "document_id": "error-E-020",
+                  "quote": "- 의미: 롤백할 이전 버전이 없거나 동작하지 않는다."
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "heading": "원인 및 대응",
+          "statements": [
+            {
+              "text": "원인은 스키마 변경이 함께 배포되어 이전 버전이 호환되지 않기 때문이다.",
+              "evidence": [
+                {
+                  "document_id": "error-E-020",
+                  "quote": "- 원인: 스키마 변경이 함께 배포돼 이전 버전이 호환되지 않음."
+                }
+              ]
+            },
+            {
+              "text": "대응은 핫픽스로 복구하는 것이며 대규모 변경은 feature flag를 사용한다.",
+              "evidence": [
+                {
+                  "document_id": "error-E-020",
+                  "quote": "- 대응: 핫픽스로 복구한다. 대규모 변경은 feature flag를 사용한다."
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "heading": "관련 장애",
+          "statements": [
+            {
+              "text": "관련 장애는 장애 리포트 #21이다.",
+              "evidence": [
+                {
+                  "document_id": "error-E-020",
+                  "quote": "- 관련 장애: 장애 리포트 #21"
+                }
+              ]
+            },
+            {
+              "text": "장애 리포트 #21의 날짜는 2025-12-17이다.",
+              "evidence": [
+                {
+                  "document_id": "incident-21",
+                  "quote": "- 날짜: 2025-12-17"
+                }
+              ]
+            },
+            {
+              "text": "장애 리포트 #21의 서비스는 catalog-api이다.",
+              "evidence": [
+                {
+                  "document_id": "incident-21",
+                  "quote": "- 서비스: catalog-api"
+                }
+              ]
+            },
+            {
+              "text": "장애 리포트 #21의 등급은 SEV1이다.",
+              "evidence": [
+                {
+                  "document_id": "incident-21",
+                  "quote": "- 등급: SEV1"
+                }
+              ]
+            },
+            {
+              "text": "장애 리포트 #21의 증상은 대규모 리팩터링 배포 후 장애가 났지만 롤백할 수 없었던 것이다.",
+              "evidence": [
+                {
+                  "document_id": "incident-21",
+                  "quote": "- 증상: 대규모 리팩터링 배포 후 장애가 났지만 롤백할 수 없었다."
+                }
+              ]
+            },
+            {
+              "text": "장애 리포트 #21의 원인은 DB 스키마가 함께 바뀌어 이전 버전이 동작하지 않은 에러 코드 E-020이다.",
+              "evidence": [
+                {
+                  "document_id": "incident-21",
+                  "quote": "- 원인: DB 스키마가 함께 바뀌어 이전 버전이 동작하지 않았다. (에러 코드 E-020)"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

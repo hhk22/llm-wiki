@@ -1,0 +1,477 @@
+{
+  "pages": [
+    {
+      "document_id": "deploy-guide-v26",
+      "summary": {
+        "text": "feature flag 없는 대규모 변경 배포를 금지하도록 규칙이 변경되었습니다.",
+        "evidence": [
+          {
+            "document_id": "deploy-guide-v26",
+            "quote": "- 변경: feature flag 없는 대규모 변경은 배포할 수 없다."
+          },
+          {
+            "document_id": "deploy-guide-v26",
+            "quote": "- 이유: 장애 리포트 #21 이후 결정"
+          }
+        ]
+      },
+      "sections": [
+        {
+          "heading": "변경 사유",
+          "statements": [
+            {
+              "text": "DB 스키마가 함께 바뀌어 이전 버전이 동작하지 않아 catalog-api 서비스에 SEV1 장애가 발생한 이후 결정되었습니다.",
+              "evidence": [
+                {
+                  "document_id": "incident-21",
+                  "quote": "- 원인: DB 스키마가 함께 바뀌어 이전 버전이 동작하지 않았다. (에러 코드 E-020)"
+                },
+                {
+                  "document_id": "incident-21",
+                  "quote": "- 증상: 대규모 리팩터링 배포 후 장애가 났지만 롤백할 수 없었다."
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "heading": "대응 및 조치",
+          "statements": [
+            {
+              "text": "핫픽스로 복구하고 feature flag 없는 대규모 변경을 금지하는 조치가 취해졌습니다.",
+              "evidence": [
+                {
+                  "document_id": "incident-21",
+                  "quote": "- 조치: 핫픽스로 복구했다. feature flag 없는 대규모 변경을 금지했다."
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "heading": "현재 규칙",
+          "statements": [
+            {
+              "text": "배포 도구는 GitHub Actions를 사용합니다.",
+              "evidence": [
+                {
+                  "document_id": "deploy-guide-v26",
+                  "quote": "- 배포 도구: GitHub Actions"
+                }
+              ]
+            },
+            {
+              "text": "배포 명령은 `deploy run --env prod`를 사용합니다.",
+              "evidence": [
+                {
+                  "document_id": "deploy-guide-v26",
+                  "quote": "- 배포 명령: `deploy run --env prod`"
+                }
+              ]
+            },
+            {
+              "text": "롤백 명령은 `deploy rollback --to <version>`을 사용하며 승인이 불필요합니다.",
+              "evidence": [
+                {
+                  "document_id": "deploy-guide-v26",
+                  "quote": "- 롤백 명령: `deploy rollback --to <version>` (승인 불필요)"
+                }
+              ]
+            },
+            {
+              "text": "배포 금지 시간은 목요일 오후, 공휴일 전날, 12/22~1/2 연말 동결입니다.",
+              "evidence": [
+                {
+                  "document_id": "deploy-guide-v26",
+                  "quote": "- 배포 금지 시간: 목요일 오후, 공휴일 전날, 12/22~1/2 연말 동결"
+                }
+              ]
+            },
+            {
+              "text": "승인자는 팀 리드와 서비스 오너입니다.",
+              "evidence": [
+                {
+                  "document_id": "deploy-guide-v26",
+                  "quote": "- 승인자: 팀 리드 + 서비스 오너"
+                }
+              ]
+            },
+            {
+              "text": "이전 버전은 배포 가이드 v25입니다.",
+              "evidence": [
+                {
+                  "document_id": "deploy-guide-v26",
+                  "quote": "- 이전 버전: 배포 가이드 v25"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "document_id": "deploy-guide-v27",
+      "summary": {
+        "text": "배포 명령에 변경 티켓 번호를 필수로 붙이도록 규칙이 변경되었습니다.",
+        "evidence": [
+          {
+            "document_id": "deploy-guide-v27",
+            "quote": "- 변경: 배포 명령에 변경 티켓 번호를 필수로 붙인다."
+          }
+        ]
+      },
+      "sections": [
+        {
+          "heading": "현재 규칙",
+          "statements": [
+            {
+              "text": "배포 도구는 GitHub Actions를 사용합니다.",
+              "evidence": [
+                {
+                  "document_id": "deploy-guide-v27",
+                  "quote": "- 배포 도구: GitHub Actions"
+                }
+              ]
+            },
+            {
+              "text": "배포 명령은 `deploy run --env prod --ticket <id>`를 사용합니다.",
+              "evidence": [
+                {
+                  "document_id": "deploy-guide-v27",
+                  "quote": "- 배포 명령: `deploy run --env prod --ticket <id>`"
+                }
+              ]
+            },
+            {
+              "text": "롤백 명령은 `deploy rollback --to <version>`을 사용하며 승인이 불필요합니다.",
+              "evidence": [
+                {
+                  "document_id": "deploy-guide-v27",
+                  "quote": "- 롤백 명령: `deploy rollback --to <version>` (승인 불필요)"
+                }
+              ]
+            },
+            {
+              "text": "배포 금지 시간은 목요일 오후, 공휴일 전날, 12/22~1/2 연말 동결입니다.",
+              "evidence": [
+                {
+                  "document_id": "deploy-guide-v27",
+                  "quote": "- 배포 금지 시간: 목요일 오후, 공휴일 전날, 12/22~1/2 연말 동결"
+                }
+              ]
+            },
+            {
+              "text": "승인자는 팀 리드와 서비스 오너입니다.",
+              "evidence": [
+                {
+                  "document_id": "deploy-guide-v27",
+                  "quote": "- 승인자: 팀 리드 + 서비스 오너"
+                }
+              ]
+            },
+            {
+              "text": "이전 버전은 배포 가이드 v26입니다.",
+              "evidence": [
+                {
+                  "document_id": "deploy-guide-v27",
+                  "quote": "- 이전 버전: 배포 가이드 v26"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "document_id": "deploy-guide-v28",
+      "summary": {
+        "text": "시크릿 누락 오류를 수정하기 위해 배포 전 필수 시크릿 존재 검사가 추가되었습니다.",
+        "evidence": [
+          {
+            "document_id": "deploy-guide-v28",
+            "quote": "- 변경: GitHub Actions 오류 수정 (E-027 시크릿 누락). 배포 전 필수 시크릿 존재를 검사한다."
+          },
+          {
+            "document_id": "deploy-guide-v28",
+            "quote": "- 이유: 장애 리포트 #23 이후 결정"
+          }
+        ]
+      },
+      "sections": [
+        {
+          "heading": "변경 사유",
+          "statements": [
+            {
+              "text": "새 기능에 필요한 시크릿이 Vault에 등록되지 않아 user-api 서비스 배포가 실패한 장애 이후 결정되었습니다.",
+              "evidence": [
+                {
+                  "document_id": "incident-23",
+                  "quote": "- 원인: 새 기능에 필요한 시크릿이 Vault에 등록되지 않았다. (에러 코드 E-027)"
+                },
+                {
+                  "document_id": "incident-23",
+                  "quote": "- 증상: 배포가 시크릿 누락으로 실패했다."
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "heading": "대응 및 조치",
+          "statements": [
+            {
+              "text": "시크릿을 등록하고 배포 전 시크릿 검사를 추가하였습니다.",
+              "evidence": [
+                {
+                  "document_id": "incident-23",
+                  "quote": "- 조치: 시크릿을 등록했다. 배포 전 시크릿 검사를 추가했다."
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "heading": "현재 규칙",
+          "statements": [
+            {
+              "text": "배포 도구는 GitHub Actions를 사용합니다.",
+              "evidence": [
+                {
+                  "document_id": "deploy-guide-v28",
+                  "quote": "- 배포 도구: GitHub Actions"
+                }
+              ]
+            },
+            {
+              "text": "배포 명령은 `deploy run --env prod --ticket <id>`를 사용합니다.",
+              "evidence": [
+                {
+                  "document_id": "deploy-guide-v28",
+                  "quote": "- 배포 명령: `deploy run --env prod --ticket <id>`"
+                }
+              ]
+            },
+            {
+              "text": "롤백 명령은 `deploy rollback --to <version>`을 사용하며 승인이 불필요합니다.",
+              "evidence": [
+                {
+                  "document_id": "deploy-guide-v28",
+                  "quote": "- 롤백 명령: `deploy rollback --to <version>` (승인 불필요)"
+                }
+              ]
+            },
+            {
+              "text": "배포 금지 시간은 목요일 오후, 공휴일 전날, 12/22~1/2 연말 동결입니다.",
+              "evidence": [
+                {
+                  "document_id": "deploy-guide-v28",
+                  "quote": "- 배포 금지 시간: 목요일 오후, 공휴일 전날, 12/22~1/2 연말 동결"
+                }
+              ]
+            },
+            {
+              "text": "승인자는 팀 리드와 서비스 오너입니다.",
+              "evidence": [
+                {
+                  "document_id": "deploy-guide-v28",
+                  "quote": "- 승인자: 팀 리드 + 서비스 오너"
+                }
+              ]
+            },
+            {
+              "text": "이전 버전은 배포 가이드 v27입니다.",
+              "evidence": [
+                {
+                  "document_id": "deploy-guide-v28",
+                  "quote": "- 이전 버전: 배포 가이드 v27"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "document_id": "deploy-guide-v29",
+      "summary": {
+        "text": "롤백 후 48시간 안에 포스트모템을 작성해야 하는 규칙이 추가되었습니다.",
+        "evidence": [
+          {
+            "document_id": "deploy-guide-v29",
+            "quote": "- 변경: 롤백 후 48시간 안에 포스트모템을 작성해야 한다."
+          },
+          {
+            "document_id": "deploy-guide-v29",
+            "quote": "- 이유: 장애 리포트 #24 이후 결정"
+          }
+        ]
+      },
+      "sections": [
+        {
+          "heading": "변경 사유",
+          "statements": [
+            {
+              "text": "이전 롤백 후 원인 분석을 하지 않아 같은 코드가 다시 배포되면서 order-api 서비스에 1월 장애가 재발한 이후 결정되었습니다.",
+              "evidence": [
+                {
+                  "document_id": "incident-24",
+                  "quote": "- 원인: 이전 롤백 후 원인 분석을 하지 않아 같은 코드가 다시 배포됐다. (에러 코드 E-001)"
+                },
+                {
+                  "document_id": "incident-24",
+                  "quote": "- 증상: 1월에 롤백한 것과 같은 장애가 재발했다."
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "heading": "대응 및 조치",
+          "statements": [
+            {
+              "text": "롤백을 수행하고 롤백 후 포스트모템 작성을 의무화하였습니다.",
+              "evidence": [
+                {
+                  "document_id": "incident-24",
+                  "quote": "- 조치: 롤백했다. 롤백 후 포스트모템 작성을 의무화했다."
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "heading": "현재 규칙",
+          "statements": [
+            {
+              "text": "배포 도구는 GitHub Actions를 사용합니다.",
+              "evidence": [
+                {
+                  "document_id": "deploy-guide-v29",
+                  "quote": "- 배포 도구: GitHub Actions"
+                }
+              ]
+            },
+            {
+              "text": "배포 명령은 `deploy run --env prod --ticket <id>`를 사용합니다.",
+              "evidence": [
+                {
+                  "document_id": "deploy-guide-v29",
+                  "quote": "- 배포 명령: `deploy run --env prod --ticket <id>`"
+                }
+              ]
+            },
+            {
+              "text": "롤백 명령은 `deploy rollback --to <version>`을 사용하며 승인이 불필요합니다.",
+              "evidence": [
+                {
+                  "document_id": "deploy-guide-v29",
+                  "quote": "- 롤백 명령: `deploy rollback --to <version>` (승인 불필요)"
+                }
+              ]
+            },
+            {
+              "text": "배포 금지 시간은 목요일 오후, 공휴일 전날, 12/22~1/2 연말 동결입니다.",
+              "evidence": [
+                {
+                  "document_id": "deploy-guide-v29",
+                  "quote": "- 배포 금지 시간: 목요일 오후, 공휴일 전날, 12/22~1/2 연말 동결"
+                }
+              ]
+            },
+            {
+              "text": "승인자는 팀 리드와 서비스 오너입니다.",
+              "evidence": [
+                {
+                  "document_id": "deploy-guide-v29",
+                  "quote": "- 승인자: 팀 리드 + 서비스 오너"
+                }
+              ]
+            },
+            {
+              "text": "이전 버전은 배포 가이드 v28입니다.",
+              "evidence": [
+                {
+                  "document_id": "deploy-guide-v29",
+                  "quote": "- 이전 버전: 배포 가이드 v28"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "document_id": "deploy-guide-v30",
+      "summary": {
+        "text": "현재 규칙을 정리한 버전으로 추가적인 변경 사항은 없습니다.",
+        "evidence": [
+          {
+            "document_id": "deploy-guide-v30",
+            "quote": "- 변경: 현재 규칙 정리본. 변경 없음."
+          }
+        ]
+      },
+      "sections": [
+        {
+          "heading": "현재 규칙",
+          "statements": [
+            {
+              "text": "배포 도구는 GitHub Actions를 사용합니다.",
+              "evidence": [
+                {
+                  "document_id": "deploy-guide-v30",
+                  "quote": "- 배포 도구: GitHub Actions"
+                }
+              ]
+            },
+            {
+              "text": "배포 명령은 `deploy run --env prod --ticket <id>`를 사용합니다.",
+              "evidence": [
+                {
+                  "document_id": "deploy-guide-v30",
+                  "quote": "- 배포 명령: `deploy run --env prod --ticket <id>`"
+                }
+              ]
+            },
+            {
+              "text": "롤백 명령은 `deploy rollback --to <version>`을 사용하며 승인이 불필요합니다.",
+              "evidence": [
+                {
+                  "document_id": "deploy-guide-v30",
+                  "quote": "- 롤백 명령: `deploy rollback --to <version>` (승인 불필요)"
+                }
+              ]
+            },
+            {
+              "text": "배포 금지 시간은 목요일 오후, 공휴일 전날, 12/22~1/2 연말 동결입니다.",
+              "evidence": [
+                {
+                  "document_id": "deploy-guide-v30",
+                  "quote": "- 배포 금지 시간: 목요일 오후, 공휴일 전날, 12/22~1/2 연말 동결"
+                }
+              ]
+            },
+            {
+              "text": "승인자는 팀 리드와 서비스 오너입니다.",
+              "evidence": [
+                {
+                  "document_id": "deploy-guide-v30",
+                  "quote": "- 승인자: 팀 리드 + 서비스 오너"
+                }
+              ]
+            },
+            {
+              "text": "이전 버전은 배포 가이드 v29입니다.",
+              "evidence": [
+                {
+                  "document_id": "deploy-guide-v30",
+                  "quote": "- 이전 버전: 배포 가이드 v29"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,394 @@
+{
+  "pages": [
+    {
+      "document_id": "error-E-006",
+      "summary": {
+        "text": "에러 코드 E-006은 사용자 역할에 해당 API 권한이 없을 때 발생하며 역할 매핑 설정과 장애 리포트 #27을 확인해 대응한다.",
+        "evidence": [
+          {
+            "document_id": "error-E-006",
+            "quote": "- 의미: 사용자 역할에 해당 API 권한이 없다."
+          },
+          {
+            "document_id": "error-E-006",
+            "quote": "- 원인: 역할 매핑 누락 또는 잘못된 매핑 배포."
+          },
+          {
+            "document_id": "error-E-006",
+            "quote": "- 대응: 역할 매핑 설정을 확인한다."
+          },
+          {
+            "document_id": "error-E-006",
+            "quote": "- 관련 장애: 장애 리포트 #27"
+          },
+          {
+            "document_id": "incident-27",
+            "quote": "- 원인: 역할 매핑 설정이 잘못 배포됐다. (에러 코드 E-006)"
+          },
+          {
+            "document_id": "incident-27",
+            "quote": "- 조치: 설정을 수정해 재배포했다."
+          }
+        ]
+      },
+      "sections": [
+        {
+          "heading": "발생 위치와 의미",
+          "statements": [
+            {
+              "text": "에러 코드 E-006은 api-gateway에서 발생하며 사용자 역할에 해당 API 권한이 없음을 의미한다.",
+              "evidence": [
+                {
+                  "document_id": "error-E-006",
+                  "quote": "- 발생 위치: api-gateway"
+                },
+                {
+                  "document_id": "error-E-006",
+                  "quote": "- 의미: 사용자 역할에 해당 API 권한이 없다."
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "heading": "원인과 대응 및 관련 장애",
+          "statements": [
+            {
+              "text": "역할 매핑 누락이나 잘못된 매핑 배포가 원인이며 역할 매핑 설정을 확인하고 장애 리포트 #27의 조치를 참고한다.",
+              "evidence": [
+                {
+                  "document_id": "error-E-006",
+                  "quote": "- 원인: 역할 매핑 누락 또는 잘못된 매핑 배포."
+                },
+                {
+                  "document_id": "error-E-006",
+                  "quote": "- 대응: 역할 매핑 설정을 확인한다."
+                },
+                {
+                  "document_id": "error-E-006",
+                  "quote": "- 관련 장애: 장애 리포트 #27"
+                },
+                {
+                  "document_id": "incident-27",
+                  "quote": "- 원인: 역할 매핑 설정이 잘못 배포됐다. (E-006)"
+                },
+                {
+                  "document_id": "incident-27",
+                  "quote": "- 조치: 설정을 수정해 재배포했다."
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "document_id": "error-E-007",
+      "summary": {
+        "text": "에러 코드 E-007은 rate limit 초과 시 발생하며 사용자 ID 기준과 장애 리포트 #07 및 FAQ Q25를 연계하여 대응한다.",
+        "evidence": [
+          {
+            "document_id": "error-E-007",
+            "quote": "- 의미: rate limit을 넘었다."
+          },
+          {
+            "document_id": "error-E-007",
+            "quote": "- 원인: 과도한 호출 또는 한도 기준 설정 오류."
+          },
+          {
+            "document_id": "error-E-007",
+            "quote": "- 대응: 한도 기준(사용자 ID)과 수치를 확인한다."
+          },
+          {
+            "document_id": "error-E-007",
+            "quote": "- 관련 장애: 장애 리포트 #07"
+          },
+          {
+            "document_id": "faq-q25",
+            "quote": "사용자 ID 기준으로 분당 600회다. 초과하면 E-007이 반환된다."
+          }
+        ]
+      },
+      "sections": [
+        {
+          "heading": "발생 위치와 의미",
+          "statements": [
+            {
+              "text": "에러 코드 E-007은 api-gateway에서 발생하며 rate limit을 넘었음을 의미한다.",
+              "evidence": [
+                {
+                  "document_id": "error-E-007",
+                  "quote": "- 발생 위치: api-gateway"
+                },
+                {
+                  "document_id": "error-E-007",
+                  "quote": "- 의미: rate limit을 넘었다."
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "heading": "원인과 대응 및 연계 문서",
+          "statements": [
+            {
+              "text": "과도한 호출 또는 한도 기준 설정 오류가 원인이며 한도 기준과 수치를 확인하고 장애 리포트 #07 및 FAQ Q25를 참조한다.",
+              "evidence": [
+                {
+                  "document_id": "error-E-007",
+                  "quote": "- 원인: 과도한 호출 또는 한도 기준 설정 오류."
+                },
+                {
+                  "document_id": "error-E-007",
+                  "quote": "- 대응: 한도 기준(사용자 ID)과 수치를 확인한다."
+                },
+                {
+                  "document_id": "error-E-007",
+                  "quote": "- 관련 장애: 장애 리포트 #07"
+                },
+                {
+                  "document_id": "incident-07",
+                  "quote": "- 원인: rate limit 기준이 사용자 대신 IP로 적용됐다. (에러 코드 E-007)"
+                },
+                {
+                  "document_id": "faq-q25",
+                  "quote": "- 관련 문서: 에러 코드 E-007"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "document_id": "error-E-008",
+      "summary": {
+        "text": "에러 코드 E-008은 DB 커넥션 풀 고갈 시 발생하며 커넥션 반환 누락 등을 확인하고 장애 리포트 #09 및 #29를 통해 조치한다.",
+        "evidence": [
+          {
+            "document_id": "error-E-008",
+            "quote": "- 의미: 커넥션 풀에서 연결을 얻지 못했다."
+          },
+          {
+            "document_id": "error-E-008",
+            "quote": "- 원인: 커넥션 반환 누락, 풀 크기 부족, 느린 쿼리."
+          },
+          {
+            "document_id": "error-E-008",
+            "quote": "- 대응: 풀 사용량과 반환 누락 코드를 확인한다."
+          },
+          {
+            "document_id": "error-E-008",
+            "quote": "- 관련 장애: 장애 리포트 #09, #29"
+          },
+          {
+            "document_id": "incident-09",
+            "quote": "- 조치: 커넥션 누수 코드를 수정하고 풀 크기를 늘렸다."
+          }
+        ]
+      },
+      "sections": [
+        {
+          "heading": "발생 위치와 의미",
+          "statements": [
+            {
+              "text": "에러 코드 E-008은 공통 영역에서 발생하며 커넥션 풀에서 연결을 얻지 못했음을 의미한다.",
+              "evidence": [
+                {
+                  "document_id": "error-E-008",
+                  "quote": "- 발생 위치: 공통"
+                },
+                {
+                  "document_id": "error-E-008",
+                  "quote": "- 의미: 커넥션 풀에서 연결을 얻지 못했다."
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "heading": "원인과 대응 및 관련 장애",
+          "statements": [
+            {
+              "text": "커넥션 반환 누락이나 풀 크기 부족 등이 원인이며 풀 사용량과 반환 누락 코드를 확인하고 장애 리포트 #09와 #29의 조치를 적용한다.",
+              "evidence": [
+                {
+                  "document_id": "error-E-008",
+                  "quote": "- 원인: 커넥션 반환 누락, 풀 크기 부족, 느린 쿼리."
+                },
+                {
+                  "document_id": "error-E-008",
+                  "quote": "- 대응: 풀 사용량과 반환 누락 코드를 확인한다."
+                },
+                {
+                  "document_id": "error-E-008",
+                  "quote": "- 관련 장애: 장애 리포트 #09, #29"
+                },
+                {
+                  "document_id": "incident-29",
+                  "quote": "- 조치: 커넥션 반환을 수정하고 배치를 재실행했다."
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "document_id": "error-E-009",
+      "summary": {
+        "text": "에러 코드 E-009는 Kafka 브로커 발행 실패 시 발생하며 브로커 상태와 재시도 설정을 점검하고 장애 리포트 #11 및 #18 등을 참고한다.",
+        "evidence": [
+          {
+            "document_id": "error-E-009",
+            "quote": "- 의미: 이벤트를 브로커에 발행하지 못했다."
+          },
+          {
+            "document_id": "error-E-009",
+            "quote": "- 원인: 브로커 재시작, 네트워크 오류, 재시도 부재."
+          },
+          {
+            "document_id": "error-E-009",
+            "quote": "- 대응: 브로커 상태를 확인한다. 발행 재시도가 있는지 확인한다."
+          },
+          {
+            "document_id": "error-E-009",
+            "quote": "- 관련 장애: 장애 리포트 #11, #18"
+          },
+          {
+            "document_id": "faq-q29",
+            "quote": "- 관련 문서: 에러 코드 E-009"
+          }
+        ]
+      },
+      "sections": [
+        {
+          "heading": "발생 위치와 의미",
+          "statements": [
+            {
+              "text": "에러 코드 E-009는 공통 영역에서 발생하며 이벤트를 브로커에 발행하지 못했음을 의미한다.",
+              "evidence": [
+                {
+                  "document_id": "error-E-009",
+                  "quote": "- 발생 위치: 공통"
+                },
+                {
+                  "document_id": "error-E-009",
+                  "quote": "- 의미: 이벤트를 브로커에 발행하지 못했다."
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "heading": "원인과 대응 및 관련 장애",
+          "statements": [
+            {
+              "text": "브로커 재시작이나 네트워크 오류가 원인이며 브로커 상태와 발행 재시도 여부를 확인하고 장애 리포트 #11, #18 및 FAQ Q29를 참조한다.",
+              "evidence": [
+                {
+                  "document_id": "error-E-009",
+                  "quote": "- 원인: 브로커 재시작, 네트워크 오류, 재시도 부재."
+                },
+                {
+                  "document_id": "error-E-009",
+                  "quote": "- 대응: 브로커 상태를 확인한다. 발행 재시도가 있는지 확인한다."
+                },
+                {
+                  "document_id": "error-E-009",
+                  "quote": "- 관련 장애: 장애 리포트 #11, #18"
+                },
+                {
+                  "document_id": "incident-11",
+                  "quote": "- 조치: 발행 재시도를 추가하고 정산을 재실행했다."
+                },
+                {
+                  "document_id": "faq-q29",
+                  "quote": "브로커 상태를 확인하고 재시도 설정이 있는지 본다. 정산 지연이 생기면 배치를 재실행한다."
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "document_id": "error-E-010",
+      "summary": {
+        "text": "에러 코드 E-010은 외부 발송 서비스 호출 실패 시 발생하며 API 키 상태를 점검하고 장애 리포트 #28의 조치 내역을 따른다.",
+        "evidence": [
+          {
+            "document_id": "error-E-010",
+            "quote": "- 의미: 외부 발송 서비스 호출이 실패했다."
+          },
+          {
+            "document_id": "error-E-010",
+            "quote": "- 원인: API 키 만료·회수, 외부 서비스 장애."
+          },
+          {
+            "document_id": "error-E-010",
+            "quote": "- 대응: API 키 상태를 확인한다."
+          },
+          {
+            "document_id": "error-E-010",
+            "quote": "- 관련 장애: 장애 리포트 #28"
+          },
+          {
+            "document_id": "incident-28",
+            "quote": "- 조치: 새 키를 발급받아 교체했다."
+          }
+        ]
+      },
+      "sections": [
+        {
+          "heading": "발생 위치와 의미",
+          "statements": [
+            {
+              "text": "에러 코드 E-010은 notification-worker에서 발생하며 외부 발송 서비스 호출이 실패했음을 의미한다.",
+              "evidence": [
+                {
+                  "document_id": "error-E-010",
+                  "quote": "- 발생 위치: notification-worker"
+                },
+                {
+                  "document_id": "error-E-010",
+                  "quote": "- 의미: 외부 발송 서비스 호출이 실패했다."
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "heading": "원인과 대응 및 관련 장애",
+          "statements": [
+            {
+              "text": "API 키 만료나 회수 및 외부 서비스 장애가 원인이며 API 키 상태를 확인하고 장애 리포트 #28의 조치를 반영한다.",
+              "evidence": [
+                {
+                  "document_id": "error-E-010",
+                  "quote": "- 원인: API 키 만료·회수, 외부 서비스 장애."
+                },
+                {
+                  "document_id": "error-E-010",
+                  "quote": "- 대응: API 키 상태를 확인한다."
+                },
+                {
+                  "document_id": "error-E-010",
+                  "quote": "- 관련 장애: 장애 리포트 #28"
+                },
+                {
+                  "document_id": "incident-28",
+                  "quote": "- 원인: 외부 발송 서비스 API 키가 회수됐다. (에러 코드 E-010)"
+                },
+                {
+                  "document_id": "incident-28",
+                  "quote": "- 조치: 새 키를 발급받아 교체했다."
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,41 @@
+{
+  "properties": {
+    "pages": {
+      "items": {
+        "properties": {
+          "document_id": {
+            "type": "string"
+          },
+          "related": {
+            "items": {
+              "properties": {
+                "document_id": {
+                  "type": "string"
+                },
+                "reason": {
+                  "type": "string"
+                }
+              },
+              "required": [
+                "document_id",
+                "reason"
+              ],
+              "type": "object"
+            },
+            "type": "array"
+          }
+        },
+        "required": [
+          "document_id",
+          "related"
+        ],
+        "type": "object"
+      },
+      "type": "array"
+    }
+  },
+  "required": [
+    "pages"
+  ],
+  "type": "object"
+}

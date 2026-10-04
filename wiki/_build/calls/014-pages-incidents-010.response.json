@@ -1,0 +1,391 @@
+{
+  "pages": [
+    {
+      "document_id": "incident-11",
+      "summary": {
+        "text": "일일 정산 서비스에서 Kafka 발행 실패로 정산이 3시간 지연되는 장애가 발생했다.",
+        "evidence": [
+          {
+            "document_id": "incident-11",
+            "quote": "- 증상: 일일 정산이 3시간 지연됐다."
+          }
+        ]
+      },
+      "sections": [
+        {
+          "heading": "장애 개요",
+          "statements": [
+            {
+              "text": "2025년 6월 18일에 settlement-pipeline 서비스에서 SEV2 등급의 장애가 발생했다.",
+              "evidence": [
+                {
+                  "document_id": "incident-11",
+                  "quote": "- 날짜: 2025-06-18"
+                },
+                {
+                  "document_id": "incident-11",
+                  "quote": "- 서비스: settlement-pipeline"
+                },
+                {
+                  "document_id": "incident-11",
+                  "quote": "- 등급: SEV2"
+                }
+              ]
+            },
+            {
+              "text": "일일 정산이 3시간 지연되는 증상이 나타났다.",
+              "evidence": [
+                {
+                  "document_id": "incident-11",
+                  "quote": "- 증상: 일일 정산이 3시간 지연됐다."
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "heading": "원인 및 대응",
+          "statements": [
+            {
+              "text": "Kafka 브로커 재시작 중 발생한 이벤트를 브로커에 발행하지 못하는 에러 코드 E-009 상황에서 발행 실패가 재시도되지 않아 원인이 되었다.",
+              "evidence": [
+                {
+                  "document_id": "error-E-009",
+                  "quote": "- 의미: 이벤트를 브로커에 발행하지 못했다."
+                },
+                {
+                  "document_id": "incident-11",
+                  "quote": "- 원인: Kafka 브로커 재시작 중 발행 실패가 재시도되지 않았다. (에러 코드 E-009)"
+                }
+              ]
+            },
+            {
+              "text": "발행 재시도를 추가하고 정산을 재실행하여 조치했다.",
+              "evidence": [
+                {
+                  "document_id": "incident-11",
+                  "quote": "- 조치: 발행 재시도를 추가하고 정산을 재실행했다."
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "document_id": "incident-12",
+      "summary": {
+        "text": "GitHub Actions 전환 후 배포 권한 부족으로 배포가 중간에 실패하는 장애가 발생했다.",
+        "evidence": [
+          {
+            "document_id": "incident-12",
+            "quote": "- 증상: GitHub Actions 전환 후 배포가 중간에 실패해 절반의 Pod만 새 버전이었다."
+          }
+        ]
+      },
+      "sections": [
+        {
+          "heading": "장애 개요",
+          "statements": [
+            {
+              "text": "2025년 7월 16일에 order-api 서비스에서 SEV2 등급의 장애가 발생했다.",
+              "evidence": [
+                {
+                  "document_id": "incident-12",
+                  "quote": "- 날짜: 2025-07-16"
+                },
+                {
+                  "document_id": "incident-12",
+                  "quote": "- 서비스: order-api"
+                },
+                {
+                  "document_id": "incident-12",
+                  "quote": "- 등급: SEV2"
+                }
+              ]
+            },
+            {
+              "text": "GitHub Actions 전환 후 배포가 중간에 실패해 절반의 Pod만 새 버전인 증상이 나타났다.",
+              "evidence": [
+                {
+                  "document_id": "incident-12",
+                  "quote": "- 증상: GitHub Actions 전환 후 배포가 중간에 실패해 절반의 Pod만 새 버전이었다."
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "heading": "원인 및 조치",
+          "statements": [
+            {
+              "text": "워크플로에 배포 권한이 없는 에러 코드 E-021 상황이 원인이 되었다.",
+              "evidence": [
+                {
+                  "document_id": "error-E-021",
+                  "quote": "- 의미: 워크플로에 배포 권한이 없다."
+                },
+                {
+                  "document_id": "incident-12",
+                  "quote": "- 원인: 워크플로에 배포 권한이 없었다. (에러 코드 E-021)"
+                }
+              ]
+            },
+            {
+              "text": "권한을 추가하고 배포를 다시 실행하여 조치했다.",
+              "evidence": [
+                {
+                  "document_id": "incident-12",
+                  "quote": "- 조치: 권한을 추가하고 배포를 다시 실행했다."
+                }
+              ]
+            },
+            {
+              "text": "이후 변경으로 후속 조치가 배포 가이드 v15에 반영되었다.",
+              "evidence": [
+                {
+                  "document_id": "incident-12",
+                  "quote": "- 후속 조치: 배포 가이드 v15에 반영"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "document_id": "incident-13",
+      "summary": {
+        "text": "새 저장소의 워크플로 권한 설정 누락으로 카탈로그 API 배포가 연속 실패했다.",
+        "evidence": [
+          {
+            "document_id": "incident-13",
+            "quote": "- 증상: 배포가 세 번 연속 실패했다."
+          }
+        ]
+      },
+      "sections": [
+        {
+          "heading": "장애 개요",
+          "statements": [
+            {
+              "text": "2025년 7월 30일에 catalog-api 서비스에서 SEV3 등급의 장애가 발생했다.",
+              "evidence": [
+                {
+                  "document_id": "incident-13",
+                  "quote": "- 날짜: 2025-07-30"
+                },
+                {
+                  "document_id": "incident-13",
+                  "quote": "- 서비스: catalog-api"
+                },
+                {
+                  "document_id": "incident-13",
+                  "quote": "- 등급: SEV3"
+                }
+              ]
+            },
+            {
+              "text": "배포가 세 번 연속 실패하는 증상이 나타났다.",
+              "evidence": [
+                {
+                  "document_id": "incident-13",
+                  "quote": "- 증상: 배포가 세 번 연속 실패했다."
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "heading": "원인 및 조치",
+          "statements": [
+            {
+              "text": "새 저장소에 워크플로 권한 설정이 누락되어 에러 코드 E-021 워크플로 권한 부족 상황이 원인이 되었다.",
+              "evidence": [
+                {
+                  "document_id": "error-E-021",
+                  "quote": "- 의미: 워크플로에 배포 권한이 없다."
+                },
+                {
+                  "document_id": "incident-13",
+                  "quote": "- 원인: 새 저장소에 워크플로 권한 설정이 누락됐다. (에러 코드 E-021)"
+                }
+              ]
+            },
+            {
+              "text": "권한 설정을 템플릿에 포함시켜 조치했다.",
+              "evidence": [
+                {
+                  "document_id": "incident-13",
+                  "quote": "- 조치: 권한 설정을 템플릿에 포함시켰다."
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "document_id": "incident-14",
+      "summary": {
+        "text": "검증 규칙 회귀 및 롤백 승인 대기로 인해 복구가 지연되는 장애가 발생했다.",
+        "evidence": [
+          {
+            "document_id": "incident-14",
+            "quote": "- 증상: 장애 발생 후 롤백 승인 대기로 복구가 40분 지연됐다."
+          }
+        ]
+      },
+      "sections": [
+        {
+          "heading": "장애 개요",
+          "statements": [
+            {
+              "text": "2025년 8월 13일에 order-api 서비스에서 SEV1 등급의 장애가 발생했다.",
+              "evidence": [
+                {
+                  "document_id": "incident-14",
+                  "quote": "- 날짜: 2025-08-13"
+                },
+                {
+                  "document_id": "incident-14",
+                  "quote": "- 서비스: order-api"
+                },
+                {
+                  "document_id": "incident-14",
+                  "quote": "- 등급: SEV1"
+                }
+              ]
+            },
+            {
+              "text": "장애 발생 후 롤백 승인 대기로 복구가 40분 지연되는 증상이 나타났다.",
+              "evidence": [
+                {
+                  "document_id": "incident-14",
+                  "quote": "- 증상: 장애 발생 후 롤백 승인 대기로 복구가 40분 지연됐다."
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "heading": "원인 및 조치",
+          "statements": [
+            {
+              "text": "주문 요청이 검증 규칙을 통과하지 못하는 에러 코드 E-001 상황과 연관된 검증 규칙 회귀가 발생했고, 롤백에 SRE 승인이 필요해 지연된 것이 원인이 되었다.",
+              "evidence": [
+                {
+                  "document_id": "error-E-001",
+                  "quote": "- 의미: 주문 요청이 검증 규칙을 통과하지 못했다."
+                },
+                {
+                  "document_id": "incident-14",
+                  "quote": "- 원인: 검증 규칙 회귀. 롤백에 SRE 승인이 필요해 지연됐다. (에러 코드 E-001)"
+                }
+              ]
+            },
+            {
+              "text": "롤백 승인 절차를 폐지하여 조치했다.",
+              "evidence": [
+                {
+                  "document_id": "incident-14",
+                  "quote": "- 조치: 롤백 승인 절차를 폐지했다."
+                }
+              ]
+            },
+            {
+              "text": "이후 변경으로 후속 조치가 배포 가이드 v19에 반영되었다.",
+              "evidence": [
+                {
+                  "document_id": "incident-14",
+                  "quote": "- 후속 조치: 배포 가이드 v19에 반영"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "document_id": "incident-15",
+      "summary": {
+        "text": "메모리 누수가 헬스체크에서 드러나지 않아 배포 후 Pod가 반복 재시작되는 장애가 발생했다.",
+        "evidence": [
+          {
+            "document_id": "incident-15",
+            "quote": "- 증상: 배포 2시간 뒤 메모리 부족으로 Pod가 반복 재시작됐다."
+          }
+        ]
+      },
+      "sections": [
+        {
+          "heading": "장애 개요",
+          "statements": [
+            {
+              "text": "2025년 8월 27일에 user-api 서비스에서 SEV2 등급의 장애가 발생했다.",
+              "evidence": [
+                {
+                  "document_id": "incident-15",
+                  "quote": "- 날짜: 2025-08-27"
+                },
+                {
+                  "document_id": "incident-15",
+                  "quote": "- 서비스: user-api"
+                },
+                {
+                  "document_id": "incident-15",
+                  "quote": "- 등급: SEV2"
+                }
+              ]
+            },
+            {
+              "text": "배포 2시간 뒤 메모리 부족으로 Pod가 반복 재시작되는 증상이 나타났다.",
+              "evidence": [
+                {
+                  "document_id": "incident-15",
+                  "quote": "- 증상: 배포 2시간 뒤 메모리 부족으로 Pod가 반복 재시작됐다."
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "heading": "원인 및 조치",
+          "statements": [
+            {
+              "text": "readiness 헬스체크가 통과하지 않는 에러 코드 E-015 상황과 유사하게 메모리 누수가 배포 직후 헬스체크에서는 드러나지 않은 것이 원인이 되었다.",
+              "evidence": [
+                {
+                  "document_id": "error-E-015",
+                  "quote": "- 의미: readiness 헬스체크가 통과하지 않았다."
+                },
+                {
+                  "document_id": "incident-15",
+                  "quote": "- 원인: 메모리 누수가 배포 직후 헬스체크에서는 드러나지 않았다. (에러 코드 E-015)"
+                }
+              ]
+            },
+            {
+              "text": "롤백하고 배포 후 모니터링을 의무화하여 조치했다.",
+              "evidence": [
+                {
+                  "document_id": "incident-15",
+                  "quote": "- 조치: 롤백했다. 배포 후 모니터링을 의무화했다."
+                }
+              ]
+            },
+            {
+              "text": "이후 변경으로 후속 조치가 배포 가이드 v20에 반영되었다.",
+              "evidence": [
+                {
+                  "document_id": "incident-15",
+                  "quote": "- 후속 조치: 배포 가이드 v20에 반영"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

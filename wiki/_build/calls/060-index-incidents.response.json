@@ -1,0 +1,55 @@
+{
+  "description": "한국어 Wiki의 장애 리포트 목록을 주제별로 탐색하기 위한 목차입니다.",
+  "groups": [
+    {
+      "heading": "주문 및 결제 관련 장애",
+      "ids": [
+        "incident-01",
+        "incident-03",
+        "incident-04",
+        "incident-10",
+        "incident-14",
+        "incident-19",
+        "incident-24",
+        "incident-28"
+      ]
+    },
+    {
+      "heading": "인증 및 권한 관련 장애",
+      "ids": [
+        "incident-02",
+        "incident-12",
+        "incident-13",
+        "incident-16",
+        "incident-17",
+        "incident-27"
+      ]
+    },
+    {
+      "heading": "배포 및 인프라 관련 장애",
+      "ids": [
+        "incident-05",
+        "incident-08",
+        "incident-15",
+        "incident-18",
+        "incident-20",
+        "incident-21",
+        "incident-22",
+        "incident-23",
+        "incident-25",
+        "incident-26",
+        "incident-30"
+      ]
+    },
+    {
+      "heading": "기타 시스템 및 서비스 장애",
+      "ids": [
+        "incident-06",
+        "incident-07",
+        "incident-09",
+        "incident-11",
+        "incident-29"
+      ]
+    }
+  ]
+}

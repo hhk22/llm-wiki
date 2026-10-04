@@ -1,0 +1,261 @@
+{
+  "pages": [
+    {
+      "document_id": "faq-q01",
+      "summary": {
+        "text": "프로덕션 배포는 GitHub Actions를 통해 실행하며 사전 승인과 staging 배포가 필요하다.",
+        "evidence": [
+          {
+            "document_id": "faq-q01",
+            "quote": "GitHub Actions에서 `deploy run --env prod --ticket <id>`를 실행한다. staging 배포와 승인이 먼저 필요하다."
+          },
+          {
+            "document_id": "faq-q01",
+            "quote": "- 관련 문서: 배포 가이드 v30"
+          }
+        ]
+      },
+      "sections": [
+        {
+          "heading": "배포 방법",
+          "statements": [
+            {
+              "text": "프로덕션 배포 시 `deploy run --env prod --ticket <id>` 명령을 GitHub Actions에서 수행한다.",
+              "evidence": [
+                {
+                  "document_id": "faq-q01",
+                  "quote": "GitHub Actions에서 `deploy run --env prod --ticket <id>`를 실행한다. staging 배포와 승인이 먼저 필요하다."
+                }
+              ]
+            },
+            {
+              "text": "본 배포 전 staging 배포 및 승인이 선행되어야 한다.",
+              "evidence": [
+                {
+                  "document_id": "faq-q01",
+                  "quote": "GitHub Actions에서 `deploy run --env prod --ticket <id>`를 실행한다. staging 배포와 승인이 먼저 필요하다."
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "heading": "참조 문서",
+          "statements": [
+            {
+              "text": "상세 내용은 배포 가이드 v30을 따른다.",
+              "evidence": [
+                {
+                  "document_id": "faq-q01",
+                  "quote": "- 관련 문서: 배포 가이드 v30"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "document_id": "faq-q02",
+      "summary": {
+        "text": "목요일 오후, 공휴일 전날, 그리고 연말 동결 기간에는 배포를 진행하지 않는다.",
+        "evidence": [
+          {
+            "document_id": "faq-q02",
+            "quote": "목요일 오후, 공휴일 전날, 12월 22일부터 1월 2일까지는 배포하지 않는다."
+          },
+          {
+            "document_id": "faq-q02",
+            "quote": "- 관련 문서: 배포 가이드 v22, v25"
+          }
+        ]
+      },
+      "sections": [
+        {
+          "heading": "배포 금지 기간",
+          "statements": [
+            {
+              "text": "목요일 오후, 공휴일 전날, 12월 22일부터 1월 2일까지는 배포하지 않는다.",
+              "evidence": [
+                {
+                  "document_id": "faq-q02",
+                  "quote": "목요일 오후, 공휴일 전날, 12월 22일부터 1월 2일까지는 배포하지 않는다."
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "heading": "관련 문서",
+          "statements": [
+            {
+              "text": "관련 정책은 배포 가이드 v22, v25에 정의되어 있다.",
+              "evidence": [
+                {
+                  "document_id": "faq-q02",
+                  "quote": "- 관련 문서: 배포 가이드 v22, v25"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "document_id": "faq-q03",
+      "summary": {
+        "text": "배포 롤백은 승인 없이 배포자가 즉시 명령을 실행하여 되돌릴 수 있다.",
+        "evidence": [
+          {
+            "document_id": "faq-q03",
+            "quote": "`deploy rollback --to <version>`을 실행한다. 승인 없이 배포자가 바로 실행할 수 있다."
+          },
+          {
+            "document_id": "faq-q03",
+            "quote": "- 관련 문서: 배포 가이드 v19"
+          }
+        ]
+      },
+      "sections": [
+        {
+          "heading": "롤백 방법",
+          "statements": [
+            {
+              "text": "`deploy rollback --to <version>` 명령을 통해 배포를 되돌린다.",
+              "evidence": [
+                {
+                  "document_id": "faq-q03",
+                  "quote": "`deploy rollback --to <version>`을 실행한다. 승인 없이 배포자가 바로 실행할 수 있다."
+                }
+              ]
+            },
+            {
+              "text": "별도의 승인 절차 없이 배포자가 직접 실행 가능하다.",
+              "evidence": [
+                {
+                  "document_id": "faq-q03",
+                  "quote": "`deploy rollback --to <version>`을 실행한다. 승인 없이 배포자가 바로 실행할 수 있다."
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "heading": "참조",
+          "statements": [
+            {
+              "text": "해당 규칙은 배포 가이드 v19에 근거한다.",
+              "evidence": [
+                {
+                  "document_id": "faq-q03",
+                  "quote": "- 관련 문서: 배포 가이드 v19"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "document_id": "faq-q04",
+      "summary": {
+        "text": "프로덕션 배포 승인은 팀 리드와 서비스 오너가 공동으로 수행한다.",
+        "evidence": [
+          {
+            "document_id": "faq-q04",
+            "quote": "팀 리드와 서비스 오너 두 명이 승인한다."
+          },
+          {
+            "document_id": "faq-q04",
+            "quote": "- 관련 문서: 배포 가이드 v24"
+          }
+        ]
+      },
+      "sections": [
+        {
+          "heading": "승인 주체",
+          "statements": [
+            {
+              "text": "배포 승인은 팀 리드와 서비스 오너 두 명이 담당한다.",
+              "evidence": [
+                {
+                  "document_id": "faq-q04",
+                  "quote": "팀 리드와 서비스 오너 두 명이 승인한다."
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "heading": "관련 문서",
+          "statements": [
+            {
+              "text": "세부 사항은 배포 가이드 v24를 참조한다.",
+              "evidence": [
+                {
+                  "document_id": "faq-q04",
+                  "quote": "- 관련 문서: 배포 가이드 v24"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "document_id": "faq-q05",
+      "summary": {
+        "text": "Jenkins는 2025년 9월에 종료되어 더 이상 사용되지 않으며 관련 절차도 무효하다.",
+        "evidence": [
+          {
+            "document_id": "faq-q05",
+            "quote": "아니다. 2025년 9월에 종료됐다. 배포 가이드 v13 이전 문서의 Jenkins 절차는 유효하지 않다."
+          },
+          {
+            "document_id": "faq-q05",
+            "quote": "- 관련 문서: 배포 가이드 v18"
+          }
+        ]
+      },
+      "sections": [
+        {
+          "heading": "Jenkins 사용 여부",
+          "statements": [
+            {
+              "text": "Jenkins는 더 이상 사용하지 않으며 2025년 9월에 종료되었다.",
+              "evidence": [
+                {
+                  "document_id": "faq-q05",
+                  "quote": "아니다. 2025년 9월에 종료됐다. 배포 가이드 v13 이전 문서의 Jenkins 절차는 유효하지 않다."
+                }
+              ]
+            },
+            {
+              "text": "배포 가이드 v13 이전 문서에 포함된 Jenkins 절차는 현재 유효하지 않다.",
+              "evidence": [
+                {
+                  "document_id": "faq-q05",
+                  "quote": "아니다. 2025년 9월에 종료됐다. 배포 가이드 v13 이전 문서의 Jenkins 절차는 유효하지 않다."
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "heading": "참조 문서",
+          "statements": [
+            {
+              "text": "관련 내용은 배포 가이드 v18에서 확인할 수 있다.",
+              "evidence": [
+                {
+                  "document_id": "faq-q05",
+                  "quote": "- 관련 문서: 배포 가이드 v18"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

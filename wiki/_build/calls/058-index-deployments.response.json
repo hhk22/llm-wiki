@@ -1,0 +1,50 @@
+{
+  "description": "배포 가이드 버전별 문서 탐색 가이드",
+  "groups": [
+    {
+      "heading": "초기 배포 가이드 (v1 - v10)",
+      "ids": [
+        "deploy-guide-v01",
+        "deploy-guide-v02",
+        "deploy-guide-v03",
+        "deploy-guide-v04",
+        "deploy-guide-v05",
+        "deploy-guide-v06",
+        "deploy-guide-v07",
+        "deploy-guide-v08",
+        "deploy-guide-v09",
+        "deploy-guide-v10"
+      ]
+    },
+    {
+      "heading": "중기 배포 가이드 및 도구 전환 (v11 - v20)",
+      "ids": [
+        "deploy-guide-v11",
+        "deploy-guide-v12",
+        "deploy-guide-v13",
+        "deploy-guide-v14",
+        "deploy-guide-v15",
+        "deploy-guide-v16",
+        "deploy-guide-v17",
+        "deploy-guide-v18",
+        "deploy-guide-v19",
+        "deploy-guide-v20"
+      ]
+    },
+    {
+      "heading": "최신 배포 가이드 및 규칙 강화 (v21 - v30)",
+      "ids": [
+        "deploy-guide-v21",
+        "deploy-guide-v22",
+        "deploy-guide-v23",
+        "deploy-guide-v24",
+        "deploy-guide-v25",
+        "deploy-guide-v26",
+        "deploy-guide-v27",
+        "deploy-guide-v28",
+        "deploy-guide-v29",
+        "deploy-guide-v30"
+      ]
+    }
+  ]
+}

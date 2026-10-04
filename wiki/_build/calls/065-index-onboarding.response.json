@@ -1,0 +1,55 @@
+{
+  "description": "온보딩 FAQ 항목들을 주제별로 탐색하기 위한 목차입니다.",
+  "groups": [
+    {
+      "heading": "배포 및 릴리스",
+      "ids": [
+        "faq-q01",
+        "faq-q02",
+        "faq-q03",
+        "faq-q04",
+        "faq-q07",
+        "faq-q11",
+        "faq-q12",
+        "faq-q13",
+        "faq-q18",
+        "faq-q19",
+        "faq-q20",
+        "faq-q21",
+        "faq-q24",
+        "faq-q26",
+        "faq-q27",
+        "faq-q30"
+      ]
+    },
+    {
+      "heading": "장애 및 대응",
+      "ids": [
+        "faq-q06",
+        "faq-q08",
+        "faq-q09",
+        "faq-q10",
+        "faq-q29"
+      ]
+    },
+    {
+      "heading": "개발 환경 및 시스템",
+      "ids": [
+        "faq-q05",
+        "faq-q14",
+        "faq-q15",
+        "faq-q16",
+        "faq-q25"
+      ]
+    },
+    {
+      "heading": "조직 및 운영",
+      "ids": [
+        "faq-q17",
+        "faq-q22",
+        "faq-q23",
+        "faq-q28"
+      ]
+    }
+  ]
+}

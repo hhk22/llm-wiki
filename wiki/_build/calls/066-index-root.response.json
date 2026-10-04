@@ -1,0 +1,19 @@
+{
+  "description": "한국어 Wiki 전체 목차 탐색 안내",
+  "groups": [
+    {
+      "heading": "배포 및 장애 관리",
+      "ids": [
+        "deployments",
+        "incidents",
+        "errors"
+      ]
+    },
+    {
+      "heading": "기타 안내",
+      "ids": [
+        "onboarding"
+      ]
+    }
+  ]
+}

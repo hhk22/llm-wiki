@@ -1,0 +1,310 @@
+{
+  "pages": [
+    {
+      "document_id": "error-E-001",
+      "summary": {
+        "text": "주문 검증 실패 에러 코드 E-001은 order-api에서 발생하며 주문 요청이 검증 규칙을 통과하지 못할 때 나타난다.",
+        "evidence": [
+          {
+            "document_id": "error-E-001",
+            "quote": "# 에러 코드 E-001 주문 검증 실패"
+          },
+          {
+            "document_id": "error-E-001",
+            "quote": "- 발생 위치: order-api"
+          },
+          {
+            "document_id": "error-E-001",
+            "quote": "- 의미: 주문 요청이 검증 규칙을 통과하지 못했다."
+          }
+        ]
+      },
+      "sections": [
+        {
+          "heading": "발생 원인",
+          "statements": [
+            {
+              "text": "에러 발생 원인은 필수 항목 누락 또는 잘못된 검증 규칙 배포이다.",
+              "evidence": [
+                {
+                  "document_id": "error-E-001",
+                  "quote": "- 원인: 필수 항목 누락 또는 잘못된 검증 규칙 배포."
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "heading": "대응 방법",
+          "statements": [
+            {
+              "text": "대응 방법으로 요청 본문을 확인하고 배포 직후 급증하면 롤백한다.",
+              "evidence": [
+                {
+                  "document_id": "error-E-001",
+                  "quote": "- 대응: 요청 본문을 확인한다. 배포 직후 급증하면 롤백한다."
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "heading": "관련 장애",
+          "statements": [
+            {
+              "text": "관련 장애는 장애 리포트 #01, #14, #24이다.",
+              "evidence": [
+                {
+                  "document_id": "error-E-001",
+                  "quote": "- 관련 장애: 장애 리포트 #01, #14, #24"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "document_id": "error-E-002",
+      "summary": {
+        "text": "재고 부족 에러 코드 E-002는 catalog-api에서 발생하며 요청 수량이 재고보다 많을 때 나타난다.",
+        "evidence": [
+          {
+            "document_id": "error-E-002",
+            "quote": "# 에러 코드 E-002 재고 부족"
+          },
+          {
+            "document_id": "error-E-002",
+            "quote": "- 발생 위치: catalog-api"
+          },
+          {
+            "document_id": "error-E-002",
+            "quote": "- 의미: 요청 수량이 재고보다 많다."
+          }
+        ]
+      },
+      "sections": [
+        {
+          "heading": "발생 원인",
+          "statements": [
+            {
+              "text": "에러 발생 원인은 재고 차감 동시성 문제 또는 실제 재고 부족이다.",
+              "evidence": [
+                {
+                  "document_id": "error-E-002",
+                  "quote": "- 원인: 재고 차감 동시성 문제 또는 실제 재고 부족."
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "heading": "대응 방법",
+          "statements": [
+            {
+              "text": "대응 방법으로 재고 수치를 확인하며 음수면 동시성 버그다.",
+              "evidence": [
+                {
+                  "document_id": "error-E-002",
+                  "quote": "- 대응: 재고 수치를 확인한다. 음수면 동시성 버그다."
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "heading": "관련 장애",
+          "statements": [
+            {
+              "text": "관련 장애는 장애 리포트 #04이다.",
+              "evidence": [
+                {
+                  "document_id": "error-E-002",
+                  "quote": "- 관련 장애: 장애 리포트 #04"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "document_id": "error-E-003",
+      "summary": {
+        "text": "결제 승인 거절 에러 코드 E-003은 payment-api에서 발생하며 PG사가 결제를 거절할 때 나타난다.",
+        "evidence": [
+          {
+            "document_id": "error-E-003",
+            "quote": "# 에러 코드 E-003 결제 승인 거절"
+          },
+          {
+            "document_id": "error-E-003",
+            "quote": "- 발생 위치: payment-api"
+          },
+          {
+            "document_id": "error-E-003",
+            "quote": "- 의미: PG사가 결제를 거절했다."
+          }
+        ]
+      },
+      "sections": [
+        {
+          "heading": "발생 원인",
+          "statements": [
+            {
+              "text": "에러 발생 원인은 카드 한도, 잘못된 카드 정보, PG사 정책이다.",
+              "evidence": [
+                {
+                  "document_id": "error-E-003",
+                  "quote": "- 원인: 카드 한도, 잘못된 카드 정보, PG사 정책."
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "heading": "대응 방법",
+          "statements": [
+            {
+              "text": "대응 방법으로 사용자에게 안내하고 거절률 급증 시 PG사 상태를 확인한다.",
+              "evidence": [
+                {
+                  "document_id": "error-E-003",
+                  "quote": "- 대응: 사용자에게 안내한다. 거절률 급증 시 PG사 상태를 확인한다."
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "document_id": "error-E-004",
+      "summary": {
+        "text": "결제 타임아웃 에러 코드 E-004는 payment-api에서 발생하며 PG사 응답이 제한 시간 안에 오지 않을 때 나타난다.",
+        "evidence": [
+          {
+            "document_id": "error-E-004",
+            "quote": "# 에러 코드 E-004 결제 타임아웃"
+          },
+          {
+            "document_id": "error-E-004",
+            "quote": "- 발생 위치: payment-api"
+          },
+          {
+            "document_id": "error-E-004",
+            "quote": "- 의미: PG사 응답이 제한 시간 안에 오지 않았다."
+          }
+        ]
+      },
+      "sections": [
+        {
+          "heading": "발생 원인",
+          "statements": [
+            {
+              "text": "에러 발생 원인은 PG사 지연 또는 타임아웃 설정이 너무 짧음이다.",
+              "evidence": [
+                {
+                  "document_id": "error-E-004",
+                  "quote": "- 원인: PG사 지연 또는 타임아웃 설정이 너무 짧음."
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "heading": "대응 방법",
+          "statements": [
+            {
+              "text": "대응 방법으로 타임아웃 설정을 확인하고 배포 직후면 롤백한다.",
+              "evidence": [
+                {
+                  "document_id": "error-E-004",
+                  "quote": "- 대응: 타임아웃 설정을 확인한다. 배포 직후면 롤백한다."
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "heading": "관련 장애",
+          "statements": [
+            {
+              "text": "관련 장애는 장애 리포트 #10이다.",
+              "evidence": [
+                {
+                  "document_id": "error-E-004",
+                  "quote": "- 관련 장애: 장애 리포트 #10"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "document_id": "error-E-005",
+      "summary": {
+        "text": "인증 토큰 만료 에러 코드 E-005는 api-gateway에서 발생하며 액세스 토큰의 유효 기간이 지났을 때 나타난다.",
+        "evidence": [
+          {
+            "document_id": "error-E-005",
+            "quote": "# 에러 코드 E-005 인증 토큰 만료"
+          },
+          {
+            "document_id": "error-E-005",
+            "quote": "- 발생 위치: api-gateway"
+          },
+          {
+            "document_id": "error-E-005",
+            "quote": "- 의미: 액세스 토큰의 유효 기간이 지났다."
+          }
+        ]
+      },
+      "sections": [
+        {
+          "heading": "발생 원인",
+          "statements": [
+            {
+              "text": "에러 발생 원인은 정상 만료 또는 TTL 설정 오류이다.",
+              "evidence": [
+                {
+                  "document_id": "error-E-005",
+                  "quote": "- 원인: 정상 만료 또는 TTL 설정 오류."
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "heading": "대응 방법",
+          "statements": [
+            {
+              "text": "대응 방법으로 재로그인 빈도가 비정상이면 TTL 설정을 확인한다.",
+              "evidence": [
+                {
+                  "document_id": "error-E-005",
+                  "quote": "- 대응: 재로그인 빈도가 비정상이면 TTL 설정을 확인한다."
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "heading": "관련 장애",
+          "statements": [
+            {
+              "text": "관련 장애는 장애 리포트 #02이다.",
+              "evidence": [
+                {
+                  "document_id": "error-E-005",
+                  "quote": "- 관련 장애: 장애 리포트 #02"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

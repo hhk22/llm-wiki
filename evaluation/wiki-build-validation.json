@@ -1,0 +1,39 @@
+{
+  "validation": {
+    "status": "PASS",
+    "source_documents": 120,
+    "pages": 120,
+    "indexes": 5,
+    "checked_links": 1175,
+    "checked_evidence_quotes": 978,
+    "semantic_review": "Quote existence does not prove claim entailment or completeness."
+  },
+  "model": "gemini-3.5-flash-lite",
+  "model_versions": [
+    "gemini-3.5-flash-lite"
+  ],
+  "build_fingerprint": "2a7d9a005470fb5ce88bb236a833c4bdc3fdebfa4b5e8e877ef1bf23e2efd42f",
+  "started_at": "2026-09-26T04:41:34.920523+00:00",
+  "finished_at": "2026-09-26T05:04:23.460899+00:00",
+  "completed_jobs": 33,
+  "recorded_call_status_counts": {
+    "invalid_output": 33,
+    "ok": 33
+  },
+  "calls_with_usage": 66,
+  "reported_tokens": {
+    "prompt_token_count": 343238,
+    "candidates_token_count": 182849,
+    "thoughts_token_count": 0,
+    "total_token_count": 526087
+  },
+  "sum_recorded_call_seconds": 631.4,
+  "wall_seconds_including_pauses": 1368.54,
+  "implementation_revisions": 2,
+  "measurement_scope": "This manifest only, including rejected responses and retries. Earlier model experiments and unrecorded interrupted calls are excluded. This is not a billing total or query benchmark.",
+  "tests": {
+    "passed": 135,
+    "skipped": 0,
+    "database_tests_included": true
+  }
+}

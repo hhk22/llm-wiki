@@ -1,0 +1,243 @@
+{
+  "pages": [
+    {
+      "document_id": "faq-q26",
+      "summary": {
+        "text": "배포 중 헬스체크 실패로 인한 자동 중단 및 대응 절차를 안내한다.",
+        "evidence": [
+          {
+            "document_id": "faq-q26",
+            "quote": "배포가 자동 중단된다. Pod 로그와 readiness 경로를 확인한다."
+          }
+        ]
+      },
+      "sections": [
+        {
+          "heading": "헬스체크 실패 증상과 조치",
+          "statements": [
+            {
+              "text": "배포 중 헬스체크가 실패하면 배포가 자동 중단되며, Pod 로그와 readiness 경로를 확인해야 한다.",
+              "evidence": [
+                {
+                  "document_id": "faq-q26",
+                  "quote": "배포가 자동 중단된다. Pod 로그와 readiness 경로를 확인한다."
+                }
+              ]
+            },
+            {
+              "text": "관련 문서로 에러 코드 E-015와 장애 리포트 #30이 있다.",
+              "evidence": [
+                {
+                  "document_id": "faq-q26",
+                  "quote": "- 관련 문서: 에러 코드 E-015, 장애 리포트 #30"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "heading": "관련 장애 원인과 대응",
+          "statements": [
+            {
+              "text": "장애 리포트 #30에서 catalog-api 서비스 배포가 헬스체크 실패로 자동 중단된 원인은 readiness 경로가 새 버전에서 바뀌었기 때문이다.",
+              "evidence": [
+                {
+                  "document_id": "incident-30",
+                  "quote": "- 증상: 배포가 헬스체크 실패로 자동 중단됐다."
+                },
+                {
+                  "document_id": "incident-30",
+                  "quote": "- 원인: readiness 경로가 새 버전에서 바뀌었다. (에러 코드 E-015)"
+                }
+              ]
+            },
+            {
+              "text": "장애 리포트 #30의 조치로 헬스체크 경로를 수정해 재배포했다.",
+              "evidence": [
+                {
+                  "document_id": "incident-30",
+                  "quote": "- 조치: 헬스체크 경로를 수정해 재배포했다."
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "document_id": "faq-q27",
+      "summary": {
+        "text": "동시 배포 제한과 잠금 메커니즘을 설명한다.",
+        "evidence": [
+          {
+            "document_id": "faq-q27",
+            "quote": "없다. 같은 서비스의 배포는 잠금으로 한 번에 하나만 실행된다."
+          }
+        ]
+      },
+      "sections": [
+        {
+          "heading": "동시 배포 제한 규칙",
+          "statements": [
+            {
+              "text": "두 명이 같은 서비스를 동시에 배포하는 것은 불가능하다.",
+              "evidence": [
+                {
+                  "document_id": "faq-q27",
+                  "quote": "없다. 같은 서비스의 배포는 잠금으로 한 번에 하나만 실행된다."
+                }
+              ]
+            },
+            {
+              "text": "관련 문서로 배포 가이드 v23이 지정되어 있다.",
+              "evidence": [
+                {
+                  "document_id": "faq-q27",
+                  "quote": "- 관련 문서: 배포 가이드 v23"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "document_id": "faq-q28",
+      "summary": {
+        "text": "SRE 팀이 담당하는 인증서 갱신과 사전 알림 일정을 안내한다.",
+        "evidence": [
+          {
+            "document_id": "faq-q28",
+            "quote": "SRE 팀이 담당한다. 만료 30일 전에 알림이 온다."
+          }
+        ]
+      },
+      "sections": [
+        {
+          "heading": "인증서 갱신 담당과 알림",
+          "statements": [
+            {
+              "text": "인증서 갱신은 SRE 팀이 담당하며 만료 30일 전에 알림이 온다.",
+              "evidence": [
+                {
+                  "document_id": "faq-q28",
+                  "quote": "SRE 팀이 담당한다. 만료 30일 전에 알림이 온다."
+                }
+              ]
+            },
+            {
+              "text": "관련 문서로 에러 코드 E-029와 장애 리포트 #16이 있다.",
+              "evidence": [
+                {
+                  "document_id": "faq-q28",
+                  "quote": "- 관련 문서: 에러 코드 E-029, 장애 리포트 #16"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "heading": "관련 장애 원인과 대응",
+          "statements": [
+            {
+              "text": "장애 리포트 #16에서 api-gateway 서비스의 외부 요청이 전부 TLS 오류로 실패한 원인은 인증서가 만료되었고 갱신 알림이 없었기 때문이다.",
+              "evidence": [
+                {
+                  "document_id": "incident-16",
+                  "quote": "- 증상: 외부 요청이 전부 TLS 오류로 실패했다."
+                },
+                {
+                  "document_id": "incident-16",
+                  "quote": "- 원인: 인증서가 만료됐다. 갱신 알림이 없었다. (에러 코드 E-029)"
+                }
+              ]
+            },
+            {
+              "text": "장애 리포트 #16의 조치로 인증서를 갱신하고 만료 30일 전 알림을 추가했다.",
+              "evidence": [
+                {
+                  "document_id": "incident-16",
+                  "quote": "- 조치: 인증서를 갱신하고 만료 30일 전 알림을 추가했다."
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "document_id": "faq-q29",
+      "summary": {
+        "text": "Kafka 발행 실패 시의 점검 사항과 정산 지연 대응 방법을 설명한다.",
+        "evidence": [
+          {
+            "document_id": "faq-q29",
+            "quote": "브로커 상태를 확인하고 재시도 설정이 있는지 본다. 정산 지연이 생기면 배치를 재실행한다."
+          }
+        ]
+      },
+      "sections": [
+        {
+          "heading": "Kafka 발행 실패 대응",
+          "statements": [
+            {
+              "text": "Kafka 발행이 실패하면 브로커 상태를 확인하고 재시도 설정이 있는지 보며, 정산 지연이 생기면 배치를 재실행한다.",
+              "evidence": [
+                {
+                  "document_id": "faq-q29",
+                  "quote": "브로커 상태를 확인하고 재시도 설정이 있는지 본다. 정산 지연이 생기면 배치를 재실행한다."
+                }
+              ]
+            },
+            {
+              "text": "관련 문서로 에러 코드 E-009가 지정되어 있다.",
+              "evidence": [
+                {
+                  "document_id": "faq-q29",
+                  "quote": "- 관련 문서: 에러 코드 E-009"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "document_id": "faq-q30",
+      "summary": {
+        "text": "다수의 배포 가이드 버전 중 최신 버전을 참조해야 함을 안내한다.",
+        "evidence": [
+          {
+            "document_id": "faq-q30",
+            "quote": "최신 버전인 v30을 본다. 이전 버전은 변경 이력 참고용이다."
+          }
+        ]
+      },
+      "sections": [
+        {
+          "heading": "배포 가이드 버전 참조 기준",
+          "statements": [
+            {
+              "text": "배포 가이드가 v1부터 v30까지 있을 때 최신 버전인 v30을 보고 이전 버전은 변경 이력 참고용으로 활용한다.",
+              "evidence": [
+                {
+                  "document_id": "faq-q30",
+                  "quote": "최신 버전인 v30을 본다. 이전 버전은 변경 이력 참고용이다."
+                }
+              ]
+            },
+            {
+              "text": "관련 문서로 배포 가이드 v30이 지정되어 있다.",
+              "evidence": [
+                {
+                  "document_id": "faq-q30",
+                  "quote": "- 관련 문서: 배포 가이드 v30"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

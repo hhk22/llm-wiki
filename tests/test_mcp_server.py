@@ -68,3 +68,23 @@ def test_mcp_tools_accept_and_forward_hybrid_method(tool_name: str) -> None:
 
     assert result.structured_content["method"] == "hybrid"
     assert result.structured_content["query"] == "E-021 오류 대응"
+
+
+def test_mcp_forwards_history_for_wiki_answers():
+    history = [{"role": "user", "content": "배포 금지 시간은?"}]
+
+    class ClientWithHistory:
+        async def answer(self, query, method, top_k, **kwargs):
+            assert (query, method, top_k) == ("그 전에는?", "wiki", 3)
+            assert kwargs == {"history": history, "max_input_tokens": 9000}
+            return {"status": "clarification_required", "answer": "어느 변경인가요?", "sources": []}
+
+    async def run():
+        async with Client(create_mcp_server(ClientWithHistory)) as client:
+            return await client.call_tool("ask_wiki", {
+                "query": "그 전에는?", "method": "wiki", "history": history,
+                "max_input_tokens": 9000,
+            })
+
+    result = asyncio.run(run())
+    assert result.structured_content["status"] == "clarification_required"

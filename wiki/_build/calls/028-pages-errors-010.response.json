@@ -1,0 +1,340 @@
+{
+  "pages": [
+    {
+      "document_id": "error-E-011",
+      "summary": {
+        "text": "에러 코드 E-011은 테스트 단계에서 실패하여 CI 빌드가 중단된 상황을 의미하며 실패한 테스트를 수정하여 대응한다.",
+        "evidence": [
+          {
+            "document_id": "error-E-011",
+            "quote": "- 발생 위치: CI"
+          },
+          {
+            "document_id": "error-E-011",
+            "quote": "- 의미: 테스트 단계에서 빌드가 중단됐다."
+          },
+          {
+            "document_id": "error-E-011",
+            "quote": "- 원인: 테스트 실패."
+          },
+          {
+            "document_id": "error-E-011",
+            "quote": "- 대응: 실패한 테스트를 수정한다."
+          }
+        ]
+      },
+      "sections": [
+        {
+          "heading": "발생 위치 및 의미",
+          "statements": [
+            {
+              "text": "에러 코드 E-011은 CI에서 발생하며 테스트 단계에서 빌드가 중단되었음을 의미한다.",
+              "evidence": [
+                {
+                  "document_id": "error-E-011",
+                  "quote": "- 발생 위치: CI"
+                },
+                {
+                  "document_id": "error-E-011",
+                  "quote": "- 의미: 테스트 단계에서 빌드가 중단됐다."
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "heading": "원인 및 대응",
+          "statements": [
+            {
+              "text": "원인은 테스트 실패이며 실패한 테스트를 수정하여 대응한다.",
+              "evidence": [
+                {
+                  "document_id": "error-E-011",
+                  "quote": "- 원인: 테스트 실패."
+                },
+                {
+                  "document_id": "error-E-011",
+                  "quote": "- 대응: 실패한 테스트를 수정한다."
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "document_id": "error-E-012",
+      "summary": {
+        "text": "에러 코드 E-012는 Jenkins CI 환경에서 빌드 캐시 손상으로 인한 빌드 실패를 의미하며 캐시 삭제 및 재빌드로 대응한다.",
+        "evidence": [
+          {
+            "document_id": "error-E-012",
+            "quote": "- 발생 위치: CI (Jenkins)"
+          },
+          {
+            "document_id": "error-E-012",
+            "quote": "- 의미: 손상된 캐시로 빌드가 실패했다."
+          },
+          {
+            "document_id": "error-E-012",
+            "quote": "- 원인: Jenkins 빌드 캐시 손상."
+          },
+          {
+            "document_id": "error-E-012",
+            "quote": "- 대응: 캐시를 삭제하고 다시 빌드한다. 배포 가이드 v3에서 자동화됐다."
+          }
+        ]
+      },
+      "sections": [
+        {
+          "heading": "발생 위치 및 의미",
+          "statements": [
+            {
+              "text": "발생 위치는 CI (Jenkins)이며 손상된 캐시로 빌드가 실패했음을 의미한다.",
+              "evidence": [
+                {
+                  "document_id": "error-E-012",
+                  "quote": "- 발생 위치: CI (Jenkins)"
+                },
+                {
+                  "document_id": "error-E-012",
+                  "quote": "- 의미: 손상된 캐시로 빌드가 실패했다."
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "heading": "원인 및 대응",
+          "statements": [
+            {
+              "text": "원인은 Jenkins 빌드 캐시 손상이며 캐시를 삭제하고 다시 빌드한다.",
+              "evidence": [
+                {
+                  "document_id": "error-E-012",
+                  "quote": "- 원인: Jenkins 빌드 캐시 손상."
+                },
+                {
+                  "document_id": "error-E-012",
+                  "quote": "- 대응: 캐시를 삭제하고 다시 빌드한다. 배포 가이드 v3에서 자동화됐다."
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "document_id": "error-E-013",
+      "summary": {
+        "text": "에러 코드 E-013은 CI 환경에서 레지스트리 인증 만료 또는 용량 초과로 컨테이너 이미지를 올리지 못한 상황을 의미하며 인증과 용량을 확인하여 대응한다.",
+        "evidence": [
+          {
+            "document_id": "error-E-013",
+            "quote": "- 발생 위치: CI"
+          },
+          {
+            "document_id": "error-E-013",
+            "quote": "- 의미: 컨테이너 이미지를 레지스트리에 올리지 못했다."
+          },
+          {
+            "document_id": "error-E-013",
+            "quote": "- 원인: 레지스트리 인증 만료 또는 용량 초과."
+          },
+          {
+            "document_id": "error-E-013",
+            "quote": "- 대응: 레지스트리 인증과 용량을 확인한다."
+          }
+        ]
+      },
+      "sections": [
+        {
+          "heading": "발생 위치 및 의미",
+          "statements": [
+            {
+              "text": "발생 위치는 CI이며 컨테이너 이미지를 레지스트리에 올리지 못했음을 의미한다.",
+              "evidence": [
+                {
+                  "document_id": "error-E-013",
+                  "quote": "- 발생 위치: CI"
+                },
+                {
+                  "document_id": "error-E-013",
+                  "quote": "- 의미: 컨테이너 이미지를 레지스트리에 올리지 못했다."
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "heading": "원인 및 대응",
+          "statements": [
+            {
+              "text": "원인은 레지스트리 인증 만료 또는 용량 초과이며 레지스트리 인증과 용량을 확인한다.",
+              "evidence": [
+                {
+                  "document_id": "error-E-013",
+                  "quote": "- 원인: 레지스트리 인증 만료 또는 용량 초과."
+                },
+                {
+                  "document_id": "error-E-013",
+                  "quote": "- 대응: 레지스트리 인증과 용량을 확인한다."
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "document_id": "error-E-014",
+      "summary": {
+        "text": "에러 코드 E-014는 태그 규칙 위반이나 latest 사용으로 인해 발생하며 장애 리포트 #06과 연계되어 `<service>:<git-sha>` 형식 태그 사용으로 대응한다.",
+        "evidence": [
+          {
+            "document_id": "error-E-014",
+            "quote": "- 발생 위치: 배포"
+          },
+          {
+            "document_id": "error-E-014",
+            "quote": "- 의미: 지정한 이미지 태그를 찾을 수 없거나 `latest`를 사용했다."
+          },
+          {
+            "document_id": "error-E-014",
+            "quote": "- 원인: 태그 규칙 위반."
+          },
+          {
+            "document_id": "error-E-014",
+            "quote": "- 대응: `<service>:<git-sha>` 형식 태그를 사용한다."
+          },
+          {
+            "document_id": "error-E-014",
+            "quote": "- 관련 장애: 장애 리포트 #06"
+          }
+        ]
+      },
+      "sections": [
+        {
+          "heading": "발생 위치 및 의미",
+          "statements": [
+            {
+              "text": "발생 위치는 배포이며 지정한 이미지 태그를 찾을 수 없거나 latest를 사용했음을 의미한다.",
+              "evidence": [
+                {
+                  "document_id": "error-E-014",
+                  "quote": "- 발생 위치: 배포"
+                },
+                {
+                  "document_id": "error-E-014",
+                  "quote": "- 의미: 지정한 이미지 태그를 찾을 수 없거나 `latest`를 사용했다."
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "heading": "원인 및 대응",
+          "statements": [
+            {
+              "text": "원인은 태그 규칙 위반이며 `<service>:<git-sha>` 형식 태그를 사용한다.",
+              "evidence": [
+                {
+                  "document_id": "error-E-014",
+                  "quote": "- 원인: 태그 규칙 위반."
+                },
+                {
+                  "document_id": "error-E-014",
+                  "quote": "- 대응: `<service>:<git-sha>` 형식 태그를 사용한다."
+                }
+              ]
+            },
+            {
+              "text": "관련 장애는 장애 리포트 #06이다.",
+              "evidence": [
+                {
+                  "document_id": "error-E-014",
+                  "quote": "- 관련 장애: 장애 리포트 #06"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "document_id": "error-E-015",
+      "summary": {
+        "text": "에러 코드 E-015는 readiness 헬스체크 실패를 의미하며 애플리케이션 시작 실패, 헬스체크 경로 변경, 리소스 부족 등의 원인에 대해 Pod 로그와 경로 확인으로 대응하며 장애 리포트 #15 및 #30과 연관된다.",
+        "evidence": [
+          {
+            "document_id": "error-E-015",
+            "quote": "- 발생 위치: 배포"
+          },
+          {
+            "document_id": "error-E-015",
+            "quote": "- 의미: readiness 헬스체크가 통과하지 않았다."
+          },
+          {
+            "document_id": "error-E-015",
+            "quote": "- 원인: 애플리케이션 시작 실패, 헬스체크 경로 변경, 리소스 부족."
+          },
+          {
+            "document_id": "error-E-015",
+            "quote": "- 대응: Pod 로그와 헬스체크 경로를 확인한다."
+          },
+          {
+            "document_id": "error-E-015",
+            "quote": "- 관련 장애: 장애 리포트 #15, #30"
+          }
+        ]
+      },
+      "sections": [
+        {
+          "heading": "발생 위치 및 의미",
+          "statements": [
+            {
+              "text": "발생 위치는 배포이며 readiness 헬스체크가 통과하지 않았음을 의미한다.",
+              "evidence": [
+                {
+                  "document_id": "error-E-015",
+                  "quote": "- 발생 위치: 배포"
+                },
+                {
+                  "document_id": "error-E-015",
+                  "quote": "- 의미: readiness 헬스체크가 통과하지 않았다."
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "heading": "원인 및 대응",
+          "statements": [
+            {
+              "text": "원인은 애플리케이션 시작 실패, 헬스체크 경로 변경, 리소스 부족이며 Pod 로그와 헬스체크 경로를 확인한다.",
+              "evidence": [
+                {
+                  "document_id": "error-E-015",
+                  "quote": "- 원인: 애플리케이션 시작 실패, 헬스체크 경로 변경, 리소스 부족."
+                },
+                {
+                  "document_id": "error-E-015",
+                  "quote": "- 대응: Pod 로그와 헬스체크 경로를 확인한다."
+                }
+              ]
+            },
+            {
+              "text": "관련 장애는 장애 리포트 #15, #30이다.",
+              "evidence": [
+                {
+                  "document_id": "error-E-015",
+                  "quote": "- 관련 장애: 장애 리포트 #15, #30"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

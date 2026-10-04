@@ -1,0 +1,245 @@
+{
+  "pages": [
+    {
+      "document_id": "faq-q11",
+      "summary": {
+        "text": "모든 서비스에 적용되는 카나리 배포 비율은 10%에서 50%를 거쳐 100% 순서로 진행됩니다.",
+        "evidence": [
+          {
+            "document_id": "faq-q11",
+            "quote": "10% → 50% → 100% 순서로 진행한다. 모든 서비스에 적용된다."
+          }
+        ]
+      },
+      "sections": [
+        {
+          "heading": "배포 비율 및 적용 범위",
+          "statements": [
+            {
+              "text": "카나리 배포는 10%, 50%, 100% 순서로 진행됩니다.",
+              "evidence": [
+                {
+                  "document_id": "faq-q11",
+                  "quote": "10% → 50% → 100% 순서로 진행한다. 모든 서비스에 적용된다."
+                }
+              ]
+            },
+            {
+              "text": "해당 카나리 배포 규칙은 모든 서비스에 적용됩니다.",
+              "evidence": [
+                {
+                  "document_id": "faq-q11",
+                  "quote": "10% → 50% → 100% 순서로 진행한다. 모든 서비스에 적용된다."
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "heading": "관련 문서",
+          "statements": [
+            {
+              "text": "관련 문서는 배포 가이드 v21입니다.",
+              "evidence": [
+                {
+                  "document_id": "faq-q11",
+                  "quote": "- 관련 문서: 배포 가이드 v21"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "document_id": "faq-q12",
+      "summary": {
+        "text": "이미지 태그는 최신 릴리스에서 변경된 형식을 따르며 latest 사용이 금지됩니다.",
+        "evidence": [
+          {
+            "document_id": "faq-q12",
+            "quote": "<service>:<git-sha> 형식만 허용한다. `latest`는 금지다."
+          }
+        ]
+      },
+      "sections": [
+        {
+          "heading": "이미지 태그 규칙",
+          "statements": [
+            {
+              "text": "이미지 태그는 <service>:<git-sha> 형식만 허용됩니다.",
+              "evidence": [
+                {
+                  "document_id": "faq-q12",
+                  "quote": "<service>:<git-sha> 형식만 허용한다. `latest`는 금지다."
+                }
+              ]
+            },
+            {
+              "text": "latest 태그 사용은 금지됩니다.",
+              "evidence": [
+                {
+                  "document_id": "faq-q12",
+                  "quote": "<service>:<git-sha> 형식만 허용한다. `latest`는 금지다."
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "heading": "관련 문서",
+          "statements": [
+            {
+              "text": "관련 문서로는 배포 가이드 v8과 에러 코드 E-014가 있습니다.",
+              "evidence": [
+                {
+                  "document_id": "faq-q12",
+                  "quote": "- 관련 문서: 배포 가이드 v8, 에러 코드 E-014"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "document_id": "faq-q13",
+      "summary": {
+        "text": "DB 마이그레이션은 배포와 함께 진행하지 않고 배포 전에 별도로 먼저 실행합니다.",
+        "evidence": [
+          {
+            "document_id": "faq-q13",
+            "quote": "아니다. 배포 전에 별도로 먼저 실행한다."
+          }
+        ]
+      },
+      "sections": [
+        {
+          "heading": "DB 마이그레이션 실행 시점",
+          "statements": [
+            {
+              "text": "DB 마이그레이션은 배포와 함께 수행되지 않습니다.",
+              "evidence": [
+                {
+                  "document_id": "faq-q13",
+                  "quote": "아니다. 배포 전에 별도로 먼저 실행한다."
+                }
+              ]
+            },
+            {
+              "text": "DB 마이그레이션은 배포 전에 별도로 먼저 실행합니다.",
+              "evidence": [
+                {
+                  "document_id": "faq-q13",
+                  "quote": "아니다. 배포 전에 별도로 먼저 실행한다."
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "heading": "관련 문서",
+          "statements": [
+            {
+              "text": "관련 문서로는 배포 가이드 v9과 장애 리포트 #08이 있습니다.",
+              "evidence": [
+                {
+                  "document_id": "faq-q13",
+                  "quote": "- 관련 문서: 배포 가이드 v9, 장애 리포트 #08"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "document_id": "faq-q14",
+      "summary": {
+        "text": "시크릿은 Vault에 저장되며 배포 전에 필수 시크릿 존재 여부가 자동 검사됩니다.",
+        "evidence": [
+          {
+            "document_id": "faq-q14",
+            "quote": "Vault에 저장한다. 배포 전에 필수 시크릿 존재 여부가 자동 검사된다."
+          }
+        ]
+      },
+      "sections": [
+        {
+          "heading": "시크릿 저장 및 검사",
+          "statements": [
+            {
+              "text": "시크릿은 Vault에 저장됩니다.",
+              "evidence": [
+                {
+                  "document_id": "faq-q14",
+                  "quote": "Vault에 저장한다. 배포 전에 필수 시크릿 존재 여부가 자동 검사된다."
+                }
+              ]
+            },
+            {
+              "text": "배포 전에 필수 시크릿 존재 여부가 자동 검사됩니다.",
+              "evidence": [
+                {
+                  "document_id": "faq-q14",
+                  "quote": "Vault에 저장한다. 배포 전에 필수 시크릿 존재 여부가 자동 검사된다."
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "heading": "관련 문서",
+          "statements": [
+            {
+              "text": "관련 문서로는 에러 코드 E-026과 E-027이 있습니다.",
+              "evidence": [
+                {
+                  "document_id": "faq-q14",
+                  "quote": "- 관련 문서: 에러 코드 E-026, E-027"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "document_id": "faq-q15",
+      "summary": {
+        "text": "로컬 개발 환경은 저장소 루트에서 특정 명령어 실행을 통해 구성할 수 있습니다.",
+        "evidence": [
+          {
+            "document_id": "faq-q15",
+            "quote": "저장소 루트에서 `docker compose up`을 실행하면 API·DB·Kafka가 함께 뜬다."
+          }
+        ]
+      },
+      "sections": [
+        {
+          "heading": "로컬 개발 환경 구성",
+          "statements": [
+            {
+              "text": "로컬 개발 환경을 구성하려면 저장소 루트에서 `docker compose up`을 실행합니다.",
+              "evidence": [
+                {
+                  "document_id": "faq-q15",
+                  "quote": "저장소 루트에서 `docker compose up`을 실행하면 API·DB·Kafka가 함께 뜬다."
+                }
+              ]
+            },
+            {
+              "text": "명령어를 실행하면 API, DB, Kafka가 함께 실행됩니다.",
+              "evidence": [
+                {
+                  "document_id": "faq-q15",
+                  "quote": "저장소 루트에서 `docker compose up`을 실행하면 API·DB·Kafka가 함께 뜬다."
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

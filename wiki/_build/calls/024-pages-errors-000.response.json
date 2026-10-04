@@ -1,0 +1,342 @@
+{
+  "pages": [
+    {
+      "document_id": "error-E-001",
+      "summary": {
+        "text": "주문 검증 실패 에러 코드 E-001은 order-api에서 발생하며 필수 항목 누락이나 잘못된 검증 규칙 배포가 원인이다.",
+        "evidence": [
+          {
+            "document_id": "error-E-001",
+            "quote": "# 에러 코드 E-001 주문 검증 실패"
+          },
+          {
+            "document_id": "error-E-001",
+            "quote": "- 발생 위치: order-api"
+          },
+          {
+            "document_id": "error-E-001",
+            "quote": "- 의미: 주문 요청이 검증 규칙을 통과하지 못했다."
+          },
+          {
+            "document_id": "error-E-001",
+            "quote": "- 원인: 필수 항목 누락 또는 잘못된 검증 규칙 배포."
+          }
+        ]
+      },
+      "sections": [
+        {
+          "heading": "대응 및 관련 장애",
+          "statements": [
+            {
+              "text": "대응 방법으로는 요청 본문을 확인하고 배포 직후 급증하면 롤백하는 것이며, 장애 리포트 #01, #14, #24와 관련이 있다.",
+              "evidence": [
+                {
+                  "document_id": "error-E-001",
+                  "quote": "- 대응: 요청 본문을 확인한다. 배포 직후 급증하면 롤백한다."
+                },
+                {
+                  "document_id": "error-E-001",
+                  "quote": "- 관련 장애: 장애 리포트 #01, #14, #24"
+                }
+              ]
+            },
+            {
+              "text": "장애 리포트 #01에 따르면 order-api에서 주문 생성 요청의 30%가 실패했으며 잘못된 주문 검증 규칙이 배포되어 이전 빌드로 롤백했다.",
+              "evidence": [
+                {
+                  "document_id": "incident-01",
+                  "quote": "- 서비스: order-api"
+                },
+                {
+                  "document_id": "incident-01",
+                  "quote": "- 증상: 주문 생성 요청의 30%가 실패했다."
+                },
+                {
+                  "document_id": "incident-01",
+                  "quote": "- 원인: 잘못된 주문 검증 규칙이 배포됐다. (에러 코드 E-001)"
+                },
+                {
+                  "document_id": "incident-01",
+                  "quote": "- 조치: 이전 빌드로 롤백했다."
+                }
+              ]
+            },
+            {
+              "text": "장애 리포트 #14에 의하면 검증 규칙 회귀와 롤백에 SRE 승인이 필요한 원인으로 복구가 40분 지연되어 롤백 승인 절차가 폐지되었다.",
+              "evidence": [
+                {
+                  "document_id": "incident-14",
+                  "quote": "- 증상: 장애 발생 후 롤백 승인 대기로 복구가 40분 지연됐다."
+                },
+                {
+                  "document_id": "incident-14",
+                  "quote": "- 원인: 검증 규칙 회귀. 롤백에 SRE 승인이 필요해 지연됐다. (에러 코드 E-001)"
+                },
+                {
+                  "document_id": "incident-14",
+                  "quote": "- 조치: 롤백 승인 절차를 폐지했다."
+                }
+              ]
+            },
+            {
+              "text": "장애 리포트 #24에 따르면 1월에 롤백한 것과 같은 장애가 재발하여 롤백 후 포스트모템 작성이 의무화되었다.",
+              "evidence": [
+                {
+                  "document_id": "incident-24",
+                  "quote": "- 증상: 1월에 롤백한 것과 같은 장애가 재발했다."
+                },
+                {
+                  "document_id": "incident-24",
+                  "quote": "- 원인: 이전 롤백 후 원인 분석을 하지 않아 같은 코드가 다시 배포됐다. (에러 코드 E-001)"
+                },
+                {
+                  "document_id": "incident-24",
+                  "quote": "- 조치: 롤백했다. 롤백 후 포스트모템 작성을 의무화했다."
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "document_id": "error-E-002",
+      "summary": {
+        "text": "재고 부족 에러 코드 E-002는 catalog-api에서 발생하며 요청 수량이 재고보다 많을 때 일어난다.",
+        "evidence": [
+          {
+            "document_id": "error-E-002",
+            "quote": "# 에러 코드 E-002 재고 부족"
+          },
+          {
+            "document_id": "error-E-002",
+            "quote": "- 발생 위치: catalog-api"
+          },
+          {
+            "document_id": "error-E-002",
+            "quote": "- 의미: 요청 수량이 재고보다 많다."
+          }
+        ]
+      },
+      "sections": [
+        {
+          "heading": "원인, 대응 및 관련 장애",
+          "statements": [
+            {
+              "text": "원인은 재고 차감 동시성 문제 또는 실제 재고 부족이며 대응은 재고 수치 확인이고 음수면 동시성 버그이다.",
+              "evidence": [
+                {
+                  "document_id": "error-E-002",
+                  "quote": "- 원인: 재고 차감 동시성 문제 또는 실제 재고 부족."
+                },
+                {
+                  "document_id": "error-E-002",
+                  "quote": "- 대응: 재고 수치를 확인한다. 음수면 동시성 버그다."
+                },
+                {
+                  "document_id": "error-E-002",
+                  "quote": "- 관련 장애: 장애 리포트 #04"
+                }
+              ]
+            },
+            {
+              "text": "장애 리포트 #04에 의하면 catalog-api에서 재고 차감 시 동시성 처리가 없어 일부 상품 재고가 음수로 표시되어 단일 트랜잭션으로 변경했다.",
+              "evidence": [
+                {
+                  "document_id": "incident-04",
+                  "quote": "- 서비스: catalog-api"
+                },
+                {
+                  "document_id": "incident-04",
+                  "quote": "- 증상: 일부 상품의 재고가 음수로 표시됐다."
+                },
+                {
+                  "document_id": "incident-04",
+                  "quote": "- 원인: 재고 차감 시 동시성 처리가 없었다. (에러 코드 E-002)"
+                },
+                {
+                  "document_id": "incident-04",
+                  "quote": "- 조치: 재고 차감을 단일 트랜잭션으로 변경했다."
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "document_id": "error-E-003",
+      "summary": {
+        "text": "결제 승인 거절 에러 코드 E-003은 payment-api에서 발생하며 PG사가 결제를 거절했음을 의미한다.",
+        "evidence": [
+          {
+            "document_id": "error-E-003",
+            "quote": "# 에러 코드 E-003 결제 승인 거절"
+          },
+          {
+            "document_id": "error-E-003",
+            "quote": "- 발생 위치: payment-api"
+          },
+          {
+            "document_id": "error-E-003",
+            "quote": "- 의미: PG사가 결제를 거절했다."
+          }
+        ]
+      },
+      "sections": [
+        {
+          "heading": "원인 및 대응",
+          "statements": [
+            {
+              "text": "원인은 카드 한도, 잘못된 카드 정보, PG사 정책이며 대응은 사용자 안내와 거절률 급증 시 PG사 상태 확인이다.",
+              "evidence": [
+                {
+                  "document_id": "error-E-003",
+                  "quote": "- 원인: 카드 한도, 잘못된 카드 정보, PG사 정책."
+                },
+                {
+                  "document_id": "error-E-003",
+                  "quote": "- 대응: 사용자에게 안내한다. 거절률 급증 시 PG사 상태를 확인한다."
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "document_id": "error-E-004",
+      "summary": {
+        "text": "결제 타임아웃 에러 코드 E-004는 payment-api에서 발생하며 PG사 응답 지연이 원인이다.",
+        "evidence": [
+          {
+            "document_id": "error-E-004",
+            "quote": "# 에러 코드 E-004 결제 타임아웃"
+          },
+          {
+            "document_id": "error-E-004",
+            "quote": "- 발생 위치: payment-api"
+          },
+          {
+            "document_id": "error-E-004",
+            "quote": "- 의미: PG사 응답이 제한 시간 안에 오지 않았다."
+          }
+        ]
+      },
+      "sections": [
+        {
+          "heading": "대응 및 관련 장애",
+          "statements": [
+            {
+              "text": "원인은 PG사 지연 또는 짧은 타임아웃 설정이며 대응은 타임아웃 확인 및 배포 직후 롤백이고 장애 리포트 #10과 관련된다.",
+              "evidence": [
+                {
+                  "document_id": "error-E-004",
+                  "quote": "- 원인: PG사 지연 또는 타임아웃 설정이 너무 짧음."
+                },
+                {
+                  "document_id": "error-E-004",
+                  "quote": "- 대응: 타임아웃 설정을 확인한다. 배포 직후면 롤백한다."
+                },
+                {
+                  "document_id": "error-E-004",
+                  "quote": "- 관련 장애: 장애 리포트 #10"
+                }
+              ]
+            },
+            {
+              "text": "장애 리포트 #10에 따르면 전체 배포 후 payment-api의 결제 타임아웃이 급증하여 롤백 후 카나리 배포를 도입했으며 배포 가이드 v12에 반영되었다.",
+              "evidence": [
+                {
+                  "document_id": "incident-10",
+                  "quote": "- 서비스: payment-api"
+                },
+                {
+                  "document_id": "incident-10",
+                  "quote": "- 증상: 전체 배포 후 결제 타임아웃이 급증했다."
+                },
+                {
+                  "document_id": "incident-10",
+                  "quote": "- 원인: 새 버전의 PG사 호출 타임아웃이 너무 짧았다. (에러 코드 E-004)"
+                },
+                {
+                  "document_id": "incident-10",
+                  "quote": "- 조치: 롤백했다. 이후 카나리 배포를 도입했다."
+                },
+                {
+                  "document_id": "incident-10",
+                  "quote": "- 후속 조치: 배포 가이드 v12에 반영"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "document_id": "error-E-005",
+      "summary": {
+        "text": "인증 토큰 만료 에러 코드 E-005는 api-gateway에서 발생하며 액세스 토큰의 유효 기간이 지난 것이다.",
+        "evidence": [
+          {
+            "document_id": "error-E-005",
+            "quote": "# 에러 코드 E-005 인증 토큰 만료"
+          },
+          {
+            "document_id": "error-E-005",
+            "quote": "- 발생 위치: api-gateway"
+          },
+          {
+            "document_id": "error-E-005",
+            "quote": "- 의미: 액세스 토큰의 유효 기간이 지났다."
+          }
+        ]
+      },
+      "sections": [
+        {
+          "heading": "대응 및 관련 장애",
+          "statements": [
+            {
+              "text": "원인은 정상 만료 혹은 TTL 설정 오류이며 대응은 TTL 확인이고 장애 리포트 #02와 관련된다.",
+              "evidence": [
+                {
+                  "document_id": "error-E-005",
+                  "quote": "- 원인: 정상 만료 또는 TTL 설정 오류."
+                },
+                {
+                  "document_id": "error-E-005",
+                  "quote": "- 대응: 재로그인 빈도가 비정상이면 TTL 설정을 확인한다."
+                },
+                {
+                  "document_id": "error-E-005",
+                  "quote": "- 관련 장애: 장애 리포트 #02"
+                }
+              ]
+            },
+            {
+              "text": "장애 리포트 #02에 의하면 api-gateway에서 토큰 TTL이 300초로 잘못 배포되어 사용자가 5분마다 재로그인해야 했고 TTL을 3600초로 수정해 재배포했다.",
+              "evidence": [
+                {
+                  "document_id": "incident-02",
+                  "quote": "- 서비스: api-gateway"
+                },
+                {
+                  "document_id": "incident-02",
+                  "quote": "- 증상: 사용자가 5분마다 재로그인해야 했다."
+                },
+                {
+                  "document_id": "incident-02",
+                  "quote": "- 원인: 토큰 TTL 설정이 300초로 잘못 배포됐다. (에러 코드 E-005)"
+                },
+                {
+                  "document_id": "incident-02",
+                  "quote": "- 조치: TTL을 3600초로 수정해 재배포했다."
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,37 @@
+{
+  "description": "v3 설계 전 v2 기준선. 기존 20문항은 변경하지 않는다. 기대 답은 모델 입력에 넣지 않는다.",
+  "cases": [
+    {
+      "id": "control-cause",
+      "kind": "existing_control",
+      "query": "목요일 오후가 배포 금지 시간으로 바뀐 계기가 된 장애는 무엇인가요?",
+      "expected": ["장애 #18", "주간 정산 배치와 배포가 겹쳐 정산 실패"],
+      "evidence": ["deploy-guide-v22", "incident-18"]
+    },
+    {
+      "id": "current-and-cause",
+      "kind": "new_composite",
+      "query": "현재 배포가 금지되는 시간과, 목요일 오후가 금지된 이유를 함께 알려줘.",
+      "expected": ["목요일 오후", "공휴일 전날", "12/22~1/2 연말 동결", "장애 #18에서 주간 정산 배치와 배포가 겹쳐 정산 실패"],
+      "evidence": ["deploy-guide-v30", "deploy-guide-v22", "incident-18"]
+    },
+    {
+      "id": "followup-raw",
+      "kind": "v2_without_history",
+      "query": "그럼 바뀌기 전에는 언제였어?",
+      "intended_previous_case": "current-and-cause",
+      "history_sent": false,
+      "expected": ["목요일 오후로 변경되기 전에는 금요일 오후 금지"],
+      "evidence": ["deploy-guide-v22"],
+      "note": "v2 API는 대화 이력 입력이 없다. 단독 실행으로 현재 기능을 확인하며, 실패를 RAG 자체의 한계나 Wiki의 우위로 해석하지 않는다."
+    },
+    {
+      "id": "followup-explicit-diagnostic",
+      "kind": "manual_rewrite_diagnostic",
+      "query": "배포 금지 시간이 목요일 오후로 바뀌기 이전에는 언제가 금지 시간이었어?",
+      "expected": ["금요일 오후", "공휴일 전날은 유지"],
+      "evidence": ["deploy-guide-v22", "deploy-guide-v21"],
+      "note": "사람이 대상을 명시한 별도 질문이다. 실제 대화 맥락 처리 구현이나 B 조건의 측정으로 계산하지 않는다. v21은 변경 직전 규칙을 확인할 대체 근거다."
+    }
+  ]
+}

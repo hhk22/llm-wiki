@@ -1,0 +1,102 @@
+{
+  "properties": {
+    "pages": {
+      "items": {
+        "properties": {
+          "document_id": {
+            "type": "string"
+          },
+          "summary": {
+            "properties": {
+              "text": {
+                "type": "string"
+              },
+              "evidence": {
+                "items": {
+                  "properties": {
+                    "document_id": {
+                      "type": "string"
+                    },
+                    "quote": {
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "document_id",
+                    "quote"
+                  ],
+                  "type": "object"
+                },
+                "type": "array"
+              }
+            },
+            "required": [
+              "text",
+              "evidence"
+            ],
+            "type": "object"
+          },
+          "sections": {
+            "items": {
+              "properties": {
+                "heading": {
+                  "type": "string"
+                },
+                "statements": {
+                  "items": {
+                    "properties": {
+                      "text": {
+                        "type": "string"
+                      },
+                      "evidence": {
+                        "items": {
+                          "properties": {
+                            "document_id": {
+                              "type": "string"
+                            },
+                            "quote": {
+                              "type": "string"
+                            }
+                          },
+                          "required": [
+                            "document_id",
+                            "quote"
+                          ],
+                          "type": "object"
+                        },
+                        "type": "array"
+                      }
+                    },
+                    "required": [
+                      "text",
+                      "evidence"
+                    ],
+                    "type": "object"
+                  },
+                  "type": "array"
+                }
+              },
+              "required": [
+                "heading",
+                "statements"
+              ],
+              "type": "object"
+            },
+            "type": "array"
+          }
+        },
+        "required": [
+          "document_id",
+          "summary",
+          "sections"
+        ],
+        "type": "object"
+      },
+      "type": "array"
+    }
+  },
+  "required": [
+    "pages"
+  ],
+  "type": "object"
+}

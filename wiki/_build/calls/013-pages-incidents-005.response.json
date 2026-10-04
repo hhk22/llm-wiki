@@ -1,0 +1,331 @@
+{
+  "pages": [
+    {
+      "document_id": "incident-06",
+      "summary": {
+        "text": "알림이 구버전 템플릿으로 발송된 장애 리포트입니다.",
+        "evidence": [
+          {
+            "document_id": "incident-06",
+            "quote": "- 증상: 알림이 구버전 템플릿으로 발송됐다."
+          }
+        ]
+      },
+      "sections": [
+        {
+          "heading": "개요 및 증상",
+          "statements": [
+            {
+              "text": "날짜는 2025-04-09이고 서비스는 notification-worker이며 등급은 SEV2이다.",
+              "evidence": [
+                {
+                  "document_id": "incident-06",
+                  "quote": "- 날짜: 2025-04-09"
+                },
+                {
+                  "document_id": "incident-06",
+                  "quote": "- 서비스: notification-worker"
+                },
+                {
+                  "document_id": "incident-06",
+                  "quote": "- 등급: SEV2"
+                }
+              ]
+            },
+            {
+              "text": "알림이 구버전 템플릿으로 발송되었다.",
+              "evidence": [
+                {
+                  "document_id": "incident-06",
+                  "quote": "- 증상: 알림이 구버전 템플릿으로 발송됐다."
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "heading": "원인 및 조치",
+          "statements": [
+            {
+              "text": "latest 태그가 캐시된 구버전 이미지를 가리킨 것이 원인이며 (에러 코드 E-014) git-sha 태그로 재배포하고 배포 가이드 v8에 반영했다.",
+              "evidence": [
+                {
+                  "document_id": "incident-06",
+                  "quote": "- 원인: `latest` 태그가 캐시된 구버전 이미지를 가리켰다. (에러 코드 E-014)"
+                },
+                {
+                  "document_id": "incident-06",
+                  "quote": "- 조치: git-sha 태그로 재배포했다."
+                },
+                {
+                  "document_id": "incident-06",
+                  "quote": "- 후속 조치: 배포 가이드 v8에 반영"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "document_id": "incident-07",
+      "summary": {
+        "text": "정상 사용자가 요청 한도 초과로 차단된 장애 리포트입니다.",
+        "evidence": [
+          {
+            "document_id": "incident-07",
+            "quote": "- 증상: 정상 사용자가 요청 한도 초과로 차단됐다."
+          }
+        ]
+      },
+      "sections": [
+        {
+          "heading": "개요 및 증상",
+          "statements": [
+            {
+              "text": "날짜는 2025-04-23이고 서비스는 api-gateway이며 등급은 SEV3이다.",
+              "evidence": [
+                {
+                  "document_id": "incident-07",
+                  "quote": "- 날짜: 2025-04-23"
+                },
+                {
+                  "document_id": "incident-07",
+                  "quote": "- 서비스: api-gateway"
+                },
+                {
+                  "document_id": "incident-07",
+                  "quote": "- 등급: SEV3"
+                }
+              ]
+            },
+            {
+              "text": "정상 사용자가 요청 한도 초과로 차단되었다.",
+              "evidence": [
+                {
+                  "document_id": "incident-07",
+                  "quote": "- 증상: 정상 사용자가 요청 한도 초과로 차단됐다."
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "heading": "원인 및 조치",
+          "statements": [
+            {
+              "text": "rate limit 기준이 사용자 대신 IP로 적용된 것이 원인이며 (에러 코드 E-007) 기준을 사용자 ID로 수정했다.",
+              "evidence": [
+                {
+                  "document_id": "incident-07",
+                  "quote": "- 원인: rate limit 기준이 사용자 대신 IP로 적용됐다. (에러 코드 E-007)"
+                },
+                {
+                  "document_id": "incident-07",
+                  "quote": "- 조치: 기준을 사용자 ID로 수정했다."
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "document_id": "incident-08",
+      "summary": {
+        "text": "배포 중 서비스가 다운된 장애 리포트입니다.",
+        "evidence": [
+          {
+            "document_id": "incident-08",
+            "quote": "- 증상: 배포 중 서비스가 20분간 다운됐다."
+          }
+        ]
+      },
+      "sections": [
+        {
+          "heading": "개요 및 증상",
+          "statements": [
+            {
+              "text": "날짜는 2025-05-07이고 서비스는 payment-api이며 등급은 SEV1이다.",
+              "evidence": [
+                {
+                  "document_id": "incident-08",
+                  "quote": "- 날짜: 2025-05-07"
+                },
+                {
+                  "document_id": "incident-08",
+                  "quote": "- 서비스: payment-api"
+                },
+                {
+                  "document_id": "incident-08",
+                  "quote": "- 등급: SEV1"
+                }
+              ]
+            },
+            {
+              "text": "배포 중 서비스가 20분간 다운되었다.",
+              "evidence": [
+                {
+                  "document_id": "incident-08",
+                  "quote": "- 증상: 배포 중 서비스가 20분간 다운됐다."
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "heading": "원인 및 조치",
+          "statements": [
+            {
+              "text": "배포와 동시에 실행된 마이그레이션이 실패한 것이 원인이며 (에러 코드 E-018) 마이그레이션을 수동 완료한 뒤 재배포하고 배포 가이드 v9에 반영했다.",
+              "evidence": [
+                {
+                  "document_id": "incident-08",
+                  "quote": "- 원인: 배포와 동시에 실행된 마이그레이션이 실패했다. (에러 코드 E-018)"
+                },
+                {
+                  "document_id": "incident-08",
+                  "quote": "- 조치: 마이그레이션을 수동 완료한 뒤 재배포했다."
+                },
+                {
+                  "document_id": "incident-08",
+                  "quote": "- 후속 조치: 배포 가이드 v9에 반영"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "document_id": "incident-09",
+      "summary": {
+        "text": "모든 API 응답이 지연된 장애 리포트입니다.",
+        "evidence": [
+          {
+            "document_id": "incident-09",
+            "quote": "- 증상: 모든 API 응답이 10초 이상 걸렸다."
+          }
+        ]
+      },
+      "sections": [
+        {
+          "heading": "개요 및 증상",
+          "statements": [
+            {
+              "text": "날짜는 2025-05-21이고 서비스는 order-api, payment-api이며 등급은 SEV2이다.",
+              "evidence": [
+                {
+                  "document_id": "incident-09",
+                  "quote": "- 날짜: 2025-05-21"
+                },
+                {
+                  "document_id": "incident-09",
+                  "quote": "- 서비스: order-api, payment-api"
+                },
+                {
+                  "document_id": "incident-09",
+                  "quote": "- 등급: SEV2"
+                }
+              ]
+            },
+            {
+              "text": "모든 API 응답이 10초 이상 걸렸다.",
+              "evidence": [
+                {
+                  "document_id": "incident-09",
+                  "quote": "- 증상: 모든 API 응답이 10초 이상 걸렸다."
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "heading": "원인 및 조치",
+          "statements": [
+            {
+              "text": "DB 커넥션 풀이 고갈되고 커넥션 반환 누락이 원인이며 (에러 코드 E-008) 커넥션 누수 코드를 수정하고 풀 크기를 늘렸다.",
+              "evidence": [
+                {
+                  "document_id": "incident-09",
+                  "quote": "- 원인: DB 커넥션 풀이 고갈됐다. 커넥션 반환 누락이 원인이다. (에러 코드 E-008)"
+                },
+                {
+                  "document_id": "incident-09",
+                  "quote": "- 조치: 커넥션 누수 코드를 수정하고 풀 크기를 늘렸다."
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "document_id": "incident-10",
+      "summary": {
+        "text": "전체 배포 후 결제 타임아웃이 급증한 장애 리포트입니다.",
+        "evidence": [
+          {
+            "document_id": "incident-10",
+            "quote": "- 증상: 전체 배포 후 결제 타임아웃이 급증했다."
+          }
+        ]
+      },
+      "sections": [
+        {
+          "heading": "개요 및 증상",
+          "statements": [
+            {
+              "text": "날짜는 2025-06-04이고 서비스는 payment-api이며 등급은 SEV1이다.",
+              "evidence": [
+                {
+                  "document_id": "incident-10",
+                  "quote": "- 날짜: 2025-06-04"
+                },
+                {
+                  "document_id": "incident-10",
+                  "quote": "- 서비스: payment-api"
+                },
+                {
+                  "document_id": "incident-10",
+                  "quote": "- 등급: SEV1"
+                }
+              ]
+            },
+            {
+              "text": "전체 배포 후 결제 타임아웃이 급증했다.",
+              "evidence": [
+                {
+                  "document_id": "incident-10",
+                  "quote": "- 증상: 전체 배포 후 결제 타임아웃이 급증했다."
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "heading": "원인 및 조치",
+          "statements": [
+            {
+              "text": "새 버전의 PG사 호출 타임아웃이 너무 짧았던 것이 원인이며 (에러 코드 E-004) 롤백하고 카나리 배포를 도입한 뒤 배포 가이드 v12에 반영했다.",
+              "evidence": [
+                {
+                  "document_id": "incident-10",
+                  "quote": "- 원인: 새 버전의 PG사 호출 타임아웃이 너무 짧았다. (에러 코드 E-004)"
+                },
+                {
+                  "document_id": "incident-10",
+                  "quote": "- 조치: 롤백했다. 이후 카나리 배포를 도입했다."
+                },
+                {
+                  "document_id": "incident-10",
+                  "quote": "- 후속 조치: 배포 가이드 v12에 반영"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

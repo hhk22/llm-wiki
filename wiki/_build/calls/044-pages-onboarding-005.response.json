@@ -1,0 +1,176 @@
+{
+  "pages": [
+    {
+      "document_id": "faq-q06",
+      "summary": {
+        "text": "에러 코드 문서에는 E-001부터 E-030까지 코드별 의미와 원인 및 대응이 정리되어 있다.",
+        "evidence": [
+          {
+            "document_id": "faq-q06",
+            "quote": "에러 코드 문서 E-001부터 E-030까지 코드별로 의미·원인·대응이 정리돼 있다."
+          },
+          {
+            "document_id": "faq-q06",
+            "quote": "- 관련 문서: 에러 코드 문서"
+          }
+        ]
+      },
+      "sections": [
+        {
+          "heading": "개요",
+          "statements": [
+            {
+              "text": "에러 코드는 어디서 확인하는지에 대한 질문에 대해 에러 코드 문서를 안내한다.",
+              "evidence": [
+                {
+                  "document_id": "faq-q06",
+                  "quote": "**Q. 에러 코드는 어디서 확인하나요?**"
+                },
+                {
+                  "document_id": "faq-q06",
+                  "quote": "- 관련 문서: 에러 코드 문서"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "document_id": "faq-q07",
+      "summary": {
+        "text": "배포 중 E-021 에러가 발생하면 워크플로 권한 부족 문제이므로 저장소 설정에서 deployments: write 권한을 확인한다.",
+        "evidence": [
+          {
+            "document_id": "faq-q07",
+            "quote": "**Q. 배포할 때 E-021이 뜨면 어떻게 하나요?**"
+          },
+          {
+            "document_id": "faq-q07",
+            "quote": "워크플로 권한 부족이다. 저장소의 워크플로 권한에 `deployments: write`가 있는지 확인한다."
+          }
+        ]
+      },
+      "sections": [
+        {
+          "heading": "대응 방법",
+          "statements": [
+            {
+              "text": "워크플로 권한 부족으로 인해 장애 리포트 #12와 에러 코드 E-021이 발생할 수 있다.",
+              "evidence": [
+                {
+                  "document_id": "faq-q07",
+                  "quote": "- 관련 문서: 에러 코드 E-021, 장애 리포트 #12"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "document_id": "faq-q08",
+      "summary": {
+        "text": "장애 발생 시 SRE 온콜에게 알리고 슬랙 채널에 상황을 남겨야 한다.",
+        "evidence": [
+          {
+            "document_id": "faq-q08",
+            "quote": "**Q. 장애가 나면 누구에게 알리나요?**"
+          },
+          {
+            "document_id": "faq-q08",
+            "quote": "SRE 온콜에게 알리고 Slack `#incident` 채널에 상황을 남긴다."
+          }
+        ]
+      },
+      "sections": [
+        {
+          "heading": "연락 방법",
+          "statements": [
+            {
+              "text": "장애 리포트 작성 규칙에 따라 관련 절차를 따른다.",
+              "evidence": [
+                {
+                  "document_id": "faq-q08",
+                  "quote": "- 관련 문서: 장애 리포트 작성 규칙"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "document_id": "faq-q09",
+      "summary": {
+        "text": "장애 등급은 서비스 전체 중단인 SEV1, 주요 기능 저하인 SEV2, 일부 사용자 영향인 SEV3로 나뉜다.",
+        "evidence": [
+          {
+            "document_id": "faq-q09",
+            "quote": "**Q. 장애 등급 SEV1, SEV2, SEV3는 무엇인가요?**"
+          },
+          {
+            "document_id": "faq-q09",
+            "quote": "SEV1은 서비스 전체 중단, SEV2는 주요 기능 저하, SEV3는 일부 사용자 영향이다."
+          }
+        ]
+      },
+      "sections": [
+        {
+          "heading": "등급 정의",
+          "statements": [
+            {
+              "text": "장애 리포트를 통해 각 등급별 상황을 파악할 수 있다.",
+              "evidence": [
+                {
+                  "document_id": "faq-q09",
+                  "quote": "- 관련 문서: 장애 리포트"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "document_id": "faq-q10",
+      "summary": {
+        "text": "롤백한 장애는 48시간 안에 포스트모템을 작성해야 하며 관련하여 장애 리포트 #24와 배포 가이드 v29에 반영되었다.",
+        "evidence": [
+          {
+            "document_id": "faq-q10",
+            "quote": "**Q. 포스트모템은 언제 써야 하나요?**"
+          },
+          {
+            "document_id": "faq-q10",
+            "quote": "롤백한 장애는 48시간 안에 작성한다."
+          },
+          {
+            "document_id": "faq-q10",
+            "quote": "- 관련 문서: 배포 가이드 v29, 장애 리포트 #24"
+          }
+        ]
+      },
+      "sections": [
+        {
+          "heading": "작성 기준",
+          "statements": [
+            {
+              "text": "장애 리포트 #24에서는 이전 롤백 후 원인 분석을 하지 않아 같은 코드가 다시 배포된 장애로 인해 롤백 후 포스트모템 작성을 의무화하는 조치가 내려졌다.",
+              "evidence": [
+                {
+                  "document_id": "incident-24",
+                  "quote": "- 원인: 이전 롤백 후 원인 분석을 하지 않아 같은 코드가 다시 배포됐다. (에러 코드 E-001)"
+                },
+                {
+                  "document_id": "incident-24",
+                  "quote": "- 조치: 롤백했다. 롤백 후 포스트모템 작성을 의무화했다."
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

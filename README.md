@@ -23,6 +23,9 @@ v1에서는 Markdown 문서 120개를 색인하고, 키워드·벡터 검색을 
 | v2 최신 버전 필터 | 구현·평가 완료 | 벡터 + 필터 문서 Hit@3 95%, hybrid + 필터 75% |
 | 출처 기반 답변 | 완료 | 검색 청크만 사용한 답변·출처·근거 부족 응답 |
 | API·MCP | 완료 | `health`, `search`, `answer` API와 MCP 도구 2개 |
+| v3 Wiki 생성 | 초기 구축 완료 | 본문 120개·목차 5개, 관련 링크·원본 출처 생성 |
+| v3 시점·변경 이력 | 구현·검증 완료 | 과거 표현 보정, 규칙 항목 변경 14건 연결, 배포 정책 상충 후보 검토 |
+| v3 Wiki 질의·후속 질문 | 구현·기능 검증 완료 | 목차·페이지 탐색, 출처 답변, 대화 기반 질문 해석·되묻기; 기존 검색 대비 평가는 후속 작업 |
 
 ## 프로젝트 구성
 
@@ -40,10 +43,94 @@ src/llm_wiki/storage_validation.py  원본과 저장 결과 비교
 src/llm_wiki/search.py      키워드·벡터·RRF hybrid 검색
 src/llm_wiki/evaluation.py  Hit@1·Hit@3 평가
 src/llm_wiki/answering.py   출처 기반 Gemini 답변
+src/llm_wiki/conversation.py  대화 이력으로 질문 대상 해석·모호하면 되묻기
+src/llm_wiki/wiki_query.py  Markdown 목차·링크 탐색과 원본 출처 답변
 src/llm_wiki/api.py         FastAPI 엔드포인트
 src/llm_wiki/mcp_server.py  API를 호출하는 MCP 도구
 scripts/                    임베딩·청킹·DB·색인 스크립트
 tests/                      문서·청킹·DB·색인·평가 데이터 테스트
+```
+
+## v3 — 원본으로 Wiki 생성
+
+`sources/`를 읽어 Gemini가 배포 버전·장애 사건·오류 코드·FAQ별 설명을 종합하고, 관련 링크와 주제별·전체 목차를 생성한다. 기존 `vector`·`hybrid`·`keyword` 검색과 답변 기능을 유지하며, `/answer`·`ask_wiki`의 `method="wiki"`로 생성된 Markdown을 읽고 답할 수 있다.
+
+`gemini-3.5-flash-lite`로 본문 120개·목차 5개를 구축했다. [Wiki 목차](wiki/index.md), [배포 v22 종합 예시](wiki/deployments/v22.md), [초기 생성 기록](evaluation/wiki-build-review.md)에서 확인할 수 있다. 시점·이력 보강 후 링크 2,166개와 기존 본문 근거 인용 978개가 검증을 통과했다. 이력은 원본에서 다시 계산해 출력과 대조하며, 전체 테스트는 DB 연동을 포함해 146개 통과했다.
+
+`.env`에 `GEMINI_API_KEY`와 `GEMINI_GENERATION_MODEL`을 설정한 뒤 실행한다. 이 단계는 DB나 임베딩을 사용하지 않는다.
+
+```bash
+uv run python scripts/build_wiki.py --model gemini-3.5-flash-lite --output wiki-rebuild
+uv run python scripts/verify_wiki.py --wiki wiki-rebuild
+# 저장소에 포함된 Wiki 검증 (API 호출 없음)
+uv run python scripts/verify_wiki.py
+```
+
+중단되면 같은 원본·모델·배치 크기로 `--resume`을 사용한다. 완료된 LLM 호출은 재사용하고, 결과를 다시 검증한다. 원본이나 생성 설정을 바꾼 전체 재생성은 새 출력 폴더를 지정한다.
+
+```bash
+uv run python scripts/build_wiki.py --resume --model gemini-3.5-flash-lite --output wiki-rebuild
+```
+
+Wiki 생성 모델만 바꾸려면 `--model`을 지정한다. 기존 검색 답변의 모델 설정은 바꾸지 않는다. `--resume`에도 최초 생성 때의 모델을 동일하게 지정해야 한다.
+
+`--resume`은 생성 당시의 원본·코드·설정을 그대로 유지한 작업을 이어갈 때 사용한다. 오프라인 검증은 Git 체크아웃의 LF/CRLF 차이를 허용하지만, 재개는 원본과 생성 코드의 바이트 해시까지 일치해야 한다.
+
+생성기 코드만 수정한 작업은 `--resume --accept-code-change`로 이어갈 수 있다. 이전 코드 해시와 재사용할 작업 목록을 기록하고, 기존 결과를 현재 검증기로 다시 검사한다. 코드 변경으로 개별 작업의 입력 프롬프트가 달라졌다면 이전 결과를 `superseded_jobs`에 보존하고 그 작업만 다시 호출한다. 원본·모델·기본 페이지 작성 정책·기본 응답 스키마 변경은 이 옵션으로 허용하지 않는다. 별도 상충 검토 정책과 스키마는 `wiki_history.py` 코드 해시 및 호출별 스키마에 기록한다.
+
+| 생성물 | 내용 |
+| --- | --- |
+| `wiki/index.md`, 각 주제의 `index.md` | LLM이 요약을 바탕으로 구성한 목차 |
+| `wiki/deployments/v*.md` | 버전별 규칙·변경 이유·원본 출처 |
+| `wiki/incidents/*.md`, `errors/*.md`, `onboarding/*.md` | 사건·코드·FAQ별 종합 설명과 관련 링크 |
+| `wiki/_build/manifest.json` | 원본 해시·모델·설정·호출 시간·토큰·검증된 구조화 결과·파일 해시 |
+| `wiki/_build/calls/` | 호출별 프롬프트·출력 스키마·원본 응답 |
+
+생성은 페이지 작성 → 관련 링크 선택 → 목차 구성 순서다. 기본적으로 5개 페이지씩 요청하며, 대상 원본과 명시적 참조로 연결된 원본을 함께 전달한다(들어오는 참조 1단계, 나가는 참조 2단계). 관련 링크와 목차는 생성된 전체 페이지의 요약을 바탕으로 작성한다. 평가 질문·정답은 입력하지 않는다. 형식·출처 검증 실패와 일시적인 API 오류는 작업당 최대 5회 시도하며, 발견한 오류를 누적해 재생성에 전달한다. 미완료 상태는 manifest에 남기며 재개할 때도 이전 오류를 전달한다.
+
+검증은 원본 인용의 존재, 핵심 원문 줄의 인용 누락, 명시된 장애 원본의 근거 포함, 페이지·목차 누락, 링크 대상, 출처 행 번호, 원본·생성 파일 해시를 확인한다. **인용이 존재한다고 종합한 주장이 정확하거나 빠짐없다는 뜻은 아니다.** 의미·인과관계·시점은 생성물과 원본을 대조해 별도로 검토한다.
+
+시점·이력 보강은 `src/llm_wiki/wiki_history.py`에서 처리한다. 배포 가이드의 연속 버전에서 `현재 규칙` 항목의 값을 비교하고, 각 페이지의 버전까지 확인된 이력만 원본 출처와 연결한다. 과거 페이지의 `현재 규칙`·`현재 배포` 표현에는 해당 버전을 표시하고 최신 가이드 링크를 붙인다. 이유 항목에서 명시한 장애만 원인 사건으로 연결한다.
+
+목차 생성 후 배포 가이드와 이를 참조하는 원본의 본문·버전·변경 정보를 LLM에 전달해 상충 후보를 검토한다. 서로 다른 가이드 버전만 비교한 결과는 충돌로 채택하지 않는다. 후보는 `확인 필요` 절에 양쪽 주장·원본 출처·시점 불확실성을 표시하고 자동으로 정답을 선택하지 않는다. 한 원본의 동일 규칙에 서로 다른 값이 중복된 경우도 코드로 표시한다. [보강 결과와 한계](evaluation/wiki-history-review.md)에 실제 원본 및 인위적 상충 사례의 검증을 기록했다.
+
+## Wiki 답변과 대화 이력
+
+`POST /answer` 또는 MCP `ask_wiki`에서 `method="wiki"`를 선택한다. 서버는 대화를 보관하지 않으며, 후속 질문에는 호출하는 쪽에서 최근 `user`·`assistant` 발화를 전달한다. 이력 없이 호출하면 질문 해석 모델 호출을 생략한다.
+
+```json
+{
+  "query": "그럼 바뀌기 전에는 언제였어?",
+  "method": "wiki",
+  "top_k": 3,
+  "history": [
+    {"role": "user", "content": "현재 배포 금지 시간과 목요일 오후가 금지된 이유는?"},
+    {"role": "assistant", "content": "목요일 오후·공휴일 전날·연말 동결 기간입니다. 목요일 오후 금지는 정산 배치와 배포 충돌 이후 도입됐습니다."}
+  ]
+}
+```
+
+**대화 → 독립적인 질문으로 해석 → 근거 다시 조회 → 출처 답변** 순서다. 이전 답변은 대상을 해석하는 보조 정보로만 사용하고, 탐색·답변 단계에는 해석한 질문과 새로 읽은 근거를 전달한다. 대상이 여러 개면 `clarification_required`로 되묻고 검색을 실행하지 않는다. 같은 질문 해석 단계를 `vector`·`hybrid`·`keyword` 답변에도 적용한다.
+
+| 입력·출력 | 동작 |
+| --- | --- |
+| `history` | 최대 12개 발화, 발화당 4,000자, 합계 16,000자. 초과 요청은 422. 호출자가 최근 대화를 골라 전달 |
+| Wiki 탐색 | 전체 목차 → 주제 목차 최대 2개 → 본문 최대 `top_k`개(1~3). 처음 선택한 본문의 링크를 한 번만 추가 탐색 |
+| `max_input_tokens` | 기본 48,000. 질문 해석·Wiki 탐색·답변의 누적 프롬프트 텍스트 토큰 한도. `count_tokens`로 호출 전 확인하며 재시도도 합산 |
+| `resolved_query` | 실제 탐색·답변에 사용한 질문. 되묻기일 때는 `null` |
+| `status` | `answered`, `clarification_required`, `insufficient_evidence`, `budget_exceeded` |
+| Wiki `sources` | 답변 번호·Wiki 경로·절·읽은 내용과 원본 ID·경로·행 범위·인용문 |
+| `trace` | 전체 응답 시간, 읽은 목차·페이지·탐색 경로·문자 수, 단계별 모델 호출·입력 토큰·응답 usage |
+
+Wiki 파일과 인용된 원본은 구축 당시 해시와 대조한다. 원본이 바뀌었다면 새 Wiki를 구축해야 하며, 변경된 파일을 그대로 읽어 답하지 않는다. 원본 파일은 출처 위치·내용 검증에 사용하고, 답변 모델에는 Wiki 근거를 전달한다. 출처의 존재와 범위를 검증해도 주장과 근거의 의미적 일치까지 보장하지는 않는다.
+
+`max_input_tokens`는 입력 텍스트 기준이며 응답 스키마 등 공급자 부가 토큰과 출력은 별도 usage로 기록한다. 현재 기존 RAG의 검색·답변 토큰은 이 한도와 trace 집계에 포함하지 않는다. 따라서 현재 trace만으로 Wiki와 RAG 전체 비용을 비교하면 안 된다. 동일 예산의 비교 계측은 후속 작업이다.
+
+고정된 원본에서 실제 모델로 첫 질문·후속 질문·모호한 질문·근거 부족 질문을 각 1회 실행한 [기능 검증 기록](evaluation/wiki-conversation-review.md)을 남겼다. 기존 20문항의 품질 비교나 성능 개선 측정은 아니다.
+
+```bash
+# API 호출 비용이 드는 기능 확인. 답변·출처·탐색·사용량을 JSON으로 저장한다.
+uv run python scripts/check_wiki_conversation.py --model gemini-3.5-flash-lite
 ```
 
 ## Docker Compose로 전체 실행
@@ -77,7 +164,7 @@ docker compose exec api python scripts/ingest.py
 {"query": "E-021 오류가 발생하면 어떤 설정을 확인해야 하나요?", "method": "vector", "top_k": 3}
 ```
 
-`/search`, `/answer`, MCP의 `search_wiki`·`ask_wiki`는 모두 `method`에 `keyword`, `vector`, `hybrid`를 지원한다. 기본값은 `vector`이며, `hybrid`는 비교용 옵션이다. 현재 배포 정책 질문에는 최신 버전 필터가 자동 적용되고, 특정 버전은 해당 버전으로 검색한다. 변경 이력·비교·불분명한 질문은 범위를 제한하지 않는다.
+`/search`, `/answer`, MCP의 `search_wiki`·`ask_wiki`는 모두 `method`에 `keyword`, `vector`, `hybrid`를 지원한다. 기본값은 `vector`이며, `hybrid`는 비교용 옵션이다. `/answer`·`ask_wiki`에는 추가로 `wiki`와 선택적인 `history`를 지원한다. 원본 검색에서 현재 배포 정책 질문에는 최신 버전 필터가 자동 적용되고, 특정 버전은 해당 버전으로 검색한다. 변경 이력·비교·불분명한 질문은 범위를 제한하지 않는다.
 
 컨테이너 내부에서는 API가 `postgres:5432`, MCP가 `http://api:8000`으로 연결한다. `.env`의 `DATABASE_URL`, `API_HOST`, `LLM_WIKI_API_URL`은 로컬 실행용이며 Compose 내부 주소는 별도로 설정한다. 호스트 공개 포트는 `.env`의 `POSTGRES_PORT`, `API_PORT`, `MCP_PORT`로 변경할 수 있다. `.env`는 이미지에 복사하지 않으며, Gemini 키는 API 컨테이너에만 전달한다.
 

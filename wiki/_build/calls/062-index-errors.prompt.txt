@@ -1,0 +1,273 @@
+한국어 Wiki 목차를 만든다. 제공한 모든 ID를 정확히 한 번 배치하고 탐색하기 쉬운 소그룹으로 묶는다. description은 한 줄짜리 탐색 안내다. 새로운 정책·사실을 추가하지 않는다. 링크나 HTML은 쓰지 않는다.
+[
+  {
+    "id": "error-E-001",
+    "title": "에러 코드 E-001 주문 검증 실패",
+    "summary": "주문 검증 실패 에러 코드 E-001은 order-api에서 발생하며 필수 항목 누락이나 잘못된 검증 규칙 배포가 원인이다.",
+    "source_ids": [
+      "error-E-001",
+      "incident-01",
+      "incident-14",
+      "incident-24"
+    ]
+  },
+  {
+    "id": "error-E-002",
+    "title": "에러 코드 E-002 재고 부족",
+    "summary": "재고 부족 에러 코드 E-002는 catalog-api에서 발생하며 요청 수량이 재고보다 많을 때 일어난다.",
+    "source_ids": [
+      "error-E-002",
+      "incident-04"
+    ]
+  },
+  {
+    "id": "error-E-003",
+    "title": "에러 코드 E-003 결제 승인 거절",
+    "summary": "결제 승인 거절 에러 코드 E-003은 payment-api에서 발생하며 PG사가 결제를 거절했음을 의미한다.",
+    "source_ids": [
+      "error-E-003"
+    ]
+  },
+  {
+    "id": "error-E-004",
+    "title": "에러 코드 E-004 결제 타임아웃",
+    "summary": "결제 타임아웃 에러 코드 E-004는 payment-api에서 발생하며 PG사 응답 지연이 원인이다.",
+    "source_ids": [
+      "error-E-004",
+      "incident-10"
+    ]
+  },
+  {
+    "id": "error-E-005",
+    "title": "에러 코드 E-005 인증 토큰 만료",
+    "summary": "인증 토큰 만료 에러 코드 E-005는 api-gateway에서 발생하며 액세스 토큰의 유효 기간이 지난 것이다.",
+    "source_ids": [
+      "error-E-005",
+      "incident-02"
+    ]
+  },
+  {
+    "id": "error-E-006",
+    "title": "에러 코드 E-006 권한 없음",
+    "summary": "사용자 역할에 API 권한이 없을 때 발생하는 에러 코드 E-006의 원인과 대응 방법입니다.",
+    "source_ids": [
+      "error-E-006",
+      "incident-27"
+    ]
+  },
+  {
+    "id": "error-E-007",
+    "title": "에러 코드 E-007 요청 한도 초과",
+    "summary": "rate limit을 초과했을 때 발생하는 에러 코드 E-007의 정보와 관련 장애 내용입니다.",
+    "source_ids": [
+      "error-E-007",
+      "incident-07"
+    ]
+  },
+  {
+    "id": "error-E-008",
+    "title": "에러 코드 E-008 DB 커넥션 고갈",
+    "summary": "커넥션 풀에서 연결을 얻지 못할 때 발생하는 에러 코드 E-008의 원인과 관련 장애 내역입니다.",
+    "source_ids": [
+      "error-E-008",
+      "incident-09",
+      "incident-29"
+    ]
+  },
+  {
+    "id": "error-E-009",
+    "title": "에러 코드 E-009 Kafka 발행 실패",
+    "summary": "이벤트를 브로커에 발행하지 못할 때 발생하는 에러 코드 E-009의 원인과 관련 장애 내역입니다.",
+    "source_ids": [
+      "error-E-009",
+      "incident-11",
+      "incident-18"
+    ]
+  },
+  {
+    "id": "error-E-010",
+    "title": "에러 코드 E-010 알림 발송 실패",
+    "summary": "외부 발송 서비스 호출이 실패할 때 발생하는 에러 코드 E-010의 정보와 관련 장애 내용입니다.",
+    "source_ids": [
+      "error-E-010",
+      "incident-28"
+    ]
+  },
+  {
+    "id": "error-E-011",
+    "title": "에러 코드 E-011 빌드 실패: 테스트",
+    "summary": "에러 코드 E-011은 테스트 단계에서의 빌드 중단과 실패를 의미한다.",
+    "source_ids": [
+      "error-E-011"
+    ]
+  },
+  {
+    "id": "error-E-012",
+    "title": "에러 코드 E-012 빌드 캐시 손상",
+    "summary": "에러 코드 E-012는 손상된 캐시로 인한 빌드 실패를 다룬다.",
+    "source_ids": [
+      "error-E-012"
+    ]
+  },
+  {
+    "id": "error-E-013",
+    "title": "에러 코드 E-013 이미지 푸시 실패",
+    "summary": "에러 코드 E-013은 레지스트리 인증 만료 또는 용량 초과로 인한 이미지 푸시 실패를 설명한다.",
+    "source_ids": [
+      "error-E-013"
+    ]
+  },
+  {
+    "id": "error-E-014",
+    "title": "에러 코드 E-014 이미지 태그 없음",
+    "summary": "에러 코드 E-014는 태그 규칙 위반이나 latest 사용으로 인한 이미지 태그 없음 오류와 장애 리포트 #06을 다룬다.",
+    "source_ids": [
+      "error-E-014",
+      "incident-06"
+    ]
+  },
+  {
+    "id": "error-E-015",
+    "title": "에러 코드 E-015 헬스체크 실패",
+    "summary": "에러 코드 E-015는 readiness 헬스체크 실패를 의미하며 장애 리포트 #15 및 #30과 연관되어 있다.",
+    "source_ids": [
+      "error-E-015",
+      "incident-15",
+      "incident-30"
+    ]
+  },
+  {
+    "id": "error-E-016",
+    "title": "에러 코드 E-016 설정 누락",
+    "summary": "에러 코드 E-016은 필수 환경 변수 누락으로 발생하는 배포 오류이며, 장애 리포트 #03의 원인이 되었다.",
+    "source_ids": [
+      "error-E-016",
+      "incident-03"
+    ]
+  },
+  {
+    "id": "error-E-017",
+    "title": "에러 코드 E-017 배포 타임아웃",
+    "summary": "에러 코드 E-017은 배포 제한 시간 초과로 발생하며, 배포 가이드 v4에서 타임아웃이 20분으로 늘어났다.",
+    "source_ids": [
+      "error-E-017"
+    ]
+  },
+  {
+    "id": "error-E-018",
+    "title": "에러 코드 E-018 마이그레이션 실패",
+    "summary": "에러 코드 E-018은 DB 마이그레이션 실패를 의미하며 장애 리포트 #08의 원인이 되었다.",
+    "source_ids": [
+      "error-E-018",
+      "incident-08"
+    ]
+  },
+  {
+    "id": "error-E-019",
+    "title": "에러 코드 E-019 자격 증명 만료",
+    "summary": "에러 코드 E-019는 Jenkins 자격 증명 만료로 발생하며 배포 가이드 v11에서 자동 갱신되도록 수정되었다.",
+    "source_ids": [
+      "error-E-019"
+    ]
+  },
+  {
+    "id": "error-E-020",
+    "title": "에러 코드 E-020 롤백 대상 없음",
+    "summary": "에러 코드 E-020은 롤백 대상 없음이나 호환성 문제로 발생하며 장애 리포트 #21과 연관된다.",
+    "source_ids": [
+      "error-E-020",
+      "incident-21"
+    ]
+  },
+  {
+    "id": "error-E-021",
+    "title": "에러 코드 E-021 워크플로 권한 부족",
+    "summary": "에러 코드 E-021은 배포 과정에서 워크플로에 필요한 권한이 없을 때 발생한다.",
+    "source_ids": [
+      "error-E-021",
+      "incident-12",
+      "incident-13",
+      "incident-17"
+    ]
+  },
+  {
+    "id": "error-E-022",
+    "title": "에러 코드 E-022 승인 누락",
+    "summary": "에러 코드 E-022는 필요한 승인 단계가 강제되지 않아 승인 없이 배포가 실행되었을 때 발생한다.",
+    "source_ids": [
+      "error-E-022",
+      "incident-05"
+    ]
+  },
+  {
+    "id": "error-E-023",
+    "title": "에러 코드 E-023 아티팩트 업로드 실패",
+    "summary": "에러 코드 E-023은 일시적 네트워크 오류로 인해 빌드 결과물 업로드가 실패할 때 발생한다.",
+    "source_ids": [
+      "error-E-023"
+    ]
+  },
+  {
+    "id": "error-E-024",
+    "title": "에러 코드 E-024 카나리 지표 이상",
+    "summary": "에러 코드 E-024는 카나리 단계에서 새 버전 결함으로 오류율이 기준을 초과해 배포가 자동 중단될 때 발생한다.",
+    "source_ids": [
+      "error-E-024",
+      "incident-19"
+    ]
+  },
+  {
+    "id": "error-E-025",
+    "title": "에러 코드 E-025 동시 배포 충돌",
+    "summary": "에러 코드 E-025는 배포 잠금이 없어 같은 서비스에 두 배포가 동시에 실행될 때 발생한다.",
+    "source_ids": [
+      "error-E-025",
+      "incident-20"
+    ]
+  },
+  {
+    "id": "error-E-026",
+    "title": "에러 코드 E-026 시크릿 접근 거부",
+    "summary": "에러 코드 E-026은 Vault 정책 변경이나 역할 매핑 오류로 인해 서비스가 시크릿을 읽지 못할 때 발생한다.",
+    "source_ids": [
+      "error-E-026",
+      "incident-22"
+    ]
+  },
+  {
+    "id": "error-E-027",
+    "title": "에러 코드 E-027 시크릿 누락",
+    "summary": "에러 코드 E-027은 새 기능의 시크릿이 Vault에 미등록되어 배포 시 시크릿이 누락되었을 때 발생한다.",
+    "source_ids": [
+      "error-E-027",
+      "incident-23"
+    ]
+  },
+  {
+    "id": "error-E-028",
+    "title": "에러 코드 E-028 노드 리소스 부족",
+    "summary": "에러 코드 E-028은 노드의 CPU 및 메모리 부족으로 인해 Pod가 스케줄되지 못하고 Pending 상태가 될 때 발생한다.",
+    "source_ids": [
+      "error-E-028",
+      "incident-25"
+    ]
+  },
+  {
+    "id": "error-E-029",
+    "title": "에러 코드 E-029 인증서 만료",
+    "summary": "에러 코드 E-029는 갱신 누락으로 인해 TLS 인증서가 만료될 때 발생한다.",
+    "source_ids": [
+      "error-E-029",
+      "incident-16"
+    ]
+  },
+  {
+    "id": "error-E-030",
+    "title": "에러 코드 E-030 배포 금지 시간 위반",
+    "summary": "에러 코드 E-030은 배포 가이드 최신 버전의 금지 시간을 미확인하여 배포 금지 시간에 배포를 시도할 때 발생한다.",
+    "source_ids": [
+      "error-E-030",
+      "incident-26"
+    ]
+  }
+]

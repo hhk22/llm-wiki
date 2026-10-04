@@ -1,0 +1,631 @@
+{
+  "started_at": "2026-09-26T13:20:44.500938+00:00",
+  "model": "gemini-3.5-flash-lite",
+  "cases_sha256": "213e043dc000ddc8ea68074490ab54a8d220a798b1ba0eb31b84a1b1d831b33a",
+  "code_sha256": {
+    "conversation.py": "9ee90728e2d99623d90cd4faedb580042c15c8cbd01c40ce1de51692d32a0005",
+    "wiki_query.py": "4afcd609a47ff5b4ffc2c6773c10f08907b8fa4e3c049d5853363cf8d43983b1",
+    "api.py": "6df0c7552a790580087d5f5729314a3b8e5fabc1240fddacbec704fbe4cf7d63"
+  },
+  "wiki_fingerprint": "958f66965faaf1ccee2efd073641ef4ebe29436989a9b97f623e0aa753a3e53d",
+  "results": [
+    {
+      "id": "current_and_reason",
+      "request": {
+        "query": "현재 배포가 금지되는 시간과, 목요일 오후가 금지된 이유를 함께 알려줘.",
+        "method": "wiki",
+        "history": []
+      },
+      "http_status": 200,
+      "response": {
+        "query": "현재 배포가 금지되는 시간과, 목요일 오후가 금지된 이유를 함께 알려줘.",
+        "method": "wiki",
+        "answer": "현재 배포가 금지되는 시간은 목요일 오후, 공휴일 전날, 12/22~1/2 연말 동결이다. [1]\n목요일 오후가 배포 금지 시간으로 지정된 이유는 목요일 오후 주간 정산 배치 중 배포가 실행되어 정산이 실패하는 충돌을 막기 위해서이다. [2] [3]",
+        "sources": [
+          {
+            "number": 1,
+            "wiki_path": "deployments/v30.md",
+            "section": "배포 가이드 v30 > 현재 규칙",
+            "content": "- 배포 도구는 GitHub Actions를 사용합니다. \n- 배포 명령은 `deploy run --env prod --ticket <id>`를 사용합니다. \n- 롤백 명령은 `deploy rollback --to <version>`을 사용하며 승인이 불필요합니다. \n- 배포 금지 시간은 목요일 오후, 공휴일 전날, 12/22~1/2 연말 동결입니다. \n- 승인자는 팀 리드와 서비스 오너입니다. \n- 이전 버전은 배포 가이드 v29입니다.",
+            "originals": [
+              {
+                "document_id": "deploy-guide-v30",
+                "path": "deploy-guide/v30.md",
+                "start_line": 14,
+                "end_line": 14,
+                "quote": "- 배포 도구: GitHub Actions"
+              },
+              {
+                "document_id": "deploy-guide-v30",
+                "path": "deploy-guide/v30.md",
+                "start_line": 15,
+                "end_line": 15,
+                "quote": "- 배포 명령: `deploy run --env prod --ticket <id>`"
+              },
+              {
+                "document_id": "deploy-guide-v30",
+                "path": "deploy-guide/v30.md",
+                "start_line": 16,
+                "end_line": 16,
+                "quote": "- 롤백 명령: `deploy rollback --to <version>` (승인 불필요)"
+              },
+              {
+                "document_id": "deploy-guide-v30",
+                "path": "deploy-guide/v30.md",
+                "start_line": 17,
+                "end_line": 17,
+                "quote": "- 배포 금지 시간: 목요일 오후, 공휴일 전날, 12/22~1/2 연말 동결"
+              },
+              {
+                "document_id": "deploy-guide-v30",
+                "path": "deploy-guide/v30.md",
+                "start_line": 18,
+                "end_line": 18,
+                "quote": "- 승인자: 팀 리드 + 서비스 오너"
+              },
+              {
+                "document_id": "deploy-guide-v30",
+                "path": "deploy-guide/v30.md",
+                "start_line": 19,
+                "end_line": 19,
+                "quote": "- 이전 버전: 배포 가이드 v29"
+              }
+            ]
+          },
+          {
+            "number": 2,
+            "wiki_path": "deployments/v22.md",
+            "section": "배포 가이드 v22",
+            "content": "장애 리포트 #18 이후 목요일 오후 주간 정산 배치와의 충돌을 막기 위해 배포 금지 시간이 금요일 오후에서 목요일 오후로 변경되었다.",
+            "originals": [
+              {
+                "document_id": "deploy-guide-v22",
+                "path": "deploy-guide/v22.md",
+                "start_line": 11,
+                "end_line": 11,
+                "quote": "- 변경: 배포 금지 시간을 변경한다. 금요일 오후 대신 목요일 오후에 배포하지 않는다. 공휴일 전날은 유지한다."
+              },
+              {
+                "document_id": "deploy-guide-v22",
+                "path": "deploy-guide/v22.md",
+                "start_line": 12,
+                "end_line": 12,
+                "quote": "- 이유: 장애 리포트 #18 이후 결정"
+              }
+            ]
+          },
+          {
+            "number": 3,
+            "wiki_path": "deployments/v22.md",
+            "section": "배포 가이드 v22 > 변경 및 이유",
+            "content": "- 금요일 오후 대신 목요일 오후에 배포하지 않도록 배포 금지 시간이 변경되었고 공휴일 전날은 유지된다. \n- 목요일 오후 주간 정산 배치 중 배포가 실행되어 정산이 실패한 장애 리포트 #18 이후 결정되었다.",
+            "originals": [
+              {
+                "document_id": "deploy-guide-v22",
+                "path": "deploy-guide/v22.md",
+                "start_line": 11,
+                "end_line": 11,
+                "quote": "- 변경: 배포 금지 시간을 변경한다. 금요일 오후 대신 목요일 오후에 배포하지 않는다. 공휴일 전날은 유지한다."
+              },
+              {
+                "document_id": "deploy-guide-v22",
+                "path": "deploy-guide/v22.md",
+                "start_line": 12,
+                "end_line": 12,
+                "quote": "- 이유: 장애 리포트 #18 이후 결정"
+              },
+              {
+                "document_id": "incident-18",
+                "path": "incidents/18.md",
+                "start_line": 17,
+                "end_line": 17,
+                "quote": "- 증상: 목요일 오후 주간 정산 배치 중 배포가 실행돼 정산이 실패했다."
+              }
+            ]
+          }
+        ],
+        "resolved_query": "현재 배포가 금지되는 시간과, 목요일 오후가 금지된 이유를 함께 알려줘.",
+        "status": "answered",
+        "trace": {
+          "elapsed_ms": 7834.62,
+          "calls": [
+            {
+              "stage": "select_topics",
+              "attempt": 1,
+              "input_text_tokens": 331,
+              "usage": {
+                "cache_tokens_details": null,
+                "cached_content_token_count": null,
+                "candidates_token_count": 22,
+                "candidates_tokens_details": null,
+                "prompt_token_count": 331,
+                "prompt_tokens_details": [
+                  {
+                    "modality": "TEXT",
+                    "token_count": 331
+                  }
+                ],
+                "thoughts_token_count": null,
+                "tool_use_prompt_token_count": null,
+                "tool_use_prompt_tokens_details": null,
+                "total_token_count": 353,
+                "traffic_type": null
+              },
+              "status": "ok",
+              "elapsed_ms": 968.68
+            },
+            {
+              "stage": "select_pages",
+              "attempt": 1,
+              "input_text_tokens": 1858,
+              "usage": {
+                "cache_tokens_details": null,
+                "cached_content_token_count": null,
+                "candidates_token_count": 13,
+                "candidates_tokens_details": null,
+                "prompt_token_count": 1858,
+                "prompt_tokens_details": [
+                  {
+                    "modality": "TEXT",
+                    "token_count": 1858
+                  }
+                ],
+                "thoughts_token_count": null,
+                "tool_use_prompt_token_count": null,
+                "tool_use_prompt_tokens_details": null,
+                "total_token_count": 1871,
+                "traffic_type": null
+              },
+              "status": "ok",
+              "elapsed_ms": 1013.86
+            },
+            {
+              "stage": "select_related",
+              "attempt": 1,
+              "input_text_tokens": 4537,
+              "usage": {
+                "cache_tokens_details": null,
+                "cached_content_token_count": null,
+                "candidates_token_count": 35,
+                "candidates_tokens_details": null,
+                "prompt_token_count": 4537,
+                "prompt_tokens_details": [
+                  {
+                    "modality": "TEXT",
+                    "token_count": 4537
+                  }
+                ],
+                "thoughts_token_count": null,
+                "tool_use_prompt_token_count": null,
+                "tool_use_prompt_tokens_details": null,
+                "total_token_count": 4572,
+                "traffic_type": null
+              },
+              "status": "ok",
+              "elapsed_ms": 1483.55
+            },
+            {
+              "stage": "wiki_answer",
+              "attempt": 1,
+              "input_text_tokens": 3677,
+              "usage": {
+                "cache_tokens_details": null,
+                "cached_content_token_count": null,
+                "candidates_token_count": 160,
+                "candidates_tokens_details": null,
+                "prompt_token_count": 3677,
+                "prompt_tokens_details": [
+                  {
+                    "modality": "TEXT",
+                    "token_count": 3677
+                  }
+                ],
+                "thoughts_token_count": null,
+                "tool_use_prompt_token_count": null,
+                "tool_use_prompt_tokens_details": null,
+                "total_token_count": 3837,
+                "traffic_type": null
+              },
+              "status": "ok",
+              "elapsed_ms": 1845.78
+            }
+          ],
+          "reads": [
+            {
+              "path": "index.md",
+              "via": "root",
+              "characters": 310
+            },
+            {
+              "path": "deployments/index.md",
+              "via": "index.md",
+              "characters": 2459
+            },
+            {
+              "path": "deployments/v30.md",
+              "via": "topic_index",
+              "characters": 7198
+            },
+            {
+              "path": "deployments/v22.md",
+              "via": "deployments/v30.md",
+              "characters": 6149
+            },
+            {
+              "path": "incidents/18.md",
+              "via": "deployments/v30.md",
+              "characters": 1074
+            }
+          ],
+          "max_input_tokens": 48000,
+          "usage_scope": "question_resolution_and_wiki_only"
+        }
+      },
+      "expected": "목요일 오후·공휴일 전날·12/22~1/2 및 주간 정산 배치와 배포의 충돌을 원본 근거와 함께 설명"
+    },
+    {
+      "id": "followup",
+      "request": {
+        "query": "그럼 바뀌기 전에는 언제였어?",
+        "method": "wiki",
+        "history": [
+          {
+            "role": "user",
+            "content": "현재 배포가 금지되는 시간과, 목요일 오후가 금지된 이유를 함께 알려줘."
+          },
+          {
+            "role": "assistant",
+            "content": "현재 배포가 금지되는 시간은 목요일 오후, 공휴일 전날, 12/22~1/2 연말 동결이다. [1]\n목요일 오후가 배포 금지 시간으로 지정된 이유는 목요일 오후 주간 정산 배치 중 배포가 실행되어 정산이 실패하는 충돌을 막기 위해서이다. [2] [3]"
+          }
+        ]
+      },
+      "http_status": 200,
+      "response": {
+        "query": "그럼 바뀌기 전에는 언제였어?",
+        "method": "wiki",
+        "answer": "배포 금지 시간 변경 전에는 금요일 오후와 공휴일 전날이었다. [1]",
+        "sources": [
+          {
+            "number": 1,
+            "wiki_path": "deployments/v22.md",
+            "section": "배포 가이드 v22 > 규칙별 변경 이력 > 배포 금지 시간",
+            "content": "- v4 → v5: 없음 → 금요일 오후  \n  - 배포 금지 시간을 추가한다. 금요일 오후에는 prod 배포를 하지 않는다. \n  - [v5 변경 문서](v5.md)\n  - 장애 리포트 #03 이후 결정 \n  - [원인 사건: 장애 리포트 #03](../incidents/03.md)\n- v15 → v16: 금요일 오후 → 금요일 오후, 공휴일 전날  \n  - 배포 금지 시간을 확대한다. 금요일 오후와 공휴일 전날에는 배포하지 않는다. \n  - [v16 변경 문서](v16.md)\n- v21 → v22: 금요일 오후, 공휴일 전날 → 목요일 오후, 공휴일 전날  \n  - 배포 금지 시간을 변경한다. 금요일 오후 대신 목요일 오후에 배포하지 않는다. 공휴일 전날은 유지한다. \n  - [v22 변경 문서](v22.md)\n  - 장애 리포트 #18 이후 결정 \n  - [원인 사건: 장애 리포트 #18](../incidents/18.md)",
+            "originals": [
+              {
+                "document_id": "deploy-guide-v04",
+                "path": "deploy-guide/v04.md",
+                "start_line": 17,
+                "end_line": 17,
+                "quote": "- 배포 금지 시간: 없음"
+              },
+              {
+                "document_id": "deploy-guide-v05",
+                "path": "deploy-guide/v05.md",
+                "start_line": 18,
+                "end_line": 18,
+                "quote": "- 배포 금지 시간: 금요일 오후"
+              },
+              {
+                "document_id": "deploy-guide-v05",
+                "path": "deploy-guide/v05.md",
+                "start_line": 11,
+                "end_line": 11,
+                "quote": "- 변경: 배포 금지 시간을 추가한다. 금요일 오후에는 prod 배포를 하지 않는다."
+              },
+              {
+                "document_id": "deploy-guide-v05",
+                "path": "deploy-guide/v05.md",
+                "start_line": 12,
+                "end_line": 12,
+                "quote": "- 이유: 장애 리포트 #03 이후 결정"
+              },
+              {
+                "document_id": "deploy-guide-v15",
+                "path": "deploy-guide/v15.md",
+                "start_line": 18,
+                "end_line": 18,
+                "quote": "- 배포 금지 시간: 금요일 오후"
+              },
+              {
+                "document_id": "deploy-guide-v16",
+                "path": "deploy-guide/v16.md",
+                "start_line": 17,
+                "end_line": 17,
+                "quote": "- 배포 금지 시간: 금요일 오후, 공휴일 전날"
+              },
+              {
+                "document_id": "deploy-guide-v16",
+                "path": "deploy-guide/v16.md",
+                "start_line": 11,
+                "end_line": 11,
+                "quote": "- 변경: 배포 금지 시간을 확대한다. 금요일 오후와 공휴일 전날에는 배포하지 않는다."
+              },
+              {
+                "document_id": "deploy-guide-v21",
+                "path": "deploy-guide/v21.md",
+                "start_line": 17,
+                "end_line": 17,
+                "quote": "- 배포 금지 시간: 금요일 오후, 공휴일 전날"
+              },
+              {
+                "document_id": "deploy-guide-v22",
+                "path": "deploy-guide/v22.md",
+                "start_line": 18,
+                "end_line": 18,
+                "quote": "- 배포 금지 시간: 목요일 오후, 공휴일 전날"
+              },
+              {
+                "document_id": "deploy-guide-v22",
+                "path": "deploy-guide/v22.md",
+                "start_line": 11,
+                "end_line": 11,
+                "quote": "- 변경: 배포 금지 시간을 변경한다. 금요일 오후 대신 목요일 오후에 배포하지 않는다. 공휴일 전날은 유지한다."
+              },
+              {
+                "document_id": "deploy-guide-v22",
+                "path": "deploy-guide/v22.md",
+                "start_line": 12,
+                "end_line": 12,
+                "quote": "- 이유: 장애 리포트 #18 이후 결정"
+              }
+            ]
+          }
+        ],
+        "resolved_query": "현재 배포 금지 시간이 바뀌기 전에는 언제였어?",
+        "status": "answered",
+        "trace": {
+          "elapsed_ms": 7031.71,
+          "calls": [
+            {
+              "stage": "resolve_question",
+              "attempt": 1,
+              "input_text_tokens": 434,
+              "usage": {
+                "cache_tokens_details": null,
+                "cached_content_token_count": null,
+                "candidates_token_count": 40,
+                "candidates_tokens_details": null,
+                "prompt_token_count": 434,
+                "prompt_tokens_details": [
+                  {
+                    "modality": "TEXT",
+                    "token_count": 434
+                  }
+                ],
+                "thoughts_token_count": null,
+                "tool_use_prompt_token_count": null,
+                "tool_use_prompt_tokens_details": null,
+                "total_token_count": 474,
+                "traffic_type": null
+              },
+              "status": "ok",
+              "elapsed_ms": 1128.88
+            },
+            {
+              "stage": "select_topics",
+              "attempt": 1,
+              "input_text_tokens": 322,
+              "usage": {
+                "cache_tokens_details": null,
+                "cached_content_token_count": null,
+                "candidates_token_count": 11,
+                "candidates_tokens_details": null,
+                "prompt_token_count": 322,
+                "prompt_tokens_details": [
+                  {
+                    "modality": "TEXT",
+                    "token_count": 322
+                  }
+                ],
+                "thoughts_token_count": null,
+                "tool_use_prompt_token_count": null,
+                "tool_use_prompt_tokens_details": null,
+                "total_token_count": 333,
+                "traffic_type": null
+              },
+              "status": "ok",
+              "elapsed_ms": 1404.84
+            },
+            {
+              "stage": "select_pages",
+              "attempt": 1,
+              "input_text_tokens": 1849,
+              "usage": {
+                "cache_tokens_details": null,
+                "cached_content_token_count": null,
+                "candidates_token_count": 48,
+                "candidates_tokens_details": null,
+                "prompt_token_count": 1849,
+                "prompt_tokens_details": [
+                  {
+                    "modality": "TEXT",
+                    "token_count": 1849
+                  }
+                ],
+                "thoughts_token_count": null,
+                "tool_use_prompt_token_count": null,
+                "tool_use_prompt_tokens_details": null,
+                "total_token_count": 1897,
+                "traffic_type": null
+              },
+              "status": "ok",
+              "elapsed_ms": 1482.33
+            },
+            {
+              "stage": "wiki_answer",
+              "attempt": 1,
+              "input_text_tokens": 3328,
+              "usage": {
+                "cache_tokens_details": null,
+                "cached_content_token_count": null,
+                "candidates_token_count": 69,
+                "candidates_tokens_details": null,
+                "prompt_token_count": 3328,
+                "prompt_tokens_details": [
+                  {
+                    "modality": "TEXT",
+                    "token_count": 3328
+                  }
+                ],
+                "thoughts_token_count": null,
+                "tool_use_prompt_token_count": null,
+                "tool_use_prompt_tokens_details": null,
+                "total_token_count": 3397,
+                "traffic_type": null
+              },
+              "status": "ok",
+              "elapsed_ms": 1595.24
+            }
+          ],
+          "reads": [
+            {
+              "path": "index.md",
+              "via": "root",
+              "characters": 310
+            },
+            {
+              "path": "deployments/index.md",
+              "via": "index.md",
+              "characters": 2459
+            },
+            {
+              "path": "deployments/v5.md",
+              "via": "topic_index",
+              "characters": 2024
+            },
+            {
+              "path": "deployments/v16.md",
+              "via": "topic_index",
+              "characters": 4299
+            },
+            {
+              "path": "deployments/v22.md",
+              "via": "topic_index",
+              "characters": 6149
+            }
+          ],
+          "max_input_tokens": 48000,
+          "usage_scope": "question_resolution_and_wiki_only"
+        }
+      },
+      "expected": "배포 금지 시간의 목요일 변경 전을 해석하고 금요일 오후·공휴일 전날을 근거로 답변"
+    },
+    {
+      "id": "ambiguous",
+      "request": {
+        "query": "그럼 바뀌기 전에는?",
+        "method": "wiki",
+        "history": [
+          {
+            "role": "user",
+            "content": "배포 금지 시간과 승인자가 각각 어떻게 변경됐어?"
+          },
+          {
+            "role": "assistant",
+            "content": "배포 금지 시간과 승인자 모두 변경 이력이 있습니다. 어느 항목을 더 보고 싶으신가요?"
+          }
+        ]
+      },
+      "http_status": 200,
+      "response": {
+        "query": "그럼 바뀌기 전에는?",
+        "method": "wiki",
+        "answer": "배포 금지 시간과 승인자 중 어느 항목의 변경 전 내용을 확인하고 싶으신가요?",
+        "sources": [],
+        "resolved_query": null,
+        "status": "clarification_required",
+        "trace": {
+          "elapsed_ms": 4071.28,
+          "calls": [
+            {
+              "stage": "resolve_question",
+              "attempt": 1,
+              "input_text_tokens": 364,
+              "usage": {
+                "cache_tokens_details": null,
+                "cached_content_token_count": null,
+                "candidates_token_count": 45,
+                "candidates_tokens_details": null,
+                "prompt_token_count": 364,
+                "prompt_tokens_details": [
+                  {
+                    "modality": "TEXT",
+                    "token_count": 364
+                  }
+                ],
+                "thoughts_token_count": null,
+                "tool_use_prompt_token_count": null,
+                "tool_use_prompt_tokens_details": null,
+                "total_token_count": 409,
+                "traffic_type": null
+              },
+              "status": "ok",
+              "elapsed_ms": 3392.2
+            }
+          ],
+          "reads": [],
+          "max_input_tokens": 48000,
+          "usage_scope": "question_resolution_and_wiki_only"
+        }
+      },
+      "expected": "clarification_required, 출처와 Wiki 읽기 기록 없음"
+    },
+    {
+      "id": "missing_evidence",
+      "request": {
+        "query": "사내 식대 지원 한도는 월 얼마야?",
+        "method": "wiki",
+        "history": []
+      },
+      "http_status": 200,
+      "response": {
+        "query": "사내 식대 지원 한도는 월 얼마야?",
+        "method": "wiki",
+        "answer": "Wiki 근거에서 확인할 수 없습니다.",
+        "sources": [],
+        "resolved_query": "사내 식대 지원 한도는 월 얼마야?",
+        "status": "insufficient_evidence",
+        "trace": {
+          "elapsed_ms": 2165.27,
+          "calls": [
+            {
+              "stage": "select_topics",
+              "attempt": 1,
+              "input_text_tokens": 319,
+              "usage": {
+                "cache_tokens_details": null,
+                "cached_content_token_count": null,
+                "candidates_token_count": 5,
+                "candidates_tokens_details": null,
+                "prompt_token_count": 319,
+                "prompt_tokens_details": [
+                  {
+                    "modality": "TEXT",
+                    "token_count": 319
+                  }
+                ],
+                "thoughts_token_count": null,
+                "tool_use_prompt_token_count": null,
+                "tool_use_prompt_tokens_details": null,
+                "total_token_count": 324,
+                "traffic_type": null
+              },
+              "status": "ok",
+              "elapsed_ms": 1183.11
+            }
+          ],
+          "reads": [
+            {
+              "path": "index.md",
+              "via": "root",
+              "characters": 310
+            }
+          ],
+          "max_input_tokens": 48000,
+          "usage_scope": "question_resolution_and_wiki_only"
+        }
+      },
+      "expected": "insufficient_evidence, 금액을 만들어 답하지 않음"
+    }
+  ]
+}
