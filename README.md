@@ -6,6 +6,8 @@ v1에서는 Markdown 문서 120개를 색인하고, 키워드·벡터 검색을 
 
 구현 과정과 측정 결과는 [RAG 기준선](./blogs/01-rag-baseline.md)과 [v2 검색 품질 실험](./blogs/02-search-quality.md)에 기록한다.
 
+이후 과정은 [v3 Wiki 구축](blogs/03-llm-wiki.md), [v4 지식 갱신](blogs/04-wiki-updates.md), [v5 성능·안정성 설계 검토](blogs/05-performance-stability.md)로 이어진다. v5는 현재 한계와 개선안을 정리한 글이며, 추가 운영 기능을 구현했다는 의미는 아니다.
+
 ## 구현 현황
 
 | 단계 | 상태 | 결과 |

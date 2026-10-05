@@ -78,7 +78,7 @@ v3에는 원본 변경을 처리하는 갱신 기능이 없었다. 수정된 내
 | FAQ를 목요일 배포 허용으로 변경한 뒤 금지로 복구 | 상충 후보에 따른 `확인 필요` 표시 생성·제거 |
 | 모델 실패 또는 작업 도중 원본 변경 | 새 결과를 반영하지 않고 기존 Wiki 유지 |
 
-[갱신 테스트 20개](../tests/test_wiki_update.py)를 추가했다. 구현 당시 전체 테스트는 **180개 통과·DB 테스트 18개 건너뜀**, Ruff 검사도 통과했다.
+[갱신 테스트 20개](https://github.com/hhk22/llm-wiki/blob/master/tests/test_wiki_update.py)를 추가했다. 구현 당시 전체 테스트는 **180개 통과·DB 테스트 18개 건너뜀**, Ruff 검사도 통과했다.
 
 기존 원본 120개와 Wiki를 대상으로 갱신 명령도 실행했다. 원본 변경이 없는 상태에서 **재생성 0개·검증 PASS**를 확인했다. 원본 변경 후 실제 LLM으로 생성한 설명의 정확성과 시간·비용은 아직 측정하지 않았다.
 
@@ -88,4 +88,6 @@ v3에는 원본 변경을 처리하는 갱신 기능이 없었다. 수정된 내
 
 v3에서는 모든 본문 생성에 당시 최신 버전을 함께 전달했다. 이 때문에 **최신 버전이 바뀌는 첫 v4 갱신은 전체 본문 재생성이 필요할 수 있다.** 새 생성 방식에서는 최신 표시를 코드가 처리하도록 분리했다.
 
-실행 방법은 [README](../README.md#v4--원본-변경에-따른-wiki-갱신), 상세 구현은 [wiki_update.py](../src/llm_wiki/wiki_update.py)에서 확인할 수 있다.
+실행 방법은 [README](https://github.com/hhk22/llm-wiki/blob/master/README.md#v4--원본-변경에-따른-wiki-갱신), 상세 구현은 [wiki_update.py](https://github.com/hhk22/llm-wiki/blob/master/src/llm_wiki/wiki_update.py)에서 확인할 수 있다.
+
+갱신 중 조회와 오래 걸리는 갱신 등 남은 운영 과제는 [v5 성능과 안정성 설계 검토](https://github.com/hhk22/llm-wiki/blob/master/blogs/05-performance-stability.md)에 정리했다.
