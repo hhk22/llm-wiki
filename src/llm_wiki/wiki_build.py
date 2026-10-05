@@ -117,6 +117,7 @@ class WikiBuilder:
         self.settings = settings
         self.interval = interval
         self.last_call = 0.0
+        self.error_history_start = 0
         self.progress = progress
         self.client = client
         self.accept_code_change = accept_code_change
@@ -183,7 +184,7 @@ class WikiBuilder:
                 api_key=self.settings.api_key, http_options=types.HttpOptions(timeout=120_000)
             )
         errors = list(dict.fromkeys(
-            call["error"] for call in self.state["calls"]
+            call["error"] for call in self.state["calls"][self.error_history_start:]
             if call["job"] == job and call["status"] == "invalid_output"
         ))
         for attempt in range(1, 6):
@@ -251,17 +252,7 @@ class WikiBuilder:
                 raise WikiBuildError(f"{job}: {record['status']}; details in _build/manifest.json")
         raise AssertionError("unreachable")
 
-    def build(self) -> dict:
-        groups = {
-            topic: [key for key, s in self.sources.items() if s.document.topic == topic]
-            for topic in TOPICS
-        }
-        groups = {topic: ids for topic, ids in groups.items() if ids}
-        deploy_ids = groups.get("deploy-guide", [])
-        latest_id = max(
-            deploy_ids, key=lambda key: int(self.sources[key].document.metadata["version"]),
-            default=None,
-        )
+    def build_pages(self, groups: dict[str, list[str]]) -> dict:
         pages = {}
         for topic, ids in groups.items():
             for offset in range(0, len(ids), self.batch_size):
@@ -273,7 +264,6 @@ class WikiBuilder:
                 } for key, source in context.items()]
                 prompt = POLICY + "\n대상 및 명시적 참조로 연결된 원본:\n" + json_text(corpus)
                 prompt += "\n이번에 작성할 문서 ID(모두 정확히 한 번):\n" + json_text(targets)
-                prompt += f"\n구축 기준 최신 배포 원본 ID: {latest_id}"
                 result = self.generate(
                     f"pages-{TOPICS[topic][0]}-{offset:03d}", prompt, PageBatch,
                     lambda batch, targets=targets, context=context: validate_pages(
@@ -281,6 +271,25 @@ class WikiBuilder:
                     ),
                 )
                 pages.update({p.document_id: p for p in result.pages})
+                for key in targets:
+                    self.state.setdefault("page_inputs", {})[key] = {
+                        "targets": targets, "context_ids": list(context),
+                    }
+                write_json(self.state_path, self.state)
+        return pages
+
+    def build(self) -> dict:
+        groups = {
+            topic: [key for key, s in self.sources.items() if s.document.topic == topic]
+            for topic in TOPICS
+        }
+        groups = {topic: ids for topic, ids in groups.items() if ids}
+        deploy_ids = groups.get("deploy-guide", [])
+        latest_id = max(
+            deploy_ids, key=lambda key: int(self.sources[key].document.metadata["version"]),
+            default=None,
+        )
+        pages = self.build_pages(groups)
         catalog = [{
             "id": key, "title": self.sources[key].document.title,
             "summary": page.summary.text,
