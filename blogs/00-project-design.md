@@ -23,16 +23,15 @@
 
 ## 버전별 전개
 
-v1~v3에서 RAG 검색 개선, Wiki 구축과 질의응답을 구현했다. v4에서는 원본 변경을 감지해 관련 Wiki를 갱신하는 명령을 추가했다. 이후에는 갱신·질의 과정의 성능과 운영 안정성을 검증한다.
+v1~v4에서 검색 개선, Wiki 구축·질의응답과 원본 변경에 따른 갱신을 구현했다. v5는 현재 한계와 개선 설계를 글로 정리하고, v6는 평가·피드백 기록을 구현해 정확성·시간·비용을 확인하는 단계로 범위를 정했다.
 
-| 버전 | 구현할 내용 |
+| 버전 | 내용과 범위 |
 | --- | --- |
 | **[v1 · RAG 기준선](https://github.com/hhk22/llm-wiki/blob/docs/llm-wiki-devlog/blogs/01-rag-baseline.md) (완료)** | 가상 문서 120개·청크 150개를 색인하고 출처 답변·API·MCP를 구현했다. 고정 질문 20개에서 벡터 Hit@3 14/20, 최신 정책 0/5를 기록했다. |
 | **[v2 · 검색 품질 개선](https://github.com/hhk22/llm-wiki/blob/v2-search-quality/blogs/02-search-quality.md) (완료)** | 식별자 보정, hybrid, 최신 버전 필터와 원인 장애 참조를 구현하고 검색 품질을 비교했다. |
-| **[v3 · LLM Wiki 전환](03-llm-wiki.md) (구현 완료)** | Wiki 본문·목차·관련 링크·출처 생성, 시점·이력·상충 표시, Wiki 기반 질의응답과 후속 질문 처리를 구현했다. |
-| **[v4 · 지식 갱신](04-wiki-updates.md) (구현·자동 테스트 검증)** | 원본 추가·수정·삭제를 감지하고 영향받는 Wiki·이력·상충을 갱신한다. 검증 후 교체하고 이전 결과와 갱신 기록을 보관한다. |
-| **v5 · 성능과 안정성** | 처리 병목과 동시성 오류를 재현하고, Worker·작업 상태·멱등성·재시도로 해결한다. |
-| **v6 · 운영 피드백** | 질의 성공·실패, 응답 시간과 사용자 피드백을 관찰하고, 병목이 확인되면 Redis 캐시와 cache hit/miss를 측정한다. |
-| **v7 · 서비스 완성** | 접근 제어, 운영 화면, Docker Compose 실행 환경, 자동 테스트와 배포·데모를 완성한다. |
+| **[v3 · LLM Wiki 전환](https://github.com/hhk22/llm-wiki/blob/master/blogs/03-llm-wiki.md) (구현 완료)** | Wiki 본문·목차·관련 링크·출처 생성, 시점·이력·상충 표시, Wiki 기반 질의응답과 후속 질문 처리를 구현했다. |
+| **[v4 · 지식 갱신](https://github.com/hhk22/llm-wiki/blob/master/blogs/04-wiki-updates.md) (구현·자동 테스트 검증)** | 원본 추가·수정·삭제를 감지하고 영향받는 Wiki·이력·상충을 갱신한다. 검증 후 교체하고 이전 결과와 갱신 기록을 보관한다. |
+| **[v5 · 성능과 안정성](https://github.com/hhk22/llm-wiki/blob/master/blogs/05-performance-stability.md) (설계 검토)** | 갱신 중 대화의 버전 유지, Worker와 상태 조회, 문서 증가에 따른 목차 계층화·Wiki 검색 결합을 설계한다. |
+| **v6 · 평가와 피드백 (구현 예정)** | 답변·출처·응답 상태·시간·토큰과 검토 결과를 기록한다. 기존 검색과 Wiki 답변, 전체 재구축과 부분 갱신을 같은 조건으로 비교한다. |
 
 자세한 코드는 여기서 확인할 수 있습니다. [https://github.com/hhk22/llm-wiki](https://github.com/hhk22/llm-wiki)
