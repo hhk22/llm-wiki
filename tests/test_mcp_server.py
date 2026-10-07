@@ -88,3 +88,27 @@ def test_mcp_forwards_history_for_wiki_answers():
 
     result = asyncio.run(run())
     assert result.structured_content["status"] == "clarification_required"
+
+
+def test_mcp_feedback_and_record_tools_forward_answer_id():
+    key = "1" * 32
+
+    class FeedbackClient:
+        async def feedback(self, answer_id, rating, category, comment):
+            assert (answer_id, rating, category, comment) == (key, "unhelpful", "answer", "오류")
+            return {"feedback_id": "feedback-1"}
+
+        async def get_answer(self, answer_id):
+            assert answer_id == key
+            return {"answer_id": key, "feedback": []}
+
+    async def run():
+        async with Client(create_mcp_server(FeedbackClient)) as client:
+            result = await client.call_tool("submit_answer_feedback", {
+                "answer_id": key, "rating": "unhelpful", "category": "answer", "comment": "오류"})
+            record = await client.call_tool("get_answer_record", {"answer_id": key})
+            return result, record
+
+    result, record = asyncio.run(run())
+    assert result.structured_content["feedback_id"] == "feedback-1"
+    assert record.structured_content["answer_id"] == key

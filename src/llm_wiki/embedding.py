@@ -10,6 +10,8 @@ from typing import Any
 from google import genai
 from google.genai import types
 
+from llm_wiki.telemetry import model_call
+
 GEMINI_EMBEDDING_MODEL = "gemini-embedding-2"
 EMBEDDING_DIMENSIONS = 768
 
@@ -64,7 +66,8 @@ class GeminiEmbeddingProvider:
 
     def _embed(self, content: str) -> list[float]:
         try:
-            result = self._client.models.embed_content(
+            result = model_call(
+                self._client.models, "embed_content", stage_name="embedding",
                 model=self.settings.model,
                 contents=content,
                 config=types.EmbedContentConfig(

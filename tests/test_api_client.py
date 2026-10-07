@@ -55,3 +55,20 @@ def test_api_client_forwards_wiki_history_and_budget():
     result = asyncio.run(client.answer("그 전에는?", "wiki", 3,
                                       history=history, max_input_tokens=9000))
     assert result["status"] == "clarification_required"
+
+
+def test_api_client_feedback_and_record_lookup():
+    key = "1" * 32
+
+    def handler(request):
+        if request.method == "POST":
+            assert request.url.path == f"/answers/{key}/feedback"
+            assert json.loads(request.content)["comment"] == "근거 확인 필요"
+            return httpx.Response(201, json={"feedback_id": "feedback-1"})
+        assert request.url.path == f"/answers/{key}"
+        return httpx.Response(200, json={"answer_id": key})
+
+    client = WikiApiClient("http://wiki.test", transport=httpx.MockTransport(handler))
+    assert asyncio.run(client.feedback(key, "unhelpful", "answer", "근거 확인 필요"))[
+        "feedback_id"] == "feedback-1"
+    assert asyncio.run(client.get_answer(key))["answer_id"] == key

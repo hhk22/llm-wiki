@@ -8,6 +8,8 @@ v1에서는 Markdown 문서 120개를 색인하고, 키워드·벡터 검색을 
 
 이후 과정은 [v3 Wiki 구축](blogs/03-llm-wiki.md), [v4 지식 갱신](blogs/04-wiki-updates.md), [v5 성능·안정성 설계 검토](blogs/05-performance-stability.md)로 이어진다. v5는 현재 한계와 개선안을 정리한 글이며, 추가 운영 기능을 구현했다는 의미는 아니다.
 
+[v6 평가와 피드백](https://github.com/hhk22/llm-wiki/blob/master/blogs/06-evaluation-feedback.md)에는 답변 기록·사용자 피드백·사람의 평가를 연결하고, 기존 검색과 Wiki를 같은 조건으로 비교하는 구현을 정리했다.
+
 ## 구현 현황
 
 | 단계 | 상태 | 결과 |
@@ -28,6 +30,7 @@ v1에서는 Markdown 문서 120개를 색인하고, 키워드·벡터 검색을 
 | v3 Wiki 생성 | 초기 구축 완료 | 본문 120개·목차 5개, 관련 링크·원본 출처 생성 |
 | v3 시점·변경 이력 | 구현·검증 완료 | 과거 표현 보정, 규칙 항목 변경 14건 연결, 배포 정책 상충 후보 검토 |
 | v3 Wiki 질의·후속 질문 | 구현·기능 검증 완료 | 목차·페이지 탐색, 출처 답변, 대화 기반 질문 해석·되묻기; 기존 검색 대비 평가는 후속 작업 |
+| v6 평가·피드백 | 구현·자동 테스트 검증 | 답변 기록·피드백·사람의 평가·회귀 사례 내보내기, 답변·갱신 비교 도구; 실제 모델 비교는 미실행 |
 | v4 Wiki 갱신 | 구현·자동 테스트 검증 | 원본 추가·수정·삭제 감지, 영향받는 본문 재생성, 이력·상충 갱신, 검증 후 교체·이전 결과 보관 |
 
 ## 프로젝트 구성
@@ -163,15 +166,16 @@ uv run python scripts/verify_wiki.py
 | --- | --- |
 | `history` | 최대 12개 발화, 발화당 4,000자, 합계 16,000자. 초과 요청은 422. 호출자가 최근 대화를 골라 전달 |
 | Wiki 탐색 | 전체 목차 → 주제 목차 최대 2개 → 본문 최대 `top_k`개(1~3). 처음 선택한 본문의 링크를 한 번만 추가 탐색 |
-| `max_input_tokens` | 기본 48,000. 질문 해석·Wiki 탐색·답변의 누적 프롬프트 텍스트 토큰 한도. `count_tokens`로 호출 전 확인하며 재시도도 합산 |
+| `max_input_tokens` | 기본 48,000. 질문 해석·Wiki 탐색·RAG/Wiki 답변의 누적 프롬프트 텍스트 토큰 한도. `count_tokens`로 호출 전 확인하며 재시도도 합산 |
 | `resolved_query` | 실제 탐색·답변에 사용한 질문. 되묻기일 때는 `null` |
 | `status` | `answered`, `clarification_required`, `insufficient_evidence`, `budget_exceeded` |
 | Wiki `sources` | 답변 번호·Wiki 경로·절·읽은 내용과 원본 ID·경로·행 범위·인용문 |
-| `trace` | 전체 응답 시간, 읽은 목차·페이지·탐색 경로·문자 수, 단계별 모델 호출·입력 토큰·응답 usage |
+| `answer_id` | 저장한 요청·답변·출처·실행 기록을 조회하고 피드백을 연결할 ID |
+| `trace` | 기록 저장 전 API 처리 시간, 검색 근거·Wiki 탐색 경로, 단계별 SDK 호출·입력 토큰·응답 usage |
 
 Wiki 파일과 인용된 원본은 구축 당시 해시와 대조한다. 원본이 바뀌었다면 `update_wiki.py`로 갱신하거나 새 Wiki를 구축해야 하며, 변경된 파일을 그대로 읽어 답하지 않는다. 원본 파일은 출처 위치·내용 검증에 사용하고, 답변 모델에는 Wiki 근거를 전달한다. 출처의 존재와 범위를 검증해도 주장과 근거의 의미적 일치까지 보장하지는 않는다.
 
-`max_input_tokens`는 입력 텍스트 기준이며 응답 스키마 등 공급자 부가 토큰과 출력은 별도 usage로 기록한다. 현재 기존 RAG의 검색·답변 토큰은 이 한도와 trace 집계에 포함하지 않는다. 따라서 현재 trace만으로 Wiki와 RAG 전체 비용을 비교하면 안 된다. 동일 예산의 비교 계측은 후속 작업이다.
+`max_input_tokens`는 생성 프롬프트 텍스트 기준이며 RAG 답변과 질문 해석·Wiki 호출이 같은 요청 예산을 공유한다. 재시도 입력도 합산한다. 임베딩은 별도 호출로 기록하며 이 생성 예산에는 포함하지 않는다. 공급자의 부가 토큰·출력은 usage로 기록하고, 사용량 미제공은 `null`로 남긴다. 총 사용량에 누락이 있으면 `total_tokens`도 `null`이며, 토큰 수를 금액으로 환산하지 않는다.
 
 고정된 원본에서 실제 모델로 첫 질문·후속 질문·모호한 질문·근거 부족 질문을 각 1회 실행한 [기능 검증 기록](evaluation/wiki-conversation-review.md)을 남겼다. 기존 20문항의 품질 비교나 성능 개선 측정은 아니다.
 
@@ -179,6 +183,90 @@ Wiki 파일과 인용된 원본은 구축 당시 해시와 대조한다. 원본�
 # API 호출 비용이 드는 기능 확인. 답변·출처·탐색·사용량을 JSON으로 저장한다.
 uv run python scripts/check_wiki_conversation.py --model gemini-3.5-flash-lite
 ```
+
+
+## v6 — 답변 기록·피드백·비교 평가
+
+`POST /answer`는 성공·근거 부족·확인 질문·한도 초과 응답에 `answer_id`를 반환한다. 생성 실패도 기록하고 HTTP 502의 `detail.answer_id`로 조회할 수 있다. 기록 저장 자체가 실패하면 HTTP 503을 반환한다.
+
+저장소는 기본 `.local/evaluation.sqlite3`이며 `LLM_WIKI_RECORD_DB`로 변경한다. 요청의 대화 이력·답변·출처·trace와 코드 해시가 저장된다. Wiki는 manifest의 구축 지문·원본 해시, RAG는 검색된 문서의 DB 색인 해시와 검색 근거를 기록한다. 이 기록을 후속 대화에 자동 주입하지 않는다. Compose에서는 `answer_records` 볼륨에 보관한다.
+
+| API | 용도 |
+| --- | --- |
+| `GET /answers/{answer_id}` | 당시 요청·답변·실행 기록·피드백·사람의 평가 조회 |
+| `POST /answers/{answer_id}/feedback` | 사용자 평가와 이유 저장 |
+| `POST /answers/{answer_id}/evaluation` | 사람이 원문을 확인한 판정과 기대 답 저장 |
+| `GET /answers/{answer_id}/regression-case` | 사람의 평가가 있는 사례만 회귀 평가 질문으로 내보내기 |
+
+피드백 입력 예시는 다음과 같다. `unhelpful`에는 이유가 필요하다.
+
+```json
+{"rating": "unhelpful", "category": "answer", "comment": "과거 규칙을 현재 규칙으로 답했습니다."}
+```
+
+사람의 평가 입력은 아래 형식이다. 판정은 `correct/partial/incorrect`, 근거 평가는 `supported/mixed/unsupported/not_applicable` 중 선택한다. 평가는 이전 것을 덮어쓰지 않고 추가되며, 최신 평가가 비교·내보내기에 사용된다.
+
+```json
+{
+  "reviewer": "reviewer-1",
+  "verdict": "incorrect",
+  "evidence": "unsupported",
+  "reason": "인용한 원문은 목요일 오후 금지인데 답변은 허용이라고 했습니다.",
+  "expected": "목요일 오후에는 배포할 수 없다고 근거와 함께 답합니다.",
+  "expected_status": "answered"
+}
+```
+
+MCP에는 `submit_answer_feedback`와 `get_answer_record`를 추가했다. 피드백은 Wiki를 수정하거나 정답을 자동 확정하지 않는다. 별도 피드백 화면은 포함하지 않는다.
+
+### 같은 조건의 답변 비교
+
+```bash
+# 실행 건수만 확인: API·DB 호출과 파일 생성 없음
+uv run python scripts/compare_answers.py --model gemini-3.6-flash \
+  --output .local/baseline.json --dry-run
+
+# 실제 실행: 유료 모델 API와 RAG용 PostgreSQL 연결 필요
+uv run python scripts/compare_answers.py --model gemini-3.6-flash \
+  --cases evaluation/questions.yaml --repeats 3 --output .local/baseline.json
+
+# 추가 4문항은 별도 결과로 저장
+uv run python scripts/compare_answers.py --model gemini-3.6-flash \
+  --cases evaluation/answer-cases-v6.json --repeats 3 --output .local/supplemental.json
+```
+
+기본 네 방식은 `keyword vector hybrid wiki`이며 `--methods`로 선택한다. `--max-input-tokens` 기본값은 48,000이다. 같은 모델·원본·질문·고정된 대화 이력·입력 예산을 적용하고, 실행 순서를 회차별로 바꾼다. 원본과 Wiki·RAG 색인의 일치는 실행 전후 검증한다. 기존 20문항과 추가·피드백 문항의 집계는 분리한다.
+
+결과 JSON과 같은 이름의 `.sqlite3` 기록 파일을 생성하며, 기존 결과는 덮어쓰지 않는다. 매 요청 후 결과를 저장하고 중단 시에도 완료한 결과가 남는다. 시간은 기록 저장을 포함한 프로세스 내부 API 호출 기준으로 중앙값·표준편차·최소·최대를 기록한다. HTTP 네트워크 시간은 포함하지 않는다. 상태·필수 원본 포함 여부는 자동 진단이며 의미적 정답은 `unreviewed`로 남긴다.
+
+```bash
+# 실제 answer_id와 사람이 작성한 평가 JSON을 지정
+uv run python scripts/review_answers.py --records .local/baseline.sqlite3 \
+  --answer-id ANSWER_ID --evaluation .local/review.json
+
+# 검토 완료된 사례를 별도 질문 세트로 내보내기
+uv run python scripts/review_answers.py --records .local/baseline.sqlite3 \
+  --answer-id ANSWER_ID --export-case .local/regression-case.json
+
+# 평가 결과를 붙인 새 보고서 생성
+uv run python scripts/review_answers.py --records .local/baseline.sqlite3 \
+  --report .local/baseline.json --output .local/baseline-reviewed.json
+```
+
+사람이 양쪽을 평가하고 기대 답·상태가 같은 쌍만 Wiki의 개선·동일·퇴보로 집계한다. 기준이 다르면 `criteria_mismatch`, 미검토는 비교에서 제외한다. 내보낸 사례는 다시 `compare_answers.py --cases`에 전달할 수 있다.
+
+### 전체 재구축과 부분 갱신 비교
+
+```bash
+uv run python scripts/compare_wiki_updates.py \
+  --before /path/to/old-sources --after /path/to/changed-sources \
+  --wiki /path/to/old-wiki --output .local/update-comparison
+```
+
+원본과 기존 Wiki를 수정하지 않고, 새 비교 폴더의 `incremental/`·`full/`에서 각각 실행한다. 이전 Wiki의 모델·배치 설정을 사용하며, 새 호출만 세어 시간·토큰·재생성·재사용 수·검증 결과·상충 후보를 `report.json`에 기록한다. 실패하면 기존 Wiki와 중간 비교 기록을 보존한다. 기본 호출 간격은 16초이며 측정 시간에 포함된다. 이 명령도 유료 API를 사용한다.
+
+두 출력의 문장 일치를 정답으로 삼지 않는다. 생성물 구조·인용 검증과 별도로 규칙·이력·링크·상충의 의미를 사람이 비교해야 한다. 최초 구축 비용은 이 갱신 비용에 포함되지 않는다.
+
 
 ## Docker Compose로 전체 실행
 

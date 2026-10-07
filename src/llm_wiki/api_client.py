@@ -36,6 +36,24 @@ class WikiApiClient:
         payload["max_input_tokens"] = max_input_tokens
         return await self._post("/answer", payload)
 
+    async def feedback(self, answer_id: str, rating: str, category: str, comment: str):
+        from uuid import UUID
+
+        key = UUID(answer_id).hex
+        return await self._post(f"/answers/{key}/feedback", {
+            "rating": rating, "category": category, "comment": comment,
+        })
+
+    async def get_answer(self, answer_id: str):
+        from uuid import UUID
+
+        key = UUID(answer_id).hex
+        async with httpx.AsyncClient(base_url=self.base_url, timeout=30,
+                                     transport=self.transport) as client:
+            response = await client.get(f"/answers/{key}")
+            response.raise_for_status()
+            return response.json()
+
     async def _post(self, path: str, payload: dict[str, Any]) -> dict[str, Any]:
         async with httpx.AsyncClient(
             base_url=self.base_url,
