@@ -3,7 +3,7 @@
 from __future__ import annotations
 
 from collections.abc import Callable
-from typing import Any
+from typing import Any, Literal
 
 from mcp.server import MCPServer
 
@@ -48,6 +48,20 @@ def create_mcp_server(client_factory: ApiClientFactory = WikiApiClient) -> MCPSe
         if max_input_tokens != 48000:
             kwargs["max_input_tokens"] = max_input_tokens
         return await client_factory().answer(query, method, top_k, **kwargs)
+
+    @server.tool()
+    async def submit_answer_feedback(
+        answer_id: str, rating: Literal["helpful", "unhelpful"],
+        category: Literal["interpretation", "retrieval", "answer", "latency", "other"] = "other",
+        comment: str = "",
+    ) -> dict[str, Any]:
+        """Record user feedback for an answer ID; does not modify Wiki or establish truth."""
+        return await client_factory().feedback(answer_id, rating, category, comment)
+
+    @server.tool()
+    async def get_answer_record(answer_id: str) -> dict[str, Any]:
+        """Read a saved answer, original request, trace and feedback by ID."""
+        return await client_factory().get_answer(answer_id)
 
     return server
 

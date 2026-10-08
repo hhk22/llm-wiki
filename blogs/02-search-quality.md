@@ -6,16 +6,20 @@
 
 오류 코드의 조사 제거는 키워드 Hit@3를 1/20 → 2/20으로 개선했다. 반면 **동일 가중치 RRF hybrid는 벡터 대비 Hit@3가 14/20 → 11/20으로 낮아져 품질 개선에 실패했다.** E-021이 목록 맨 앞에 나온 것도 동점 정렬의 결과였다. 이후 최신 버전 필터를 적용하자 벡터의 문서 Hit@3가 **14/20 → 19/20**으로 올랐다. 기본 검색은 **벡터 + 질문 의도에 따른 버전 필터**이며, hybrid는 비교용 옵션으로 남겼다.
 
-## 진행 현황
+## 단계별 결과 먼저 보기
 
-각 단계에서 문제 재현·원인 확인·구현·평가·API·MCP 연결을 함께 진행한다.
+각 단계에서 문제 재현·원인 확인·구현·평가·API·MCP 연결을 함께 진행했다. 문서 적중과 답변 근거 확보는 다른 항목이므로 따로 기록한다.
 
 | 단계 | 작업 | 상태 |
 | --- | --- | --- |
 | 1단계 | 키워드 검색 보정 | 오류 코드 조사 제거 적용 완료 — 키워드 Hit@3 1/20 → 2/20 |
 | 2단계 | Hybrid 검색 실험 | 구현·평가 완료 — 벡터 대비 Hit@3 14/20 → 11/20, 기본 검색으로 미채택 |
 | 3단계 | 최신 버전 필터 | 구현·평가 완료 — 벡터 문서 Hit@3 14/20 → 19/20, 근거 청크 누락 1건은 남음 |
-| 4단계 | 후보 누락 진단·근거 보강 | 청크 2개·원인 장애 참조·가중 RRF 비교 |
+| 4단계 · 청크 보강 | 문서당 최대 2개 청크 전달 | 벡터 문서 Hit@3 19/20 유지, 최신 정책의 근거 확보 4/5 → 5/5 |
+| 4단계 · 참조 보강 | 명시된 원인 장애 1단계 조회 | 저장된 후보와 DB를 이용한 벡터 문서 Hit@3 재평가 19/20 → 20/20 |
+| 4단계 · 가중 RRF | 키워드 1 : 벡터 3 비교 | 참조 보강 제외 문서 Hit@3 15/20 → 19/20, Hit@1 퇴보가 있어 기본 검색으로 미채택 |
+
+**20/20은 고정 회귀 문항의 후보 재평가 결과다.** 같은 조건의 전체 답변 정확도 측정이나 독립적인 새 질문 세트의 성능으로 해석하지 않는다. 각 단계의 측정 조건과 실제 답변 확인 범위는 아래에 구분했다.
 
 ## 1단계 — 키워드 검색 보정
 
@@ -56,7 +60,7 @@ E-008은 → '008은', 'e', 'e-008은'
 
 ## 2단계 — Hybrid 검색 실험
 
-기존 사례는 [v1 평가](https://github.com/hhk22/llm-wiki/blob/v2-search-quality/evaluation/results-v1.json)와 [20문항 hybrid 평가](https://github.com/hhk22/llm-wiki/blob/v2-search-quality/evaluation/results-v2-hybrid.json)로 비교한다. 아래 E-025 사례는 이후 추가로 확인한 탐색 질문이며, 기존 20문항 점수와 분리한다. 이 단계의 평가에는 버전 필터·reranker를 적용하지 않았다.
+기존 사례는 [v1 평가](https://github.com/hhk22/llm-wiki/blob/30b5274c1f3e64d71989bd5108bb0cd172a07693/evaluation/results-v1.json)와 [20문항 hybrid 평가](https://github.com/hhk22/llm-wiki/blob/30b5274c1f3e64d71989bd5108bb0cd172a07693/evaluation/results-v2-hybrid.json)로 비교한다. 아래 E-025 사례는 이후 추가로 확인한 탐색 질문이며, 기존 20문항 점수와 분리한다. 이 단계의 평가에는 버전 필터·reranker를 적용하지 않았다.
 
 ### 식별자를 알아도 정답이 뒤로 밀린다
 
@@ -72,7 +76,7 @@ E-008은 → '008은', 'e', 'e-008은'
 
 **왜?** E-025는 키워드 2위·벡터 1위의 점수를 합쳐 0.032522를 받았고, 다음 후보의 0.030798보다 높아 동점 없이 1위가 됐다. 반환된 청크에는 배포 잠금 부재와 v23의 잠금 도입이 담겨 있었다.
 
-**적용 결과:** 키워드 검색의 정답 순위는 2위 → hybrid 1위로 개선됐다. **벡터도 이미 1위였으므로 벡터 대비 개선은 아니다.** 성공 사례를 확인하기 위해 추가한 질문 4개 모두의 [검색 결과](https://github.com/hhk22/llm-wiki/blob/v2-search-quality/evaluation/hybrid-example-check.json)를 남겼으며, 이 사례를 전체 품질 향상의 근거로 확대하지 않는다.
+**적용 결과:** 키워드 검색의 정답 순위는 2위 → hybrid 1위로 개선됐다. **벡터도 이미 1위였으므로 벡터 대비 개선은 아니다.** 성공 사례를 확인하기 위해 추가한 질문 4개 모두의 [검색 결과](https://github.com/hhk22/llm-wiki/blob/30b5274c1f3e64d71989bd5108bb0cd172a07693/evaluation/hybrid-example-check.json)를 남겼으며, 이 사례를 전체 품질 향상의 근거로 확대하지 않는다.
 
 **개선되지 않은 사례: E-021 오류가 발생하면 어떤 설정을 확인해야 하나요?**
 
@@ -84,7 +88,7 @@ E-008은 → '008은', 'e', 'e-008은'
 
 **한계:** E-021과 FAQ Q07은 RRF 점수가 같아(각 0.032522) 문서 ID순으로만 순서가 정해졌으므로, 관련성을 더 정확히 구분한 사례로 볼 수 없다.
 
-**[전체 평가](https://github.com/hhk22/llm-wiki/blob/v2-search-quality/evaluation/results-v2-hybrid.json) (고정 20문항, Hit@3): 벡터 70%(14/20) > 키워드 보정 + 벡터 RRF 55%(11/20)**
+**[전체 평가](https://github.com/hhk22/llm-wiki/blob/30b5274c1f3e64d71989bd5108bb0cd172a07693/evaluation/results-v2-hybrid.json) (고정 20문항, Hit@3): 벡터 70%(14/20) > 키워드 보정 + 벡터 RRF 55%(11/20)**
 
 **다음 보정:** 특정 코드의 의미·대응을 묻는 질문은 식별자 일치를 우선하고, 일반 질문은 벡터 비중을 높인 뒤 기존·별도 검증 질문에서 벡터 단독 대비 개선과 기존 성공 유지가 확인되면 기본 검색에 적용한다.
 
@@ -132,7 +136,7 @@ v30의 청크 안에서 검색 → 대표 청크 선택
 
 ### 결과 — 문서 선택은 개선됐고, 근거 선택은 남았다
 
-**[고정 20문항 평가](https://github.com/hhk22/llm-wiki/blob/v2-search-quality/evaluation/results-v2-filters.json) · 문서 Hit@3**
+**[고정 20문항 평가](https://github.com/hhk22/llm-wiki/blob/30b5274c1f3e64d71989bd5108bb0cd172a07693/evaluation/results-v2-filters.json) · 문서 Hit@3**
 
 | 검색 방식 | 필터 전 | 필터 후 |
 | --- | --- | --- |
@@ -148,7 +152,7 @@ v30의 청크 안에서 검색 → 대표 청크 선택
 
 ## 4단계 — 후보 누락 진단·근거 보강
 
-아래는 [3단계 평가 결과](https://github.com/hhk22/llm-wiki/blob/v2-search-quality/evaluation/results-v2-filters.json)에서 확인한 실패 사례다.
+아래는 [3단계 평가 결과](https://github.com/hhk22/llm-wiki/blob/30b5274c1f3e64d71989bd5108bb0cd172a07693/evaluation/results-v2-filters.json)에서 확인한 실패 사례다.
 
 ### 사례 1 — 정답 문서는 찾았지만 답이 없는 청크를 골랐다
 
@@ -182,7 +186,7 @@ v30의 청크 안에서 검색 → 대표 청크 선택
 
 **답변 변화:** “근거 문서에서 확인할 수 없습니다.” → **“배포 명령에 티켓 ID(`--ticket <id>`)를 포함하도록 명시되어 있습니다. [2]”**
 
-**[검증 결과](https://github.com/hhk22/llm-wiki/blob/v2-search-quality/evaluation/results-v2-evidence.json):** 고정 20문항에서 세 검색 방식 모두 문서 순위와 기존 대표 청크를 유지했다. 벡터의 문서 Hit@3는 **19/20 그대로**, 최신 정책 질문에 필요한 근거 청크 확보는 **4/5 → 5/5**다. 실제 답변을 비교한 8문항에서는 티켓 질문이 개선됐고, 나머지 7문항의 핵심 내용은 유지됐다.
+**[검증 결과](https://github.com/hhk22/llm-wiki/blob/30b5274c1f3e64d71989bd5108bb0cd172a07693/evaluation/results-v2-evidence.json):** 고정 20문항에서 세 검색 방식 모두 문서 순위와 기존 대표 청크를 유지했다. 벡터의 문서 Hit@3는 **19/20 그대로**, 최신 정책 질문에 필요한 근거 청크 확보는 **4/5 → 5/5**다. 실제 답변을 비교한 8문항에서는 티켓 질문이 개선됐고, 나머지 7문항의 핵심 내용은 유지됐다.
 
 **한계:** 이 사례의 프롬프트는 281자 → 575자로 늘었다. 선택한 문서 밖의 근거 누락이나 문서 순위 오류까지 해결하는 변경은 아니다.
 
@@ -220,9 +224,9 @@ v22 → incident-18 → incident-26
 
 참조를 한 번만 따라 장애 문서 하나를 보강한다. 참조가 없거나 대상 문서가 없으면 원래 결과를 유지한다. 정답 ID를 검색 규칙에 넣지 않는다.
 
-**[후보 재평가](https://github.com/hhk22/llm-wiki/blob/v2-search-quality/evaluation/results-v2-followups.json):** 저장된 후보와 DB로 비교했을 때 벡터 문서 Hit@3는 **19/20 → 20/20**, 기존 성공 문항의 퇴보는 없었다. 이는 장애 원문 확보의 개선이며, 답변 정확도 100%를 뜻하지 않는다.
+**[후보 재평가](https://github.com/hhk22/llm-wiki/blob/30b5274c1f3e64d71989bd5108bb0cd172a07693/evaluation/results-v2-followups.json):** 저장된 후보와 DB로 비교했을 때 벡터 문서 Hit@3는 **19/20 → 20/20**, 기존 성공 문항의 퇴보는 없었다. 이는 장애 원문 확보의 개선이며, 답변 정확도 100%를 뜻하지 않는다.
 
-**[실제 답변 비교](https://github.com/hhk22/llm-wiki/blob/v2-search-quality/evaluation/followup-answer-check.json):** 변경 전에도 가이드의 참조로 “장애 #18”은 답했다. 보강 후에는 원문을 근거로 **주간 정산 배치 중 배포가 실행돼 정산이 실패한 장애**라는 설명까지 제공했다.
+**[실제 답변 비교](https://github.com/hhk22/llm-wiki/blob/30b5274c1f3e64d71989bd5108bb0cd172a07693/evaluation/followup-answer-check.json):** 변경 전에도 가이드의 참조로 “장애 #18”은 답했다. 보강 후에는 원문을 근거로 **주간 정산 배치 중 배포가 실행돼 정산이 실패한 장애**라는 설명까지 제공했다.
 
 ### 사례 3 — 벡터의 성공 결과가 RRF 결합 후 탈락했다
 
@@ -244,7 +248,7 @@ v22 → incident-18 → incident-26
 변경 점수 = 1 / (60 + 키워드 순위) + 3 / (60 + 벡터 순위)
 ```
 
-**[후보 재평가](https://github.com/hhk22/llm-wiki/blob/v2-search-quality/evaluation/results-v2-followups.json):** 참조 보강을 제외한 hybrid의 문서 Hit@3는 **15/20 → 19/20**으로, 위 4문항이 회복됐다. 가중치 3은 기존 실패 순위를 보고 선택한 실험값이다.
+**[후보 재평가](https://github.com/hhk22/llm-wiki/blob/30b5274c1f3e64d71989bd5108bb0cd172a07693/evaluation/results-v2-followups.json):** 참조 보강을 제외한 hybrid의 문서 Hit@3는 **15/20 → 19/20**으로, 위 4문항이 회복됐다. 가중치 3은 기존 실패 순위를 보고 선택한 실험값이다.
 
 **남은 퇴보:** E-021이 1위 → 2위로 내려가 Hit@1은 **11/15 → 10/15**가 됐다. 기본 검색은 벡터를 유지하고, 가중 hybrid는 비교 옵션으로 사용한다.
 
@@ -254,7 +258,7 @@ v22 → incident-18 → incident-26
 
 문서 120개·청크 150개, 임베딩 모델과 768차원 설정을 유지한다. 아래는 기본 경로와 hybrid 비교 경로다. 답변에는 선택한 문서별 상위 청크를 최대 2개 전달한다.
 
-![벡터 검색 기본 경로와 hybrid 비교 경로, 참조 장애 보강 및 근거 기반 답변 흐름](https://raw.githubusercontent.com/hhk22/llm-wiki/master/images/search-quality-flow-v2.png)
+![벡터 검색 기본 경로와 hybrid 비교 경로, 참조 장애 보강 및 근거 기반 답변 흐름](https://raw.githubusercontent.com/hhk22/llm-wiki/30b5274c1f3e64d71989bd5108bb0cd172a07693/images/search-quality-flow-v2.png)
 
 3단계 필터 실험은 문서별 대표 청크 하나로 평가했다. 4단계 사례 1은 문서 순위를 유지하며 청크 수를 비교하고, 사례 2·3은 참조 보강과 결합 가중치의 효과를 각각 비교한다. 이번에 실패한 설정은 후보 10개·RRF 상수 60·동일 가중치 조합이다. 다른 설정도 별도 검증이 필요하며, 벡터 단독 대비 품질과 비용을 확인한 뒤 채택 여부를 판단한다.
 
@@ -270,4 +274,8 @@ v22 → incident-18 → incident-26
 
 기본 검색은 **벡터 + 버전 필터**를 유지하고, 답변에는 **문서당 최대 2개 청크와 정책 원인 장애 참조 보강**을 적용했다. 가중 Hybrid(키워드 1 : 벡터 3)는 비교 옵션으로 남겼다.
 
-변경별 설정·평가 결과·답변 비교는 [실험 기록](https://github.com/hhk22/llm-wiki/tree/v2-search-quality/evaluation)에 보존했다.
+변경별 설정·평가 결과·답변 비교는 [실험 기록](https://github.com/hhk22/llm-wiki/tree/30b5274c1f3e64d71989bd5108bb0cd172a07693/evaluation)에 보존했다.
+
+## 다음 실험 — 연결한 설명을 Wiki로 보관하기
+
+v2는 근거 문서를 연결해 변경 이유를 답할 수 있다. [v3](https://github.com/hhk22/llm-wiki/blob/v6-evaluation-feedback/blogs/03-llm-wiki.md)에서는 이 설명을 Wiki에 미리 정리해 여러 질문에서 재사용하는 구조를 구현한다. 기존 RAG가 답변에 실패했다는 가정으로 출발하지 않으며, Wiki의 답변 품질·시간·비용 우위는 같은 조건의 별도 평가가 필요하다.

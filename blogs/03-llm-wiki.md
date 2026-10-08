@@ -5,9 +5,9 @@
 원본 120개를 읽어 **본문 120개와 목차 5개를 생성**했다. 이후 시점·변경 이력·상충 표시를 보강하고, 생성한 Wiki를 읽어 답하는 경로와 대화 기반 후속 질문 처리를 연결했다.
 
 
-## 왜 LLM Wiki로 전환하려는가?
+## 왜 Wiki 질의 경로를 추가했나?
 
-### v2의 문제점
+### v2에서 남은 과제
 
 > “배포 금지 시간이 금요일 오후에서 목요일 오후로 바뀐 이유가 뭐야?”
 
@@ -15,7 +15,9 @@ v2는 이 질문에 답하기 위해 **가이드 검색 → ‘이유’ 항목�
 
 답변을 만들 수는 있지만, **두 문서를 종합한 설명은 저장되지 않는다.** 비슷한 질문이 들어오면 다시 검색하고 내용을 연결해야 한다.
 
-### LLM Wiki 전환으로 기대하는 점
+실제 [v2·v3 기준선 확인 기록](https://github.com/hhk22/llm-wiki/blob/d2b96d6be0c91be85d50a2a120e40894913f42de/evaluation/v2-v3-baseline-review.md)에서도 v2가 현재 규칙과 변경 이유를 답하는 것을 확인했다. Wiki를 추가한 이유는 RAG로 답할 수 없어서가 아니라, 종합한 설명을 출처와 함께 보관하고 재사용하기 위해서다.
+
+### Wiki를 추가하며 기대하는 점
 
 **규칙·변경 이유·출처를 Wiki에 미리 정리하고, 여러 질문에서 재사용한다.**
 
@@ -54,6 +56,24 @@ v2는 이 질문에 답하기 위해 **가이드 검색 → ‘이유’ 항목�
 
 예를 들어 배포 v22 페이지에는 **가이드의 금요일→목요일 변경과 장애 #18의 정산 실패를 함께 설명**하고, 원본 행 번호와 장애 Wiki 링크를 붙였다. 이 단계에서 원본을 종합한 설명을 파일로 보관하고 목차·링크로 찾아갈 수 있게 됐다.
 
+다음은 실제 저장된 원본과 Wiki의 일부다. 가상 답변 예시가 아니라, 두 원본의 내용을 한 설명으로 연결한 결과다.
+
+```text
+입력 1 — 배포 가이드 v22
+변경: 배포 금지 시간을 변경한다. 금요일 오후 대신 목요일 오후에
+      배포하지 않는다. 공휴일 전날은 유지한다.
+이유: 장애 리포트 #18 이후 결정
+
+입력 2 — 장애 리포트 #18
+증상: 목요일 오후 주간 정산 배치 중 배포가 실행돼 정산이 실패했다.
+    ↓ LLM이 원본을 함께 읽고 종합
+출력 — Wiki 배포 가이드 v22의 요약
+장애 리포트 #18 이후 목요일 오후 주간 정산 배치와의 충돌을 막기 위해
+배포 금지 시간이 금요일 오후에서 목요일 오후로 변경되었다. [1] [2]
+```
+
+[배포 원본](https://github.com/hhk22/llm-wiki/blob/d2b96d6be0c91be85d50a2a120e40894913f42de/sources/deploy-guide/v22.md) · [장애 원본](https://github.com/hhk22/llm-wiki/blob/d2b96d6be0c91be85d50a2a120e40894913f42de/sources/incidents/18.md) · [생성된 Wiki와 원본 출처](https://github.com/hhk22/llm-wiki/blob/d2b96d6be0c91be85d50a2a120e40894913f42de/wiki/deployments/v22.md)
+
 LLM에는 구조화된 응답 형식을 지정한다. 인용이 원문과 다르거나 필수 근거가 빠지면 오류를 전달해 재시도한다. 완료된 작업은 저장해 재개 시 다시 검증하고 재사용한다.
 
 생성 입력에는 평가 질문·정답을 넣지 않는다. 원본·코드 해시, 모델, 프롬프트, 응답, 토큰 사용량은 `wiki/_build/`에 보관한다.
@@ -86,7 +106,7 @@ Wiki: 해당 버전까지의 이력 + 변경 문서 · 장애 링크
 | v21 → v22 | 금요일 오후 → **목요일 오후** · 공휴일 전날 유지 | 전후 원문 · v22 변경·이유 · **장애 #18** |
 | v24 → v25 | 기존 금지 시간 + **12/22~1/2 연말 동결** | 전후 원문 · v25 변경·이유 |
 
-[최신 v30](../wiki/deployments/v30.md) → **v22·v25·장애 #18 링크** 포함 · [과거 v22](../wiki/deployments/v22.md) → **v22까지의 이력**만 표시
+[최신 v30](https://github.com/hhk22/llm-wiki/blob/d2b96d6be0c91be85d50a2a120e40894913f42de/wiki/deployments/v30.md) → **v22·v25·장애 #18 링크** 포함 · [과거 v22](https://github.com/hhk22/llm-wiki/blob/d2b96d6be0c91be85d50a2a120e40894913f42de/wiki/deployments/v22.md) → **v22까지의 이력**만 표시
 
 **변경본 반영 — 원본 변경 후 전체 재구축**
 
@@ -157,7 +177,7 @@ Wiki에는 양쪽 주장·출처와 함께 **“FAQ의 적용 시점과 예외 �
 
 전체 구축에서는 원본 120개에 대응하는 본문 120개·목차 5개, 링크·인용을 검사했다. 변경 이력 14건은 원본에서 다시 계산해 저장된 페이지와 대조했으며, 실제 배포 관련 원본 67개에서는 상충 후보가 나오지 않았다.
 
-실험은 `gemini-3.5-flash-lite`로 조건별 1회 실행했고, 원본 파일은 보존한 채 입력만 바꿨다. 전체 상충의 탐지나 설명의 정확성을 보장하는 평가는 아니다. [실험 입력·응답](../evaluation/wiki-history-conflict-probe.json) · [이력·상충 검증 기록](../evaluation/wiki-history-review.md) · [초기 생성 기록](../evaluation/wiki-build-review.md)
+실험은 `gemini-3.5-flash-lite`로 조건별 1회 실행했고, 원본 파일은 보존한 채 입력만 바꿨다. 전체 상충의 탐지나 설명의 정확성을 보장하는 평가는 아니다. [실험 입력·응답](https://github.com/hhk22/llm-wiki/blob/d2b96d6be0c91be85d50a2a120e40894913f42de/evaluation/wiki-history-conflict-probe.json) · [이력·상충 검증 기록](https://github.com/hhk22/llm-wiki/blob/d2b96d6be0c91be85d50a2a120e40894913f42de/evaluation/wiki-history-review.md) · [초기 생성 기록](https://github.com/hhk22/llm-wiki/blob/d2b96d6be0c91be85d50a2a120e40894913f42de/evaluation/wiki-build-review.md)
 
 ## 3단계 — Wiki를 읽고 대화의 후속 질문에 답한다
 
@@ -184,8 +204,8 @@ Wiki 탐색: 배포 목차 → v22의 변경 이력 확인
 | 변경 대상이 둘인데 “그 전에는?” | 대상을 되묻고 탐색하지 않음 |
 | 원본에 없는 식대 지원 한도 질문 | 금액을 만들지 않고 근거 부족 응답 |
 
-**네 사례를 각 1회 확인한 결과**이며, 기존 검색 대비 품질 우위를 측정한 것은 아니다. 테스트·탐색 경로·토큰 사용량 등은 [질의·대화 기능 확인 기록](../evaluation/wiki-conversation-review.md)에 남겼다.
+**네 사례를 각 1회 확인한 결과**이며, 기존 검색 대비 품질 우위를 측정한 것은 아니다. 테스트·탐색 경로·토큰 사용량 등은 [질의·대화 기능 확인 기록](https://github.com/hhk22/llm-wiki/blob/d2b96d6be0c91be85d50a2a120e40894913f42de/evaluation/wiki-conversation-review.md)에 남겼다.
 
 ## v4로 이어질 작업 — 원본 변경에 따른 Wiki 갱신
 
-v3는 고정된 원본의 Wiki 구축과 질의 비교까지 진행한다. 원본이 바뀌면 수동으로 전체를 다시 생성하며, **변경 감지·영향받는 Wiki의 부분 갱신·갱신 이력 관리**는 [v4 지식 갱신](04-wiki-updates.md)에서 다룬다.
+v3에서는 고정된 원본의 Wiki 구축과 질의·후속 대화 기능을 확인했다. 원본이 바뀌면 수동으로 전체를 다시 생성하며, **변경 감지·영향받는 Wiki의 부분 갱신·갱신 이력 관리**는 [v4 지식 갱신](https://github.com/hhk22/llm-wiki/blob/v6-evaluation-feedback/blogs/04-wiki-updates.md)에서 다룬다.

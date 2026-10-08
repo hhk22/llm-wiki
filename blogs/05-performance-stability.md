@@ -6,6 +6,18 @@ v4까지 원본 변경을 감지하고 관련 Wiki를 갱신하는 기능을 구
 
 이 글은 현재 구현을 바탕으로 한 설계 검토다. Worker나 무중단 전환을 새로 구현한 결과가 아니라, 남은 문제와 개선 조건을 정리한다.
 
+## 어떤 조건에서 도입할 것인가?
+
+현재 규모만으로 세 기능이 모두 필요하다고 판단하지는 않았다. 다음 요구나 측정 결과가 확인될 때 각각 도입을 검토한다.
+
+| 개선안 | 도입을 검토할 조건 | 먼저 확인할 것 |
+| --- | --- | --- |
+| 원본·Wiki 버전 묶음과 `build_id` | 갱신 중에도 질의를 허용하거나 대화의 근거 버전을 유지해야 할 때 | 갱신 중 조회 실패, 요청·후속 질문의 버전 일관성 |
+| Worker와 작업 상태 조회 | CLI 대신 API로 갱신을 접수하고, 연결을 유지하지 않고 진행·실패를 확인해야 할 때 | 실제 갱신 시간, 접수·재시도·상태 확인 요구 |
+| 목차 계층화·Wiki 검색 | 문서 증가로 목차 입력량·탐색 지연·근거 누락이 문제가 될 때 | 문서 수별 입력 토큰, 답변 시간, 필요한 근거의 포함 여부 |
+
+아직 이 조건에 대한 운영 측정값이나 도입 기준 수치를 확보하지 않았다. 아래에서는 현재 코드의 한계와 각 개선안이 해결할 문제를 구분한다.
+
 ## 1. 갱신 중 사용자가 Wiki를 읽으면 어떻게 될까?
 
 현재는 갱신 중 질의를 멈추는 운영을 전제로 한다. 조회 도중 Wiki를 교체하면 목차와 본문의 버전이 달라질 수 있고, 원본이 수정되면 이전 Wiki의 출처 검증도 실패할 수 있다.
@@ -151,4 +163,4 @@ API는 접수한 작업 ID를 바로 반환한다. Worker는 등록된 작업을
 
 Wiki에 정리된 설명·변경 이력·출처는 유지하고, **질문에 필요한 근거를 찾아가는 경로를 개선**한다. 문서 수를 늘려가며 답변까지 걸리는 시간·입력 토큰과 필요한 근거의 누락 여부를 함께 확인한다.
 
-현재 구현과 테스트는 [v4 갱신 글](https://github.com/hhk22/llm-wiki/blob/master/blogs/04-wiki-updates.md), [갱신 코드](https://github.com/hhk22/llm-wiki/blob/master/src/llm_wiki/wiki_update.py), [갱신 테스트](https://github.com/hhk22/llm-wiki/blob/master/tests/test_wiki_update.py)에서 확인할 수 있다.
+현재 구현과 테스트는 [v4 갱신 글](https://github.com/hhk22/llm-wiki/blob/v6-evaluation-feedback/blogs/04-wiki-updates.md), [갱신 코드](https://github.com/hhk22/llm-wiki/blob/51ebdfc3bab868f1fb37678bb0f133ab8b7e937c/src/llm_wiki/wiki_update.py), [갱신 테스트](https://github.com/hhk22/llm-wiki/blob/51ebdfc3bab868f1fb37678bb0f133ab8b7e937c/tests/test_wiki_update.py)에서 확인할 수 있다.

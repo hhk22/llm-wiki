@@ -12,6 +12,7 @@ from google import genai
 from google.genai import types
 
 from llm_wiki.search import SearchResult
+from llm_wiki.telemetry import InputBudgetExceeded, model_call
 
 GEMINI_GENERATION_MODEL = "gemini-3.6-flash"
 
@@ -60,11 +61,14 @@ class GeminiAnswerProvider:
     def generate(self, query: str, sources: Sequence[SearchResult]) -> str:
         prompt = build_grounded_prompt(query, sources)
         try:
-            response = self._client.models.generate_content(
+            response = model_call(
+                self._client.models, "generate_content", stage_name="rag_answer",
                 model=self.settings.model,
                 contents=prompt,
                 config=types.GenerateContentConfig(temperature=0),
             )
+        except InputBudgetExceeded:
+            raise
         except Exception as exc:  # Provider exceptions vary by transport and status code.
             status_code = getattr(exc, "status_code", getattr(exc, "code", None))
             retryable = status_code == 429 or (isinstance(status_code, int) and status_code >= 500)

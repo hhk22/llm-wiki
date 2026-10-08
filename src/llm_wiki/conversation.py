@@ -11,6 +11,7 @@ from google.genai import types
 from pydantic import BaseModel, ConfigDict, Field, field_validator, model_validator
 
 from llm_wiki.answering import GenerationRequestError, GenerationSettings
+from llm_wiki.telemetry import InputBudgetExceeded, model_call
 from llm_wiki.wiki_build import provider_schema
 
 AnswerMethod = Literal["keyword", "vector", "hybrid", "wiki"]
@@ -47,10 +48,6 @@ class QuestionResolution(StrictResponse):
         return self
 
 
-class InputBudgetExceeded(ValueError):
-    """The next prompt would exceed this request's cumulative text-token budget."""
-
-
 class GeminiJsonModel:
     """Request-local structured calls with a shared prompt budget and usage trace."""
 
@@ -66,7 +63,8 @@ class GeminiJsonModel:
     def run(self, stage: str, prompt: str, schema):
         # count_tokens measures prompt text; schema/system overhead is recorded in usage.
         try:
-            count = self.client.models.count_tokens(model=self.settings.model, contents=prompt)
+            count = model_call(self.client.models, "count_tokens", stage_name=stage,
+                               model=self.settings.model, contents=prompt)
             tokens = count.total_tokens
             if not isinstance(tokens, int) or tokens < 0:
                 raise ValueError("Missing token count")
@@ -81,7 +79,8 @@ class GeminiJsonModel:
             record = {"stage": stage, "attempt": attempt, "input_text_tokens": tokens}
             started = time.monotonic()
             try:
-                response = self.client.models.generate_content(
+                response = model_call(
+                    self.client.models, "generate_content", stage_name=stage, input_tokens=tokens,
                     model=self.settings.model, contents=prompt,
                     config=types.GenerateContentConfig(
                         temperature=0, response_mime_type="application/json",
@@ -93,6 +92,9 @@ class GeminiJsonModel:
                 result = schema.model_validate_json(response.text or "")
                 record["status"] = "ok"
                 return result
+            except InputBudgetExceeded:
+                record["status"] = "budget_exceeded"
+                raise
             except Exception as exc:
                 record["status"] = "failed"
                 code = getattr(exc, "status_code", getattr(exc, "code", None))

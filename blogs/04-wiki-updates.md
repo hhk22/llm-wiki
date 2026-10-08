@@ -20,6 +20,23 @@ v3에는 원본 변경을 처리하는 갱신 기능이 없었다. 수정된 내
 
 갱신 명령을 실행하면 이 과정을 자동 처리한다. 파일을 수정하는 순간 실행되는 감시 기능은 포함하지 않았다.
 
+```bash
+# 변경 범위만 확인 — LLM 생성·Wiki 교체 없음
+uv run python scripts/update_wiki.py --dry-run
+
+# 확인한 원본 변경을 반영 — 필요하면 LLM 호출
+uv run python scripts/update_wiki.py
+```
+
+코드는 다음 순서로 읽으면 된다.
+
+| 실행 순서 | 볼 코드 | 역할 |
+| --- | --- | --- |
+| 1. 명령 실행 | [update_wiki.py의 main()](https://github.com/hhk22/llm-wiki/blob/51ebdfc3bab868f1fb37678bb0f133ab8b7e937c/scripts/update_wiki.py#L20) | 입력 경로와 옵션을 받고 갱신 실행 |
+| 2. 변경 계획 | [WikiUpdatePlan](https://github.com/hhk22/llm-wiki/blob/51ebdfc3bab868f1fb37678bb0f133ab8b7e937c/src/llm_wiki/wiki_update.py#L86) | 구축 당시 원본과 현재 원본을 비교하고 영향 범위 계산 |
+| 3. 생성·재사용 | [IncrementalWikiBuilder](https://github.com/hhk22/llm-wiki/blob/51ebdfc3bab868f1fb37678bb0f133ab8b7e937c/src/llm_wiki/wiki_update.py#L162) | 바뀐 입력의 작업을 생성하고 유효한 결과를 재사용 |
+| 4. 검증·반영 | [update_wiki()](https://github.com/hhk22/llm-wiki/blob/51ebdfc3bab868f1fb37678bb0f133ab8b7e937c/src/llm_wiki/wiki_update.py#L232) | 임시 폴더에서 검증 후 기존 Wiki를 교체 |
+
 ## 1. 수정한 문서와 연결된 설명도 갱신한다
 
 배포 v22는 장애 #18을 근거로 배포 금지 시간이 바뀐 이유를 설명한다. 따라서 장애 #18의 원인이 수정되면, 장애 페이지와 이를 참고한 배포 페이지를 함께 검토해야 한다.
@@ -62,7 +79,21 @@ v3에는 원본 변경을 처리하는 갱신 기능이 없었다. 수정된 내
 
 삭제도 같은 흐름으로 처리한다. 원본이 사라지면 해당 Wiki를 제거하고, 남은 페이지의 근거·링크·목차를 재검토한다. 상충 원본이 정정되면 재검토 결과에 따라 `확인 필요` 표시도 갱신한다.
 
-**파일·인용·링크·이력 검증을 통과한 결과만 반영한다.** 갱신에 실패하면 기존 Wiki를 유지한다.
+**파일·인용·링크·이력 검증을 통과한 결과만 반영한다.** 반영 순서는 다음과 같다.
+
+```text
+임시 폴더에 새 Wiki 생성
+    ↓
+파일·인용·링크·이력 검증 + 작업 중 원본 변경 여부 확인
+    ↓
+기존 Wiki를 백업 경로로 이동
+    ↓
+새 Wiki를 기존 경로로 이동
+    ├─ 성공: 갱신 완료
+    └─ 이동 중 예외: 백업을 기존 경로로 복원
+```
+
+생성·검증 실패 시에는 교체하지 않는다. 교체 중 예외에도 복원을 시도하지만, 프로세스 강제 종료나 동시 조회까지 보장하는 무중단 전환 구조는 아니다.
 
 ## 검증 — 변경 전후의 Wiki를 비교했다
 
@@ -78,7 +109,7 @@ v3에는 원본 변경을 처리하는 갱신 기능이 없었다. 수정된 내
 | FAQ를 목요일 배포 허용으로 변경한 뒤 금지로 복구 | 상충 후보에 따른 `확인 필요` 표시 생성·제거 |
 | 모델 실패 또는 작업 도중 원본 변경 | 새 결과를 반영하지 않고 기존 Wiki 유지 |
 
-[갱신 테스트 20개](https://github.com/hhk22/llm-wiki/blob/master/tests/test_wiki_update.py)를 추가했다. 구현 당시 전체 테스트는 **180개 통과·DB 테스트 18개 건너뜀**, Ruff 검사도 통과했다.
+[갱신 테스트 20개](https://github.com/hhk22/llm-wiki/blob/51ebdfc3bab868f1fb37678bb0f133ab8b7e937c/tests/test_wiki_update.py)를 추가했다. 구현 당시 전체 테스트는 **180개 통과·DB 테스트 18개 건너뜀**, Ruff 검사도 통과했다.
 
 기존 원본 120개와 Wiki를 대상으로 갱신 명령도 실행했다. 원본 변경이 없는 상태에서 **재생성 0개·검증 PASS**를 확인했다. 원본 변경 후 실제 LLM으로 생성한 설명의 정확성과 시간·비용은 아직 측정하지 않았다.
 
@@ -88,6 +119,8 @@ v3에는 원본 변경을 처리하는 갱신 기능이 없었다. 수정된 내
 
 v3에서는 모든 본문 생성에 당시 최신 버전을 함께 전달했다. 이 때문에 **최신 버전이 바뀌는 첫 v4 갱신은 전체 본문 재생성이 필요할 수 있다.** 새 생성 방식에서는 최신 표시를 코드가 처리하도록 분리했다.
 
-실행 방법은 [README](https://github.com/hhk22/llm-wiki/blob/master/README.md#v4--원본-변경에-따른-wiki-갱신), 상세 구현은 [wiki_update.py](https://github.com/hhk22/llm-wiki/blob/master/src/llm_wiki/wiki_update.py)에서 확인할 수 있다.
+현재 운영 전제는 **원본 수정과 갱신 중에는 질의를 멈추는 것**이다. 원본과 Wiki를 같은 버전으로 묶어 보관하거나, 진행 중인 요청이 이전 버전을 끝까지 읽도록 고정하는 기능은 아직 구현하지 않았다.
 
-갱신 중 조회와 오래 걸리는 갱신 등 남은 운영 과제는 [v5 성능과 안정성 설계 검토](https://github.com/hhk22/llm-wiki/blob/master/blogs/05-performance-stability.md)에 정리했다.
+실행 방법은 [README](https://github.com/hhk22/llm-wiki/blob/51ebdfc3bab868f1fb37678bb0f133ab8b7e937c/README.md#v4--원본-변경에-따른-wiki-갱신), 상세 구현은 [wiki_update.py](https://github.com/hhk22/llm-wiki/blob/51ebdfc3bab868f1fb37678bb0f133ab8b7e937c/src/llm_wiki/wiki_update.py)에서 확인할 수 있다.
+
+갱신 중 조회와 오래 걸리는 갱신 등 남은 운영 과제는 [v5 성능과 안정성 설계 검토](https://github.com/hhk22/llm-wiki/blob/v6-evaluation-feedback/blogs/05-performance-stability.md)에 정리했다.
