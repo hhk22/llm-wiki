@@ -18,11 +18,21 @@
 
 이 결과는 가상 문서와 고정 질문에서 측정한 검색 기준선이다. 실제 사내 문서 전체의 성능이나 최종 답변의 정확도를 뜻하지는 않는다.
 
+## 구현한 흐름
+
+```text
+색인 명령 → Markdown 120개 → 청크 150개 → 임베딩 → PostgreSQL 저장
+사용자 질문 → MCP → API → 키워드·벡터 검색 → 근거 청크 → 답변·출처 반환
+평가 명령 → 고정 질문 20개 → 필요한 문서가 검색 결과에 포함됐는지 비교
+```
+
+색인은 사람이 명령을 실행하는 일괄 처리다. 질의 시에는 저장된 청크를 검색한다.
+
 ## 1. 실험 설계: 질문 20개를 먼저 고정했다
 
 ### 평가 질문
 
-검색 결과를 본 뒤 질문을 고르지 않도록, 검색 구현 전에 유형별 5개씩 질문 20개와 정답 문서를 [`evaluation/questions.yaml`](https://github.com/hhk22/llm-wiki/blob/docs/llm-wiki-devlog/evaluation/questions.yaml)에 고정했다. 문항 수와 정답 문서의 존재는 테스트로 검증하며, v2도 같은 파일을 그대로 쓴다. 아래 예시는 질문을 줄여 표현한 것이다.
+검색 결과를 본 뒤 질문을 고르지 않도록, 검색 구현 전에 유형별 5개씩 질문 20개와 정답 문서를 [`evaluation/questions.yaml`](https://github.com/hhk22/llm-wiki/blob/054d059c824a28afdc6cd803955b77f6f450cc2d/evaluation/questions.yaml)에 고정했다. 문항 수와 정답 문서의 존재는 테스트로 검증하며, v2도 같은 파일을 그대로 쓴다. 아래 예시는 질문을 줄여 표현한 것이다.
 
 | 유형 | 예시 | 정답 문서 |
 | --- | --- | --- |
@@ -35,7 +45,7 @@
 
 ### 문서 구성
 
-[`sources/`](https://github.com/hhk22/llm-wiki/tree/docs/llm-wiki-devlog/sources)에 주제별 30개씩 총 120개의 가상 문서를 만들었다. 문서 종류를 늘리기보다 버전 변화, 표현 차이, 문서 간 연결을 검색으로 확인할 수 있게 구성했다.
+[`sources/`](https://github.com/hhk22/llm-wiki/tree/054d059c824a28afdc6cd803955b77f6f450cc2d/sources)에 주제별 30개씩 총 120개의 가상 문서를 만들었다. 문서 종류를 늘리기보다 버전 변화, 표현 차이, 문서 간 연결을 검색으로 확인할 수 있게 구성했다.
 
 | 주제 | 문서 | 확인하려는 문제 |
 | --- | ---: | --- |
@@ -61,7 +71,7 @@
 
 ## 2. 색인: 헤딩 청킹, 해시 기반 증분, 문서 단위 트랜잭션
 
-문서 120개 규모라 큐·Worker 대신 명령 한 번으로 전체 파일을 확인하는 일괄 색인을 택했다. 대신 변경 없는 문서는 해시로 건너뛰고, 문서 단위 트랜잭션과 API 재시도로 중간 실패를 격리해 재실행만으로 복구되게 했다. 비동기 큐·Worker 구성은 v5에서 다룬다.
+문서 120개 규모라 명령 한 번으로 전체 파일을 확인하는 일괄 색인을 택했다. 변경 없는 문서는 해시로 건너뛰고, 문서 단위 트랜잭션과 API 재시도로 중간 실패를 격리해 재실행으로 복구하도록 했다. 큐·Worker는 구현하지 않았으며, v5에서 Wiki 갱신 작업을 비동기로 처리할 조건을 설계로 검토한다.
 
 ### 헤딩 기반 청킹
 
@@ -73,7 +83,7 @@
 
 ### 저장 구조와 변경 감지
 
-PostgreSQL 17.11 + pgvector 0.8.6에 두 테이블을 둔다. 스키마는 [`database.py`](https://github.com/hhk22/llm-wiki/blob/docs/llm-wiki-devlog/src/llm_wiki/database.py)에 있다.
+PostgreSQL 17.11 + pgvector 0.8.6에 두 테이블을 둔다. 스키마는 [`database.py`](https://github.com/hhk22/llm-wiki/blob/054d059c824a28afdc6cd803955b77f6f450cc2d/src/llm_wiki/database.py)에 있다.
 
 | 테이블 | 저장 내용 |
 | --- | --- |
@@ -92,7 +102,7 @@ Markdown 로딩 → frontmatter 파싱 → content_hash 계산 → DB의 기존 
 
 ### 저장 결과 검증
 
-건수만 같아도 오래된 청크가 남아 있을 수 있다. 그래서 현재 Markdown을 다시 파싱·청킹한 예상값과 DB의 실제값을 [`storage_validation.py`](https://github.com/hhk22/llm-wiki/blob/docs/llm-wiki-devlog/src/llm_wiki/storage_validation.py)로 비교해 `PASS`를 확인한 뒤 검색 평가를 진행했다.
+건수만 같아도 오래된 청크가 남아 있을 수 있다. 그래서 현재 Markdown을 다시 파싱·청킹한 예상값과 DB의 실제값을 [`storage_validation.py`](https://github.com/hhk22/llm-wiki/blob/054d059c824a28afdc6cd803955b77f6f450cc2d/src/llm_wiki/storage_validation.py)로 비교해 `PASS`를 확인한 뒤 검색 평가를 진행했다.
 
 | 확인 항목 | 결과 |
 | --- | --- |
@@ -106,11 +116,11 @@ Markdown 로딩 → frontmatter 파싱 → content_hash 계산 → DB의 기존 
 - **키워드**: 질문을 `simple` 설정의 OR 조건 `tsquery`로 바꾸고, 제목(A)·헤딩(B)·본문(C) 가중치를 준 `ts_rank_cd`로 정렬한다. 제목 일치에 더 큰 가중치를 주지만 식별자 일치를 반드시 우선하는 규칙은 없다.
 - **벡터**: 문서는 색인할 때, 질문은 검색할 때 같은 Gemini 모델로 임베딩하고, cosine similarity(`1 - (embedding <=> query)`)로 정렬한다.
 
-구현은 [`search.py`](https://github.com/hhk22/llm-wiki/blob/docs/llm-wiki-devlog/src/llm_wiki/search.py)에 있다.
+구현은 [`search.py`](https://github.com/hhk22/llm-wiki/blob/054d059c824a28afdc6cd803955b77f6f450cc2d/src/llm_wiki/search.py)에 있다.
 
 ## 4. 평가 결과: 어디서 실패했나
 
-[`scripts/evaluate.py`](https://github.com/hhk22/llm-wiki/blob/docs/llm-wiki-devlog/scripts/evaluate.py)로 같은 질문 20개를 두 방식에 실행했다. 유형별 Hit@3는 첫 표와 같고, Hit@1은 단일 정답 15문항에서만 계산했다.
+[`scripts/evaluate.py`](https://github.com/hhk22/llm-wiki/blob/054d059c824a28afdc6cd803955b77f6f450cc2d/scripts/evaluate.py)로 같은 질문 20개를 두 방식에 실행했다. 유형별 Hit@3는 첫 표와 같고, Hit@1은 단일 정답 15문항에서만 계산했다.
 
 | 검색 방식 | Hit@1 (단일 정답 15문항) | Hit@3 (전체 20문항) |
 | --- | ---: | ---: |
@@ -133,7 +143,7 @@ Markdown 로딩 → frontmatter 파싱 → content_hash 계산 → DB의 기존 
 
 식별자를 명시한 질문조차 5개 중 1개만 성공했다. `simple` 파서가 한국어 조사를 분리하지 못해, 조사가 붙은 식별자(`E-008은`, `#20의`, `v22에서`, `Q10에서`)는 조사까지 한 토큰이 되어 제목의 식별자와 일치하지 않았다. 유일한 성공인 `E-021` 질문은 식별자 뒤에 조사가 없어 제목의 `-021` 토큰과 맞았고, 이 질문에서는 키워드가 1위, 벡터는 2위였다. OR 조건과 순위 계산이 미친 영향은 v2에서 분리해 확인한다. 단일 문항의 관찰이지만, 식별자 질문에서 키워드가 벡터를 보완할 수 있다는 가설로 v2에 넘긴다.
 
-질문별 Top 3와 성공 여부는 [`evaluation/results-v1.json`](https://github.com/hhk22/llm-wiki/blob/docs/llm-wiki-devlog/evaluation/results-v1.json)에 기록했다. 문서 ID가 맞아도 선택된 청크에 답변 근거가 없을 수 있다. v1의 점수는 문서 검색 성공률이며, 근거 청크와 답변 정확도까지 검증한 결과는 아니다.
+질문별 Top 3와 성공 여부는 [`evaluation/results-v1.json`](https://github.com/hhk22/llm-wiki/blob/054d059c824a28afdc6cd803955b77f6f450cc2d/evaluation/results-v1.json)에 기록했다. 문서 ID가 맞아도 선택된 청크에 답변 근거가 없을 수 있다. v1의 점수는 문서 검색 성공률이며, 근거 청크와 답변 정확도까지 검증한 결과는 아니다.
 
 ## 5. 출처 기반 답변과 API·MCP
 
@@ -149,18 +159,18 @@ Markdown 로딩 → frontmatter 파싱 → content_hash 계산 → DB의 기존 
 
 제공한 근거만 사용하고 부족하면 `근거 문서에서 확인할 수 없습니다.`로 답하도록 프롬프트를 구성했다. 실제 호출에서 출처 표시와 거절 응답을 확인했지만, 모든 질문의 인용 정확성·거절 동작을 평가한 것은 아니다. 최신 문서가 검색되지 않으면 답변 모델이 이를 고칠 수 없으므로, 검색 품질이 답변 품질의 상한이다.
 
-검색·답변은 FastAPI 엔드포인트 세 개(`GET /health`, `POST /search`, `POST /answer`)로 제공하고, MCP Server는 이 API를 호출하는 `search_wiki`·`ask_wiki` 두 도구만 노출해 검색 로직을 한 곳에 둔다. 실제 MCP 호출에서 `ask_wiki`가 답변과 `deploy-guide-v22` 출처를 반환하는 것까지 확인했다. 실행·Codex 연결 방법은 [README](https://github.com/hhk22/llm-wiki/blob/docs/llm-wiki-devlog/README.md#api와-mcp)에 정리했다.
+검색·답변은 FastAPI 엔드포인트 세 개(`GET /health`, `POST /search`, `POST /answer`)로 제공하고, MCP Server는 이 API를 호출하는 `search_wiki`·`ask_wiki` 두 도구만 노출해 검색 로직을 한 곳에 둔다. 실제 MCP 호출에서 `ask_wiki`가 답변과 `deploy-guide-v22` 출처를 반환하는 것까지 확인했다. 실행·Codex 연결 방법은 [README](https://github.com/hhk22/llm-wiki/blob/054d059c824a28afdc6cd803955b77f6f450cc2d/README.md#api와-mcp)에 정리했다.
 
 ## 결론: v1이 확인한 것과 v2에서 바꿀 것
 
 **관련 문서는 찾았지만 최신 문서는 찾지 못했다.** 벡터 검색은 표현 변화(Hit@3 100%)와 문서 간 연결(80%)에는 효과가 있었지만, 비슷한 버전 30개 중 최신 문서를 고르는 일(0%)은 두 방식 모두 하지 못했다. 답변 모델은 검색이 놓친 문서를 되살릴 수 없으므로, 검색 품질이 답변 품질의 상한이다.
 
-v1로 얻은 것은 고정 질문 20개와 유형별 기준선이다. 다음 [v2 · 검색 품질 개선](https://github.com/hhk22/llm-wiki/blob/v2-search-quality/blogs/02-search-quality.md)에서는 같은 20문항으로 아래 항목을 분리해 적용하고 Hit@K를 다시 측정한다.
+v1로 얻은 것은 고정 질문 20개와 유형별 기준선이다. 다음 [v2 · 검색 품질 개선](https://github.com/hhk22/llm-wiki/blob/v6-evaluation-feedback/blogs/02-search-quality.md)에서는 같은 20문항으로 아래 항목을 분리해 적용하고 Hit@K를 다시 측정한다.
 
 | v2 항목 | v1의 근거 |
 | --- | --- |
 | 식별자 검색 보정, hybrid 검색 | `simple` 토크나이저의 조사 처리 한계. `E-021` 질문에서 키워드 1위·벡터 2위 (단일 문항, 가설) |
 | 최신 버전 필터 | 최신 정책 0/5, 두 방식 모두. 이 유형이 0/5에서 얼마나 바뀌는지 따로 확인한다 |
-| reranker | 문서 간 연결 1건 실패. 정답이 Top 3에는 있지만 1위가 아닌 경우 2건 |
+| 후보·근거 누락 진단 | 문서 간 연결 1건 실패와 정답 문서 내 근거 누락을 구분한다. reranker는 검토 후보였으며 최종적으로 구현하지 않았다. |
 
-전체 구현 코드와 실행 방법은 [v1 GitHub 저장소](https://github.com/hhk22/llm-wiki/tree/docs/llm-wiki-devlog)에서 확인할 수 있다.
+전체 구현 코드와 실행 방법은 [v1 GitHub 저장소](https://github.com/hhk22/llm-wiki/tree/054d059c824a28afdc6cd803955b77f6f450cc2d)에서 확인할 수 있다.
