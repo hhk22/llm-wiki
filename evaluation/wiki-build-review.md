@@ -46,4 +46,4 @@ FAQ 생성에서 두 항목의 근거 누락이 번갈아 반복됐다. 마지�
 
 다음 단계는 현재 규칙·변경 이력·상충 내용 검토, Wiki 기반 질의 구현, 동일 조건의 답변 비교다. 기존 `vector`·`hybrid`·`keyword`와 답변 API는 유지했다.
 
-초기 원본 해시·모델·프롬프트·출력·호출 시각은 [당시 manifest](https://github.com/hhk22/llm-wiki/blob/0033be049e056349225b3b02d9f0f8a374504398/wiki/_build/manifest.json)와 [당시 호출 기록](https://github.com/hhk22/llm-wiki/tree/0033be049e056349225b3b02d9f0f8a374504398/wiki/_build/calls)에, 기계 판독용 집계는 [검증 JSON](wiki-build-validation.json)에 보관한다. 재생성·재개 명령은 [README](../README.md#v3--원본으로-wiki-생성)에 있다.
+초기 원본 해시·모델·프롬프트·출력·호출 시각은 [당시 manifest](https://github.com/hhk22/llm-wiki/blob/0033be049e056349225b3b02d9f0f8a374504398/wiki/_build/manifest.json)와 [당시 호출 기록](https://github.com/hhk22/llm-wiki/tree/0033be049e056349225b3b02d9f0f8a374504398/wiki/_build/calls)에, 기계 판독용 집계는 [검증 JSON](wiki-build-validation.json)에 보관한다. 재생성·재개 명령은 [실행 안내](../docs/usage.md#v3--원본으로-wiki-생성)에 있다.
