@@ -1,37 +1,119 @@
 # LLM Wiki
 
-가상 사내 문서로 RAG 검색의 기준선을 만들고, 검색 품질과 운영 문제를 단계적으로 개선하는 포트폴리오 프로젝트다.
+**원본 문서를 근거로 답하고, 문서 변경과 답변 검토 기록을 추적하는 RAG·Wiki 프로젝트.**
 
-v1에서는 Markdown 문서 120개를 색인하고, 키워드·벡터 검색을 20개 질문으로 평가한 뒤 검색 결과에 출처를 붙여 답변한다. v2에서는 오류 코드 조사 보정과 hybrid 검색을 구현했다. 고정 20문항에서 hybrid Hit@3는 55%로 벡터의 70%보다 낮아 기본 검색은 벡터로 유지한다. 3단계 최신 버전 필터를 적용한 벡터의 문서 Hit@3는 95%(19/20)이며 기존 성공 문항은 유지됐다. 4단계에서는 답변에 문서당 최대 2개 청크를 전달해, 대표 청크 하나를 고를 때 빠지던 근거를 함께 제공한다.
+배포 가이드·장애 리포트·오류 코드·FAQ로 구성한 가상 사내 문서 120개를 사용한다. 검색 실패를 분석해 최신 버전 선택과 근거 누락을 개선하고, 여러 원본을 종합한 Wiki의 구축·질의·부분 갱신을 구현했다. API 답변에는 당시의 근거와 실행 기록을 남기고, 사용자 피드백과 사람이 작성한 평가를 연결한다.
 
-구현 과정과 측정 결과는 [RAG 기준선](./blogs/01-rag-baseline.md)과 [v2 검색 품질 실험](./blogs/02-search-quality.md)에 기록한다.
+[블로그 시리즈](https://velog.io/@khhh9401/series/portfolio-llm-wiki) · [프로젝트 개요](blogs/00-project-design.md) · [빠른 시작](#quick-start) · [구현 기록](#devlogs)
 
-이후 과정은 [v3 Wiki 구축](blogs/03-llm-wiki.md), [v4 지식 갱신](blogs/04-wiki-updates.md), [v5 성능·안정성 설계 검토](blogs/05-performance-stability.md)로 이어진다. v5는 현재 한계와 개선안을 정리한 글이며, 추가 운영 기능을 구현했다는 의미는 아니다.
+## 핵심 결과와 설계 판단
 
-[v6 평가와 피드백](https://github.com/hhk22/llm-wiki/blob/master/blogs/06-evaluation-feedback.md)에는 답변 기록·사용자 피드백·사람의 평가를 연결하고, 기존 검색과 Wiki를 같은 조건으로 비교하는 구현을 정리했다.
-
-## 구현 현황
-
-| 단계 | 상태 | 결과 |
+| 문제 | 구현과 판단 | 확인한 결과 |
 | --- | --- | --- |
-| 샘플 문서 준비 | 완료 | 4개 주제, 총 120개 Markdown 문서 |
-| Embedding API 연결 | 완료 | `gemini-embedding-2`, 768차원 벡터 생성 확인 |
-| 평가 질문 작성 | 완료 | 4개 시나리오, 총 20개 질문 |
-| 청킹 | 완료 | 헤딩 단위 분할, 120개 문서 → 150개 청크 |
-| PostgreSQL + pgvector 실행 + DB 연결 및 스키마 구성 | 완료 | PostgreSQL 17.11, pgvector 0.8.6, `vector(768)` |
-| 일괄 색인 | 완료 | 문서 120개, 청크 150개, 768차원 벡터 저장 |
-| 저장 결과 검증 | 완료 | 원본 대비 누락·중복·내용 불일치 0건 |
-| 키워드·벡터 검색 | 완료 | 문서 중복을 제거한 Top K 검색 |
-| v1 검색 평가 | 완료 | 키워드 Hit@3 5%, 벡터 Hit@3 70% |
-| v2 조사 보정·Hybrid | 구현·평가 완료 | 보정 키워드 Hit@3 10%, hybrid 55%; 기본값은 벡터 유지 |
-| v2 최신 버전 필터 | 구현·평가 완료 | 벡터 + 필터 문서 Hit@3 95%, hybrid + 필터 75% |
-| 출처 기반 답변 | 완료 | 검색 청크만 사용한 답변·출처·근거 부족 응답 |
-| API·MCP | 완료 | `health`, `search`, `answer` API와 MCP 도구 2개 |
-| v3 Wiki 생성 | 초기 구축 완료 | 본문 120개·목차 5개, 관련 링크·원본 출처 생성 |
-| v3 시점·변경 이력 | 구현·검증 완료 | 과거 표현 보정, 규칙 항목 변경 14건 연결, 배포 정책 상충 후보 검토 |
-| v3 Wiki 질의·후속 질문 | 구현·기능 검증 완료 | 목차·페이지 탐색, 출처 답변, 대화 기반 질문 해석·되묻기; 기존 검색 대비 평가는 후속 작업 |
-| v6 평가·피드백 | 구현·자동 테스트 검증 | 답변 기록·피드백·사람의 평가·회귀 사례 내보내기, 답변·갱신 비교 도구; 실제 모델 비교는 미실행 |
-| v4 Wiki 갱신 | 구현·자동 테스트 검증 | 원본 추가·수정·삭제 감지, 영향받는 본문 재생성, 이력·상충 갱신, 검증 후 교체·이전 결과 보관 |
+| 현재 규칙을 물어도 구버전이 검색됨 | 질문 의도에 따라 최신·특정 버전으로 후보 제한 | 고정 20문항의 벡터 **문서 Hit@3: 14/20 → 19/20**. [실험 결과](evaluation/results-v2-filters.json) |
+| 검색을 결합해도 품질이 좋아지지 않음 | 키워드·벡터를 동일 가중치 RRF로 결합해 비교한 뒤 기본 검색은 벡터로 유지 | 동일 조건에서 **Hybrid 11/20, 벡터 14/20**. [실험 결과](evaluation/results-v2-hybrid.json) |
+| 정답 문서를 찾아도 답에 필요한 청크가 빠짐 | 문서 순위를 유지하며 문서당 최대 2개 청크 전달 | 최신 정책 5문항의 **필요 근거 확보: 4/5 → 5/5**, 벡터 문서 Hit@3는 19/20 유지. [실험 결과](evaluation/results-v2-evidence.json) |
+
+문서 Hit@3는 필요한 문서가 상위 3개에 포함되는지를 평가한다. **최종 답변 정확도와는 다른 지표**이며, 위 결과는 가상 문서와 고정 질문에서 측정했다. 원인 장애 참조 보강의 저장 후보 재평가에서는 20/20을 기록했으며, [측정 조건과 한계](blogs/02-search-quality.md)를 별도로 남겼다.
+
+Wiki 본문 **120개·목차 5개**를 구축하고, 실제 모델로 첫 질문·후속 질문·되묻기·근거 부족의 네 사례를 각 1회 확인했다. 원본 변경에 따른 갱신과 답변·피드백·평가 저장은 자동 테스트로 검증했다. RAG 대비 Wiki의 답변 품질·비용 우위와 전체·부분 갱신의 반복 성능 비교는 아직 측정하지 않았다.
+
+## 전체 흐름
+
+```mermaid
+flowchart TD
+    S["원본 Markdown 120개"] -->|"색인 명령"| DB["PostgreSQL · pgvector"]
+    S -->|"Wiki 구축·갱신 명령"| W["Wiki 본문 · 목차 · 출처"]
+    U["질문 + 선택적인 history"] --> M["MCP ask_wiki"]
+    M --> A["FastAPI /answer"]
+    A --> Q["history가 있으면 질문 대상 해석"]
+    Q -->|"RAG"| R["키워드 · 벡터 · Hybrid 검색"]
+    DB --> R
+    Q -->|"Wiki"| N["목차 · 링크 탐색"]
+    W --> N
+    R --> G["근거 기반 답변 생성"]
+    N --> G
+    Q -->|"대상이 모호함"| C["확인 질문 생성"]
+    G --> AR["SQLite에 API 답변 · 실행 기록 저장"]
+    C --> AR
+    AR --> O["answer_id · 답변 · 출처 반환"]
+    O -->|"별도 MCP / API 호출"| F["feedback 저장"]
+    F --> H["사람이 당시 답변 · 피드백 · 원문 검토"]
+    H -->|"별도 평가 API / 스크립트 호출"| E["evaluations 저장"]
+```
+
+- **RAG와 Wiki는 선택 가능한 두 답변 경로다.** RAG도 원본을 연결해 변경 이유를 답할 수 있다. Wiki는 종합한 설명을 미리 보관하고 재사용하기 위해 추가했다.
+- **후속 대화는 호출자가 `history`로 전달한다.** 이전 대화는 질문의 대상을 해석하는 데 사용하고, 답변 근거는 다시 조회한다.
+- **갱신·피드백·평가 제출에는 각각 명령이나 호출이 필요하다.** 원본 파일 감시, 피드백 원인 자동 분석, 평가에 따른 Wiki·검색 정책 자동 수정은 구현하지 않았다.
+
+## 사용 예시
+
+아래 대화는 [실제 모델의 기능 확인 기록](evaluation/wiki-conversation-review.md)을 읽기 쉽게 요약한 것이다. 녹화된 실행 화면이나 실시간 응답은 아니다.
+
+```text
+사용자: 현재 배포 금지 시간과 목요일 오후가 금지된 이유를 알려줘.
+    ↓ ask_wiki(method="wiki") → POST /answer
+답변: 목요일 오후·공휴일 전날·12/22~1/2에는 배포하지 않습니다.
+      목요일 오후에는 정산 배치와 배포가 충돌한 장애가 있었습니다. + 출처
+
+사용자: 그럼 바뀌기 전에는 언제였어?
+    ↓ 호출자가 앞선 대화를 history로 전달 → 질문 대상 해석 → Wiki 조회
+답변: 금요일 오후·공휴일 전날이었습니다. + 출처
+```
+
+원문·생성 결과는 [배포 가이드 v22](sources/deploy-guide/v22.md), [장애 #18](sources/incidents/18.md), [이를 종합한 Wiki](wiki/deployments/v22.md)에서 확인할 수 있다.
+
+<a id="quick-start"></a>
+
+## 빠른 시작
+
+**필요 환경:** Git, Docker Compose, Gemini API 키. 질의·색인·Wiki 생성은 유료 API를 호출할 수 있다. 아래 명령은 저장소에 포함된 Wiki로 답변하는 경로이며, RAG 색인은 별도로 실행한다.
+
+```bash
+git clone https://github.com/hhk22/llm-wiki.git
+cd llm-wiki
+
+# 기존 .env가 없을 때만 생성
+[ -f .env ] || cp .env.example .env
+# .env의 GEMINI_API_KEY를 본인의 키로 설정
+
+docker compose up -d --build
+docker compose ps
+```
+
+API가 `healthy` 상태가 되면 실행한다. 기본 API 포트를 변경했다면 주소도 맞춘다.
+
+```bash
+curl --fail-with-body http://127.0.0.1:8000/answer \
+  -H 'Content-Type: application/json' \
+  -d '{"query":"현재 배포 금지 시간과 목요일 오후가 금지된 이유를 알려줘.","method":"wiki","top_k":3}'
+```
+
+응답의 `answer`, `sources`, `answer_id`, `status`를 확인한다. API 응답과 실행 기록은 SQLite에 저장한다. `method="wiki"`는 원본의 벡터 색인이 없어도 사용할 수 있다.
+
+- **RAG 검색도 실행하려면:** `docker compose exec api python scripts/ingest.py`로 원본을 색인한 뒤 `method="vector"`로 호출한다. 기존 색인이 있다면 [저장 결과 검증](#저장-결과-검증)을 확인한다.
+- **화면에서 API를 호출하려면:** [Swagger UI](http://127.0.0.1:8000/docs)를 연다.
+- **MCP로 연결하려면:** [API와 MCP](#api와-mcp)의 연결 절차를 따른다. 기본 HTTP MCP 주소는 `http://127.0.0.1:8001/mcp`다.
+- **생성된 Wiki만 검증하려면:** Python 3.11 이상과 uv로 `uv sync --extra dev` 후 `uv run python scripts/verify_wiki.py`를 실행한다. API 키·모델 호출·DB 연결이 필요 없다.
+
+포트·볼륨·기존 프로세스 처리 등은 [Docker Compose 실행 안내](#docker-compose로-전체-실행)에 정리했다.
+
+<a id="devlogs"></a>
+
+## 구현 기록과 현재 범위
+
+| 버전 | 구현·검증 내용 | 상세 기록 |
+| --- | --- | --- |
+| v1 · RAG 기준선 | 120개 문서·150개 청크 색인, 키워드·벡터 검색, 고정 20문항 평가 | [기준선과 실패 사례](blogs/01-rag-baseline.md) |
+| v2 · 검색 개선 | 조사 보정, 버전 필터, 근거 청크·원인 장애 참조 보강, Hybrid 비교 | [변경 전후 측정](blogs/02-search-quality.md) |
+| v3 · Wiki 구축·질의 | 본문·목차·출처 생성, 변경 이력·상충 표시, 후속 질문 해석 | [구축·기능 확인](blogs/03-llm-wiki.md) |
+| v4 · Wiki 갱신 | 원본 변경에 따른 생성 결과 재사용·부분 재생성, 검증 후 교체 | [갱신·실패 처리](blogs/04-wiki-updates.md) |
+| v5 · 운영 개선 설계 | 구축 버전 유지, Worker, 목차 확장 검토. **설계 단계** | [현재 한계와 도입 조건](blogs/05-performance-stability.md) |
+| v6 · 답변 기록·평가 | 답변·피드백·사람의 평가 저장, 답변·갱신 비교 도구. **실제 모델 비교는 미실행** | [저장 흐름과 보조 도구](blogs/06-evaluation-feedback.md) |
+
+MCP 도구는 `search_wiki`, `ask_wiki`, `submit_answer_feedback`, `get_answer_record`의 **4개**다. 평가 저장은 별도 HTTP API 또는 스크립트로 수행한다. reranker, Worker·작업 큐, Redis 캐시, 갱신 중 무중단 조회는 구현하지 않았다.
+
+아래부터는 생성·갱신·평가·실행·테스트의 상세 절차다.
 
 ## 프로젝트 구성
 
@@ -50,10 +132,17 @@ src/llm_wiki/search.py      키워드·벡터·RRF hybrid 검색
 src/llm_wiki/evaluation.py  Hit@1·Hit@3 평가
 src/llm_wiki/answering.py   출처 기반 Gemini 답변
 src/llm_wiki/conversation.py  대화 이력으로 질문 대상 해석·모호하면 되묻기
+src/llm_wiki/wiki_build.py  원본을 종합한 Wiki 구축
 src/llm_wiki/wiki_query.py  Markdown 목차·링크 탐색과 원본 출처 답변
 src/llm_wiki/wiki_update.py 원본 변경 계획·부분 재생성·검증 후 교체
 src/llm_wiki/api.py         FastAPI 엔드포인트
-src/llm_wiki/mcp_server.py  API를 호출하는 MCP 도구
+src/llm_wiki/mcp_server.py  API를 호출하는 MCP 도구 4개
+src/llm_wiki/answer_records.py  SQLite 답변·피드백·평가 저장
+src/llm_wiki/telemetry.py   요청별 실행 단계·근거·모델 호출 기록
+src/llm_wiki/evaluation_runs.py  답변 비교 보고서와 사람의 평가 연결
+src/llm_wiki/update_evaluation.py  전체·부분 갱신 비교
+wiki/                       생성된 Wiki와 구축 기록
+blogs/                      버전별 설계·구현·측정 원고
 scripts/                    임베딩·청킹·DB·색인 스크립트
 tests/                      문서·청킹·DB·색인·평가 데이터 테스트
 ```
@@ -62,7 +151,7 @@ tests/                      문서·청킹·DB·색인·평가 데이터 테스�
 
 `sources/`를 읽어 Gemini가 배포 버전·장애 사건·오류 코드·FAQ별 설명을 종합하고, 관련 링크와 주제별·전체 목차를 생성한다. 기존 `vector`·`hybrid`·`keyword` 검색과 답변 기능을 유지하며, `/answer`·`ask_wiki`의 `method="wiki"`로 생성된 Markdown을 읽고 답할 수 있다.
 
-`gemini-3.5-flash-lite`로 본문 120개·목차 5개를 구축했다. [Wiki 목차](wiki/index.md), [배포 v22 종합 예시](wiki/deployments/v22.md), [초기 생성 기록](evaluation/wiki-build-review.md)에서 확인할 수 있다. 시점·이력 보강 후 링크 2,166개와 기존 본문 근거 인용 978개가 검증을 통과했다. 이력은 원본에서 다시 계산해 출력과 대조하며, 전체 테스트는 DB 연동을 포함해 146개 통과했다.
+`gemini-3.5-flash-lite`로 본문 120개·목차 5개를 구축했다. [Wiki 목차](wiki/index.md), [배포 v22 종합 예시](wiki/deployments/v22.md), [초기 생성 기록](evaluation/wiki-build-review.md)에서 확인할 수 있다. 시점·이력 보강 후 링크 2,166개와 기존 본문 근거 인용 978개가 검증을 통과했다. 이력은 원본에서 다시 계산해 출력과 대조하며, 당시 구축·이력 보강 단계의 테스트는 DB 연동을 포함해 146개 통과했다.
 
 `.env`에 `GEMINI_API_KEY`와 `GEMINI_GENERATION_MODEL`을 설정한 뒤 실행한다. 이 단계는 DB나 임베딩을 사용하지 않는다.
 
@@ -146,7 +235,7 @@ uv run python scripts/verify_wiki.py
 
 ## Wiki 답변과 대화 이력
 
-`POST /answer` 또는 MCP `ask_wiki`에서 `method="wiki"`를 선택한다. 서버는 대화를 보관하지 않으며, 후속 질문에는 호출하는 쪽에서 최근 `user`·`assistant` 발화를 전달한다. 이력 없이 호출하면 질문 해석 모델 호출을 생략한다.
+`POST /answer` 또는 MCP `ask_wiki`에서 `method="wiki"`를 선택한다. 서버는 요청에 포함된 대화를 답변 기록으로 저장하지만, 다음 요청의 이력으로 자동 불러오지는 않는다. 후속 질문에는 호출하는 쪽에서 최근 `user`·`assistant` 발화를 전달한다. 이력 없이 호출하면 질문 해석 모델 호출을 생략한다.
 
 ```json
 {
@@ -188,6 +277,8 @@ uv run python scripts/check_wiki_conversation.py --model gemini-3.5-flash-lite
 ## v6 — 답변 기록·피드백·비교 평가
 
 `POST /answer`는 성공·근거 부족·확인 질문·한도 초과 응답에 `answer_id`를 반환한다. 생성 실패도 기록하고 HTTP 502의 `detail.answer_id`로 조회할 수 있다. 기록 저장 자체가 실패하면 HTTP 503을 반환한다.
+
+저장되는 답변은 API가 생성한 응답이며, MCP 결과를 바탕으로 클라이언트가 다시 작성한 최종 대화 문장까지 저장하는 것은 아니다.
 
 저장소는 기본 `.local/evaluation.sqlite3`이며 `LLM_WIKI_RECORD_DB`로 변경한다. 요청의 대화 이력·답변·출처·trace와 코드 해시가 저장된다. Wiki는 manifest의 구축 지문·원본 해시, RAG는 검색된 문서의 DB 색인 해시와 검색 근거를 기록한다. 이 기록을 후속 대화에 자동 주입하지 않는다. Compose에서는 `answer_records` 볼륨에 보관한다.
 
@@ -475,7 +566,10 @@ uv run python scripts/answer.py "배포 가이드 v22에서 변경된 배포 금
 FastAPI가 실제 검색·답변 기능을 제공하고, MCP Server는 이 API를 Codex가 호출할 수 있는 도구로 노출한다.
 
 ```text
-Codex → MCP Server → FastAPI → PostgreSQL + Gemini
+Codex → MCP Server → FastAPI
+    ├─ RAG 검색·답변 → PostgreSQL + Gemini
+    ├─ Wiki 답변 → Wiki Markdown + Gemini
+    └─ 답변 기록 조회·피드백 저장 → SQLite
 ```
 
 ### 1. Compose MCP를 Codex에 등록
@@ -537,16 +631,22 @@ Codex
 → ask_wiki(query, method="vector", top_k=3)
 → POST /answer
 → 벡터 검색 문서 Top 3 → 문서당 최대 2개 청크 + Gemini 답변 생성
-→ 답변과 출처 반환
+→ API 답변·실행 기록 저장 → answer_id·답변·출처 반환
 ```
 
 | 구분 | 이름 | 역할 |
 | --- | --- | --- |
 | API | `GET /health` | DB 연결 확인 |
 | API | `POST /search` | 키워드·벡터·hybrid 검색 |
-| API | `POST /answer` | 답변과 출처 반환 |
+| API | `POST /answer` | RAG·Wiki 답변, 기록 저장 후 ID·답변·출처 반환 |
+| API | `GET /answers/{answer_id}` | 당시 요청·답변·실행 기록과 피드백·평가 조회 |
+| API | `POST /answers/{answer_id}/feedback` | 사용자 피드백 저장 |
+| API | `POST /answers/{answer_id}/evaluation` | 사람이 작성한 평가 저장 |
+| API | `GET /answers/{answer_id}/regression-case` | 검토된 질문과 최신 평가의 기대 답 내보내기 |
 | MCP | `search_wiki` | `/search` 호출 |
 | MCP | `ask_wiki` | `/answer` 호출 |
+| MCP | `submit_answer_feedback` | 피드백 API 호출 |
+| MCP | `get_answer_record` | 답변 기록 조회 API 호출 |
 
 로컬 stdio 방식에서 API 주소를 변경했다면 MCP 등록 명령의 `LLM_WIKI_API_URL`도 같은 주소로 변경한다. Compose의 MCP는 내부 서비스 이름으로 API에 연결하므로 호스트 API 포트 변경의 영향을 받지 않는다.
 
@@ -554,10 +654,10 @@ Codex
 
 ```bash
 uv run pytest -q
-uv run ruff check scripts/check_embedding.py scripts/preview_chunks.py scripts/init_db.py scripts/ingest.py scripts/verify_storage.py scripts/search.py scripts/evaluate.py scripts/evaluate_filters.py scripts/evaluate_evidence.py scripts/evaluate_followups.py scripts/check_followup_answers.py scripts/answer.py scripts/serve_api.py scripts/mcp_server.py src tests
+uv run ruff check scripts/check_embedding.py scripts/preview_chunks.py scripts/init_db.py scripts/ingest.py scripts/verify_storage.py scripts/search.py scripts/evaluate.py scripts/evaluate_filters.py scripts/evaluate_evidence.py scripts/evaluate_followups.py scripts/check_followup_answers.py scripts/answer.py scripts/serve_api.py scripts/mcp_server.py scripts/compare_answers.py scripts/compare_wiki_updates.py scripts/review_answers.py src tests
 ```
 
-테스트는 임베딩·청킹·색인·검색·Hit@K·출처 답변과 API·MCP 연결을 확인한다.
+테스트는 임베딩·청킹·색인·검색·Hit@K·출처 답변과 API·MCP 연결, Wiki 구축·갱신·후속 질문, 답변 기록·피드백·평가·비교 도구를 확인한다. 모델 대역을 사용한 자동 테스트와 실제 모델의 기능 확인·품질 평가는 구분한다.
 
 버전 필터의 실제 PostgreSQL 테스트는 `TEST_DATABASE_URL`을 설정하면 함께 실행된다. 연결 안에서만 보이는 임시 테이블을 사용해 기존 문서를 변경하지 않으며, v31·v100 추가와 숫자 버전 정렬, 특정 버전 및 이력 검색을 검증한다.
 
