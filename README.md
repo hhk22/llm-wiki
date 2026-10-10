@@ -53,7 +53,32 @@ docker compose up -d --build
 {"query":"현재 배포 금지 시간과 목요일 오후가 금지된 이유는?","method":"wiki","top_k":3}
 ```
 
-응답으로 `answer`, `sources`, `answer_id`를 받습니다. RAG 색인·MCP 연결·테스트 방법은 [실행 안내](docs/usage.md)에 있습니다.
+응답으로 `answer`, `sources`, `answer_id`를 받습니다.
+
+### 답변 방식 선택
+
+위 JSON의 `method`를 바꾸면 됩니다. 요청마다 선택하며, 생략하면 `vector`를 사용합니다.
+
+| `method` | 답변에 사용할 근거 | 사전 준비 |
+| --- | --- | --- |
+| `wiki` | 생성된 Wiki의 목차·링크를 탐색 | 저장소에 포함된 Wiki 사용 |
+| `vector` | 임베딩 유사도로 찾은 원본 | 아래 색인 명령 실행 |
+| `keyword` | 키워드로 찾은 원본 | 아래 색인 명령 실행 |
+| `hybrid` | 키워드·벡터 검색 순위를 결합한 원본 | 아래 색인 명령 실행 |
+
+RAG 세 방식을 사용하려면 최초 한 번 원본을 DB에 색인합니다. 이 명령은 임베딩 API를 호출합니다.
+
+```bash
+docker compose exec api python scripts/ingest.py
+```
+
+예를 들어 벡터 검색 기반 답변은 다음과 같이 요청합니다.
+
+```json
+{"query":"E-021 오류 대응 방법은?","method":"vector","top_k":3}
+```
+
+MCP의 `ask_wiki`도 같은 `method` 값을 받습니다. 검색 결과만 반환하는 `POST /search`·`search_wiki`는 `vector`, `keyword`, `hybrid`를 지원합니다. MCP 연결·테스트 방법은 [실행 안내](docs/usage.md#api와-mcp)에 있습니다.
 
 <a id="devlogs"></a>
 
